@@ -1,0 +1,43 @@
+<div class='main {COLOR}'>
+
+	<section  class='session_form'>
+
+		<div class='content'>
+
+			<h1>Registo</h1>
+
+			<img src='/imgs/logo/logo2_260.png'>
+
+			<script>
+			$( document ).ready(function() {
+				$('.advice').effect( "shake" );
+			});
+			</script>
+
+			<!-- BEGIN ALREADY_EXISTS -->
+			<p class="advice">Nome de utilizador já existente :(</p>
+			<!-- END ALREADY_EXISTS-->
+
+			<!-- BEGIN NEED_DATA -->
+			<p class="advice">Não inseriu todos os dados!</p>
+			<!-- END NEED_DATA -->
+
+			<form class='session' action='/action/register' method='post'>
+
+				<p>Nome</p>
+				<input class='text' type='text' name='name'>
+
+				<p>Nome de utilizador</p>
+				<input class='text' type='text' name='user'>
+
+				<p>Password</p>
+				<input class='text' type='password' name='password'>
+				<input id='submit' type='submit' value='Registar'>
+
+			</form>
+
+		</div>
+
+	</section>
+
+</div>

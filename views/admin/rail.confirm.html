@@ -1,0 +1,59 @@
+<div class='main {COLOR}'>	
+
+	<section>
+		<div class='content form'>	
+
+			<!-- BEGIN HEAD_ADDRAIL -->
+			<h1>Adicionar Trilho</h1>
+			<p>Revê as informações sobre o trilho antes de continuares.</p>	
+			<!-- END HEAD_ADDRAIL -->
+
+			<!-- BEGIN HEAD_REMOVERAIL -->
+			<h1>Remover Trilho</h1>
+			<p>Revê as informações sobre o trilho antes de continuares.</p>	
+			<!-- END HEAD_REMOVERAIL -->
+
+		</div>
+	</section>
+
+	<section class='greyOne'>
+		<div class='content form'>
+
+			<!-- BEGIN CONTENT_ADDRAIL -->
+
+			<form class="form" action="/admin/rails/add/3" method="post">
+
+				<p>Título</p>
+				<input class='text' type='text' name='title' value="{TITLE}" readonly>
+
+				<p>Cor</p>
+				<input class='text' type='text' name='color' value="{COLOR}" readonly>
+
+				<p>Imagem</p>
+				<input class='text' type='text' name='image' value="{IMAGE}" readonly>
+
+				<p>Descrição</p>
+				<textarea class='text big' type='text' name='description' readonly>{DESCRIPTION}</textarea>
+
+				<p>O que é... ?</p>
+				<textarea class='text big' type='text' name='what' readonly>{WHAT}</textarea>
+
+				<input class="submit list" type="submit" name="undefined" value="Prosseguir">
+			</form>
+			<!-- END CONTENT_ADDRAIL -->
+
+			<!-- BEGIN CONTENT_REMOVERAIL -->
+
+			<form class="form" action="/admin/rails/remove/3" method="post">
+
+				<p>Tens a certeza de que queres remover o trilho "{TITLE}"?</p>
+				<input style="display:none;" class='text' type='text' name='title' value="{TITLE}" readonly></p>
+
+				<input class="submit button" type="submit" name="undefined" value="Sim">
+				<input class="submit button" onClick="page('admin');" type="button" value="Não">
+			</form>
+			<!-- END CONTENT_REMOVERAIL -->
+
+		</div>
+	</section>
+</div>

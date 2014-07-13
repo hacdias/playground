@@ -1,0 +1,62 @@
+<script>
+$( document ).ready(function() {
+	$('.advice').effect( "shake" );
+});
+</script>
+
+<div class='main {COLOR}'>
+
+	<section>
+		<div class='content'>
+			<h1>Administração</h1>
+
+			<!-- BEGIN ADVICE_RAILADDED -->
+			<p class="advice back_green">Trilho adicionado com sucesso!</p>
+			<!-- END ADVICE_RAILADDED -->
+
+			<!-- BEGIN ADVICE_RAILREMOVED -->
+			<p class="advice back_green">Trilho removido com sucesso!</p>
+			<!-- END ADVICE_RAILREMOVED -->
+
+			<!-- BEGIN ADVICE_RAILEXISTENT -->
+			<p class="advice">Já existe um trilho com esse nome!</p>
+			<!-- END ADVICE_RAILEXISTENT -->
+
+			<!-- BEGIN ADVICE_ITEMADDED -->
+			<p class="advice back_green">Item adicionado com sucesso!</p>
+			<!-- END ADVICE_ITEMADDED -->
+
+			<!-- BEGIN ADVICE_ITEMREMOVED -->
+			<p class="advice back_green">Item removido com sucesso!</p>
+			<!-- END ADVICE_ITEMREMOVED -->
+
+			<!-- BEGIN ADVICE_ITEMEXISTENT -->
+			<p class="advice">Já existe um item com esse nome!</p>
+			<!-- END ADVICE_ITEMEXISTENT -->
+
+		</div>
+	</section>
+
+	<section class='greyOne'>
+		<div class='content'>
+
+			<div style="width: 50%; display:inline-block; float:left;">
+				<h2>Trilhos</h2>
+
+				<button class="button" onClick="page('admin/rails/add/1');">Adicionar</button><br>
+				<button class="button" onClick="page('admin/rails/remove/1');">Remover</button><br>
+				<button class="button" onClick="page('admin/rails/edit/1');">Editar</button>
+			</div>
+
+			<div style="width: 50%; display:inline-block;">
+				<h2>Items</h2>
+				
+				<button class="button" onClick="page('admin/items/add/1');">Adicionar</button><br>
+				<button class="button" onClick="page('admin/items/remove/1');">Remover</button><br>
+				<button class="button" onClick="page('admin/items/edit/1');">Editar</button>
+			</div>
+
+		</div>
+	</section>
+
+</div>

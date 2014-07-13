@@ -1,0 +1,32 @@
+<script src='/admin/lib/ckeditor/ckeditor.js'/></script>
+
+<div class='main'>
+	<section>
+		<div class='content form'>	
+			<h1>Adicionar Item ao Trilho</h1>
+			<p>Adicione um novo item a um trilho.</p>	
+		</div>
+	</section>
+
+	<section class='greyOne'>
+		<div class='content form'>
+			<form class='form' action='/admin/?action=addRailSubmitItem' method='post'>
+				<p>Título</p>
+				<input class='text' type='text' name='title' autofocus value=''>
+
+				<p>Trilho</p>
+				<input class='text' type='text' name='rail' autofocus value='{RAIL}'>
+
+				<p>Conteúdo</p>
+				<textarea class='text big' type='text'  id='editor' name='content'></textarea>
+				<script>
+					// Replace the <textarea id='editor1'> with a CKEditor
+					// instance, using default configuration.
+					CKEDITOR.replace( 'editor' );
+			    </script>
+
+				<input class='submit' type='submit'>
+			</form>
+		</div>
+	</section>
+</div>

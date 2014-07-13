@@ -1,0 +1,68 @@
+<div class='main {COLOR}'>	
+
+	<section>
+		<div class='content form'>	
+
+			<!-- BEGIN HEAD_REMOVERAIL -->
+			<h1>Remover Trilho</h1>	
+			<p>Escolha o trilho que deseja remover.</p>
+			<!-- END HEAD_REMOVERAIL -->
+
+			<!-- BEGIN HEAD_EDITRAIL -->
+			<h1>Editar Trilho</h1>	
+			<p>Escolha o trilho que deseja editar.</p>
+			<!-- END HEAD_EDITRAIL -->
+
+			<!-- BEGIN HEAD_ADDITEM -->
+			<h1>Adicionar Item ao Trilho</h1>	
+			<p>Escolha o trilho a que desejas adicionar um item/guia.</p>
+			<!-- END HEAD_ADDITEM -->
+
+			<!-- BEGIN HEAD_REMOVEITEM -->
+			<h1>Remover Item do Trilho</h1>	
+			<p>Escolha o trilho a que deseja remover um item.</p>
+			<!-- END HEAD_REMOVEITEM -->
+
+			<!-- BEGIN HEAD_EDITITEM -->
+			<h1>Editar Item do Trilho</h1>	
+			<p>Escolha o trilho a que deseja editar um item.</p>
+			<!-- END HEAD_EDITITEM -->
+		</div>
+	</section>
+
+	<section class='greyOne'>
+		<div class='content form'>
+
+			<!-- BEGIN CONTENT_REMOVERAIL -->
+			<form class="form" action="/admin/rails/remove/2" method="post">
+				<input class="submit list" type="submit" name="title" value="{RAIL_TITLE}">
+			</form>
+			<!-- END CONTENT_REMOVERAIL -->
+
+			<!-- BEGIN CONTENT_EDITRAIL -->
+			<form class='form' action='/admin/rails/edit/2' method='post'>
+				<input class='submit list' type='submit' name='title' value='{RAIL_TITLE}'>
+			</form>
+			<!-- END CONTENT_EDITRAIL -->	
+
+			<!-- BEGIN CONTENT_ADDITEM -->
+			<form class='form' action='/admin/item/add/2' method='post'>
+				<input class='submit list' type='submit' name='title' value='{RAIL_TITLE}'>
+			</form>
+			<!-- END CONTENT_ADDITEM -->
+
+			<!-- BEGIN CONTENT_REMOVEITEM -->
+			<form class='form' action='/admin/item/remove/2' method='post'>
+				<input class='submit list' type='submit' name='title' value='{RAIL_TITLE}'>
+			</form>
+			<!-- END CONTENT_REMOVEITEM -->
+
+			<!-- BEGIN CONTENT_EDITITEM -->
+			<form class='form' action='/admin/item/edit/2' method='post'>
+				<input class='submit list' type='submit' name='title' value='{RAIL_TITLE}'>
+			</form>
+			<!-- END CONTENT_EDITITEM -->	
+
+		</div>
+	</section>
+</div>

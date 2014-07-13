@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang='pt'>
+
+	<head>
+		<title>{SITE_NAME}</title>
+
+		<meta charset='utf-8'>
+		<meta name='viewport' content='width=device-width, initial-scale=1'>
+		<link rel='shortcut icon' href='/imgs/logo/favicon.ico'/>
+
+		
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+		<link rel='stylesheet' href='/css/template.css?v={CSS_VERSION}' type='text/css' media='all' />
+
+		<!-- Apple -->
+		<meta name='apple-mobile-web-app-capable' content='yes'>
+		<meta name='apple-mobile-web-app-title' content='{SITE_NAME}'>
+		<meta name='apple-mobile-web-app-status-bar-style' content='black-translucent'>
+
+		<link rel='apple-touch-icon-precomposed' href='/imgs/logo/logo200.png'>
+		<link rel='apple-touch-icon-precomposed' sizes='76x76' href='/imgs/logo/logo76.png'>
+		<link rel='apple-touch-icon-precomposed' sizes='120x120' href='/imgs/logo/logo120.png'>
+		<link rel='apple-touch-icon-precomposed' sizes='152x152' href='/imgs/logo/logo152.png'>
+
+		<!-- Android/Chrome -->
+		<meta name='mobile-web-app-capable' content='yes'>
+
+		<link rel='icon' sizes='196x196' href='/imgs/logo/logo196.png'>
+
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		<script src="/js/page.js?v={JS_VERSION}"></script>
+	</head>
+
+	<body>
+		<div id='header'>
+
+			<span class="btnz">
+				<label for='menu-checkbox' id='menu-btn'>
+					<div id='menu-btn-div'></div>
+				</label>
+			</span>
+
+			<a onClick="page('')"><img class='logo' src='/imgs/logo/logo78.png'></a>
+			<span id='header_title'><a onClick="page('')">{SITE_NAME}</a></span>
+
+		</div>
+
+		<input id='menu-checkbox' type='checkbox'>
+
+		<nav id='menu'>
+
+			<div class='user' style="background: {COLOR};" >
+				<div class='user_photo' style="background-image: url(/imgs/users/{USERPHOTO}_small.png);"></div>
+
+				<div class='user_name'>
+
+					<!-- BEGIN LOGIN_MENU  --> 
+					<p>Inicie sessão</p>
+					<!-- END LOGIN_MENU -->
+					<p>{USERNAME}</p>
+					<!-- FINALLY LOGIN_MENU -->
+
+				</div>
+
+			</div>
+
+		
+
+			<label for='menu-checkbox'>
+
+				<ul class="menu_items">
+
+					<!-- BEGIN NAV_USER -->
+
+					<a onClick="page('profile/{USER}')"><li><img src='/imgs/icons/profile.png'><p>Perfil</p></li></a>
+
+					<div class='separator'></div>
+
+					<!-- END NAV_USER -->
+
+					<a onClick="page('')"><li><img src='/imgs/icons/home.png'><p>Home</p></li></a>
+					<a onClick="page('about')"><li><img src='/imgs/icons/info.png'><p>Sobre</p></li></a>
+
+				</ul>
+
+			</label>
+
+			<!-- BEGIN LOGIN -->
+			<label for='menu-checkbox'>
+
+				<ul class="menu_items">
+					<a onClick="page('user/login');"><li class="login_button"><img src='/imgs/icons/login.png'><p>Login</p></li></a>
+				</ul>
+
+			</label>
+
+			<!-- END LOGIN  -->
+
+			<label for='menu-checkbox'>
+
+				<ul class="menu_items">
+					<a onClick="page('action/logout')"><li class="login_button"><img src='/imgs/icons/exit.png'><p>Sair</p></li></a>
+				</ul>
+
+			</label>
+			<!-- FINALLY LOGIN -->
+
+		</nav>
+
+		<label for='menu-checkbox' id='overlay'></label>
+
+		<div id='wrap'>
