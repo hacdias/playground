@@ -4,7 +4,7 @@
  * FOOTER CLASS
  *
  * @author Henrique Dias
- * @package CodePocket
+ * @package MathPocket
  */
 
 require_once('config.php');
@@ -12,11 +12,13 @@ require_once('config.php');
 class Footer {
 
 	public function footer() {
-		global $DATA;
 
-		$DATA['footer'] = new Template(HOST_DIR . '/views/footer.html');
-		$DATA['footer']->SITE_NAME = SITE_NAME;
-		$DATA['footer']->show();
+		$footer = new Template(Base::viewsDir('footer'));
+
+		$footer->SITE_NAME = SITE_NAME;
+		$footer->ABOUT = _('Sobre');
+		
+		$footer->show();
 	}
 
 }

@@ -4,12 +4,12 @@
  * USER CLASS
  *
  * @author Henrique Dias
- * @package CodePocket
+ * @package MathPocket
  */
 
 require_once('config.php');
 
-class User extends Base {
+class User {
 
 	public function profile($user) {
 		global $DATA;
@@ -20,7 +20,7 @@ class User extends Base {
 
 		} else {
 
-			$DATA['page'] = new Template($this->viewsDir('profile'));
+			$DATA['page'] = new Template(Base::viewsDir('profile'));
 			$DATA['page']->COLOR = $this->getColor($user);
 
 			$name = $this->getName($user);
@@ -46,7 +46,7 @@ class User extends Base {
 	public function isAdmin($user) {
 		global $DATA;
 		
-		$sql = $DATA['sql']->selectOneWhere('type', 'users', 'user', $user);
+		$sql = SQL::selectOneWhere('type', 'users', 'user', $user);
 
 		foreach($sql as $user) {
 			$type = $user['type'];
@@ -62,7 +62,7 @@ class User extends Base {
 	public function exists($user) {
 		global $DATA;
 
-		$confirmIfExists = $DATA['sql']->selectOneWhereLimit('user', 'users', 'user', $user);
+		$confirmIfExists = SQL::selectOneWhereLimit('user', 'users', 'user', $user);
 
 		if ($confirmIfExists->rowCount() == 0) {
 			return false;
@@ -84,7 +84,7 @@ class User extends Base {
 					     '3'	=>	'#e74c3c',
 					     '4'	=>	'#FF9500');
 
-		$results = $DATA['sql']->selectOneWhereLimit('color', 'users', 'user', $user);
+		$results = SQL::selectOneWhereLimit('color', 'users', 'user', $user);
 
 		foreach ($results as $color) {
 			$colorId = $color['color'];
@@ -104,7 +104,7 @@ class User extends Base {
 	public function getBio($user) {
 		global $DATA;
 
-		$results = $DATA['sql']->selectOneWhereLimit('bio', 'users', 'user', $user);
+		$results = SQL::selectOneWhereLimit('bio', 'users', 'user', $user);
 
 		foreach ($results as $result) {
 			return $result['bio'];
@@ -115,7 +115,7 @@ class User extends Base {
 	public function getName($user) {
 		global $DATA;
 
-		$results = $DATA['sql']->selectOneWhereLimit('name', 'users', 'user', $user);
+		$results = SQL::selectOneWhereLimit('name', 'users', 'user', $user);
 
 		foreach ($results as $result) {
 			return $result['name'];
@@ -176,8 +176,8 @@ class User extends Base {
 
 		} else {
 
-			$DATA['sql']->updateOne('users', 'color', $color, 'user', $user);
-			$DATA['sql']->updateOne('users', 'bio', $bio, 'user', $user);
+			SQL::updateOne('users', 'color', $color, 'user', $user);
+			SQL::updateOne('users', 'bio', $bio, 'user', $user);
 
 			$this->message('Definições alteradas!', $this->getColor($user));
 		}

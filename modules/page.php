@@ -4,7 +4,7 @@
  * PAGE CLASS
  *
  * @author Henrique Dias
- * @package CodePocket
+ * @package MathPocket
  */
 
 require_once('config.php');

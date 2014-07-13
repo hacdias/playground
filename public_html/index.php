@@ -4,7 +4,9 @@
  * INDEX
  *
  * @author Henrique Dias
- * @package CodePocket
+ * @package MathPocket
+ *
+ * @todo Converter mysql_* em PDO
  */
 
 require_once('/config.php');

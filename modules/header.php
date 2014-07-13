@@ -4,42 +4,48 @@
  * HEADER CLASS
  *
  * @author Henrique Dias
- * @package CodePocket
+ * @package MathPocket
  */
 
 require_once('config.php');
 
-class Header extends Base {
+class Header {
 
 	public function header() {
 		global $DATA;
 
-		$DATA['page'] = new Template($this->viewsDir('header'));
-		$DATA['page']->CSS_VERSION = $this->fileHash('/css/template.css');
-		$DATA['page']->JS_VERSION = $this->fileHash('/js/page.js');
+		$header = new Template(Base::viewsDir('header'));
+		$header->LANG = 'pt-PT';
+		$header->CSS_VERSION = Base::fileHash('/css/template.css');
+		$header->JS_VERSION = Base::fileHash('/js/page.js');
 
-		$DATA['page']->SITE_NAME = SITE_NAME;
+		$header->SITE_NAME = SITE_NAME;
+
+		$header->PROFILE = _('Perfil');
+		$header->ABOUT = _('Sobre');
+		$header->PLEASE_LOGIN = _('Inicie Sessão');
+
 
 		if ($DATA['userSession']->loggedIn() === false ) {
 
-			$DATA['page']->USER = 'default';
-			$DATA['page']->USERPHOTO = 'default';
+			$header->USER = 'default';
+			$header->USERPHOTO = 'default';
 
-			$DATA['page']->block('LOGIN_MENU');
-			$DATA['page']->block('LOGIN');
+			$header->block('LOGIN_MENU');
+			$header->block('LOGIN');
 
 		} else {
 
-			$DATA['page']->USERPHOTO = $DATA['user']->getPhoto($_SESSION['user_user']);
-			$DATA['page']->USER = $_SESSION['user_user'];
-			$DATA['page']->COLOR = $DATA['user']->getColor($_SESSION['user_user'], true);
-			$DATA['page']->USERNAME =  $_SESSION['user_name'];
-			$DATA['page']->block('NAV_USER');
+			$header->USERPHOTO = $DATA['user']->getPhoto($_SESSION['user_user']);
+			$header->USER = $_SESSION['user_user'];
+			$header->COLOR = $DATA['user']->getColor($_SESSION['user_user'], true);
+			$header->USERNAME =  $_SESSION['user_name'];
+			$header->block('NAV_USER');
 		}
-
 		
-		$DATA['page']->show();
-		$this->dbStatus();
+		$header->show();
+
+		Base::dbStatus();
 	}
 }
 

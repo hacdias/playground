@@ -4,16 +4,16 @@
  * BASE CLASS with common functions
  *
  * @author Henrique Dias
- * @package CodePocket
+ * @package MathPocket
  */
 
 class Base {
 
-	protected function viewsDir($page) {
+	static public function viewsDir($page) {
 		return HOST_DIR . '/views/' . $page . '.html';
 	}
 
-	protected function cleanString($string) {
+	static public function cleanString($string) {
 
 		return strtolower(trim(preg_replace('~[^0-9a-z]+~i', '-', 
 html_entity_decode(preg_replace('~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i', '$1', 
@@ -21,10 +21,9 @@ htmlentities($string, ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8')), '-'));
 
 	}
 
-	protected function dbStatus() {
-		global $DATA;
+	static public function dbStatus() {
 
-		if (!$DATA['db_status']) {
+		if (!DB_STATUS) {
 			$page = new Page('tecnical',  'red');
 			$footer = new Footer();
 
@@ -32,7 +31,7 @@ htmlentities($string, ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8')), '-'));
 		}
 	}
 
-	protected function fileHash($dir) {
+	static public function fileHash($dir) {
 		return md5_file(HOST_URL . $dir);
 	}
 

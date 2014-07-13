@@ -4,7 +4,7 @@
  * ROUTER
  *
  * @author Henrique Dias
- * @package CodePocket
+ * @package MathPocket
  */
 
 require_once('/config.php');
@@ -43,14 +43,6 @@ if(empty($DATA['url'][0])) {
 
 		case 'action':
 			actions();
-			break;
-
-		case 'admin':
-			if ($DATA['userSession']->loggedIn() && $DATA['user']->isAdmin($_SESSION['user_user'])) {
-				admin();
-			} else {
-				echo "<script>page('404');</script>";
-			}
 			break;
 
 		default:
@@ -169,33 +161,6 @@ function profile() {
 
 		}
 				
-	}
-}
-
-function admin() {
-	global $DATA;
-
-	if (!isset($DATA['url'][1])) {
-
-		$DATA['page'] = new Page('admin/main', 'orange');
-
-	} else {
-
-		switch($DATA['url'][1]) {
-
-			case 'rails':
-				adminRails();
-				break;
-
-			case 'items':
-				adminItems();
-				break;
-
-			default:
-				echo "<script>page('404');</script>";
-				break;
-
-		}
 	}
 }
 

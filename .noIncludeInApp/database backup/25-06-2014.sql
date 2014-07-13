@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `codepocket`
+-- Database: `MathPocket`
 --
 
 -- --------------------------------------------------------
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `user`, `password`, `type`, `color`, `bio`, `name`) VALUES
-(1, 'admin', 'T2ZPTkdDR0hsOUFoZFZlWVVFY05Kdz09', 0, '4', 'Eu sou o Administrador do CodePocket. Este ainda está em versão beta.', 'Administrador');
+(1, 'admin', 'T2ZPTkdDR0hsOUFoZFZlWVVFY05Kdz09', 0, '4', 'Eu sou o Administrador do MathPocket. Este ainda está em versão beta.', 'Administrador');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -4,11 +4,15 @@
  * CONFIGURATION FILE
  *
  * @author Henrique Dias
- * @package CodePocket
+ * @package MathPocket
  */
 
-
 define('HOST_URL', 'http://' . $_SERVER['HTTP_HOST']);
+
+if ($_SERVER['REQUEST_URI'] == '/config.php' || $_SERVER['REQUEST_URI'] == '/router.php') {  
+	header( 'Location: ' . HOST_URL . '/404' );
+}
+
 define('HOST_DIR', 'D:/Dev/mathpocket');
 define('SITE_NAME', 'MathPocket');
 
@@ -20,11 +24,7 @@ $DATA = array(
 	'userSession'	=> new UserSession(),
 	'user'			=> new User()		,
 	'db'        	=> null      		,
-	'db_status' 	=> null      		,
-	'sql'			=> new Sql()		,
-	'page'      	=> null      		,
-	'footer'    	=> null      		,
-	'url'      		=> null      		);
+	'page'      	=> null      		);
 
 $host     = 'localhost';
 $username = 'root';
@@ -34,13 +34,13 @@ $db 	  = 'mathpocket';
 try {
 
 	$DATA['db'] = new PDO('mysql:host=' . $host . ';dbname=' . $db, $username, $password);
-	$DATA['db'] ->exec("SET NAMES 'utf8';");
+	$DATA['db']->exec("SET NAMES 'utf8';");
 
-	$DATA['db_status'] = true;
+	define('DB_STATUS', true);
 
 } catch (PDOException $error) {
 
-	$DATA['db_status'] = false;
+	define('DB_STATUS', false);
 
 }
 

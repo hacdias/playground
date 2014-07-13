@@ -60,13 +60,18 @@ class UserSession extends Base {
     }
     
     function confirmUser($user, $pass) {
+        global $DATA;
 
-        mysql_connect('localhost', 'root', '5VcDgpPpJoyp') or trigger_error(mysql_error());
         $pass = $this->encryptPass($pass);
+
+        $DATA['db']->setAttribute(
+               PDO::ATTR_EMULATE_PREPARES => false, 
+               PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+          ); 
         
         if ($this->dataFilter) {
-            $user = mysql_escape_string($user);
-            $pass = mysql_escape_string($pass);
+            $user = PDO::quote($user);
+            $pass = PDO::quote($pass);
         }
         
         // Os data são case-sensitive?
