@@ -44,4 +44,6 @@ try {
 
 }
 
+define('DEBUG', false);
+
 ?>

@@ -150,7 +150,7 @@ class User {
 
 		} else {
 
-			$DATA['page'] = new Template($this->viewsDir('user.config'));
+			$DATA['page'] = new Template(Base::viewsDir('user.config'));
 
 			$color = $this->getColor($user);
 			$bio = $this->getBio($user);
@@ -179,7 +179,7 @@ class User {
 			SQL::updateOne('users', 'color', $color, 'user', $user);
 			SQL::updateOne('users', 'bio', $bio, 'user', $user);
 
-			$this->message('Definições alteradas!', $this->getColor($user));
+			Base::message('Definições alteradas!', $this->getColor($user));
 		}
 	}
 

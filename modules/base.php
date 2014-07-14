@@ -35,10 +35,10 @@ htmlentities($string, ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8')), '-'));
 		return md5_file(HOST_URL . $dir);
 	}
 
-	protected function message($message, $color =  'blue', $loginButton = false) {
+	static public function message($message, $color =  'blue', $loginButton = false) {
 		global $DATA;
 
-		$DATA['page'] = new Template($this->viewsDir('message'));
+		$DATA['page'] = new Template(Base::viewsDir('message'));
 		$DATA['page']->MESSAGE = $message;
 		$DATA['page']->COLOR = $color;
 

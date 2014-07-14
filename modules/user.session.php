@@ -6,7 +6,7 @@
  * @author Henrique Dias
  * @package MathPocket
  *
- * @author Thiago Belem <contato@thiagobelem.net>
+ * @author Thiago Belem <contato@thiagobelem.net> | Extremamente editado por Henrique Dias
  * @link http://blog.thiagobelem.net/
  */
 
@@ -29,10 +29,6 @@ class UserSession extends Base {
     var $keyPrefix = 'user_';
     
     var $cookie = true;
-    
-    var $caseSensitive = true;
-    
-    var $dataFilter = true;
     
     var $rememberTime = 7;
     
@@ -60,33 +56,29 @@ class UserSession extends Base {
     }
     
     function confirmUser($user, $pass) {
+        global $DATA;
 
-        mysql_connect('localhost', 'root', '5VcDgpPpJoyp') or trigger_error(mysql_error());
         $pass = $this->encryptPass($pass);
-        
-        if ($this->dataFilter) {
-            $user = mysql_escape_string($user);
-            $pass = mysql_escape_string($pass);
-        }
-        
-        // Os data são case-sensitive?
-        $binary = ($this->caseSensitive) ? 'BINARY' : '';
 
         // Procura por usuários com o mesmo usuário e pass
         $sql = "SELECT COUNT(*) AS total
                 FROM `{$this->database}`.`{$this->usersTable}`
                 WHERE
-                    {$binary} `{$this->fields['user']}` = '{$user}'
+                     `{$this->fields['user']}` = '{$user}'
                     AND
-                    {$binary} `{$this->fields['pass']}` = '{$pass}'";
+                     `{$this->fields['pass']}` = '{$pass}'";
 
-        $query = mysql_query($sql);
+                    echo $sql;
+
+        $query = $DATA['db']->prepare($sql);
+        $query->execute();
+
         if ($query) {
             // Total de usuários encontrados
-            $total = mysql_result($query, 0, 'total');
+            $total = $query->fetchColumn();
             
             // Limpa a consulta da memória
-            mysql_free_result($query);
+            $query->closeCursor();
         } else {
             // A consulta foi mal sucedida, retorna false
             return false;
@@ -96,7 +88,8 @@ class UserSession extends Base {
         return ($total == 1) ? true : false;
     }
 
-    function login($user, $pass, $remember = false) {            
+    function login($user, $pass, $remember = false) {    
+        global $DATA;        
         // Verifica se é um usuário válido
 
         if ($user == '' || $pass == '') {
@@ -110,11 +103,6 @@ class UserSession extends Base {
                 if ($this->loginVar AND !isset($_SESSION)) {
                     session_start();
                 }
-            
-                if ($this->dataFilter) {
-                    $user = mysql_real_escape_string($user);
-                    $pass = mysql_real_escape_string($pass);
-                }
                 
                 if ($this->data != false) {
                     // Adiciona o campo do usuário na lista de data
@@ -124,25 +112,23 @@ class UserSession extends Base {
                 
                     // Monta o formato SQL da lista de fields
                     $data = '`' . join('`, `', array_unique($this->data)) . '`';
-            
-                    // Os data são case-sensitive?
-                    $binary = ($this->caseSensitive) ? 'BINARY' : '';
 
                     // Consulta os data
                     $sql = "SELECT {$data}
                             FROM `{$this->database}`.`{$this->usersTable}`
-                            WHERE {$binary} `{$this->fields['user']}` = '{$user}'";
+                            WHERE `{$this->fields['user']}` = '{$user}'";
 
-                    $query = mysql_query($sql);
+                    $query = $DATA['db']->query($sql);
                     
                     // Se a consulta falhou
                     if (!$query) {
                         $this->erro = 'A consulta dos data é inválida';
                         $page = new Page('login', 'blue', true); //return false
                     } else {
-                        $data = mysql_fetch_assoc($query);
+
+                        $data = $query->fetch(PDO::FETCH_ASSOC);
                         // Limpa a consulta da memória
-                        mysql_free_result($query);
+                        $query->closeCursor();
                         
                         foreach ($data AS $chave=>$value) {
                             $_SESSION[$this->keyPrefix . $chave] = $value;
@@ -276,7 +262,7 @@ class UserSession extends Base {
     function registration($name, $user, $pass) {
         global $DATA;
 
-        if ($DATA['db_status']) {
+        if (DB_STATUS) {
 
             if (!$name == '' && !$user == '' && !$pass == '')  {
 
