@@ -1,0 +1,113 @@
+<? /**
+	* Header
+	* 
+	* @author Henrique Dias
+	* @package MathPocket
+	*/ ?>
+
+<!doctype html>
+<html lang="pt">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" href="/imgs/icon/favicon.ico"/>
+		
+		<script src="http://code.jquery.com/jquery-1.4.min.js" type="text/javascript"></script>
+
+		<link rel="stylesheet" href="/css/template.css" type="text/css" media="all" />
+		<link rel="stylesheet" href="/css/{COLOR}.css" type="text/css" media="all" />
+
+		<!-- Apple -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-title" content="MathPocket">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<link rel="apple-touch-icon-precomposed" href="/imgs/icon/logo200.png">
+		<link rel="apple-touch-icon-precomposed" sizes="76x76" href="/imgs/icon/logo76.png">
+		<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/imgs/icon/logo120.png">
+		<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/imgs/icon/logo152.png">
+
+		<!-- Android/Chrome -->
+		<meta name="mobile-web-app-capable" content="yes">
+
+     	<link rel="icon" sizes="196x196" href="/imgs/icon/logo196.png">
+
+		<title>MathPocket</title>
+	</head>
+
+	<body>
+		<div id="header">
+
+			<label for="menu-checkbox" id="menu-btn"><div id="menu-btn-div"></div></label>
+
+			<a href="/"><img class="logo" src="/imgs/icon/logo100.png"> </a>
+			<span id="header_title"><a href="/">MathPocket</a></span>
+			<a href="/search"><img class="search" src="/imgs/site/search_{COLOR}.png"></a>
+	
+		</div>
+
+		<!-- BEGIN BLOCK_NAV_USER -->
+
+		<div id="nav">
+		
+			<ul>
+				<a href="/"><li>Home</li></a>
+				<a href="/profile"><li>Perfil</li></a>
+			</ul>
+
+		</div>
+
+		<!-- END BLOCK_NAV_USER -->
+
+		<input id="menu-checkbox" type="checkbox">
+		<nav id="menu">
+
+			<div class="user">
+                <div class="user_photo"><img src="/imgs/site/default.png"></div>
+                <div class="user_name">
+                	<!-- BEGIN BLOCK_LOGIN_MENU  --> 
+                	<a href='/login'>Inicie Sessão</a> 
+                	<!-- END BLOCK_LOGIN_MENU -->
+
+                	{USERNAME}
+                </div>
+            </div>
+
+            <a href="/"><div class="menu_item"><img src="/imgs/icon/logo100.png"><p>Home</p></div></a>
+            <a href="/categories"><div class="menu_item"><img src="/imgs/site/category.png"><p>Categorias</p></div></a>
+            <a href="/about"><div class="menu_item"><img src="/imgs/site/globe.png"><p>Sobre</p></div></a>
+
+            <!-- BEGIN BLOCK_MENU_USER -->
+
+            <div class="separator"></div>
+
+            <a href="/favorites"><div class="menu_item"><img src="/imgs/site/star.png"><p>Favoritos</p></div></a>
+            <a href=""><div class="menu_item"><img src="/imgs/site/star.png"><p>Ler + tarde</p></div></a>
+
+            <!-- END  BLOCK_MENU_USER -->
+
+            <!-- BEGIN BLOCK_LOGIN -->
+			<a href="/login.php">
+			<div class="login_button">
+				<img src="/imgs/site/login.png">
+				<p>Iniciar Sessão</p>
+			</div>
+			</a>
+
+			<!-- END BLOCK_LOGIN  -->
+
+
+			<!-- BEGIN BLOCK_LOGOUT -->
+			<a href="/logout.php">
+			<div class="login_button">
+				<img src="/imgs/site/exit.png">
+				<p>Sair</p>
+			</div>
+			</a>
+			<!-- END BLOCK_LOGOUT  -->
+				
+		</nav>
+		<label for="menu-checkbox" id="overlay"></label>
+
+
+		<div id="content">

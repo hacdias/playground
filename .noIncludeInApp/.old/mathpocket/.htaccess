@@ -1,0 +1,30 @@
+ErrorDocument 404 /?page=404
+
+RewriteBase /
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+
+	RewriteRule ^(admin)($|/) - [L]
+
+	RewriteRule   ^category/([A-Za-z0-9-]+)/?$    /?category=$1    [L]
+
+	RewriteRule   ^item/([A-Za-z0-9-]+)/?$    /?title=$1    [L]  
+
+	RewriteRule   ^about$  /?page=about [L]
+	RewriteRule   ^about/$  /?page=about [L]
+	
+	RewriteRule   ^all$  /?page=all [L]
+	RewriteRule   ^all/$  /?page=all [L]
+
+	RewriteRule   ^search$  /?page=search [L]
+	RewriteRule   ^search/$  /?page=search [L]
+
+	RewriteRule   ^favorites$  /?page=favorites [L]
+	RewriteRule   ^favorites/$  /?page=favorites [L]
+
+	RewriteRule   ^readlater$  /?page=readlater [L]
+	RewriteRule   ^readlater/$  /?page=readlater [L]
+
+	RewriteRule   ^categories$  /?page=categories [L]
+	RewriteRule   ^categories/$  /?page=categories [L]
+</IfModule>

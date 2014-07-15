@@ -1,0 +1,18 @@
+<? /**
+	* Categories Page
+	* 
+	* @author Henrique Dias
+	* @package MathPocket
+	*/ ?>
+
+<h1>{PAGE_TITLE}</h1>
+
+<p>
+	Os itens estão divididos em categorias para se tornarem mais fáceis de encontrar.
+	<div class="buttons">
+		<a href="/all"><div class="button">Todos os itens</div></a>
+	<!-- BEGIN BLOCK_CATEGORIES -->
+		<a href="/category/{SCATEGORY}"><div class="button">{CATEGORY}</div></a>
+	<!-- END BLOCK_CATEGORIES -->
+	</div>
+</p>

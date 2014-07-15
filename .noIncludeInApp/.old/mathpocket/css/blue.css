@@ -1,0 +1,63 @@
+
+/**
+ * Blue Styles 
+ * 
+ * @author Henrique Dias
+ * @package MathPocket
+ */
+
+#header{
+	border-bottom: 1px solid #007AFF;
+}
+
+#header_title a {
+	color: #007AFF;
+}
+
+#nav ul li{
+	transition: all 0.5s ease;
+	border-bottom:  #007AFF solid 0.25em;
+}
+
+#nav ul li:hover, #nav ul li:active { 
+	background: rgba(0,0,0,0.05);
+}
+
+
+#nav ul a {
+	color: #007AFF;
+}
+
+.button {
+	background: #007AFF;
+}
+
+#items li {
+	border: 1px solid #007AFF;
+}
+
+#logo {
+	border: 1px solid #007AFF;
+	border-radius: 5px;
+}
+
+#content h1:hover {
+	color: #007AFF;
+}
+
+#menu-btn {
+	color: #007AFF;
+}
+
+#menu-btn-div{
+	background-image: url(/imgs/site/menu-button.png);
+}
+
+
+@media only screen and (max-width : 40em) { 
+	#nav
+	{
+		border-bottom: 1px solid #007AFF;
+		border-top: 1px solid #007AFF;
+	}
+}

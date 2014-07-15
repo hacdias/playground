@@ -1,0 +1,61 @@
+/**
+ * Red Styles 
+ * 
+ * @author Henrique Dias
+ * @package MathPocket
+ */
+
+#header{
+	border-bottom: 1px solid #FF3B30;
+}
+
+#header_title a {
+	color: #FF3B30;
+}
+
+#nav ul li{
+	transition: all 0.5s ease;
+	border-bottom: #FF3B30 solid 0.25em;
+}
+
+#nav ul li:hover, #nav ul li:active { 
+	background: rgba(0,0,0,0.05);
+}
+
+
+#nav ul a {
+	color: #FF3B30;
+}
+
+.button {
+	background: #FF3B30;
+}
+
+#items li {
+	border: 1px solid #FF3B30;
+}
+
+#logo {
+	border: 1px solid #FF3B30;
+	border-radius: 5px;
+}
+
+#content h1:hover {
+	color: #FF3B30;
+}
+
+#menu-btn {
+	color: #FF3B30;
+}
+
+#menu-btn-div{
+	background-image: url(/imgs/site/menu-button-red.png);
+}
+
+@media only screen and (max-width : 40em) { 
+	#nav
+	{
+		border-bottom: 1px solid #FF3B30;
+		border-top: 1px solid #FF3B30;
+	}
+}

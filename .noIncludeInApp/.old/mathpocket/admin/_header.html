@@ -1,0 +1,71 @@
+<? /**
+	* Header of Admin Area
+	* 
+	* @author Henrique Dias
+	* @package MathPocket
+	*/ ?>
+
+<!doctype html>
+<html lang="pt">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" href="/imgs/icon/favicon.ico" />
+
+		<link rel="stylesheet" href="/admin/css/backoffice.css" type="text/css" media="all" />
+
+		<!-- Apple -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-title" content="MathPocket">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<link rel="apple-touch-icon-precomposed" href="/imgs/icon/logo200.png">
+		<link rel="apple-touch-icon-precomposed" sizes="76x76" href="/imgs/icon/logo76.png">
+		<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/imgs/icon/logo120.png">
+		<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/imgs/icon/logo152.png">
+
+		<!-- Android/Chrome -->
+		<meta name="mobile-web-app-capable" content="yes">
+
+     	<link rel="icon" sizes="196x196" href="/imgs/icon/logo196.png">
+
+		<title>MathPocket</title>
+	</head>
+
+	<body>
+
+		<div id="header">
+		
+			<img id="logo" src="/imgs/site/logo.png"> 
+			<span id="header_title"><a href="/admin/">{PAGE_TITLE}</a></span>
+			<span id="people">{PEOPLE}</span>
+			<a href="/?page=search"><img id="search" src="/imgs/site/search_{COLOR}.png"></a>
+			
+			<div id="nav">
+				<ul>
+				<a href="/"><li>Home</li></a>
+				<a href="/admin/"><li>Admin</li></a>
+				</ul>
+			</div>
+			
+		</div>
+
+		<div id="nav-mobile-only">
+			<ul>
+				<a href="/"><li>Home</li></a>
+				<a href="/admin/"><li>Admin</li></a>
+			</ul>
+		</div>
+
+		<div id="sidebar">
+			<a href="/admin/?add=item"><div>Adicionar Item</div></a>
+			<a href="/admin/?rem=item"><div>Remover Item</div></a>
+			<a href="/admin/?edit=item"><div>Editar Item</div></a>
+			<a href="/admin/?edit=itemname"><div>Editar Item (Nome)</div></a>
+			<a href="/admin/?add=category"><div>Adicionar Categoria</div></a>
+			<a href="/admin/?rem=category"><div>Remover Categoria</div></a>
+			<a href="/admin/?edit=category"><div>Editar Categoria</div></a>
+			<a href="logout.php"><div>Sair</div></a>
+		</div>
+
+		<div class="content">
