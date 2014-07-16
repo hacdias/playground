@@ -1,0 +1,57 @@
+<div class="container">
+
+	<div class='main {COLOR}'>
+
+		<section>
+
+			<div class='content'>
+				
+				<ul id="items">
+
+					<!-- BEGIN ITEM -->
+					<li class="card">
+						<p class="title"><a href="/dictionary/item/{UTITLE}">{TITLE}</a></p>
+						<div class="description">{DESCRIPTION}</div>
+						<div class="bottom">
+							<div class="creator">
+								<img src="/imgs/site/category.png">
+								<a href="/dictionary/category/{UCATEGORY}">{CATEGORY}</a>
+							</div>
+
+							<!-- BEGIN BLOCK_USER_ACTIONS -->
+							<div class="creator right">
+								<form  class="readLaterOverlay" method="post" action="/index.php">
+									<input type="button" name="addFavorites" value="{TITLE}" />
+									<input type="submit" name="addFavorites" value="{TITLE}" /><img src="/imgs/site/star2.png">
+								</form>
+								<form  class="readLaterOverlay" method="post" action="/index.php">
+									<input type="button" name="addReadLater" value="{TITLE}" />
+									<input type="submit" name="addReadLater" value="{TITLE}" /><img src="/imgs/site/plus.png">
+								</form>
+							</div>
+							<!-- END BLOCK_USER_ACTIONS -->
+
+						</div>
+					</li>
+					<!-- END ITEM -->
+
+				</ul>
+
+
+				<!-- BEGIN PREV -->
+					<button onclick="page('dictionary/{PREV_N}');">Anterior</button>
+				<!-- END PREV -->
+
+				<!-- BEGIN NEXT -->
+
+					<button onclick="page('dictionary/{NEXT_N}');">Próxima</button>
+
+				<!-- END NEXT -->
+
+			</div>
+
+		</section>
+
+	</div>
+
+</div>

@@ -6,26 +6,14 @@
 
 		<meta charset='utf-8'>
 		<meta name='viewport' content='width=device-width, initial-scale=1'>
-		<link rel='shortcut icon' href='/imgs/logo/favicon.ico'/>
-
 		
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 		<link rel='stylesheet' href='/css/template.css?v={CSS_VERSION}' type='text/css' media='all' />
 
-		<!-- Apple -->
-		<meta name='apple-mobile-web-app-capable' content='yes'>
 		<meta name='apple-mobile-web-app-title' content='{SITE_NAME}'>
-		<meta name='apple-mobile-web-app-status-bar-style' content='black-translucent'>
 
-		<link rel='apple-touch-icon-precomposed' href='/imgs/logo/logo200.png'>
-		<link rel='apple-touch-icon-precomposed' sizes='76x76' href='/imgs/logo/logo76.png'>
-		<link rel='apple-touch-icon-precomposed' sizes='120x120' href='/imgs/logo/logo120.png'>
-		<link rel='apple-touch-icon-precomposed' sizes='152x152' href='/imgs/logo/logo152.png'>
-
-		<!-- Android/Chrome -->
-		<meta name='mobile-web-app-capable' content='yes'>
-
-		<link rel='icon' sizes='196x196' href='/imgs/logo/logo196.png'>
+		<link rel='apple-touch-icon-precomposed' href='/imgs/touch-icon.png'>
+		<link rel='icon' sizes='196x196' href='/imgs/touch-icon.png'>
 
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
@@ -80,6 +68,7 @@
 					<!-- END NAV_USER -->
 
 					<a onClick="page('')"><li><img src='/imgs/icons/home.png'><p>Home</p></li></a>
+					<a onClick="page('dictionary')"><li><img src='/imgs/icons/info.png'><p>{DICTIONARY}</p></li></a>
 					<a onClick="page('about')"><li><img src='/imgs/icons/info.png'><p>{ABOUT}</p></li></a>
 
 				</ul>

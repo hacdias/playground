@@ -25,6 +25,49 @@ class sql {
 		return $DATA['db']->query($query);
 	}
 
+	static public function selectOneOrder($what, $from, $order) {
+		global $DATA;
+
+		$query = "SELECT " . $what . " FROM " . $from . " ORDER BY " . $order;
+		return $DATA['db']->query($query);
+	}
+
+	static public function selectAllOrder($from, $order) {
+		global $DATA;
+
+		$query = "SELECT * FROM " . $from . " ORDER BY " . $order;
+		return $DATA['db']->query($query);
+	}
+
+	static public function selectOneOrderLimit($what, $from, $order, $limit = 1) {
+		global $DATA;
+
+		$query = "SELECT " . $what . " FROM " . $from . " ORDER BY " . $order . " LIMIT " . $limit;
+		return $DATA['db']->query($query);
+	}
+
+	static public function selectOneOrderLimitOffset($what, $from, $order, $limit = 1, $offset = 0) {
+		global $DATA;
+
+		$query = "SELECT " . $what . " FROM " . $from . " ORDER BY " . $order . " LIMIT " . $limit . "," .  $offset;
+		return $DATA['db']->query($query);
+	}
+
+	static public function selectAllOrderLimit($from, $order, $limit = 1) {
+		global $DATA;
+
+		$query = "SELECT * FROM " . $from . " ORDER BY " . $order . " LIMIT " . $limit;
+		return $DATA['db']->query($query);
+	}
+
+	static public function selectALlOrderLimitOffset($from, $order, $limit = 1, $offset = 0) {
+		global $DATA;
+
+		$query = "SELECT * FROM " . $from . " ORDER BY " . $order . " LIMIT " . $limit . " OFFSET " .  $offset;
+		return $DATA['db']->query($query);
+		
+	}
+
 	static public function selectOneWhere($what, $from, $where, $equalTo) {
 		global $DATA;
 
@@ -53,17 +96,17 @@ class sql {
 		return $DATA['db']->query($query);
 	}
 
-	static public function selectOneWhereLimit($what, $from, $where, $equalTo) {
+	static public function selectOneWhereLimit($what, $from, $where, $equalTo, $limit = 1) {
 		global $DATA;
 
-		$query = "SELECT " . $what . " FROM " . $from . " WHERE " . $where . " = '" . $equalTo . "' LIMIT 1";
+		$query = "SELECT " . $what . " FROM " . $from . " WHERE " . $where . " = '" . $equalTo . "' LIMIT " . $limit;
 		return $DATA['db']->query($query);
 	}
 
-	static public function selectAllWhereLimit($from, $where, $equalTo) {
+	static public function selectAllWhereLimit($from, $where, $equalTo, $limit = 1) {
 		global $DATA;
 
-		$query = "SELECT * FROM " . $from . " WHERE " . $where . " = '" . $equalTo . "' LIMIT 1";
+		$query = "SELECT * FROM " . $from . " WHERE " . $where . " = '" . $equalTo . "' LIMIT " . $limit;
 		return $DATA['db']->query($query);
 	}
 
@@ -75,6 +118,22 @@ class sql {
 				WHERE " . $where . " = '" . $whereWat . "';";
 
 		return $DATA['db']->query($query);
+	}
+
+	static public function rowNumber($table) {
+		global $DATA;
+
+		$result = $DATA['db']->query("SELECT count(*) FROM " . $table); 
+		return $result->fetchColumn(); 
+
+	}
+
+	static public function rowNumberWhere($table, $where, $equalTo) {
+		global $DATA;
+
+		$result = $DATA['db']->query("SELECT count(*) FROM " . $table . " WHERE " . $where . " = '" . $equalTo . "'"); 
+		return $result->fetchColumn(); 
+
 	}
 
 }

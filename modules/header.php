@@ -22,6 +22,7 @@ class Header {
 		$header->SITE_NAME = SITE_NAME;
 
 		$header->PROFILE = _('Perfil');
+		$header->DICTIONARY = _('Dicionário');
 		$header->ABOUT = _('Sobre');
 		$header->PLEASE_LOGIN = _('Inicie Sessão');
 

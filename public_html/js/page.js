@@ -1,4 +1,5 @@
 function page(name) {
+    window.scrollTo(0, 0);
 	$("#wrap").load("/router.php?url=" + name);
 
    	var stateObject = {};

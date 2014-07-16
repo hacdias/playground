@@ -25,6 +25,14 @@ if(empty($DATA['url'][0])) {
 
 	switch ($DATA['url'][0]) {
 
+		/* case 'ut':
+			$page = new UpdateTable();
+			break; */
+
+		case 'dictionary':
+			dictionary();
+			break;
+
 		case 'about':
 			$page = new Page('about');
 			break;
@@ -162,6 +170,54 @@ function profile() {
 		}
 				
 	}
+}
+
+function dictionary() {
+	global $DATA;
+
+	$page = new Dictionary();
+
+	if (!isset($DATA['url'][1])) {
+
+		$page->allItems();
+
+	} else {
+
+		if ($DATA['url'][1] == 'item') {
+
+			if (!isset($DATA['url'][2])) {
+
+				$page->allItems();
+
+			} else {
+
+				$page->item($DATA['url'][2]);
+
+			}
+
+		} else if (is_numeric($DATA['url'][1])) {
+
+			$n = $DATA['url'][1];
+			$page->allItems($n);
+
+		} else if ($DATA['url'][1] == 'category') {
+
+			if (!isset($DATA['url'][2])) {
+
+				$page->allItems();
+
+			} else {
+
+				$page->category($DATA['url'][2]);
+			}
+
+		} else {
+
+			echo "<script>page('404');</script>";
+
+		}
+	}
+		
 }
 
 ?>
