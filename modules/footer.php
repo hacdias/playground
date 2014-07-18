@@ -17,7 +17,7 @@ class Footer {
 
 		$footer->SITE_NAME = SITE_NAME;
 		$footer->ABOUT = _('Sobre');
-		
+
 		$footer->show();
 	}
 

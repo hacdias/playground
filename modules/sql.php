@@ -65,7 +65,13 @@ class sql {
 
 		$query = "SELECT * FROM " . $from . " ORDER BY " . $order . " LIMIT " . $limit . " OFFSET " .  $offset;
 		return $DATA['db']->query($query);
-		
+	}
+
+	static public function selectAllOrderWhereLimitOffset($from, $where, $equalTo, $order, $limit = 1, $offset = 0) {
+		global $DATA;
+
+		$query = "SELECT * FROM " . $from . " WHERE " . $where . " = '" . $equalTo . "' ORDER BY " . $order . " LIMIT " . $limit . " OFFSET " .  $offset;
+		return $DATA['db']->query($query);
 	}
 
 	static public function selectOneWhere($what, $from, $where, $equalTo) {

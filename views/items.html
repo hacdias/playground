@@ -10,26 +10,26 @@
 
 					<!-- BEGIN ITEM -->
 					<li class="card">
-						<p class="title"><a href="/dictionary/item/{UTITLE}">{TITLE}</a></p>
+						<p class="title"><a onclick="page('dictionary/item/{UTITLE}');">{TITLE}</a></p>
 						<div class="description">{DESCRIPTION}</div>
 						<div class="bottom">
 							<div class="creator">
-								<img src="/imgs/site/category.png">
-								<a href="/dictionary/category/{UCATEGORY}">{CATEGORY}</a>
+								<img src="/imgs/icons/category.png">
+								<a onclick="page('dictionary/category/{UCATEGORY}');">{CATEGORY}</a>
 							</div>
 
-							<!-- BEGIN BLOCK_USER_ACTIONS -->
+							<!-- BEGIN USER_ACTIONS -->
 							<div class="creator right">
-								<form  class="readLaterOverlay" method="post" action="/index.php">
+								<form class="readLaterOverlay" method="post" action="/index.php">
 									<input type="button" name="addFavorites" value="{TITLE}" />
-									<input type="submit" name="addFavorites" value="{TITLE}" /><img src="/imgs/site/star2.png">
+									<input type="submit" name="addFavorites" value="{TITLE}" /><img src="/imgs/icons/star2.png">
 								</form>
-								<form  class="readLaterOverlay" method="post" action="/index.php">
+								<form class="readLaterOverlay" method="post" action="/index.php">
 									<input type="button" name="addReadLater" value="{TITLE}" />
-									<input type="submit" name="addReadLater" value="{TITLE}" /><img src="/imgs/site/plus.png">
+									<input type="submit" name="addReadLater" value="{TITLE}" /><img src="/imgs/icons/plus.png">
 								</form>
 							</div>
-							<!-- END BLOCK_USER_ACTIONS -->
+							<!-- END USER_ACTIONS -->
 
 						</div>
 					</li>

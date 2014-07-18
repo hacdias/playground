@@ -16,14 +16,14 @@ class Header {
 
 		$header = new Template(Base::viewsDir('header'));
 		$header->LANG = 'pt-PT';
-		$header->CSS_VERSION = Base::fileHash('/css/template.css');
-		$header->JS_VERSION = Base::fileHash('/js/page.js');
+		$header->CSS_VERSION = Base::fileHash('/public_html/css/template.css');
+		$header->JS_VERSION = Base::fileHash('/public_html/js/page.js');
 
 		$header->SITE_NAME = SITE_NAME;
 
 		$header->PROFILE = _('Perfil');
 		$header->DICTIONARY = _('Dicionário');
-		$header->ABOUT = _('Sobre');
+		//$header->ABOUT = _('Sobre');
 		$header->PLEASE_LOGIN = _('Inicie Sessão');
 
 

@@ -11,11 +11,16 @@ require_once('config.php');
 
 class Dictionary {
 
-	public function allItems($n = 1) {
-		$maxPages = ceil(SQL::rowNumber('i_con') / 15); 
+	protected $maxItens = 15;
 
-		$offset = ($n - 1) * 15;
-		$items = SQL::selectAllOrderLimitOffset('i_con', 'title', 15, $offset);
+	protected function getOffset($n) {
+		return ($n - 1) * $this->maxItens;
+	}
+
+	public function allItems($n = 1) {
+		$maxPages = ceil(SQL::rowNumber('i_con') / $this->maxItens); 
+
+		$items = SQL::selectAllOrderLimitOffset('i_con', 'title', $this->maxItens, $this->getOffset($n));
 
 		$this->display($items, $maxPages, $n);
 
@@ -27,20 +32,15 @@ class Dictionary {
 
 	}
 
-	/* public function category($ucategory, $n = 1) {
+	public function category($ucategory, $n = 1) {
 
-		$maxPages = ceil(SQL::rowNumberWhere('i_con', 'u_category', $ucategory) / 15); 
+		$maxPages = ceil(SQL::rowNumberWhere('i_con', 'u_category', $ucategory) / $this->maxItens); 
 
-		$offset = ($n - 1) * 15;
-
-
-		$items = SQL::selectAllWhere('i_con', 'u_category', $ucategory);
-
-		$items = SQL::selectAllOrderWhereLimitOffset('i_con', 'title', 15, $offset);
+		$items = SQL::selectAllOrderWhereLimitOffset('i_con', 'u_category', $ucategory, 'title', $this->maxItens, $this->getOffset($n));
 
 		$this->display($items, $maxPages, $n);
 		
-	} */
+	}
 
 	protected function display($items, $maxPages = 1, $n = 0) {
 

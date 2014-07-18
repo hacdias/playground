@@ -32,7 +32,7 @@ htmlentities($string, ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8')), '-'));
 	}
 
 	static public function fileHash($dir) {
-		return md5_file(HOST_URL . $dir);
+		return md5_file(HOST_DIR . $dir);
 	}
 
 	static public function message($message, $color =  'blue', $loginButton = false) {
