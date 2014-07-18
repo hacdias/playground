@@ -43,6 +43,7 @@ class Dictionary {
 	}
 
 	protected function display($items, $maxPages = 1, $n = 0) {
+		global $DATA;
 
 		if ($n > $maxPages) {
 
@@ -53,6 +54,13 @@ class Dictionary {
 			$page = new Template(Base::viewsDir("items"));
 
 			foreach($items as $item){
+
+				$page->ID = $item['id'];
+
+				if ($DATA['userSession']->loggedIn()) {
+					$page->block('USER_ACTIONS');
+				}
+				
 				$page->TITLE = $item['title'];
 				$page->UTITLE = Base::cleanString($item['title']);
 				$page->DESCRIPTION = $item['description'];

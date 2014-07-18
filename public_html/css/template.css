@@ -712,9 +712,9 @@ footer a:hover {
 
 .readLaterOverlay input
 {
-	background:transparent;
+	background: transparent !important;
 	border:0;
-	color:transparent;
+	color: transparent !important;
 	cursor:pointer;
 	display:inline-block;
 	height:32px;

@@ -24,3 +24,20 @@ $(document).on({
         $('#wrap').effect( "slide" ); 
     }    
 });
+
+function addFav(id) {
+    data = 'url=action/addFav&id=' + id + '&user=' +  session.user_user;
+
+    $.ajax({
+        type: 'GET',
+        url: '/router.php',
+        data: data,
+        success: function() {
+            alert('Favorito Adicionado!');
+        }
+    });
+
+    data = null;
+
+    return false;
+}

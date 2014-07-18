@@ -143,6 +143,13 @@ function actions() {
 				$DATA['user']->configUpdate($user, $color, $bio);
 				break;
 
+			case 'addFav':
+				$id = $_GET['id'];
+				$user = $_GET['user'];
+
+				Favorites::addFav($id, $user);
+				break;
+
 			default:
 				echo "<script>page('404');</script>";
 				break;

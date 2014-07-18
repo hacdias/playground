@@ -162,6 +162,14 @@ class UserSession extends Base {
     function loggedIn($cookies = true) {
         if ($this->loginVar AND !isset($_SESSION)) {
             session_start();
+
+            ?>
+
+            <script>
+                var session = eval('(<?php echo json_encode($_SESSION)?>)');
+                //onsole.log(session);
+            </script>
+        <?php
         }
         
         if (!isset($_SESSION[$this->keyPrefix . 'loggedIn']) OR !$_SESSION[$this->keyPrefix . 'loggedIn']) {

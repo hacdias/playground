@@ -20,13 +20,12 @@
 
 							<!-- BEGIN USER_ACTIONS -->
 							<div class="creator right">
+
+							<button class="addFav" onclick="javascript:addFav({ID});"><img src="/imgs/icons/star.svg"></button>
+							
 								<form class="readLaterOverlay" method="post" action="/index.php">
-									<input type="button" name="addFavorites" value="{TITLE}" />
-									<input type="submit" name="addFavorites" value="{TITLE}" /><img src="/imgs/icons/star2.png">
-								</form>
-								<form class="readLaterOverlay" method="post" action="/index.php">
-									<input type="button" name="addReadLater" value="{TITLE}" />
-									<input type="submit" name="addReadLater" value="{TITLE}" /><img src="/imgs/icons/plus.png">
+									<input type="button" name="addReadLater" value="{ID}" />
+									<input type="submit" name="addReadLater" /><img src="/imgs/icons/plus.svg">
 								</form>
 							</div>
 							<!-- END USER_ACTIONS -->
