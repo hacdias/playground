@@ -163,13 +163,11 @@ class UserSession extends Base {
         if ($this->loginVar AND !isset($_SESSION)) {
             session_start();
 
-            ?>
+            $session_json = json_encode($_SESSION);
 
-            <script>
-                var session = eval('(<?php echo json_encode($_SESSION)?>)');
-                //onsole.log(session);
-            </script>
-        <?php
+            echo "<script>
+                 var session = eval('( "  . $session_json .  ")');
+                </script>";
         }
         
         if (!isset($_SESSION[$this->keyPrefix . 'loggedIn']) OR !$_SESSION[$this->keyPrefix . 'loggedIn']) {

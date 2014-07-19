@@ -21,13 +21,9 @@
 							<!-- BEGIN USER_ACTIONS -->
 							<div class="creator right">
 
-							<button class="addFav" onclick="javascript:addFav({ID});"><img src="/imgs/icons/star.svg"></button>
+							<button class="addFav" onclick="javascript:addFavLater({ID}, 'fav');"><img src="/imgs/icons/star.svg"></button>
+							<button class="addLater" onclick="javascript:addFavLater({ID}, 'later');"><img src="/imgs/icons/plus.svg"></button>
 							
-								<form class="readLaterOverlay" method="post" action="/index.php">
-									<input type="button" name="addReadLater" value="{ID}" />
-									<input type="submit" name="addReadLater" /><img src="/imgs/icons/plus.svg">
-								</form>
-							</div>
 							<!-- END USER_ACTIONS -->
 
 						</div>

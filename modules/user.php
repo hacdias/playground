@@ -59,7 +59,7 @@ class User {
 		}
 	}
 
-	public function exists($user) {
+	static public function exists($user) {
 		global $DATA;
 
 		$confirmIfExists = SQL::selectOneWhereLimit('user', 'users', 'user', $user);
@@ -183,6 +183,98 @@ class User {
 		}
 	}
 
+	static function addFavLater($itemId = 0, $user, $thing) {
+		global $DATA;
+
+		/*
+		 *	STATUS MAP
+		 * 
+		 *	STATUS	=>	DESCRIPTION
+		 *	0 		=>	Nenhum problema
+		 *	1		=>	Utilizador inexistente
+		 *	2		=>	Item já gravado na lista em questão
+		 *	3 		=>	Problema na base de dados
+		 *	4 		=>	Item inválido
+		 *  5		=> 	Sem sessão iniciada
+		 */
+
+		if ($DATA['userSession']->loggedIn()) {
+
+			$result = array();
+
+			if ($itemId != 0) {
+
+				if (!User::exists($user)) {
+
+					$result['status'] = 1;
+
+				} else {
+
+					$query = SQL::selectOneWhereLimit($thing, 'users', 'user', $user);
+
+					if($query) {
+
+						foreach ($query as $item) {
+							$new = $item[$thing];
+						}
+
+						$confirm = explode(';', $new);
+
+						$alsoExists = false;
+
+						for ($i = 0; $i < count($confirm); $i++) {
+
+							if($confirm[$i] == $itemId) {
+
+								$alsoExists = true;
+								
+							}
+
+						}
+
+						if (!$alsoExists) {
+
+							$new .= $itemId . ';';
+
+							if(SQL::updateOne('users', $thing, $new, 'user', $user)) {
+
+								$result['status'] = 0;
+
+							} else {
+
+								$result['status'] = 3;
+
+							}
+
+						} else {
+
+							$result['status'] = 2;
+
+						}
+
+					} else {
+
+						$result['status'] = 3;
+
+					}
+
+				}
+
+			} else {
+
+				$result['status'] = 4;
+
+			}
+
+		} else {
+			$result['status'] = 5;
+		}
+
+		ob_end_clean();
+		header('Content-type: application/json');
+		echo json_encode($result);	
+
+	}
 }
 
 ?>

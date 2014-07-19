@@ -144,11 +144,20 @@ function actions() {
 				break;
 
 			case 'addFav':
-				$id = $_GET['id'];
-				$user = $_GET['user'];
+				$id = isset($_POST['id']) ? $_POST['id'] : null;
+				$user = isset($_POST['user']) ? $_POST['user'] : null;
 
-				Favorites::addFav($id, $user);
+				User::addFavLater($id, $user, 'favs');
 				break;
+
+			case 'addLater':
+				$id = isset($_POST['id']) ? $_POST['id'] : null;
+				$user = isset($_POST['user']) ? $_POST['user'] : null;
+
+				User::addFavLater($id, $user, 'later');
+				break;
+
+
 
 			default:
 				echo "<script>page('404');</script>";
