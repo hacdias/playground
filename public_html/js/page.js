@@ -64,56 +64,7 @@ function addFavLater(id, thing) {
     
 
     data = null;
+    url = null;
+    list =  null;
     return false;
 }
-
-/*
-
-
-function addFavLater(id, thing) {
-    data = 'id=' + id + '&user=' +  session.user_user;
-
-    if (thing == 'fav' || thing == 'later') { 
-
-        if (thing == 'fav') {
-            url = '/router.php?url=action/addFav';
-            list = 'Favoritos';
-        } else if (thing == 'later') {
-            url = '/router.php?url=action/addLater';
-            list = 'Ler Mais Tarde';
-        } 
-
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: data,
-            dataType: 'json',
-            success: function(response) {
-
-                if(response.status == 0) {
-                    alert('Item adicionado à lista ' + list);
-                } else if (response.status == 2) {
-                    alert('Já tem esse item na lista!');
-                } else {
-                    alert('Não conseguimos concluir o seu pedido!');
-                    console.log('Error code given by PHP: ' + response.status);
-                }
-            },
-            error: function(xhr, desc, err) {
-                console.log(xhr);
-                console.log("Details: " + desc + "\nError:" + err);
-            }
-        });
-
-    } else {
-
-        alert('Não conseguimos concluir o seu pedido!');
-        console.log('Error 1.');
-    }
-    
-
-    data = null;
-    return false;
-}
-
-*/
