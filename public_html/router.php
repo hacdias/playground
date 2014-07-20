@@ -53,6 +53,10 @@ if(empty($DATA['url'][0])) {
 			actions();
 			break;
 
+		case 'sidebar':
+			$page = new Sidebar();
+			break;
+
 		default:
 			echo "<script>page('404');</script>";
 			break;
@@ -157,8 +161,6 @@ function actions() {
 				User::addFavLater($id, $user, 'later');
 				break;
 
-
-
 			default:
 				echo "<script>page('404');</script>";
 				break;
@@ -181,7 +183,7 @@ function profile() {
 
 		} else {
 
-			$DATA['page'] = new Page('login', 'blue', false, false, false, true);
+			$DATA['page'] = new Page('login', 'blue', array('needLogin'	=> true));
 
 		}
 				

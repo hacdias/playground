@@ -20,29 +20,6 @@ class Header {
 		$header->JS_VERSION = Base::fileHash('/public_html/js/page.js');
 
 		$header->SITE_NAME = SITE_NAME;
-
-		$header->PROFILE = _('Perfil');
-		$header->DICTIONARY = _('Dicionário');
-		//$header->ABOUT = _('Sobre');
-		$header->PLEASE_LOGIN = _('Inicie Sessão');
-
-
-		if ($DATA['userSession']->loggedIn() === false ) {
-
-			$header->USER = 'default';
-			$header->USERPHOTO = 'default';
-
-			$header->block('LOGIN_MENU');
-			$header->block('LOGIN');
-
-		} else {
-
-			$header->USERPHOTO = $DATA['user']->getPhoto($_SESSION['user_user']);
-			$header->USER = $_SESSION['user_user'];
-			$header->COLOR = $DATA['user']->getColor($_SESSION['user_user'], true);
-			$header->USERNAME =  $_SESSION['user_name'];
-			$header->block('NAV_USER');
-		}
 		
 		$header->show();
 

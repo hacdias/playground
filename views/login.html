@@ -1,3 +1,5 @@
+<div id='wrap'>
+
 <div class="main {COLOR}">
 	<section class='session_form'>
 		<div class='content'>
@@ -13,16 +15,12 @@
 				<!-- BEGIN LOGIN_MSG -->
 				<p class="advice back_orange">Inicia sessão primeiro :)</p>
 				<!-- END LOGIN_MSG-->
+				
+				<div id="advice">
+					<!-- AVISO -->
+				</div>
 
-				<!-- BEGIN WRONG -->
-				<p class="advice">Utilizador ou password errados!</p>
-				<!-- END WRONG-->
-
-				<!-- BEGIN NEED_DATA -->
-				<p class="advice">Não inseriu todos os dados!</p>
-				<!-- END NEED_DATA -->
-
-				<form method='post' class='session' action='/action/login'>
+				<form method='post' id="login_form" class='session' action='javascript:login();'>
 					<p>Utilizador</p>
 					<input class='text' type='text' name='user' maxlength='50' />
 
@@ -37,4 +35,6 @@
 				</form>
 		</div>
 	</section>
+</div>
+
 </div>

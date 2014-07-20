@@ -11,6 +11,7 @@
 require_once('/config.php');
 
 $header = new Header(); 
+$sidebar = new Sidebar();
 
 require_once('/router.php');
 

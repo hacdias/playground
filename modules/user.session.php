@@ -92,9 +92,15 @@ class UserSession extends Base {
         global $DATA;        
         // Verifica se é um usuário válido
 
+        $result = array();
+
         if ($user == '' || $pass == '') {
 
-            $page = new Page('login', 'blue', false, true);
+            $result['status'] = 'needData';
+
+            ob_end_clean();
+            header('Content-type: application/json');
+            echo json_encode($result);  
 
         } else {
 
@@ -123,7 +129,13 @@ class UserSession extends Base {
                     // Se a consulta falhou
                     if (!$query) {
                         $this->erro = 'A consulta dos data é inválida';
-                        $page = new Page('login', 'blue', true); //return false
+
+                        $result['status'] = 'wrong';
+
+                        ob_end_clean();
+                        header('Content-type: application/json');
+                        echo json_encode($result);  
+
                     } else {
 
                         $data = $query->fetch(PDO::FETCH_ASSOC);
@@ -148,13 +160,23 @@ class UserSession extends Base {
                 }
             
                 if ($remember) $this->rememberData($user, $pass);
-                echo '<script> history.go(-2); </script>';
+
+                $result['status'] = 'correct';
+
+                ob_end_clean();
+                header('Content-type: application/json');
+                echo json_encode($result);
                 exit;
                 
                             
             } else {
                 $this->erro = 'Utilizador inválido';
-                $page = new Page('login', 'blue', true);
+               
+                $result['status'] = 'wrong';
+
+                ob_end_clean();
+                header('Content-type: application/json');
+                echo json_encode($result);  
             }
         }
     }
