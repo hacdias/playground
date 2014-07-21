@@ -9,7 +9,7 @@
 
 require_once('config.php');
 
-class sql {
+class Sql {
 
 	static public function selectOne($what, $from) {
 		global $DATA;
@@ -85,6 +85,13 @@ class sql {
 		global $DATA;
 
 		$query = "SELECT * FROM " . $from . " WHERE " . $where . " = '" . $equalTo . "'";
+		return $DATA['db']->query($query);
+	}
+
+	static public function selectAllWhereMultipleOrder($from, $where, $equalTo, $order) {
+		global $DATA;
+
+		$query = "SELECT * FROM " . $from . " WHERE " . $where . " IN (" . $equalTo . ") ORDER BY " . $order;
 		return $DATA['db']->query($query);
 	}
 

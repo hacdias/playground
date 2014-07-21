@@ -1,67 +1,66 @@
-<div id="sidebar">
+<input id='menu-checkbox' type='checkbox'>
 
-	<input id='menu-checkbox' type='checkbox'>
+<nav id='menu'>
 
-	<nav id='menu'>
+	<div class='user' style="background: {COLOR};" >
+		<div class='user_photo' style="background-image: url(/imgs/users/{USERPHOTO}_small.png);"></div>
 
-		<div class='user' style="background: {COLOR};" >
-			<div class='user_photo' style="background-image: url(/imgs/users/{USERPHOTO}_small.png);"></div>
+		<div class='user_name'>
 
-			<div class='user_name'>
-
-				<!-- BEGIN LOGIN_MENU  --> 
-				<p>{PLEASE_LOGIN}</p>
-				<!-- END LOGIN_MENU -->
-				<p>{USERNAME}</p>
-				<!-- FINALLY LOGIN_MENU -->
-
-			</div>
+			<!-- BEGIN LOGIN_MENU  --> 
+			<p>{PLEASE_LOGIN}</p>
+			<!-- END LOGIN_MENU -->
+			<p>{USERNAME}</p>
+			<!-- FINALLY LOGIN_MENU -->
 
 		</div>
 
+	</div>
 
 
-		<label for='menu-checkbox'>
 
-			<ul class="menu_items">
+	<label for='menu-checkbox'>
 
-				<!-- BEGIN NAV_USER -->
+		<ul class="menu_items">
 
-				<a onClick="page('profile/{USER}')"><li><img src='/imgs/icons/profile.png'><p>{PROFILE}</p></li></a>
+			<!-- BEGIN NAV_USER -->
 
-				<div class='separator'></div>
+			<a onClick="page('profile/{USER}')"><li><img src='/imgs/icons/profile.png'><p>{PROFILE}</p></li></a>
+			<a onClick="page('dictionary/favorites')"><li><img src='/imgs/icons/profile.png'><p>{FAVORITES}</p></li></a>
+			<a onClick="page('dictionary/readlater')"><li><img src='/imgs/icons/profile.png'><p>{READ_LATER}</p></li></a>
 
-				<!-- END NAV_USER -->
+			<div class='separator'></div>
 
-				<a onClick="page('')"><li><img src='/imgs/icons/home.png'><p>Home</p></li></a>
-				<a onClick="page('dictionary')"><li><img src='/imgs/icons/info.png'><p>{DICTIONARY}</p></li></a>
+			<!-- END NAV_USER -->
 
-			</ul>
+			<a onClick="page('')"><li><img src='/imgs/icons/home.png'><p>Home</p></li></a>
+			<a onClick="page('dictionary')"><li><img src='/imgs/icons/info.png'><p>{DICTIONARY}</p></li></a>
 
-		</label>
+		</ul>
 
-		<!-- BEGIN LOGIN -->
-		<label for='menu-checkbox'>
+	</label>
 
-			<ul class="menu_items">
-				<a onClick="page('user/login');"><li class="login_button"><img src='/imgs/icons/login.png'><p>Login</p></li></a>
-			</ul>
+	<!-- BEGIN LOGIN -->
+	<label for='menu-checkbox'>
 
-		</label>
+		<ul class="menu_items">
+			<a onClick="page('user/login');"><li class="login_button"><img src='/imgs/icons/login.png'><p>Login</p></li></a>
+		</ul>
 
-		<!-- END LOGIN  -->
+	</label>
 
-		<label for='menu-checkbox'>
+	<!-- END LOGIN  -->
 
-			<ul class="menu_items">
-				<a onClick="logout();"><li class="login_button"><img src='/imgs/icons/exit.png'><p>Logout</p></li></a>
-			</ul>
+	<label for='menu-checkbox'>
 
-		</label>
-		<!-- FINALLY LOGIN -->
+		<ul class="menu_items">
+			<a onClick="logout();"><li class="login_button"><img src='/imgs/icons/exit.png'><p>Logout</p></li></a>
+		</ul>
 
-	</nav>
+	</label>
 
-	<label for='menu-checkbox' id='overlay'></label>
+	<!-- FINALLY LOGIN -->
 
-</div>
+</nav>
+
+<label for='menu-checkbox' id='overlay'></label>

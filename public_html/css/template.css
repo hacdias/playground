@@ -13,7 +13,7 @@ blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,
 em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,
 u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,
 caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,
-embed,figure,figcaption,.site_footer,header,hgroup,menu,nav,output,
+embed,figure,figcaption,footer,header,hgroup,menu,nav,output,
 ruby,section,summary,time,mark,audio,video
 {
 	border:0;
@@ -23,7 +23,7 @@ ruby,section,summary,time,mark,audio,video
 	vertical-align:baseline;
 }
 
-article,aside,details,figcaption,figure,.site_footer,header,hgroup,menu,nav,section
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section
 {
 	display:block;
 }
@@ -134,9 +134,13 @@ h2
 	border:0!important;
 	border-radius:5px;
 	height:2em;
+	width: 2em;
 	line-height:3em;
 	position:relative;
 	vertical-align:middle;
+	display: inline-block;
+	background: url('/imgs/logo.svg');
+	background-size: 100%;
 }
 
 #header .search
@@ -371,6 +375,11 @@ h2
 	border-radius:10px;
 	max-width:100%;
 	width:250px;
+	height: 250px;
+	display: block;
+	background: url('/imgs/logo.svg') no-repeat center center;
+	background-size: 100%;
+	margin: 0 auto;
 }
 
 .main .author img
@@ -420,12 +429,15 @@ h2
 	color: #949494;
 }
 
-.site_footer p img
-{
-	height:1.5em;
-	line-height:4em;
-	margin-left:.5em;
-	vertical-align:middle;
+.site_footer .logo
+{    
+    height: 1.5em;  
+    width: 1.5em;  line-height: 3em;  position: relative;  
+    vertical-align: middle;  
+    display: inline-block;  
+    background: url('/imgs/logo_pi.svg') no-repeat center center;  
+    background-size: 100%;
+    margin-right: 5px;
 }
 
 .site_footer a {
@@ -559,11 +571,14 @@ h2
 	font-size:3em;
 }
 
-.session_form img
+.session_form .logo
 {
 	height:130px;
-	margin:10px 0;
-	width:130px;
+	margin: 10px auto;
+	width: 130px;
+	display: block;
+	background: url('/imgs/logo_pi.svg') no-repeat center center;
+	background-size: 100%;
 }
 
 .session_form .advice {
@@ -1407,29 +1422,6 @@ body.loading .overlay {
 		position:relative!important;
 		vertical-align:middle;
 		width:100%!important;
-	}
-	
-	#sidebar a
-	{
-		background:#7EACFF!important;
-		color:#fff;
-		display:block;
-		margin:5px 0;
-		text-decoration:none;
-		transition:all .3s ease;
-	}
-	
-	#sidebar a:hover
-	{
-		background:#6298F5!important;
-	}
-	
-	#sidebar a div
-	{
-		padding-bottom:5px;
-		padding-left:0!important;
-		padding-top:5px;
-		width:100%;
 	}
 	
 	.main

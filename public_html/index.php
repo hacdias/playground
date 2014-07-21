@@ -16,6 +16,12 @@ require_once('/router.php');
 
 $footer = new Footer();
 
-$sidebar = new Sidebar();
 
 ?>
+		<div id="sidebar">
+
+			<?php $sidebar = new Sidebar(); ?>
+
+		</div>
+	</body>
+</html>

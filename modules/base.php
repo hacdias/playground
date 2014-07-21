@@ -60,6 +60,15 @@ htmlentities($string, ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8')), '-'));
 		$DATA['page']->show();
 	}
 
+	static public function needLogin() {
+		$options = array();
+		$options['needLogin'] = true;
+
+		echo "<script> var options = eval('( "  . json_encode($options) .  ")'); </script>";
+
+		$DATA['page'] = new Page('login');
+	}
+
 }
 
 ?>

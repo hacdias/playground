@@ -23,12 +23,14 @@ class Page extends Base {
 		$this->color = $color;
 		$this->options = $options;
 
-		if ($page == 'register') {
- 			$this->registerPage();
-		} else if ($page == '') {
-			//DO NOTHING
-		} else {
-			$this->index();
+
+		switch ($page) {
+			case 'register':
+				$this->registerPage();
+				break;
+
+			default:
+				$this->index();
 		}
 	}
 
@@ -50,7 +52,7 @@ class Page extends Base {
 	protected function registerPage() {
 		global $DATA;
 
-		if (!$DATA['userSession']->loggedIn()) {
+		if (!$DATA['user']->loggedIn()) {
 
 			$DATA['page'] = new Template(Base::viewsDir($this->page));
 			$DATA['page']->COLOR = Base::cleanString($this->color);

@@ -2,17 +2,7 @@
 	<section class='session_form'>
 		<div class='content'>
 				<h1>Login</h1>
-				<img src='/imgs/logo_pi.svg'>
-
-				<script>
-				$( document ).ready(function() {
-					$('.advice').effect( "shake" );
-				});
-				</script>
-
-				<!-- BEGIN LOGIN_MSG -->
-				<p class="advice back_orange">Inicia sessão primeiro :)</p>
-				<!-- END LOGIN_MSG-->
+				<span class="logo"></span>
 				
 				<div id="advice">
 					<!-- AVISO -->
@@ -34,3 +24,11 @@
 		</div>
 	</section>
 </div>
+
+<script>
+
+if (typeof options != 'undefined' && options.needLogin == true) {
+	$('#advice').html("<p class='advice back_orange'>Inicia sessão primeiro :)</p>").effect('shake');
+}
+
+</script>

@@ -3,7 +3,7 @@
 
 		<!-- BEGIN ITEM -->
 
-		<article class="items">
+		<article class="items" id="item-{ID}">
 
 			<header>
 				<h2><a onclick="page('dictionary/item/{UTITLE}');">{TITLE}</a></h2>
@@ -17,11 +17,22 @@
 				<img src="/imgs/icons/category.png">
 				<a onclick="page('dictionary/category/{UCATEGORY}');">{CATEGORY}</a>
 
+				<!-- BEGIN ADDFAV -->
+					<span id="fav-{ID}"><button class="user_actions" id="addFav" onclick="javascript:actionFavLater({ID}, 'fav', 'add');"><img src="/imgs/icons/star.svg"></button></span>
+				<!-- END ADDFAV -->
 
-				<!-- BEGIN USER_ACTIONS -->
-					<button class="user_actions" onclick="javascript:addFavLater({ID}, 'fav');"><img src="/imgs/icons/star.svg"></button>
-					<button class="user_actions" onclick="javascript:addFavLater({ID}, 'later');"><img src="/imgs/icons/plus.svg"></button>
-				<!-- END USER_ACTIONS -->
+				<!-- BEGIN REMFAV -->
+					<span id="fav-{ID}"><button class="user_actions" id="remFav" onclick="javascript:actionFavLater({ID}, 'fav', 'rem');"><img src="/imgs/icons/unstar.svg"></button></span>
+				<!-- END REMFAV -->
+
+				<!-- BEGIN ADDLATER -->
+					<span id="later-{ID}"><button class="user_actions" id="addLater" onclick="javascript:actionFavLater({ID}, 'later', 'add');"><img src="/imgs/icons/plus.svg"></button></span>
+				<!-- END ADDLATER -->
+
+				<!-- BEGIN REMLATER -->
+					<span id="later-{ID}"><button class="user_actions" id="remLater" onclick="javascript:actionFavLater({ID}, 'later', 'rem');"><img src="/imgs/icons/minus.svg"></button></span>
+				<!-- END REMLATER -->
+				
 			</footer>
 
 		</article>

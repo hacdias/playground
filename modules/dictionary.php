@@ -17,6 +17,87 @@ class Dictionary {
 		return ($n - 1) * $this->maxItens;
 	}
 
+	protected function isInList($itemId, $user, $thing) {
+		$query = SQL::selectOneWhereLimit($thing, 'users', 'user', $user);
+
+		foreach ($query as $item) {
+			$items = $item[$thing];
+		}
+
+		$isInList = false;
+
+		$items = explode(',', $items);
+
+		for ($i = 0; $i < count($items); $i++) {
+			if ($items[$i] == $itemId) {
+				$isInList = true;
+			}
+		}
+
+		return $isInList;
+	}
+
+	protected function display($items, $maxPages = 1, $n = 0) {
+		global $DATA;
+
+		if ($n > $maxPages) {
+
+			$page = new Page('404', 'red');
+
+		} else {
+
+			$page = new Template(Base::viewsDir("items"));
+
+			foreach($items as $item){
+
+				$page->ID = $item['id'];
+
+				if ($DATA['user']->loggedIn()) {
+
+					$id = $item['id'];
+					$user = $_SESSION['user_user'];
+
+					if ($this->isInList($id, $user, 'favs')) {
+						$page->block('REMFAV');
+					} else {
+						$page->block('ADDFAV');
+					}
+
+					if ($this->isInList($id, $user, 'later')) {
+						$page->block('REMLATER');
+					} else {
+						$page->block('ADDLATER');
+					}
+					
+				}
+				
+				$page->TITLE = $item['title'];
+				$page->UTITLE = Base::cleanString($item['title']);
+				$page->DESCRIPTION = $item['description'];
+				$page->CATEGORY = $item['category'];
+				$page->UCATEGORY = Base::cleanString($item['category']);
+				$page->block("ITEM");
+			}
+
+			/**
+			 * @todo fix bug next and prev pages like category, favs, later, etc.
+			 */
+
+			if ($n > 1) {
+				$page->PREV_N = $n - 1;
+				$page->block('PREV');
+			}
+			
+			if ($n < $maxPages && $n != 0) {
+				$page->NEXT_N = $n + 1;
+				$page->block('NEXT');
+			}
+			
+			$page->show();
+
+		}
+	}
+
 	public function allItems($n = 1) {
 		$maxPages = ceil(SQL::rowNumber('i_con') / $this->maxItens); 
 
@@ -56,46 +137,156 @@ class Dictionary {
 		}
 	}
 
-	protected function display($items, $maxPages = 1, $n = 0) {
+	public function listFavLater($user, $thing) {
 		global $DATA;
 
-		if ($n > $maxPages) {
+		$query = SQL::selectOneWhereLimit($thing, 'users', 'user', $user);
 
-			$page = new Page('404', 'red');
+		if($query) {
+
+			foreach ($query as $item) {
+				$itemsIds = $item[$thing];
+			}
+
+			if ($itemsIds != '' && $itemsIds != null) {
+
+				$itemsIds = rtrim($itemsIds, ',');
+
+				$items = SQL::selectAllWhereMultipleOrder('i_con', 'id', $itemsIds, 'title');
+				$this->display($items);
+
+			} else  {
+				echo "<div class='main {COLOR}'>
+	<div class='content'>Ainda não adicionou itens a esta lista!</div></div>";
+			}
 
 		} else {
-
-			$page = new Template(Base::viewsDir("items"));
-
-			foreach($items as $item){
-
-				$page->ID = $item['id'];
-
-				if ($DATA['userSession']->loggedIn()) {
-					$page->block('USER_ACTIONS');
-				}
-				
-				$page->TITLE = $item['title'];
-				$page->UTITLE = Base::cleanString($item['title']);
-				$page->DESCRIPTION = $item['description'];
-				$page->CATEGORY = $item['category'];
-				$page->UCATEGORY = Base::cleanString($item['category']);
-				$page->block("ITEM");
-			}
-
-			if ($n > 1) {
-				$page->PREV_N = $n - 1;
-				$page->block('PREV');
-			}
-			
-			if ($n < $maxPages && $n != 0) {
-				$page->NEXT_N = $n + 1;
-				$page->block('NEXT');
-			}
-			
-			$page->show();
-
+			//Consulta mal sucedida
 		}
+
+	}
+
+	static function actionFavLater($itemId = 0, $user, $thing, $action) {
+		global $DATA;
+
+        /*
+         *  STATUS MAP
+         *
+         *  0 =>    Nenhum problema
+         *  1 =>    Utilizador Inexistente
+         *  2 =>    Item já gravado na lista em questão
+         *  3 =>    Problema na base de dados
+         *  4 =>    Item inválido
+         *  5 =>    Sem sessão Iniciada
+         *  6 =>    Operação Inválida
+         *
+         */
+
+		if ($DATA['user']->loggedIn()) {
+
+			$result = array();
+
+			if ($itemId != 0) {
+
+				if (!User::exists($user)) {
+
+					$result['status'] = 1;
+
+				} else {
+
+					$query = SQL::selectOneWhereLimit($thing, 'users', 'user', $user);
+
+					if($query) {
+
+						foreach ($query as $item) {
+							$new = $item[$thing];
+						}
+
+						$confirm = explode(',', $new);
+
+						$alsoExists = false;
+
+						for ($i = 0; $i < count($confirm); $i++) {
+
+							if($confirm[$i] == $itemId) {
+
+								$alsoExists = true;
+								
+							}
+
+						}
+
+						if (!$alsoExists) {
+
+                            if ($action == 'add') {
+
+                                $new .= $itemId . ',';
+
+                                if(SQL::updateOne('users', $thing, $new, 'user', $user)) {
+
+                                    $result['status'] = 0;
+
+                                } else {
+
+                                    $result['status'] = 3;
+
+                                }
+
+                            } else if ($action == 'rem') {
+
+                                $result['status'] = 6;
+                            }
+							
+
+						} else {
+
+                            if ($action == 'add') {
+
+                                $result['status'] = 2;
+
+                            } else if ($action == 'rem') {
+
+                                $new = str_replace($itemId . ',', '', $new);
+
+                                if(SQL::updateOne('users', $thing, $new, 'user', $user)) {
+
+                                    $result['status'] = 0;
+
+                                } else {
+
+                                    $result['status'] = 3;
+
+                                }
+                            } else {
+
+                                $result['status'] = 6;
+
+                            }
+
+						}
+
+					} else {
+
+						$result['status'] = 3;
+
+					}
+
+				}
+
+			} else {
+
+				$result['status'] = 4;
+
+			}
+
+		} else {
+			$result['status'] = 5;
+		}
+
+		ob_end_clean();
+		header('Content-type: application/json');
+		echo json_encode($result);	
+
 	}
 
 	/*

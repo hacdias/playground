@@ -16,12 +16,14 @@ class Sidebar {
 
 		$sidebar = new Template(Base::viewsDir('sidebar'));
 
-		$sidebar->PROFILE = _('Perfil');
-		$sidebar->DICTIONARY = _('Dicionário');
-		$sidebar->PLEASE_LOGIN = _('Inicie Sessão');
+		$sidebar->PROFILE = 'Perfil';
+		$sidebar->FAVORITES = 'Favoritos';
+		$sidebar->READ_LATER = 'Ler +Tarde';
+		$sidebar->DICTIONARY = 'Dicionário';
+		$sidebar->PLEASE_LOGIN = 'Inicie Sessão';
 
 
-		if ($DATA['userSession']->loggedIn() === false ) {
+		if ($DATA['user']->loggedIn() === false ) {
 
 			$sidebar->USER = 'default';
 			$sidebar->USERPHOTO = 'default';

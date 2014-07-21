@@ -1,15 +1,3 @@
-function page(name) {
-    window.scrollTo(0, 0);
-
-    var stateObject = {};
-    var title = "MathPocket";
-    var newUrl = "/" + name;
-
-    history.pushState(stateObject,title,newUrl);
-    
-    $("#wrap").load("/router.php?url=" + name).effect( "slide" );
-}
-
 $(document).on({
     ajaxStart: function() { 
         $("body").addClass("loading"); 
@@ -19,18 +7,30 @@ $(document).on({
     }    
 });
 
-function addFavLater(id, thing) {
+function page(name) {
+    window.scrollTo(0, 0);
+
+    var stateObject = {};
+    var title = "MathPocket";
+    var newUrl = "/" + name;
+
+    history.pushState(stateObject,title,newUrl);
+    $("#wrap").html('');
+    $("#wrap").load("/router.php?url=" + name).effect('slide');
+}
+
+function actionFavLater(id, thing, action) {
     failM = 'Não conseguimos concluir o seu pedido!';
 
-    data = 'id=' + id + '&user=' +  session.user_user;
+    data = 'id=' + id + '&user=' +  user.user;
 
     if (thing == 'fav' || thing == 'later') { 
 
         if (thing == 'fav') {
-            url = '/router.php?url=action/addFav';
+            url = '/router.php?url=action/' + action + 'Fav';
             list = 'Favoritos';
         } else if (thing == 'later') {
-            url = '/router.php?url=action/addLater';
+            url = '/router.php?url=action/' + action + 'Later';
             list = 'Ler Mais Tarde';
         } 
 
@@ -41,8 +41,38 @@ function addFavLater(id, thing) {
             dataType: 'json'
         }).done(function(response) {
             if(response.status == 0) {
-                alert('Item adicionado à lista ' + list);
-                list = null;
+
+               switch (thing) {
+
+                    case 'later':
+                        if (action == 'rem') {
+
+                            $('#later-' + id).html("<button class='user_actions' id='addLater' onclick=" + 'javascript:actionFavLater(' + id + ',' + "'later'" + ',' + "'add'" + ");" + "><img src='/imgs/icons/plus.svg'></button>");
+
+                        } else if (action == 'add') {
+
+                            $('#later-' + id).html("<button class='user_actions' id='remLater' onclick=" + 'javascript:actionFavLater(' + id + ',' + "'later'" + ',' + "'rem'" + ");" + "><img src='/imgs/icons/minus.svg'></button>");
+                        }
+
+                        break;
+
+                    case 'fav':
+                        if (action == 'rem') {
+
+                            $('#fav-' + id).html("<button class='user_actions' id='addFav' onclick=" + 'javascript:actionFavLater(' + id + ',' + "'fav'" + ',' + "'add'" + ");" + "><img src='/imgs/icons/star.svg'></button>");
+
+                        } else if (action == 'add') {
+
+                            $('#fav-' + id).html("<button class='user_actions' id='remFav' onclick=" + 'javascript:actionFavLater(' + id + ',' + "'fav'" + ',' + "'rem'" + ");" + "><img src='/imgs/icons/unstar.svg'></button>");
+                        }
+                        break;
+
+                    default:
+                        break;
+
+               }
+
+
             } else if (response.status == 2) {
                 alert('Já tem esse item na lista!');
                 list = null;

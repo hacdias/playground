@@ -21,10 +21,8 @@ foreach (glob(HOST_DIR . "/modules/*.php") as $filename) {
 }
 
 $DATA = array(
-	'userSession'	=> new UserSession(),
 	'user'			=> new User()		,
-	'db'        	=> null      		,
-	'page'      	=> null      		);
+	'db'        	=> null      		);
 
 $host     = 'localhost';
 $username = 'root';
