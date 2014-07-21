@@ -23,9 +23,7 @@ class Page extends Base {
 		$this->color = $color;
 		$this->options = $options;
 
-		if ($page == 'login') {
-			$this->loginPage();
-		} else if ($page == 'register') {
+		if ($page == 'register') {
  			$this->registerPage();
 		} else if ($page == '') {
 			//DO NOTHING
@@ -47,36 +45,6 @@ class Page extends Base {
 		}
 
 		$DATA['page']->show();
-	}
-
-	protected function loginPage() {
-		global $DATA;
-
-		if (!$DATA['userSession']->loggedIn()) {
-
-			$DATA['page'] = new Template(Base::viewsDir($this->page));
-			$DATA['page']->COLOR = Base::cleanString($this->color);
-
-			if (isset($this->options['wrong']) && $this->options['wrong'] == true) {
-
-				$DATA['page']->block('WRONG');
-
-			} else if (isset($this->options['needData']) && $this->options['needData'] == true) {
-
-				$DATA['page']->block('NEED_DATA');
-
-			} else if (isset($this->options['needLogin']) && $this->options['needLogin'] == true) {
-
-				$DATA['page']->block('LOGIN_MSG');
-
-			}
-
-			$DATA['page']->show();
-
-		} else {
-			$this->message('Já tem a sessão iniciada!');
-		}
-
 	}
 
 	protected function registerPage() {

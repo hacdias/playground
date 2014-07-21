@@ -44,6 +44,4 @@ try {
 
 }
 
-define('DEBUG', false);
-
 ?>

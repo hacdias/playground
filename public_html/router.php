@@ -25,10 +25,6 @@ if(empty($DATA['url'][0])) {
 
 	switch ($DATA['url'][0]) {
 
-		/* case 'ut':
-			$page = new UpdateTable();
-			break; */
-
 		case 'dictionary':
 			dictionary();
 			break;
@@ -58,7 +54,7 @@ if(empty($DATA['url'][0])) {
 			break;
 
 		default:
-			echo "<script>page('404');</script>";
+			$page = new Page('404', 'red');
 			break;
 	}
 }
@@ -91,7 +87,7 @@ function user() {
 				break;
 
 			default:
-				echo "<script>page('404');</script>";
+				$page = new Page('404', 'red');
 				break;
 		}
 	}
@@ -108,10 +104,11 @@ function actions() {
 			case 'logout':
 				if ($DATA['userSession']->logout()) {
 
-					echo '<script>reloadToHome();</script>';
-					die;
-					exit;
+					$result['status'] = 0;
 
+	                ob_end_clean();
+	                header('Content-type: application/json');
+	                echo json_encode($result);
 				}
 
 				break;
@@ -162,7 +159,7 @@ function actions() {
 				break;
 
 			default:
-				echo "<script>page('404');</script>";
+				$page = new Page('404', 'red');
 				break;
 		}
 	}
@@ -173,7 +170,7 @@ function profile() {
 
 	if (!isset($DATA['url'][1])) {
 
-		echo "<script>page('404');</script>";
+		$page = new Page('404', 'red');
 
 	} else {
 
@@ -231,7 +228,7 @@ function dictionary() {
 
 		} else {
 
-			echo "<script>page('404');</script>";
+			$page = new Page('404', 'red');
 
 		}
 	}

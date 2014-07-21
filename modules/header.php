@@ -20,7 +20,7 @@ class Header {
 		$header->JS_VERSION = Base::fileHash('/public_html/js/page.js');
 
 		$header->SITE_NAME = SITE_NAME;
-		
+
 		$header->show();
 
 		Base::dbStatus();

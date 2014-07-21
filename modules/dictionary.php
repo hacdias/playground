@@ -27,19 +27,33 @@ class Dictionary {
 	}
 
 	public function item($utitle) {
-		$items = SQL::selectAllWhere('i_con', 'u_title', $utitle);
-		$this->display($items);
 
+		if (SQL::rowNumberWhere('i_con', 'u_title', $utitle) == 0) {
+
+			$page = new Page('404', 'red');
+
+		} else {
+
+			$items = SQL::selectAllWhere('i_con', 'u_title', $utitle);
+			$this->display($items);
+
+		}
 	}
 
 	public function category($ucategory, $n = 1) {
 
-		$maxPages = ceil(SQL::rowNumberWhere('i_con', 'u_category', $ucategory) / $this->maxItens); 
+		if (SQL::rowNumberWhere('i_con', 'u_category', $ucategory) == 0) {
 
-		$items = SQL::selectAllOrderWhereLimitOffset('i_con', 'u_category', $ucategory, 'title', $this->maxItens, $this->getOffset($n));
+			$page = new Page('404', 'red');
+			
+		} else {
 
-		$this->display($items, $maxPages, $n);
-		
+			$maxPages = ceil(SQL::rowNumberWhere('i_con', 'u_category', $ucategory) / $this->maxItens); 
+
+			$items = SQL::selectAllOrderWhereLimitOffset('i_con', 'u_category', $ucategory, 'title', $this->maxItens, $this->getOffset($n));
+
+			$this->display($items, $maxPages, $n);
+		}
 	}
 
 	protected function display($items, $maxPages = 1, $n = 0) {
@@ -47,7 +61,7 @@ class Dictionary {
 
 		if ($n > $maxPages) {
 
-			echo "<script>page('404');</script>";
+			$page = new Page('404', 'red');
 
 		} else {
 
@@ -83,6 +97,69 @@ class Dictionary {
 
 		}
 	}
+
+	/*
+
+	function search($words) { 
+
+		global $database;
+		$search = $words;
+
+		$commonWords = array(" e ", " ou ", " em ", " a ", " o ", " se ", " com ", " da ");
+
+		for ($i = 0; $i < count($commonWords); $i++) {
+			$words = str_replace($commonWords[$i], ' ', $words);
+		}
+
+		$word = explode(" ", $words);
+		$query = "SELECT * FROM items WHERE ";
+
+		for ($i = 0; $i < count($word); $i++) {
+
+			if ($i == 0) {
+				$query .= "title LIKE '%".$word[$i]."%' OR description LIKE '%".$word[$i]."%' OR category LIKE '%".$word[$i]."%'";
+			} else {
+				$query .= "OR title LIKE '%".$word[$i]."%' OR description LIKE '%".$word[$i]."%' OR category LIKE '%".$word[$i]."%'";
+			}
+
+		}
+
+		$items = $database->query($query); 
+		$itemsNumber = $items->rowCount();	
+		
+		$page = new Template("_list.html");
+		$page->PAGE_TITLE = "Pesquisa";
+
+		$noResults = 'Não foram encontrados resultados por "'.$search.'".';
+		$existentResults = 'Resultados por "'.$search.'".';
+
+		if ($itemsNumber == 0){
+			callHeader("Red");
+			$page->SEARCH_MESSAGE = $noResults;
+			$page->block("BLOCK_SEARCH");
+
+		} else {
+			callHeader("Blue");
+			$page->SEARCH_MESSAGE = $existentResults;
+			$page->block("BLOCK_SEARCH");
+			foreach($items as $item) { 
+				$page->TITLE = $item['title'];
+				$page->UTITLE = cleanString($item['title']);
+				$page->DESCRIPTION = $item['description'];
+				$page->CATEGORY = $item['category'];
+				$page->UCATEGORY = cleanString($item['category']);
+
+				displayUserButtons($page);
+				$page->block("BLOCK_ITEMS");
+			} 
+
+		}
+
+		$page->show();  
+		
+	}
+	*/
+
 }
 
 ?>

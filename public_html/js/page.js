@@ -6,13 +6,8 @@ function page(name) {
     var newUrl = "/" + name;
 
     history.pushState(stateObject,title,newUrl);
-    $('#wrap').effect( "slide" );
-    $("#wrap").load("/router.php?url=" + name +'&?_ajax=1');
-}
-
-function reloadToHome() {
-    var url = document.location.origin;
-    window.location.href=url; 
+    
+    $("#wrap").load("/router.php?url=" + name).effect( "slide" );
 }
 
 $(document).on({
@@ -47,10 +42,13 @@ function addFavLater(id, thing) {
         }).done(function(response) {
             if(response.status == 0) {
                 alert('Item adicionado à lista ' + list);
+                list = null;
             } else if (response.status == 2) {
                 alert('Já tem esse item na lista!');
+                list = null;
             } else {
                 alert(failM);
+                list = null;
                 console.log('Error code given by PHP: ' + response.status);
             }
         }).fail(function(xhr, desc, err) {
@@ -82,17 +80,14 @@ function login() {
         dataType: 'json'
     }).done(function(response) {
         if(response.status == 'needData') {
-            $('#advice').html("<p class='advice'>Não inseriu todos os dados!</p>");
-            $('.advice').effect( "shake");
+            $('#advice').html("<p class='advice'>Não inseriu todos os dados!</p>").effect( "shake");
         } else if (response.status == 'wrong') {
-            $('#advice').html("<p class='advice'>Utilizador ou password errados!</p>");
-            $('.advice').effect( "shake");
+            $('#advice').html("<p class='advice'>Utilizador ou password errados!</p>").effect( "shake");
         } else if (response.status == 'correct') {
             $('#sidebar').load('/router.php?url=sidebar');
             page('');
-
         }  else {
-            alert(failM);
+            $('#advice').html("<p class='advice'>" + failM + "</p>").effect( "shake");
             console.log('Error code given by PHP: ' + response.status);
         }
     }).fail(function(xhr, desc, err) {
@@ -103,5 +98,22 @@ function login() {
     });
 
     data = null;
+
+}
+
+function logout() {
+
+    $.ajax({
+        url: '/router.php?url=action/logout',
+        dataType: 'json'
+    }).done(function(response) {
+        if(response.status == 0) {
+            $('#sidebar').load('/router.php?url=sidebar');
+            page('');
+        }
+    }).fail(function(xhr, desc, err) {
+        console.log(xhr);
+        console.log("Details: " + desc + "\nError:" + err);
+    });
 
 }

@@ -18,7 +18,6 @@ class Sidebar {
 
 		$sidebar->PROFILE = _('Perfil');
 		$sidebar->DICTIONARY = _('Dicionário');
-		//$sidebar->ABOUT = _('Sobre');
 		$sidebar->PLEASE_LOGIN = _('Inicie Sessão');
 
 

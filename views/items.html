@@ -1,55 +1,41 @@
-<div id='wrap'>
+<div class='main {COLOR}'>
+	<div class='content'>
 
-<div class="container">
+		<!-- BEGIN ITEM -->
 
-	<div class='main {COLOR}'>
+		<article class="items">
 
-		<section>
+			<header>
+				<h2><a onclick="page('dictionary/item/{UTITLE}');">{TITLE}</a></h2>
+			</header>
 
-			<div class='content'>
-				
-				<ul id="items">
-
-					<!-- BEGIN ITEM -->
-					<li class="card">
-						<p class="title"><a onclick="page('dictionary/item/{UTITLE}');">{TITLE}</a></p>
-						<div class="description">{DESCRIPTION}</div>
-						<div class="bottom">
-							<div class="creator">
-								<img src="/imgs/icons/category.png">
-								<a onclick="page('dictionary/category/{UCATEGORY}');">{CATEGORY}</a>
-							</div>
-
-							<!-- BEGIN USER_ACTIONS -->
-							<div class="creator right">
-
-								<button class="addFav" onclick="javascript:addFavLater({ID}, 'fav');"><img src="/imgs/icons/star.svg"></button>
-								<button class="addLater" onclick="javascript:addFavLater({ID}, 'later');"><img src="/imgs/icons/plus.svg"></button>
-							</div>
-							<!-- END USER_ACTIONS -->
-					
-					</li>
-					<!-- END ITEM -->
-
-				</ul>
-
-
-				<!-- BEGIN PREV -->
-					<button onclick="page('dictionary/{PREV_N}');">Anterior</button>
-				<!-- END PREV -->
-
-				<!-- BEGIN NEXT -->
-
-					<button onclick="page('dictionary/{NEXT_N}');">Próxima</button>
-
-				<!-- END NEXT -->
-
+			<div class="description">
+				{DESCRIPTION}
 			</div>
 
-		</section>
+			<footer>
+				<img src="/imgs/icons/category.png">
+				<a onclick="page('dictionary/category/{UCATEGORY}');">{CATEGORY}</a>
+
+
+				<!-- BEGIN USER_ACTIONS -->
+					<button class="user_actions" onclick="javascript:addFavLater({ID}, 'fav');"><img src="/imgs/icons/star.svg"></button>
+					<button class="user_actions" onclick="javascript:addFavLater({ID}, 'later');"><img src="/imgs/icons/plus.svg"></button>
+				<!-- END USER_ACTIONS -->
+			</footer>
+
+		</article>
+
+		<!-- END ITEM -->
+
+
+		<!-- BEGIN PREV -->
+			<button onclick="page('dictionary/{PREV_N}');">Anterior</button>
+		<!-- END PREV -->
+
+		<!-- BEGIN NEXT -->
+			<button onclick="page('dictionary/{NEXT_N}');">Próxima</button>
+		<!-- END NEXT -->
 
 	</div>
-
-</div>
-
 </div>

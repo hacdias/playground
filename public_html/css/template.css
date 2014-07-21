@@ -13,7 +13,7 @@ blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,
 em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,
 u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,
 caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,
-embed,figure,figcaption,footer,header,hgroup,menu,nav,output,
+embed,figure,figcaption,.site_footer,header,hgroup,menu,nav,output,
 ruby,section,summary,time,mark,audio,video
 {
 	border:0;
@@ -23,7 +23,7 @@ ruby,section,summary,time,mark,audio,video
 	vertical-align:baseline;
 }
 
-article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section
+article,aside,details,figcaption,figure,.site_footer,header,hgroup,menu,nav,section
 {
 	display:block;
 }
@@ -101,30 +101,6 @@ h2
 	color:rgba(0,0,0,0.63);
 	font-size:3em;
 }
-
-/*  */
-.entry-title {
-font-size: 2em !important;
-text-align: left !important;
-color: rgba(0,0,0,0.6) !important;
-}
-
-.entry-title a {
-color: #757575 !important;
-transition: .5s ease all;
-}
-
-.entry-meta img {
-height: 16px;
-vertical-align: middle;
-padding-right: 5px;
-}
-
-.entry-header {
-padding-bottom: 10px;
-border-bottom: 1px solid #DDDDDD;
-}
-/* */
 
 #header
 {
@@ -367,6 +343,7 @@ border-bottom: 1px solid #DDDDDD;
 	margin: 0 auto;
 	max-width: 1080px;
 	width:90%;
+	clear: both;
 }
 
 .main
@@ -416,7 +393,7 @@ border-bottom: 1px solid #DDDDDD;
 	transition:background-color 1000ms linear;
 }
 
-footer
+.site_footer
 {
 	background-color: #3a3a3a;
 	border-top: 3px solid #9C9C9C;
@@ -428,7 +405,7 @@ footer
 	width:100%;
 }
 
-footer p
+.site_footer p
 {
 	color: #949494;
 	line-height:3em;
@@ -438,12 +415,12 @@ footer p
 	display: inline-block;
 }
 
-footer p a
+.site_footer p a
 {
 	color: #949494;
 }
 
-footer p img
+.site_footer p img
 {
 	height:1.5em;
 	line-height:4em;
@@ -451,13 +428,13 @@ footer p img
 	vertical-align:middle;
 }
 
-footer a {
+.site_footer a {
 	color: #949494;
 	text-decoration: none;
 	transition: color .5s ease;
 }
 
-footer a:hover {
+.site_footer a:hover {
 	color: #29b6f6;
 }
 
@@ -800,11 +777,6 @@ footer a:hover {
 	background:#10A229;
 }
 
-.green #items li
-{
-	border:1px solid #4CD964;
-}
-
 .green #logo
 {
 	border:1px solid #4CD964;
@@ -841,11 +813,6 @@ footer a:hover {
 	background:#DA0C00;
 }
 
-.red #items li
-{
-	border:1px solid #e74c3c;
-}
-
 .red #logo
 {
 	border:1px solid #e74c3c;
@@ -875,11 +842,6 @@ footer a:hover {
 .blue .button
 {
 	background:#007AFF;
-}
-
-.blue #items li
-{
-	border:1px solid #007AFF;
 }
 
 .blue #logo
@@ -923,11 +885,6 @@ footer a:hover {
 	background:#E78700;
 }
 
-.orange #items li
-{
-	border:1px solid #FF9500;
-}
-
 .orange #logo
 {
 	border:1px solid #FF9500;
@@ -966,9 +923,8 @@ footer a:hover {
 
 .color_section
 {
-	margin-bottom:20px;
 	max-width:100%!important;
-	padding: 0 0 20px;
+	padding: .75em 0;
 	width:100%!important;
 }
 
@@ -1134,40 +1090,6 @@ footer a:hover {
   width:   100%;
 }
 
-.card  {
-    background: #fff;
-    border-radius: 3px;
-    box-shadow: rgba(0, 0, 0, 0.258824) 0px 2px 5px;
-    transition: .5s ease all;
-    padding: 15px;
-    margin: 1.5em 0;
-}
-
-.card:hover {
-	box-shadow: rgba(0, 0, 0, 0.258824) 0px 2px 20px;
-}
-
-.card button, 
-.card input[type="button"], 
-.card input[type="reset"], 
-.card input[type="submit"] {
-    background: transparent;
-    color: #03a9f4;
-    font-size: 1.4rem;
-    text-transform: uppercase;
-    font-weight: bold;
-    box-shadow: 0 0 0;
-    float: right;
-}
-
-.card button:hover, 
-.card input[type="button"]:hover, 
-.card input[type="reset"]:hover, 
-.card input[type="submit"]:hover {
-	box-shadow: 0 0 0 0;
-	background: rgba(153, 153, 153, 0.2);
-}
-
 .ninety {
 	width: 90%;
 	margin: 0 auto;
@@ -1236,45 +1158,36 @@ body.loading .overlay {
 
 /* ITEMS */
 
-#items
-{
-	margin:0;
-	padding:0;
-}
-
-#items li
-{
-	background-color: rgba(255, 255, 255, 1);
-	border-radius:5px;
-	clear:both;
+.items  {
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.258824) 0px 2px 5px;
+    transition: .5s ease all;
+    padding: 15px;
+    margin: 1.5em 0;
+    clear:both;
 	list-style-type:none;
-	margin-bottom:15px;
-	margin-left:auto;
-	margin-right:auto;
-	padding:15px;
 }
 
-#items .creator a
+.items:hover {
+	box-shadow: rgba(0, 0, 0, 0.258824) 0px 2px 20px;
+}
+
+.items h2
+{
+	color:#3f3f3f;
+	font-weight:700;
+	font-size: 1em;
+}
+
+.items h2 a
 {
 	color:#3f3f3f;
 	font-weight:700;
 	text-decoration:none;
 }
 
-#items .title
-{
-	color:#3f3f3f;
-	font-weight:700;
-}
-
-#items .title a
-{
-	color:#3f3f3f;
-	font-weight:700;
-	text-decoration:none;
-}
-
-#items .description
+.items .description
 {
 	clear:both;
 	color:#3f3f3f;
@@ -1284,7 +1197,7 @@ body.loading .overlay {
 	text-align:justify;
 }
 
-#items .description a
+.items .description a
 {
 	color:#383838;
 	text-align:justify;
@@ -1292,30 +1205,30 @@ body.loading .overlay {
 	line-height: 1.25em;
 }
 
-#items .description table
+.items .description table
 {
 	margin-bottom:5px;
 	margin-top:10px;
 	width:100%!important;
 }
 
-#items .description table tr
+.items .description table tr
 {
 	width:100%;
 }
 
-#items .description table td
+.items .description table td
 {
 	width:50%;
 }
 
-#items img
+.items .description img
 {
 	max-width:100%;
 	vertical-align: middle;
 }
 
-#items .bottom
+.items footer
 {
 	background: rgba(215, 215, 215, 0.31);
 	clear:both;
@@ -1323,14 +1236,13 @@ body.loading .overlay {
 	padding:5px;
 }
 
-#items .date,#items .creator
-{
+.items footer p {
 	display:inline-block;
 	margin:0;
+	vertical-align:middle;
 }
 
-#items .date img,#items .creator img
-{
+.items footer img  {
 	display:inline-block;
 	height: 1.5em;
 	padding:.25em;
@@ -1338,11 +1250,20 @@ body.loading .overlay {
 	width:1.5em;
 }
 
-#items .date p,#items .creator p
-{
-	display:inline-block;
-	margin:0;
-	vertical-align:middle;
+.items button {
+	border: 0;
+	font-size: 1em;
+	padding: 0;
+	margin: 0;
+	border-radius: 50%;
+	background: transparent;
+	transition: .5s ease all;
+	float: right;
+}
+
+.items button:hover {
+    background: rgba(153, 153, 153, 0.12);
+	
 }
 
 @-moz-keyframes bubblingG {
@@ -1472,7 +1393,7 @@ body.loading .overlay {
 		transition:all .2s ease;
 	}
 	
-	footer
+	.site_footer
 	{
 		margin-left:0!important;
 	}
