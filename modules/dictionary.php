@@ -5,6 +5,8 @@
  *
  * @author Henrique Dias
  * @package MathPocket
+ *
+ * @todo Adicionar animação fadeOut para tirar itens da lista ler mais e favoritos
  */
 
 require_once('config.php');

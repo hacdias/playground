@@ -8,21 +8,11 @@
 
 			<span class="logo"></span>
 
-			<script>
-			$( document ).ready(function() {
-				$('.advice').effect( "shake" );
-			});
-			</script>
+			<div id="advice">
+				<!-- AVISO -->
+			</div>
 
-			<!-- BEGIN ALREADY_EXISTS -->
-			<p class="advice">Nome de utilizador já existente :(</p>
-			<!-- END ALREADY_EXISTS-->
-
-			<!-- BEGIN NEED_DATA -->
-			<p class="advice">Não inseriu todos os dados!</p>
-			<!-- END NEED_DATA -->
-
-			<form class='session' action='/action/register' method='post'>
+			<form class='session' id="register_form" action='javascript:registration();' method='post'>
 
 				<p>Nome</p>
 				<input class='text' type='text' name='name'>

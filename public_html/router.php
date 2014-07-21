@@ -218,18 +218,18 @@ function actions() {
 				break;
 
 			case 'register':
-				$name = $_POST['name'];
-				$user = $_POST['user'];
-				$pass = $_POST['password'];
+				$name = isset($_POST['name']) ? $_POST['name'] : null;
+				$user = isset($_POST['user']) ? $_POST['user'] : null;
+				$pass = isset($_POST['password']) ? $_POST['password'] : null;
 
 				$DATA['user'] = new User;
 				$DATA['user']->registration($name, $user, $pass);
 				break;
 
 			case 'update_conf':
-				$user = $_POST['user'];
-				$color = $_POST['color'];
-				$bio = $_POST['bio'];
+				$user = isset($_POST['user']) ? $_POST['user'] : null;
+				$color = isset($_POST['color']) ? $_POST['color'] : null;
+				$bio = isset($_POST['bio']) ? $_POST['bio'] : null;
 
 				$DATA['user']->configUpdate($user, $color, $bio);
 				break;

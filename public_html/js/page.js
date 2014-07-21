@@ -15,8 +15,7 @@ function page(name) {
     var newUrl = "/" + name;
 
     history.pushState(stateObject,title,newUrl);
-    $("#wrap").html('');
-    $("#wrap").load("/router.php?url=" + name).effect('slide');
+    $("#wrap").load("/router.php?url=" + name);
 }
 
 function actionFavLater(id, thing, action) {
@@ -109,6 +108,8 @@ function login() {
         data: data,
         dataType: 'json'
     }).done(function(response) {
+
+        //Melhorar isto utilizando códigos numéricos
         if(response.status == 'needData') {
             $('#advice').html("<p class='advice'>Não inseriu todos os dados!</p>").effect( "shake");
         } else if (response.status == 'wrong') {
@@ -120,6 +121,49 @@ function login() {
             $('#advice').html("<p class='advice'>" + failM + "</p>").effect( "shake");
             console.log('Error code given by PHP: ' + response.status);
         }
+    }).fail(function(xhr, desc, err) {
+        alert(failM);
+
+        console.log(xhr);
+        console.log("Details: " + desc + "\nError:" + err);
+    });
+
+    data = null;
+
+}
+
+function registration() {
+    failM = 'Não conseguimos concluir o seu pedido!';
+
+    data = $('#register_form').serialize();
+
+    $.ajax({
+        type: 'POST',
+        url: '/router.php?url=action/register',
+        data: data,
+        dataType: 'json'
+    }).done(function(response) {
+
+        switch (response.status) {
+            case 0:
+                $('#advice').html("<p class='advice back_green'>Inscrito com sucesso!</p>").effect("slide");
+                setTimeout(function() {
+                    page('user/login');
+                }, 2000);
+                break;
+
+            case 1:
+                $('#advice').html("<p class='advice'>Nome de utilizador já existente!</p>").effect("shake");
+                break;
+
+            case 2:
+                $('#advice').html("<p class='advice'>Não inseriu todos os dados!</p>").effect("shake");
+                break;
+
+            default:
+                break;
+        }
+
     }).fail(function(xhr, desc, err) {
         alert(failM);
 
@@ -146,4 +190,37 @@ function logout() {
         console.log("Details: " + desc + "\nError:" + err);
     });
 
+}
+
+function updateConfig() {
+
+    data = $('#config_form').serialize();
+
+    failM = 'Não conseguimos concluir o seu pedido!';
+
+    $.ajax({
+        type: 'POST',
+        url: '/router.php?url=action/update_conf',
+        data: data,
+        dataType: 'json'
+    }).done(function(response) {
+
+        switch (response.status) {
+            case 0:
+                $('#sidebar').load('/router.php?url=sidebar');
+                page('profile/' + user.user);
+                break;
+
+            default:
+                break;
+        }
+
+    }).fail(function(xhr, desc, err) {
+        alert(failM);
+
+        console.log(xhr);
+        console.log("Details: " + desc + "\nError:" + err);
+    });
+
+    data = null;
 }

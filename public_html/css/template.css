@@ -259,7 +259,7 @@ h2
 
 #overlay
 {
-	background-color: rgba(0,0,0,0.5);
+	background-color: rgba(0,0,0,0.3);
 	display:none;
 	height:100%;
 	left:0;
@@ -502,7 +502,7 @@ h2
 {
 	background:#e74c3c;
 	color:#fff;
-	height:40px;
+	/* height:40px; */
 	line-height:40px;
 	margin:0 auto 10px !important;
 	text-align: center;
@@ -1116,10 +1116,6 @@ h2
 
 body.loading .modal {
   display: block;
-}
-
-body.loading .overlay {
-	display: block;
 }
 
 .bubblingG {

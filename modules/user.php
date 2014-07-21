@@ -288,9 +288,11 @@ class User {
     }
 
     function registration($name, $user, $pass) {
-        global $DATA;
+        global $DATA;       
 
         if (DB_STATUS) {
+
+            $result = array();
 
             if (!$name == '' && !$user == '' && !$pass == '')  {
 
@@ -303,28 +305,31 @@ class User {
                     $query =  "INSERT INTO users(name, user, password) VALUES ('".$name."', '".$user."', '".$pass."')";
                     $DATA['db']->query($query);
 
-                    $queryData = "INSERT INTO userdata(user) VALUES ('".$name."')";
-                    $DATA['db']->query($queryData);
-
-                    $this->message('O seu registo foi concluido com sucesso!', true);
+                    $result['status'] = 0;
 
                 } else {
 
-                    $page =  new Page('register', 'blue', false, false, true);
-
+                    //Utilizador já existente
+                    $result['status'] = 1;
                 }   
 
             } else {
 
-                $page =  new Page('register', 'blue', false, true);
+                //Dados necessários
+                $result['status'] = 2;
 
             }
+
+            ob_end_clean();
+            header('Content-type: application/json');
+            echo json_encode($result);  
 
         } else {
 
             $page = new Page('tecnical', 'red');
 
         }
+
     }
 
 	public function profile($user) {
@@ -395,7 +400,7 @@ class User {
 						   '3'	=>	'red',
 						   '4'	=>	'orange');
 
-		$idToHex = array('1'	=>	'#00adee',
+		$idToHex = array('1'	=>	'#007AFF',
 					     '2'	=>	'#4CD964',
 					     '3'	=>	'#e74c3c',
 					     '4'	=>	'#FF9500');
@@ -488,14 +493,19 @@ class User {
 
 		if (!$this->exists($user)) {
 
-			echo "<script>page('404');</script>";
+			$page = new Page('404', 'red');
 
 		} else {
 
 			SQL::updateOne('users', 'color', $color, 'user', $user);
 			SQL::updateOne('users', 'bio', $bio, 'user', $user);
 
-			Base::message('Definições alteradas!', $this->getColor($user));
+			$result = array();
+            $result['status'] = 0;
+
+            ob_end_clean();
+            header('Content-type: application/json');
+            echo json_encode($result);  
 		}
 	}
 }
