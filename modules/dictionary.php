@@ -44,7 +44,7 @@ class Dictionary {
 
 		if ($n > $maxPages) {
 
-			$page = new Page('404', 'red');
+			$page = new Piece('404', 'red');
 
 		} else {
 
@@ -113,7 +113,7 @@ class Dictionary {
 
 		if (SQL::rowNumberWhere('i_con', 'u_title', $utitle) == 0) {
 
-			$page = new Page('404', 'red');
+			$page = new Piece('404', 'red');
 
 		} else {
 
@@ -127,7 +127,7 @@ class Dictionary {
 
 		if (SQL::rowNumberWhere('i_con', 'u_category', $ucategory) == 0) {
 
-			$page = new Page('404', 'red');
+			$page = new Piece('404', 'red');
 			
 		} else {
 
@@ -170,19 +170,6 @@ class Dictionary {
 
 	static function actionFavLater($itemId = 0, $user, $thing, $action) {
 		global $DATA;
-
-        /*
-         *  STATUS MAP
-         *
-         *  0 =>    Nenhum problema
-         *  1 =>    Utilizador Inexistente
-         *  2 =>    Item já gravado na lista em questão
-         *  3 =>    Problema na base de dados
-         *  4 =>    Item inválido
-         *  5 =>    Sem sessão Iniciada
-         *  6 =>    Operação Inválida
-         *
-         */
 
 		if ($DATA['user']->loggedIn()) {
 

@@ -34,12 +34,18 @@ try {
 	$DATA['db'] = new PDO('mysql:host=' . $host . ';dbname=' . $db, $username, $password);
 	$DATA['db']->exec("SET NAMES 'utf8';");
 
-	define('DB_STATUS', true);
+	$dbStatus = true;
 
 } catch (PDOException $error) {
 
-	define('DB_STATUS', false);
+	$dbStatus = false;
+}
 
+if (!$dbStatus) {
+	$page = new Piece('tecnical',  'red');
+	$footer = new Footer();
+
+	die;
 }
 
 ?>

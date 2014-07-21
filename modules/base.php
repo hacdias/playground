@@ -21,43 +21,8 @@ htmlentities($string, ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8')), '-'));
 
 	}
 
-	static public function dbStatus() {
-
-		if (!DB_STATUS) {
-			$page = new Page('tecnical',  'red');
-			$footer = new Footer();
-
-			die;
-		}
-	}
-
 	static public function fileHash($dir) {
 		return md5_file(HOST_DIR . $dir);
-	}
-
-	static public function message($message, $color =  'blue', $loginButton = false) {
-		global $DATA;
-
-		$DATA['page'] = new Template(Base::viewsDir('message'));
-		$DATA['page']->MESSAGE = $message;
-		$DATA['page']->COLOR = $color;
-
-		if ($loginButton) {
-			$DATA['page']->block('MESSAGE_LOGIN');
-		} 
-
-		$DATA['page']->show();
-	}
-
-	protected function adminMessage($msg) {
-		global $DATA;
-
-		$DATA['page'] = new Template($this->viewsDir('admin/main'));
-		$DATA['page']->COLOR = 'orange';
-
-		$DATA['page']->block('ADVICE_' . strtoupper($msg));
-
-		$DATA['page']->show();
 	}
 
 	static public function needLogin() {
@@ -66,7 +31,7 @@ htmlentities($string, ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8')), '-'));
 
 		echo "<script> var options = eval('( "  . json_encode($options) .  ")'); </script>";
 
-		$DATA['page'] = new Page('login');
+		$DATA['page'] = new Piece('login');
 	}
 
 }

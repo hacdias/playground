@@ -16,9 +16,9 @@ $DATA['url'] = explode('/', $DATA['url']);
 if(empty($DATA['url'][0])) {
 
 	if ($DATA['user']->loggedIn()) {
-		$page = new Page('home.user');
+		$page = new Piece('home.user');
 	} else {
-		$page = new Page('home');
+		$page = new Piece('home');
 	}
 
 } else {
@@ -26,11 +26,11 @@ if(empty($DATA['url'][0])) {
 	switch ($DATA['url'][0]) {
 
 		case 'sidebar':
-			$page = new Sidebar();
+			$page = new Piece('sidebar');
 			break;
 
 		case 'about':
-			$page = new Page('about');
+			$page = new Piece('about');
 			break;
 
 		case 'dictionary':
@@ -50,7 +50,7 @@ if(empty($DATA['url'][0])) {
 			break;
 
 		default:
-			$page = new Page('404', 'red');
+			$page = new Piece('404', 'red');
 			break;
 	}
 }
@@ -126,7 +126,7 @@ function dictionary() {
 
 		} else {
 
-			$page = new Page('404', 'red');
+			$page = new Piece('404', 'red');
 
 		}
 	}
@@ -138,7 +138,7 @@ function profile() {
 
 	if (!isset($DATA['url'][1])) {
 
-		$page = new Page('404', 'red');
+		$page = new Piece('404', 'red');
 
 	} else {
 
@@ -162,11 +162,11 @@ function user() {
 		switch ($DATA['url'][1]) {
 
 			case 'login':
-				$page = new Page('login');
+				$page = new Piece('login');
 				break;
 
 			case 'register':
-				$page = new Page('register');
+				$page = new Piece('register');
 				break;
 
 			case 'config':
@@ -182,7 +182,7 @@ function user() {
 				break;
 
 			default:
-				$page = new Page('404', 'red');
+				$page = new Piece('404', 'red');
 				break;
 		}
 	}
@@ -263,7 +263,7 @@ function actions() {
 				break;
 
 			default:
-				$page = new Page('404', 'red');
+				$page = new Piece('404', 'red');
 				break;
 		}
 	}

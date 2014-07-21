@@ -109,18 +109,27 @@ function login() {
         dataType: 'json'
     }).done(function(response) {
 
-        //Melhorar isto utilizando códigos numéricos
-        if(response.status == 'needData') {
-            $('#advice').html("<p class='advice'>Não inseriu todos os dados!</p>").effect( "shake");
-        } else if (response.status == 'wrong') {
-            $('#advice').html("<p class='advice'>Utilizador ou password errados!</p>").effect( "shake");
-        } else if (response.status == 'correct') {
-            $('#sidebar').load('/router.php?url=sidebar');
-            page('');
-        }  else {
-            $('#advice').html("<p class='advice'>" + failM + "</p>").effect( "shake");
-            console.log('Error code given by PHP: ' + response.status);
+        switch (response.status) {
+
+            case 0:
+                $('#sidebar').load('/router.php?url=sidebar');
+                page('');
+                break;
+
+            case 7:
+                $('#advice').html("<p class='advice'>Não inseriu todos os dados!</p>").effect( "shake");
+                break;
+
+            case 8:
+                $('#advice').html("<p class='advice'>Utilizador ou password errados!</p>").effect( "shake");
+                break;
+
+            default:
+                $('#advice').html("<p class='advice'>" + failM + "</p>").effect( "shake");
+                console.log('Error code given by PHP: ' + response.status);
+                break;
         }
+
     }).fail(function(xhr, desc, err) {
         alert(failM);
 
@@ -152,11 +161,11 @@ function registration() {
                 }, 2000);
                 break;
 
-            case 1:
+            case 2:
                 $('#advice').html("<p class='advice'>Nome de utilizador já existente!</p>").effect("shake");
                 break;
 
-            case 2:
+            case 7:
                 $('#advice').html("<p class='advice'>Não inseriu todos os dados!</p>").effect("shake");
                 break;
 

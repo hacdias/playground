@@ -32,18 +32,110 @@ class User {
     var $cookiePath = '/';
     
     var $erro = '';
+
+    static public function exists($user) {
+        global $DATA;
+
+        $confirmIfExists = SQL::selectOneWhereLimit('user', 'users', 'user', $user);
+
+        return ($confirmIfExists->rowCount() == 0) ? false : true;
+    }
+
+    static public function getInfo($user, $info) {
+        global $DATA;
+
+        $results = SQL::selectOneWhereLimit($info, 'users', 'user', $user);
+
+        if ($results) {
+
+            foreach ($results as $result) {
+                return $result[$info];
+            } 
+
+        } else {
+
+            return 'Error';
+
+        } 
+    }
+
+    static public function getColor($user, $acurrate = false) {
+        global $DATA;
+
+        $idToColor = array('1'  =>  'blue',
+                        '2'  =>  'green',
+                        '3'  =>  'red',
+                        '4'  =>  'orange');
+
+        $idToHex = array('1'    =>  '#007AFF',
+                        '2'    =>  '#4CD964',
+                        '3'    =>  '#e74c3c',
+                        '4'    =>  '#FF9500');
+
+        $results = SQL::selectOneWhereLimit('color', 'users', 'user', $user);
+
+        if ($results) {
+            foreach ($results as $color) {
+                $colorId = $color['color'];
+            }
+
+            return ($acurrate) ? $idToHex[$colorId] : $idToColor[$colorId];
+
+        } else {
+
+            return 'Error';
+
+        }
+    }
+
+    static public function getPhoto($user) {
+        $filename = HOST_URL . '/imgs/users/' . $user . '_big.png';
+        $file_headers = @get_headers($filename);
+
+        if ($file_headers[0] == 'HTTP/1.1 404 Not Found' || $file_headers[0] == 'HTTP/1.0 404 Not Found'){
+
+            return 'default';
+
+        } else if ($file_headers[0] == 'HTTP/1.0 302 Found' && $file_headers[7] == 'HTTP/1.0 404 Not Found'){
+
+            return 'default';
+
+        } else {
+
+            return $user;
+
+        }
+    }
+
+    static public function isAdmin($user) {
+        global $DATA;
+
+        $sql = SQL::selectOneWhere('type', 'users', 'user', $user);
+
+        if ($sql) {
+
+            foreach($sql as $user) {
+                $type = $user['type'];
+            }
+
+            return ($type == 0) ? true : false;
+
+        } else {
+
+            return 'Error.';
+
+        }
+    }
     
-    function encryptPass($string) {
+    protected function encryptPass($string) {
         $output = false;
 
         $encrypt_method = "AES-256-CBC";
         $secret_key = 'Pi8D1E2^e8s&vUnkg7~|asdfgjkg;T]]EGMuFM54sYMen~w5w5Tr]p.!4x%a1v;Z0X78sF';
         $secret_iv = 'N|;b,$567+76;Or.';
 
-        // hash
         $key = hash('sha256', $secret_key);
         
-        // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
         $iv = substr(hash('sha256', $secret_iv), 0, 16);
 
         $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
@@ -52,12 +144,11 @@ class User {
         return $output;
     }
     
-    function confirmUser($user, $pass) {
+    protected function confirmUser($user, $pass) {
         global $DATA;
 
         $pass = $this->encryptPass($pass);
 
-        // Procura por usuários com o mesmo usuário e pass
         $sql = "SELECT COUNT(*) AS total
                 FROM `{$this->database}`.`{$this->usersTable}`
                 WHERE
@@ -65,37 +156,66 @@ class User {
                     AND
                      `{$this->fields['pass']}` = '{$pass}'";
 
-                    echo $sql;
-
         $query = $DATA['db']->prepare($sql);
         $query->execute();
 
         if ($query) {
-            // Total de usuários encontrados
-            $total = $query->fetchColumn();
             
-            // Limpa a consulta da memória
+            $total = $query->fetchColumn();
             $query->closeCursor();
+
         } else {
-            // A consulta foi mal sucedida, retorna false
+
             return false;
         }
-        
-        // Se houver apenas um usuário, retorna true
+
         return ($total == 1) ? true : false;
+    }
+
+    protected function rememberData($user, $pass) {    
+        $time = strtotime("+{$this->rememberTime} day", time());
+
+        $user = rand(1, 9) . base64_encode($user);
+        $pass = rand(1, 9) . base64_encode($pass);
+    
+        setcookie($this->keyPrefix . 'lu', $user, $time, $this->cookiePath);
+        setcookie($this->keyPrefix . 'ls', $pass, $time, $this->cookiePath);
+    }
+
+    protected function confirmRememberedData() {
+        if (isset($_COOKIE[$this->keyPrefix . 'lu']) AND isset($_COOKIE[$this->keyPrefix . 'ls'])) {
+
+            $user = base64_decode(substr($_COOKIE[$this->keyPrefix . 'lu'], 1));
+            $pass = base64_decode(substr($_COOKIE[$this->keyPrefix . 'ls'], 1));
+            
+            return $this->login($user, $pass, true);        
+        }
+        
+        return false;
+    }
+    
+    protected function cleanRememberedData() {
+
+        if (isset($_COOKIE[$this->keyPrefix . 'lu'])) {
+            setcookie($this->keyPrefix . 'lu', false, (time() - 3600), $this->cookiePath);
+            unset($_COOKIE[$this->keyPrefix . 'lu']);            
+        }
+
+        if (isset($_COOKIE[$this->keyPrefix . 'ls'])) {
+            setcookie($this->keyPrefix . 'ls', false, (time() - 3600), $this->cookiePath);
+            unset($_COOKIE[$this->keyPrefix . 'ls']);            
+        }
     }
 
     function login($user, $pass, $remember = false) {    
         global $DATA;        
-        // Verifica se é um usuário válido
 
         $result = array();
 
         if ($user == null || $pass == null) {
 
-            $result['status'] = 'needData';
+            $result['status'] = 7;
 
-            ob_end_clean();
             header('Content-type: application/json');
             echo json_encode($result);  
 
@@ -108,6 +228,7 @@ class User {
                 }
                 
                 if ($this->data != false) {
+
                     // Adiciona o campo do usuário na lista de data
                     if (!in_array($this->fields['user'], $this->data)) {
                         $this->data[] = 'user';
@@ -123,20 +244,16 @@ class User {
 
                     $query = $DATA['db']->query($sql);
                     
-                    // Se a consulta falhou
                     if (!$query) {
-                        $this->erro = 'A consulta dos data é inválida';
 
-                        $result['status'] = 'wrong';
+                        $result['status'] = 3;
 
-                        ob_end_clean();
                         header('Content-type: application/json');
                         echo json_encode($result);  
 
                     } else {
 
                         $data = $query->fetch(PDO::FETCH_ASSOC);
-                        // Limpa a consulta da memória
                         $query->closeCursor();
                         
                         foreach ($data AS $chave=>$value) {
@@ -147,9 +264,8 @@ class User {
                 
                 $_SESSION[$this->keyPrefix . 'loggedIn'] = true;
                 
-                // Define um cookie para maior segurança?
                 if ($this->cookie) {
-                    // Monta uma cookie com informações gerais sobre o usuário: usuario, ip e navegador
+                    
                     $value = join('#', array($user, $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT']));
                     $value = sha1($value);
                     
@@ -158,18 +274,16 @@ class User {
             
                 if ($remember) $this->rememberData($user, $pass);
 
-                $result['status'] = 'correct';
+                $result['status'] = 0;
 
-                ob_end_clean();
                 header('Content-type: application/json');
                 echo json_encode($result);
                 exit;
                 
                             
             } else {
-                $this->erro = 'Utilizador inválido';
                
-                $result['status'] = 'wrong';
+                $result['status'] = 8;
 
                 ob_end_clean();
                 header('Content-type: application/json');
@@ -251,101 +365,58 @@ class User {
         
         return !$this->loggedIn(false);
     }
-    
-    function rememberData($user, $pass) {    
-        $time = strtotime("+{$this->rememberTime} day", time());
-
-        $user = rand(1, 9) . base64_encode($user);
-        $pass = rand(1, 9) . base64_encode($pass);
-    
-        setcookie($this->keyPrefix . 'lu', $user, $time, $this->cookiePath);
-        setcookie($this->keyPrefix . 'ls', $pass, $time, $this->cookiePath);
-    }
-
-    function confirmRememberedData() {
-        if (isset($_COOKIE[$this->keyPrefix . 'lu']) AND isset($_COOKIE[$this->keyPrefix . 'ls'])) {
-
-            $user = base64_decode(substr($_COOKIE[$this->keyPrefix . 'lu'], 1));
-            $pass = base64_decode(substr($_COOKIE[$this->keyPrefix . 'ls'], 1));
-            
-            return $this->login($user, $pass, true);        
-        }
-        
-        return false;
-    }
-    
-    function cleanRememberedData() {
-
-        if (isset($_COOKIE[$this->keyPrefix . 'lu'])) {
-            setcookie($this->keyPrefix . 'lu', false, (time() - 3600), $this->cookiePath);
-            unset($_COOKIE[$this->keyPrefix . 'lu']);            
-        }
-
-        if (isset($_COOKIE[$this->keyPrefix . 'ls'])) {
-            setcookie($this->keyPrefix . 'ls', false, (time() - 3600), $this->cookiePath);
-            unset($_COOKIE[$this->keyPrefix . 'ls']);            
-        }
-    }
 
     function registration($name, $user, $pass) {
         global $DATA;       
 
-        if (DB_STATUS) {
+        $result = array();
 
-            $result = array();
+        if (!$name == '' && !$user == '' && !$pass == '')  {
 
-            if (!$name == '' && !$user == '' && !$pass == '')  {
+            $confirmIfExists = $DATA['db']->query("SELECT * FROM users WHERE user = '" . $user ."';");
 
-                $confirmIfExists = $DATA['db']->query("SELECT * FROM users WHERE user = '" . $user ."';");
+            if ($confirmIfExists->rowCount() == 0) {
 
-                if ($confirmIfExists->rowCount() == 0) {
+                $pass = $this->encryptPass($pass);
 
-                    $pass = $this->encryptPass($pass);
+                $query =  "INSERT INTO users(name, user, password) VALUES ('".$name."', '".$user."', '".$pass."')";
+                $DATA['db']->query($query);
 
-                    $query =  "INSERT INTO users(name, user, password) VALUES ('".$name."', '".$user."', '".$pass."')";
-                    $DATA['db']->query($query);
-
-                    $result['status'] = 0;
-
-                } else {
-
-                    //Utilizador já existente
-                    $result['status'] = 1;
-                }   
+                $result['status'] = 0;
 
             } else {
 
-                //Dados necessários
                 $result['status'] = 2;
-
-            }
-
-            ob_end_clean();
-            header('Content-type: application/json');
-            echo json_encode($result);  
+            }   
 
         } else {
 
-            $page = new Page('tecnical', 'red');
+            $result['status'] = 7;
 
         }
 
+        header('Content-type: application/json');
+        echo json_encode($result);  
+
     }
+
+    //REVER A PARTIR DAQUI
+    //Tornar algumas funções estáticas
 
 	public function profile($user) {
 		global $DATA;
 
-		if (!$this->exists($user)) {
+		if (!User::exists($user)) {
 
-			echo "<script>page('404');</script>";
+			$page = new Piece('404', 'red');
 
 		} else {
 
 			$DATA['page'] = new Template(Base::viewsDir('profile'));
-			$DATA['page']->COLOR = $this->getColor($user);
+			$DATA['page']->COLOR = User::getColor($user);
 
-			$name = $this->getName($user);
-			$bio = $this->getBio($user);
+			$name = User::getInfo($user, 'name');
+			$bio = User::getInfo($user, 'bio');
 
 			if ($DATA['user']->loggedIn()) {
 
@@ -357,124 +428,28 @@ class User {
 			}
 
 			$DATA['page']->NAME = $name;
-			$DATA['page']->IMG  = $this->getPhoto($user);
+			$DATA['page']->IMG  = User::getPhoto($user);
 			$DATA['page']->BIO  = $bio;
 
 			$DATA['page']->show();
 		}
 	}
 
-	public function isAdmin($user) {
-		global $DATA;
-		
-		$sql = SQL::selectOneWhere('type', 'users', 'user', $user);
 
-		foreach($sql as $user) {
-			$type = $user['type'];
-		}
-
-		if ($type == 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	static public function exists($user) {
-		global $DATA;
-
-		$confirmIfExists = SQL::selectOneWhereLimit('user', 'users', 'user', $user);
-
-		if ($confirmIfExists->rowCount() == 0) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	public function getColor($user, $acurrate = false) {
-		global $DATA;
-
-		$idToColor = array('1'	=>	'blue',
-						   '2'	=>	'green',
-						   '3'	=>	'red',
-						   '4'	=>	'orange');
-
-		$idToHex = array('1'	=>	'#007AFF',
-					     '2'	=>	'#4CD964',
-					     '3'	=>	'#e74c3c',
-					     '4'	=>	'#FF9500');
-
-		$results = SQL::selectOneWhereLimit('color', 'users', 'user', $user);
-
-		foreach ($results as $color) {
-			$colorId = $color['color'];
-		}
-
-		if ($acurrate) {
-
-			return $idToHex[$colorId];
-
-		} else {
-
-			return $idToColor[$colorId];
-
-		}
-	}
-
-	public function getBio($user) {
-		global $DATA;
-
-		$results = SQL::selectOneWhereLimit('bio', 'users', 'user', $user);
-
-		foreach ($results as $result) {
-			return $result['bio'];
-		}
-
-	}
-
-	public function getName($user) {
-		global $DATA;
-
-		$results = SQL::selectOneWhereLimit('name', 'users', 'user', $user);
-
-		foreach ($results as $result) {
-			return $result['name'];
-		}
-	}
-
-	public function getPhoto($user) {
-		$filename = HOST_URL . '/imgs/users/' . $user . '_big.png';
-		$file_headers = @get_headers($filename);
-
-		if ($file_headers[0] == 'HTTP/1.1 404 Not Found' || $file_headers[0] == 'HTTP/1.0 404 Not Found'){
-
-			return 'default';
-
-		} else if ($file_headers[0] == 'HTTP/1.0 302 Found' && $file_headers[7] == 'HTTP/1.0 404 Not Found'){
-
-			return 'default';
-
-		} else {
-
-			return $user;
-
-		}
-	}
 
 	public function configPage($user) {
 		global $DATA;
 
-		if (!$this->exists($user)) {
+		if (!User::exists($user)) {
 
-			echo "<script>page('404');</script>";
+			$page = new Piece('404', 'red');
 
 		} else {
 
 			$DATA['page'] = new Template(Base::viewsDir('user.config'));
 
-			$color = $this->getColor($user);
-			$bio = $this->getBio($user);
+			$color = User::getColor($user);
+			$bio = User::getInfo($user, 'bio');
 
 			$DATA['page']->COLOR = $color;
 			$DATA['page']->CFG_BIO  = $bio;
@@ -491,9 +466,9 @@ class User {
 	public function configUpdate($user, $color, $bio) {
 		global $DATA;
 
-		if (!$this->exists($user)) {
+		if (!User::exists($user)) {
 
-			$page = new Page('404', 'red');
+			$page = new Piece('404', 'red');
 
 		} else {
 

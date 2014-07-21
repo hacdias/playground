@@ -10,17 +10,17 @@
 
 require_once('/config.php');
 
-$header = new Header(); 
+$header = new Piece('header'); 
 
 require_once('/router.php');
 
-$footer = new Footer();
+$footer = new Piece('footer');
 
 
 ?>
 		<div id="sidebar">
 
-			<?php $sidebar = new Sidebar(); ?>
+			<?php $sidebar = new Piece('sidebar'); ?>
 
 		</div>
 	</body>
