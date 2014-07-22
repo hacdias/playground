@@ -1270,6 +1270,30 @@ body.loading .modal {
 	background: transparent;
 	transition: .5s ease all;
 	float: right;
+	outline: 0;
+}
+
+
+@-webkit-keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+		display: none;
+	}
+}
+
+@keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+		display: none;
+	}
 }
 
 .items button:hover {

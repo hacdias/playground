@@ -162,7 +162,18 @@ function user() {
 		switch ($DATA['url'][1]) {
 
 			case 'login':
-				$page = new Piece('login');
+				if ($DATA['user']->loggedIn()) {
+
+					/**
+					  * @todo Sessão já iniciada. Colocar outra pag em vez de 404.
+					  */
+					$page = new Piece('404', 'red');
+
+				} else {
+
+					$page = new Piece('login');
+
+				}
 				break;
 
 			case 'register':

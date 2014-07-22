@@ -1,3 +1,36 @@
+
+
+function page(name) {
+    window.scrollTo(0, 0);
+
+    var url = "/" + name;
+
+    history.pushState({ path: url },'',url);
+
+    $("#wrap").load("/router.php?url=" + name);
+
+    return false;
+}
+
+$(window).bind('popstate', function(event) {
+    var state = event.originalEvent.state;
+
+    var remove = window.location.protocol + '//' + window.location.host + '/';
+    var path = state.path.replace(remove, '');
+
+    if (path[0] == '/') {
+        path = path.substring(1);
+    }
+
+    if (state) {
+        $('#wrap').load("/router.php?url=" + path);
+    }
+});
+
+history.replaceState({ path: window.location.href }, '');
+
+/* OUTROS */
+
 $(document).on({
     ajaxStart: function() { 
         $("body").addClass("loading"); 
@@ -6,17 +39,6 @@ $(document).on({
         $("body").removeClass("loading");  
     }    
 });
-
-function page(name) {
-    window.scrollTo(0, 0);
-
-    var stateObject = {};
-    var title = "MathPocket";
-    var newUrl = "/" + name;
-
-    history.pushState(stateObject,title,newUrl);
-    $("#wrap").load("/router.php?url=" + name);
-}
 
 function actionFavLater(id, thing, action) {
     failM = 'Não conseguimos concluir o seu pedido!';
@@ -43,6 +65,14 @@ function actionFavLater(id, thing, action) {
 
                switch (thing) {
 
+                    /*
+
+                    $('#item-1').fadeTo('slow', 0);
+                        setTimeout(function() {
+                            $('#item-1').hide();
+                        }, 1000);
+                    
+                    */
                     case 'later':
                         if (action == 'rem') {
 
