@@ -38,7 +38,15 @@ class User {
 
         $confirmIfExists = SQL::selectOneWhereLimit('user', 'users', 'user', $user);
 
-        return ($confirmIfExists->rowCount() == 0) ? false : true;
+        if ($confirmIfExists) {
+
+            return ($confirmIfExists->rowCount() == 0) ? false : true;
+
+        } else {
+
+            return false;
+
+        }
     }
 
     static public function getInfo($user, $info) {
@@ -54,7 +62,7 @@ class User {
 
         } else {
 
-            return 'Error';
+            return false;
 
         } 
     }
@@ -75,6 +83,7 @@ class User {
         $results = SQL::selectOneWhereLimit('color', 'users', 'user', $user);
 
         if ($results) {
+            
             foreach ($results as $color) {
                 $colorId = $color['color'];
             }
@@ -83,7 +92,7 @@ class User {
 
         } else {
 
-            return 'Error';
+            return false;
 
         }
     }
@@ -122,9 +131,101 @@ class User {
 
         } else {
 
-            return 'Error.';
+            return false;
 
         }
+    }
+
+    static public function profile($user) {
+        global $DATA;
+
+        if (!User::exists($user)) {
+
+            $page = new Piece('404', 'red');
+
+        } else {
+
+            $page = new Template(Base::viewsDir('profile'));
+            $page->COLOR = User::getColor($user);
+
+            $name = User::getInfo($user, 'name');
+            $bio = User::getInfo($user, 'bio');
+
+            if ($DATA['user']->loggedIn()) {
+
+                if ($_SESSION['user_user'] == $user) {
+
+                    $page->block('CONFIG');
+
+                };
+            }
+
+            $page->NAME = $name;
+            $page->IMG  = User::getPhoto($user);
+            $page->BIO  = $bio;
+
+            $page->show();
+        }
+    }
+
+    static public function configPage($user) {
+        global $DATA;
+
+        if (!User::exists($user)) {
+
+            $page = new Piece('404', 'red');
+
+        } else {
+
+            $page = new Template(Base::viewsDir('user.config'));
+
+            $color = User::getColor($user);
+            $bio = User::getInfo($user, 'bio');
+
+            $page->COLOR = $color;
+            $page->CFG_BIO  = $bio;
+            $page->CFG_USER = $user;
+
+            $page->block('COLOR_'.strtoupper($color));
+
+            $page->show();
+        }
+    }
+
+    static public function configUpdate($user, $color, $bio) {
+        global $DATA;
+
+        if ($DATA['user']->loggedIn() && $_SESSION['user_user'] == $user) {
+
+            if (!User::exists($user)) {
+
+                $page = new Piece('404', 'red');
+
+            } else {
+
+                $result = array();
+
+                if(SQL::updateOne('users', 'color', $color, 'user', $user) && SQL::updateOne('users', 'bio', $bio, 'user', $user)) {
+
+                    $result['status'] = 0;
+
+                } else {
+
+                    $result['status'] = 3;
+
+                }
+            }
+
+        } else {
+
+            $result = array();
+            $result['status'] = 5;
+
+        }
+
+        ob_end_clean();
+        header('Content-type: application/json');
+        echo json_encode($result);  
     }
     
     protected function encryptPass($string) {
@@ -399,90 +500,6 @@ class User {
         echo json_encode($result);  
 
     }
-
-    //REVER A PARTIR DAQUI
-    //Tornar algumas funções estáticas
-
-	public function profile($user) {
-		global $DATA;
-
-		if (!User::exists($user)) {
-
-			$page = new Piece('404', 'red');
-
-		} else {
-
-			$DATA['page'] = new Template(Base::viewsDir('profile'));
-			$DATA['page']->COLOR = User::getColor($user);
-
-			$name = User::getInfo($user, 'name');
-			$bio = User::getInfo($user, 'bio');
-
-			if ($DATA['user']->loggedIn()) {
-
-				if ($_SESSION['user_user'] == $user) {
-
-					$DATA['page']->block('CONFIG');
-
-				};
-			}
-
-			$DATA['page']->NAME = $name;
-			$DATA['page']->IMG  = User::getPhoto($user);
-			$DATA['page']->BIO  = $bio;
-
-			$DATA['page']->show();
-		}
-	}
-
-
-
-	public function configPage($user) {
-		global $DATA;
-
-		if (!User::exists($user)) {
-
-			$page = new Piece('404', 'red');
-
-		} else {
-
-			$DATA['page'] = new Template(Base::viewsDir('user.config'));
-
-			$color = User::getColor($user);
-			$bio = User::getInfo($user, 'bio');
-
-			$DATA['page']->COLOR = $color;
-			$DATA['page']->CFG_BIO  = $bio;
-			$DATA['page']->CFG_USER = $user;
-
-			$DATA['page']->block('COLOR_'.strtoupper($color));
-
-			$DATA['page']->show();
-
-		}
-	}
-
-
-	public function configUpdate($user, $color, $bio) {
-		global $DATA;
-
-		if (!User::exists($user)) {
-
-			$page = new Piece('404', 'red');
-
-		} else {
-
-			SQL::updateOne('users', 'color', $color, 'user', $user);
-			SQL::updateOne('users', 'bio', $bio, 'user', $user);
-
-			$result = array();
-            $result['status'] = 0;
-
-            ob_end_clean();
-            header('Content-type: application/json');
-            echo json_encode($result);  
-		}
-	}
 }
 
 ?>

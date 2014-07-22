@@ -166,7 +166,18 @@ function user() {
 				break;
 
 			case 'register':
-				$page = new Piece('register');
+				if ($DATA['user']->loggedIn()) {
+
+					/**
+					  * @todo Sessão já iniciada. Colocar outra pag em vez de 404.
+					  */
+					$page = new Piece('404', 'red');
+
+				} else {
+
+					$page = new Piece('register');
+
+				}
 				break;
 
 			case 'config':
@@ -231,7 +242,7 @@ function actions() {
 				$color = isset($_POST['color']) ? $_POST['color'] : null;
 				$bio = isset($_POST['bio']) ? $_POST['bio'] : null;
 
-				$DATA['user']->configUpdate($user, $color, $bio);
+				User::configUpdate($user, $color, $bio);
 				break;
 
 			case 'addFav':

@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 /**
  * DICTIONARY CLASS
@@ -159,7 +159,7 @@ class Dictionary {
 
 			} else  {
 				echo "<div class='main {COLOR}'>
-	<div class='content'>Ainda não adicionou itens a esta lista!</div></div>";
+	<div class='content'><p>Ainda não adicionou itens a esta lista!</p></div></div>";
 			}
 
 		} else {
@@ -171,7 +171,7 @@ class Dictionary {
 	static function actionFavLater($itemId = 0, $user, $thing, $action) {
 		global $DATA;
 
-		if ($DATA['user']->loggedIn()) {
+		if ($DATA['user']->loggedIn() && $_SESSION['user_user'] == $user) {
 
 			$result = array();
 
@@ -285,10 +285,10 @@ class Dictionary {
 		global $database;
 		$search = $words;
 
-		$commonWords = array(" e ", " ou ", " em ", " a ", " o ", " se ", " com ", " da ");
+		$commonWords = array('e', 'a', 'as', 'o', 'os', 'da', 'das', 'do', 'dos', 'na', 'nas', 'no', 'nos', 'ou', 'com', 'sem');
 
 		for ($i = 0; $i < count($commonWords); $i++) {
-			$words = str_replace($commonWords[$i], ' ', $words);
+			$words = str_replace(' ' . $commonWords[$i] . ' ', ' ', $words);
 		}
 
 		$word = explode(" ", $words);
