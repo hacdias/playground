@@ -1274,25 +1274,23 @@ body.loading .modal {
 }
 
 
-@-webkit-keyframes fadeOut {
+@-webkit-keyframes rotate {
 	0% {
-		opacity: 1;
+		transform: rotate(0deg);
 	}
 
 	100% {
-		opacity: 0;
-		display: none;
+		transform: rotate(360deg);
 	}
 }
 
-@keyframes fadeOut {
+@keyframes rotate {
 	0% {
-		opacity: 1;
+		transform: rotate(0deg);
 	}
 
 	100% {
-		opacity: 0;
-		display: none;
+		transform: rotate(360deg);
 	}
 }
 

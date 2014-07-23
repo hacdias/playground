@@ -65,34 +65,29 @@ function actionFavLater(id, thing, action) {
 
                switch (thing) {
 
-                    /*
-
-                    $('#item-1').fadeTo('slow', 0);
-                        setTimeout(function() {
-                            $('#item-1').hide();
-                        }, 1000);
-                    
-                    */
                     case 'later':
                         if (action == 'rem') {
 
                             $('#later-' + id).html("<button class='user_actions' id='addLater' onclick=" + 'javascript:actionFavLater(' + id + ',' + "'later'" + ',' + "'add'" + ");" + "><img src='/imgs/icons/plus.svg'></button>");
+                            removeAnimation(id);
 
                         } else if (action == 'add') {
 
                             $('#later-' + id).html("<button class='user_actions' id='remLater' onclick=" + 'javascript:actionFavLater(' + id + ',' + "'later'" + ',' + "'rem'" + ");" + "><img src='/imgs/icons/minus.svg'></button>");
+                        
                         }
-
                         break;
 
                     case 'fav':
                         if (action == 'rem') {
-
+                            
                             $('#fav-' + id).html("<button class='user_actions' id='addFav' onclick=" + 'javascript:actionFavLater(' + id + ',' + "'fav'" + ',' + "'add'" + ");" + "><img src='/imgs/icons/star.svg'></button>");
+                            removeAnimation(id);
 
                         } else if (action == 'add') {
 
                             $('#fav-' + id).html("<button class='user_actions' id='remFav' onclick=" + 'javascript:actionFavLater(' + id + ',' + "'fav'" + ',' + "'rem'" + ");" + "><img src='/imgs/icons/unstar.svg'></button>");
+                        
                         }
                         break;
 
@@ -125,6 +120,18 @@ function actionFavLater(id, thing, action) {
     data = null;
     url = null;
     return false;
+}
+
+function removeAnimation(id) {
+    var path = window.location.pathname;
+    
+    if (path.indexOf('favorites') > -1 || path.indexOf('readlater') > -1) {
+
+        $('#item-' + id).fadeTo('fast', 0);
+        setTimeout(function() {
+            $('#item-' + id).hide();
+        }, 600);
+    }
 }
 
 function login() {
