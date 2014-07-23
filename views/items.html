@@ -6,7 +6,7 @@
 		<article class="items" id="item-{ID}">
 
 			<header>
-				<h2><a onclick="page('dictionary/item/{UTITLE}');">{TITLE}</a></h2>
+				<h2><a onclick="page('dictionary/{UCATEGORY}/{UTITLE}');">{TITLE}</a></h2>
 			</header>
 
 			<div class="description">
@@ -15,22 +15,22 @@
 
 			<footer>
 				<img src="/imgs/icons/category.png">
-				<a onclick="page('dictionary/category/{UCATEGORY}');">{CATEGORY}</a>
+				<a onclick="page('dictionary/{UCATEGORY}');">{CATEGORY}</a>
 
 				<!-- BEGIN ADDFAV -->
-					<span id="fav-{ID}"><button class="user_actions" id="addFav" onclick="javascript:actionFavLater({ID}, 'fav', 'add');"><img src="/imgs/icons/star.svg"></button></span>
+					<span id="fav-{ID}"><button class="user_actions addFav" onclick="javascript:actionFavLater({ID}, 'fav', 'add');"><span></span></button></span>
 				<!-- END ADDFAV -->
 
 				<!-- BEGIN REMFAV -->
-					<span id="fav-{ID}"><button class="user_actions" id="remFav" onclick="javascript:actionFavLater({ID}, 'fav', 'rem');"><img src="/imgs/icons/unstar.svg"></button></span>
+					<span id="fav-{ID}"><button class="user_actions remFav" onclick="javascript:actionFavLater({ID}, 'fav', 'rem');"><span></span></button></span>
 				<!-- END REMFAV -->
 
 				<!-- BEGIN ADDLATER -->
-					<span id="later-{ID}"><button class="user_actions" id="addLater" onclick="javascript:actionFavLater({ID}, 'later', 'add');"><img src="/imgs/icons/plus.svg"></button></span>
+					<span id="later-{ID}"><button class="user_actions addLater" onclick="javascript:actionFavLater({ID}, 'later', 'add');"><span></span></button></span>
 				<!-- END ADDLATER -->
 
 				<!-- BEGIN REMLATER -->
-					<span id="later-{ID}"><button class="user_actions" id="remLater" onclick="javascript:actionFavLater({ID}, 'later', 'rem');"><img src="/imgs/icons/minus.svg"></button></span>
+					<span id="later-{ID}"><button class="user_actions remLater" onclick="javascript:actionFavLater({ID}, 'later', 'rem');"><span></span></button></span>
 				<!-- END REMLATER -->
 				
 			</footer>
@@ -39,14 +39,12 @@
 
 		<!-- END ITEM -->
 
-
 		<!-- BEGIN PREV -->
-			<button onclick="page('dictionary/{PREV_N}');">Anterior</button>
+			<button onclick="page('{URL}{PREV_N}');">Anterior</button>
 		<!-- END PREV -->
 
 		<!-- BEGIN NEXT -->
-			<button onclick="page('dictionary/{NEXT_N}');">Próxima</button>
+			<button onclick="page('{URL}{NEXT_N}');">Próxima</button>
 		<!-- END NEXT -->
-
 	</div>
 </div>

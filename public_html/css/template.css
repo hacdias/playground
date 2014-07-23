@@ -1,7 +1,7 @@
 /**
  * Styles 
  * 
- * @author Henrique Dias
+ * @author Henrique Dias, Alexandre Reis
  * @package MathPocket
  */
 
@@ -100,6 +100,21 @@ h2
 {
 	color:rgba(0,0,0,0.63);
 	font-size:3em;
+	margin: 0.25em 0;
+}
+
+input[type="button"], 
+input[type="submit"], 
+input[type="reset"], 
+input[type="file"],
+button {
+    padding: 5px 10px;
+    border: 0;
+    background: #03a9f4;
+    margin: 0.75em 0;
+    color: #fff;
+    border-radius: 5px;
+    transition: .5s ease all;
 }
 
 #header
@@ -307,7 +322,6 @@ h2
 	color:#fff;
 	display:table-cell;
 	font-size: 1.25em;
-	height: 5em;
 	margin:0;
 	text-align:center;
 	vertical-align:middle;
@@ -1203,8 +1217,6 @@ body.loading .modal {
 	clear:both;
 	color:#3f3f3f;
 	font-size:1em;
-	margin-bottom:5px;
-	margin-top:5px;
 	text-align:justify;
 }
 
@@ -1255,49 +1267,178 @@ body.loading .modal {
 
 .items footer img  {
 	display:inline-block;
-	height: 1.5em;
 	padding:.25em;
 	vertical-align:middle;
-	width:1.5em;
 }
 
 .items button {
 	border: 0;
 	font-size: 1em;
-	padding: 0;
 	margin: 0;
 	border-radius: 50%;
-	background: transparent;
 	transition: .5s ease all;
 	float: right;
 	outline: 0;
+	padding: .25em;
+	background: transparent;
 }
 
-
-@-webkit-keyframes rotate {
-	0% {
-		transform: rotate(0deg);
-	}
-
-	100% {
-		transform: rotate(360deg);
-	}
+.user_actions span {
+    height: 1.5em;
+    width: 1.5em;
+    display: block;
 }
 
-@keyframes rotate {
-	0% {
-		transform: rotate(0deg);
-	}
+.items .addFav span {
+    background: url(/imgs/icons/star.svg) no-repeat center center;
+    background-size: 100%;
+}
 
-	100% {
-		transform: rotate(360deg);
-	}
+.items .remFav span {
+	background: url(/imgs/icons/unstar.svg) no-repeat center center;
+    background-size: 100%;
+}
+
+.items .addLater span {
+	background: url(/imgs/icons/plus.svg) no-repeat center center;
+    
+	background-size: 100%;
+}
+
+.items .remLater span {
+	background: url(/imgs/icons/minus.svg) no-repeat center center;
+    background-size: 100%;
 }
 
 .items button:hover {
     background: rgba(153, 153, 153, 0.12);
-	
 }
+
+/* ROTATE LEFT */
+
+@keyframes rotateLeft {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(-360deg);
+	}
+}
+
+@-moz-keyframes rotateLeft {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(-360deg);
+	}
+}
+
+@-webkit-keyframes rotateLeft {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(-360deg);
+	}
+}
+
+@-ms-keyframes rotateLeft {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(-360deg);
+	}
+}
+
+@-o-keyframes rotateLeft {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(-360deg);
+	}
+}
+
+@keyframes rotateLeft {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(-360deg);
+	}
+}
+
+/* ROTATE RIGHT */
+
+@keyframes rotateRight {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@-moz-keyframes rotateRight {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@-webkit-keyframes rotateRight {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@-ms-keyframes rotateRight {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@-o-keyframes rotateRight {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes rotateRight {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/* LOADING KEYFRAMES */
 
 @-moz-keyframes bubblingG {
 	0% {
@@ -1378,6 +1519,8 @@ body.loading .modal {
 		transform: translateY(-17px);
 	}
 }
+
+/* MOBILE RESPONSIVE */
 
 @media only screen and (max-width: 40em) {
 	#nav

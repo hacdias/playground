@@ -3,7 +3,7 @@
 /**
  * USER CLASS
  *
- * @author Henrique Dias
+ * @author Henrique Dias, Alexandre Reis
  * @package MathPocket
  */
 
@@ -315,10 +315,10 @@ class User {
 
         if ($user == null || $pass == null) {
 
-            $result['status'] = 7;
+            $result['status'] = 7; //Responde isto se faltarem dados
 
-            header('Content-type: application/json');
-            echo json_encode($result);  
+            header('Content-type: application/json');  //coloca o cabeçalho a identificar o tipo json
+            echo json_encode($result);   //Codifica em  Json
 
         } else {
 
@@ -384,6 +384,7 @@ class User {
                             
             } else {
                
+                //Dados errados!!!
                 $result['status'] = 8;
 
                 ob_end_clean();
@@ -393,7 +394,7 @@ class User {
         }
     }
 
-    function loggedIn($cookies = true) {
+    function loggedIn($cookies = true, $json = true) {
         if ($this->loginVar AND !isset($_SESSION)) {
             session_start();
         }
@@ -423,15 +424,20 @@ class User {
             }
         }
 
-        $user = array();
-        $user['user'] = $_SESSION[$this->keyPrefix . 'user'];
-
-        $session_json = json_encode($user);
-
-        echo "<script>
-             var user = eval('( "  . $session_json .  ")');
-            </script>";
         
+        if ($json) {
+
+            $user = array();
+            $user['user'] = $_SESSION[$this->keyPrefix . 'user'];
+
+            $session_json = json_encode($user);
+
+            echo "<script>
+                 var user = eval('( "  . $session_json .  ")');
+                </script>";
+                
+        }
+    
         return true;
     }
     

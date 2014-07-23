@@ -3,7 +3,7 @@
 /**
  * PAGE CLASS
  *
- * @author Henrique Dias
+ * @author Henrique Dias, Alexandre Reis
  * @package MathPocket
  */
 

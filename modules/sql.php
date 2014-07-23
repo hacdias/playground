@@ -3,7 +3,7 @@
 /**
 * SQL CLASS
 *
-* @author Henrique Dias
+* @author Henrique Dias, Alexandre Reis
 * @package MathPocket
 *
 * @todo Rever e adicionar maisw

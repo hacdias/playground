@@ -1,4 +1,13 @@
+var failMessage = 'Não conseguimos concluir o seu pedido!';;
 
+$(document).on({
+    ajaxStart: function() { 
+        $("body").addClass("loading"); 
+    },
+    ajaxStop: function() { 
+        $("body").removeClass("loading");  
+    }    
+});
 
 function page(name) {
     window.scrollTo(0, 0);
@@ -29,19 +38,7 @@ $(window).bind('popstate', function(event) {
 
 history.replaceState({ path: window.location.href }, '');
 
-/* OUTROS */
-
-$(document).on({
-    ajaxStart: function() { 
-        $("body").addClass("loading"); 
-    },
-    ajaxStop: function() { 
-        $("body").removeClass("loading");  
-    }    
-});
-
 function actionFavLater(id, thing, action) {
-    failM = 'Não conseguimos concluir o seu pedido!';
 
     data = 'id=' + id + '&user=' +  user.user;
 
@@ -61,61 +58,78 @@ function actionFavLater(id, thing, action) {
             data: data,
             dataType: 'json'
         }).done(function(response) {
+
             if(response.status == 0) {
 
-               switch (thing) {
+                var animRight = "-moz-animation: rotateRight 1s ease;-webkit-animation: rotateRight 1s ease;-ms-animation: rotateRight 1s ease;-o-animation: rotateRight 1s ease; animation: rotateRight 1s ease;";
 
-                    case 'later':
-                        if (action == 'rem') {
+                var animLeft = "-moz-animation: rotateLeft 1s ease;-webkit-animation: rotateLeft 1s ease;-ms-animation: rotateLeft 1s ease;-o-animation: rotateLeft  1s ease;animation: rotateLeft 1s ease;";
 
-                            $('#later-' + id).html("<button class='user_actions' id='addLater' onclick=" + 'javascript:actionFavLater(' + id + ',' + "'later'" + ',' + "'add'" + ");" + "><img src='/imgs/icons/plus.svg'></button>");
-                            removeAnimation(id);
+                if (action == 'rem') {
 
-                        } else if (action == 'add') {
+                    if (thing == 'later') {
 
-                            $('#later-' + id).html("<button class='user_actions' id='remLater' onclick=" + 'javascript:actionFavLater(' + id + ',' + "'later'" + ',' + "'rem'" + ");" + "><img src='/imgs/icons/minus.svg'></button>");
-                        
-                        }
-                        break;
+                        $('#later-' + id + ' button').attr({'class': 'user_actions addLater',
+                                            'onclick': 'javascript:actionFavLater(' + id + ',' + "'later'" + ',' + "'add'" + ");",
+                                            'style' : animLeft});
 
-                    case 'fav':
-                        if (action == 'rem') {
-                            
-                            $('#fav-' + id).html("<button class='user_actions' id='addFav' onclick=" + 'javascript:actionFavLater(' + id + ',' + "'fav'" + ',' + "'add'" + ");" + "><img src='/imgs/icons/star.svg'></button>");
-                            removeAnimation(id);
+                    } else if (thing == 'fav') {
 
-                        } else if (action == 'add') {
+                        $('#fav-' + id + ' button').attr({'class': 'user_actions addFav',
+                                            'onclick': 'javascript:actionFavLater(' + id + ',' + "'fav'" + ',' + "'add'" + ");",
+                                            'style' : animLeft});
+                    }
 
-                            $('#fav-' + id).html("<button class='user_actions' id='remFav' onclick=" + 'javascript:actionFavLater(' + id + ',' + "'fav'" + ',' + "'rem'" + ");" + "><img src='/imgs/icons/unstar.svg'></button>");
-                        
-                        }
-                        break;
+                    removeAnimation(id);
 
-                    default:
-                        break;
+                } else if (action == 'add') {
 
-               }
+                    if (thing == 'later') {
 
+                        $('#later-' + id + ' button').attr({'class': 'user_actions remLater',
+                                            'onclick': 'javascript:actionFavLater(' + id + ',' + "'later'" + ',' + "'rem'" + ");",
+                                            'style' : animRight});
+
+                    } else if (thing == 'fav') {
+
+                        $('#fav-' + id + ' button').attr({'class': 'user_actions remFav',
+                                            'onclick': 'javascript:actionFavLater(' + id + ',' + "'fav'" + ',' + "'rem'" + ");",
+                                            'style' : animRight});
+                    }
+
+                }
+
+                id = null;
+                thing = null;
+                action = null;
 
             } else if (response.status == 2) {
+
                 alert('Já tem esse item na lista!');
                 list = null;
+
             } else {
-                alert(failM);
+
+                alert(failMessage);
                 list = null;
                 console.log('Error code given by PHP: ' + response.status);
+
             }
+
         }).fail(function(xhr, desc, err) {
-            alert(failM);
+            alert(failMessage);
+
             console.log(xhr);
             console.log("Details: " + desc + "\nError:" + err);
+
         });
 
     } else {
-        alert(failM);
+
+        alert(failMessage);
         console.log('Error 1.');
+
     }
-    
 
     data = null;
     url = null;
@@ -124,7 +138,7 @@ function actionFavLater(id, thing, action) {
 
 function removeAnimation(id) {
     var path = window.location.pathname;
-    
+
     if (path.indexOf('favorites') > -1 || path.indexOf('readlater') > -1) {
 
         $('#item-' + id).fadeTo('fast', 0);
@@ -132,11 +146,11 @@ function removeAnimation(id) {
             $('#item-' + id).hide();
         }, 600);
     }
+
+    path = null;
 }
 
 function login() {
-    failM = 'Não conseguimos concluir o seu pedido!';
-
     data = $('#login_form').serialize();
 
     $.ajax({
@@ -150,7 +164,7 @@ function login() {
 
             case 0:
                 $('#sidebar').load('/router.php?url=sidebar');
-                page('');
+                history.go(-1);
                 break;
 
             case 7:
@@ -162,13 +176,13 @@ function login() {
                 break;
 
             default:
-                $('#advice').html("<p class='advice'>" + failM + "</p>").effect( "shake");
+                $('#advice').html("<p class='advice'>" + failMessage + "</p>").effect( "shake");
                 console.log('Error code given by PHP: ' + response.status);
                 break;
         }
 
     }).fail(function(xhr, desc, err) {
-        alert(failM);
+        alert(failMessage);
 
         console.log(xhr);
         console.log("Details: " + desc + "\nError:" + err);
@@ -178,9 +192,28 @@ function login() {
 
 }
 
-function registration() {
-    failM = 'Não conseguimos concluir o seu pedido!';
+function logout() {
 
+    $.ajax({
+        url: '/router.php?url=action/logout',
+        dataType: 'json'
+    }).done(function(response) {
+
+        if(response.status == 0) {
+            $('#sidebar').load('/router.php?url=sidebar');
+            page('');
+        }
+
+    }).fail(function(xhr, desc, err) {
+        alert(failMessage);
+
+        console.log(xhr);
+        console.log("Details: " + desc + "\nError:" + err);
+    });
+
+}
+
+function registration() {
     data = $('#register_form').serialize();
 
     $.ajax({
@@ -192,7 +225,7 @@ function registration() {
 
         switch (response.status) {
             case 0:
-                $('#advice').html("<p class='advice back_green'>Inscrito com sucesso!</p>").effect("slide");
+                $('#advice').html("<p class='advice back_green'>Inscrito com sucesso!</p>").effect("slide"); 
                 setTimeout(function() {
                     page('user/login');
                 }, 2000);
@@ -211,7 +244,7 @@ function registration() {
         }
 
     }).fail(function(xhr, desc, err) {
-        alert(failM);
+        alert(failMessage);
 
         console.log(xhr);
         console.log("Details: " + desc + "\nError:" + err);
@@ -221,48 +254,32 @@ function registration() {
 
 }
 
-function logout() {
-
-    $.ajax({
-        url: '/router.php?url=action/logout',
-        dataType: 'json'
-    }).done(function(response) {
-        if(response.status == 0) {
-            $('#sidebar').load('/router.php?url=sidebar');
-            page('');
-        }
-    }).fail(function(xhr, desc, err) {
-        console.log(xhr);
-        console.log("Details: " + desc + "\nError:" + err);
-    });
-
-}
-
 function updateConfig() {
-
     data = $('#config_form').serialize();
 
-    failM = 'Não conseguimos concluir o seu pedido!';
-
     $.ajax({
-        type: 'POST',
+        type: 'POST', 
         url: '/router.php?url=action/update_conf',
         data: data,
-        dataType: 'json'
+        dataType: 'json' 
     }).done(function(response) {
 
         switch (response.status) {
+
             case 0:
                 $('#sidebar').load('/router.php?url=sidebar');
                 page('profile/' + user.user);
                 break;
 
             default:
+                alert(failMessage);
+                console.log('Error:' + response.status);
                 break;
+
         }
 
     }).fail(function(xhr, desc, err) {
-        alert(failM);
+        alert(failMessage);
 
         console.log(xhr);
         console.log("Details: " + desc + "\nError:" + err);

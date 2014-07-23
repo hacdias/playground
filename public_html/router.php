@@ -3,7 +3,7 @@
 /**
  * ROUTER
  *
- * @author Henrique Dias
+ * @author Henrique Dias, Alexandre Reis
  * @package MathPocket
  */
 
@@ -66,71 +66,34 @@ function dictionary() {
 
 	} else {
 
-		if ($DATA['url'][1] == 'item') {
-
-			if (!isset($DATA['url'][2])) {
-
-				$page->allItems();
-
-			} else {
-
-				$page->item($DATA['url'][2]);
-
-			}
-
-		} else if (is_numeric($DATA['url'][1])) {
+		if (is_numeric($DATA['url'][1])) {
 
 			$n = $DATA['url'][1];
 			$page->allItems($n);
 
-		} else if ($DATA['url'][1] == 'category') {
+		} else if (isset($DATA['url'][2])) {
 
-			if (!isset($DATA['url'][2])) {
-
-				$page->allItems();
-
+			if (is_numeric($DATA['url'][2])) {
+				$page->category($DATA['url'][1], $DATA['url'][2]);
 			} else {
-
-				if (isset($DATA['url'][3]) && is_numeric($DATA['url'][3])) {
-					$page->category($DATA['url'][2], $DATA['url'][3]);
-				} else {
-					$page->category($DATA['url'][2]);
-				}
-
-				
+				$page->item($DATA['url'][2]);
 			}
 
 		} else if ($DATA['url'][1] == 'favorites') {
 
-			if($DATA['user']->loggedIn()) {
+			($DATA['user']->loggedIn(true, false)) ? $page->listFavLater($_SESSION['user_user'], 'favs') : Base::needLogin();
 
-				$page->listFavLater($_SESSION['user_user'], 'favs');
-
-			} else {
-
-				Base::needLogin();
-
-			} 
 
 		} else if ($DATA['url'][1] == 'readlater') {
 
-			if($DATA['user']->loggedIn()) {
-
-				$page->listFavLater($_SESSION['user_user'], 'later');
-
-			} else {
-
-				Base::needLogin();
-
-			} 
+			($DATA['user']->loggedIn(true, false)) ? $page->listFavLater($_SESSION['user_user'], 'later') : Base::needLogin();
 
 		} else {
 
-			$page = new Piece('404', 'red');
+			$page->category($DATA['url'][1]);
 
 		}
-	}
-		
+	}	
 }
 
 function profile() {

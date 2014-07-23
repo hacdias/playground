@@ -3,7 +3,7 @@
 /**
  * BASE CLASS with common functions
  *
- * @author Henrique Dias
+ * @author Henrique Dias, Alexandre Reis
  * @package MathPocket
  */
 
