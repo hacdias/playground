@@ -11,7 +11,7 @@ require_once('config.php');
 
 class User {
 
-	var $database = 'MathPocket';
+	var $database = 'MathSpot';
     var $usersTable = 'users';
 
     var $fields = array(
