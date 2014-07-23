@@ -130,7 +130,7 @@ button:hover {
 
 #header
 {
-	background-color: white;
+	background-color: rgba(255,255,255,0.95);
 	box-shadow: 0px 1px 5px rgba(0,0,0,.26);
 	height:3em;
 	left:0;
@@ -262,7 +262,7 @@ button:hover {
 	visibility:hidden;
 	width:250px;
 	z-index: 2;
-	box-shadow: 1px 0 5px rgba(0,0,0,.26);
+	/* box-shadow: 1px 0 5px rgba(0,0,0,.26); */
 }
 
 #menu ~ body
@@ -387,12 +387,6 @@ button:hover {
 	color:rgba(0,0,0,0.63);
 	font-size:5.5em;
 	text-align: left;
-	transition:color .5s ease;
-}
-
-.main h1:hover
-{
-	color:#02CCFF;
 }
 
 .main .logo
@@ -1022,6 +1016,7 @@ button:hover {
 	display:inline-block;
 	font-size:3.5em;
 	vertical-align:middle;
+	margin: 0.2em 0;
 }
 
 .profile .color_section .photo img
@@ -1206,7 +1201,7 @@ body.loading .modal {
 }
 
 .items:hover {
-	box-shadow: rgba(0, 0, 0, 0.258824) 0px 2px 20px;
+	box-shadow: rgba(0, 0, 0, 0.258824) 0px 2px 10px;
 }
 
 .items h2

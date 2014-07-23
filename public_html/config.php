@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_URI'] == '/config.php' || $_SERVER['REQUEST_URI'] == '/rou
 	header( 'Location: ' . HOST_URL . '/404' );
 }
 
-define('HOST_DIR', 'D:/Dev/mathpocket');
+define('HOST_DIR', 'D:/Dev/mathspot');
 define('SITE_NAME', 'MathSpot');
 
 foreach (glob(HOST_DIR . "/modules/*.php") as $filename) {
