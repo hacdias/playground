@@ -3,7 +3,7 @@
 /**
  * INDEX
  *
- * @author Henrique Dias, Alexandre Reis
+ * @author Henrique Dias <me@henriquedias.com>
  * @package MathPocket
  *
  */

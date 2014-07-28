@@ -1,18 +1,35 @@
 <?php
 
 /**
- * BASE CLASS with common functions
+ * This class has the basic functions of MathSpot. These functions
+ * can be used in all source files.
  *
- * @author Henrique Dias, Alexandre Reis
- * @package MathPocket
+ * @author		Henrique Dias <me@henriquedias.com>
+ * @package		MathPocket
+ * @subpackage	Base
  */
 
 class Base {
 
+
+	/**
+	 * Views Directory.
+	 *
+	 * @param	string $page	The name  of the .html page that is saved in /views/ directory.
+	 *
+	 * @return	The method returns the URL to the HTML page ($page).
+	 */
 	static public function viewsDir($page) {
 		return HOST_DIR . '/views/' . $page . '.html';
 	}
 
+	/**
+	 * Clean String.
+	 *
+	 * @param	string $string	The string to be cleaned.
+	 * @return	The method returns a string "slugged".
+	 *
+	 */
 	static public function cleanString($string) {
 
 		return strtolower(trim(preg_replace('~[^0-9a-z]+~i', '-', 
@@ -21,6 +38,12 @@ htmlentities($string, ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8')), '-'));
 
 	}
 
+	/**
+	 * File Hash
+	 * 
+	 * @param	string $dir	The file directory.
+	 * @return	MD5 hash of the file.
+	 **/
 	static public function fileHash($dir) {
 		return md5_file(HOST_DIR . $dir);
 	}

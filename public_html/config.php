@@ -3,7 +3,7 @@
 /**
  * CONFIGURATION FILE
  *
- * @author Henrique Dias, Alexandre Reis
+ * @author Henrique Dias <me@henriquedias.com>
  * @package MathPocket
  */
 
@@ -31,8 +31,8 @@ $db 	  = 'mathspot';
 
 try {
 
-	$DATA['db'] = new PDO('mysql:host=' . $host . ';dbname=' . $db, $username, $password);
-	$DATA['db']->exec("SET NAMES 'utf8';");
+	$DATABASE = new PDO('mysql:host=' . $host . ';dbname=' . $db, $username, $password);
+	$DATABASE->exec("SET NAMES 'utf8';");
 
 	$dbStatus = true;
 

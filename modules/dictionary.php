@@ -3,7 +3,7 @@
 /**
 * DICTIONARY CLASS
 *
-* @author Henrique Dias, Alexandre Reis
+* @author Henrique Dias <me@henriquedias.com>
 * @package MathPocket
 */
 
@@ -11,23 +11,51 @@ require_once('config.php');
 
 class Dictionary {
 
+	/**
+	 * The max itens per page.
+	 * @var	int
+	 */
 	protected $maxItens = 15;
 
+	/**
+	 * Get Offset
+	 *
+	 * @param	int $n	Actual page number.
+	 * @return	the offset to be used in a query.
+	 */
 	protected function getOffset($n) {
 		return ($n - 1) * $this->maxItens;
 	}
 
-	protected function getMaxPage($query) {
-		return ceil($query / $this->maxItens); 
+	/**
+	 * Get Max Page
+	 *
+	 * @param	int	$n	number of itens.
+	 * @return	the max pages number.
+	 */
+	protected function getMaxPage($n) {
+		return ceil($n / $this->maxItens); 
 	}
 
-	protected function isInList($itemId, $user, $thing) {
-		$query = SQL::selectOneWhereLimit($thing, 'users', 'user', $user);
+	/**
+	 * Confirm if the $user has the item on the $list.
+	 *
+	 * There are only two lists: 'favs' and  'later'. Any 
+	 * other is invalid.
+	 *
+	 * @param	int $itemId		The ID of the item.
+	 * @param	string $user	The username of the user.
+	 * @param	string $list	The name of the list.
+	 *
+	 * @return	a boolean value or 'Error' if an error occurred.
+	 */
+	protected function isInList($itemId, $user, $list) {
+		$query = SQL::selectWhereLimit($list, 'users', 'user', $user);
 
 		if ($query) {
 
 			foreach ($query as $item) {
-				$items = $item[$thing];
+				$items = $item[$list];
 			}
 
 			$isInList = false;
@@ -36,8 +64,9 @@ class Dictionary {
 
 			for ($i = 0; $i < count($items); $i++) {
 
-				if ($items[$i] == $itemId) {
+				if ($items[$i] === $itemId) {
 					$isInList = true;
+					break;
 				}
 
 			}
@@ -45,7 +74,9 @@ class Dictionary {
 			return $isInList;
 
 		} else {
+
 			return 'Error';
+
 		}
 	}
 
@@ -142,7 +173,7 @@ class Dictionary {
 	public function listFavLater($user, $thing) {
 		global $DATA;
 
-		$query = SQL::selectOneWhereLimit($thing, 'users', 'user', $user);
+		$query = SQL::selectWhereLimit($thing, 'users', 'user', $user);
 
 		if($query) {
 
@@ -174,118 +205,92 @@ class Dictionary {
 	static function actionFavLater($itemId = 0, $user, $thing, $action) {
 		global $DATA;
 
-		if ($DATA['user']->loggedIn() && $_SESSION['user_user'] == $user) {
+		$result = array();
 
-			$result = array();
+		do {
 
-			if ($itemId != 0) {
+			if ( !$DATA['user']->loggedIn() && !$_SESSION['user_user'] == $user)
+				{ $result['status'] = 5; break; }
 
-				if (!User::exists($user)) {
+			if ( $itemId < 1 ) 
+				{ $result['status'] = 4; break; }
 
-					$result['status'] = 1;
+			if ( !User::exists($user) )
+				{ $result['status'] = 1; break; }
 
-				} else {
+			$query = SQL::selectWhereLimit($thing, 'users', 'user', $user);
 
-					$query = SQL::selectOneWhereLimit($thing, 'users', 'user', $user);
+			if ( !$query ) 
+				{ $result['status'] = 3; break; }
 
-					if($query) {
+			foreach ($query as $item) {
+				$new = $item[$thing];
+			}
 
-						foreach ($query as $item) {
-							$new = $item[$thing];
-						}
+			$confirm = explode(',', $new);
 
-						$confirm = explode(',', $new);
+			$alsoExists = false;
 
-						$alsoExists = false;
+			for ($i = 0; $i < count($confirm); $i++) {
 
-						for ($i = 0; $i < count($confirm); $i++) {
+				if($confirm[$i] === $itemId) {
 
-							if($confirm[$i] == $itemId) {
+					$alsoExists = true;
 
-								$alsoExists = true;
-
-							}
-
-						}
-
-						if (!$alsoExists) {
-
-							if ($action == 'add') {
-
-								$new .= $itemId . ',';
-
-								if(SQL::updateOne('users', $thing, $new, 'user', $user)) {
-
-									$result['status'] = 0;
-
-								} else {
-
-									$result['status'] = 3;
-
-								}
-
-							} else if ($action == 'rem') {
-
-								$result['status'] = 6;
-
-							}
-
-
-						} else {
-
-							if ($action == 'add') {
-
-								$result['status'] = 2;
-
-							} else if ($action == 'rem') {
-
-								$new = str_replace($itemId . ',', '', $new);
-
-								if(SQL::updateOne('users', $thing, $new, 'user', $user)) {
-
-									$result['status'] = 0;
-
-								} else {
-
-									$result['status'] = 3;
-
-								}
-
-							} else {
-
-								$result['status'] = 6;
-
-							}
-						}
-
-					} else {
-
-						$result['status'] = 3;
-
-					}
 				}
-
-			} else {
-
-				$result['status'] = 4;
 
 			}
 
-		} else {
+			if (!$alsoExists) {
 
-			$result['status'] = 5;
+				if ($action == 'add') {
 
-		}
+					$new .= $itemId . ',';
+
+					$result['status'] = ( SQL::updateOne('users', $thing, $new, 'user', $user) ) ? 0 : 3;
+
+				} else if ($action == 'rem') {
+
+					$result['status'] = 6;
+
+				}
+
+
+			} else {
+
+				if ($action == 'add') {
+
+					$result['status'] = 2;
+
+				} else if ($action == 'rem') {
+
+					$new = str_replace($itemId . ',', '', $new);
+
+					$result['status'] = ( SQL::updateOne('users', $thing, $new, 'user', $user) ) ? 0 : 3;
+
+				} else {
+
+					$result['status'] = 6;
+
+				}
+			}
+
+		} while (0);
 
 		ob_end_clean();
 		header('Content-type: application/json');
 		echo json_encode($result);
+
 	}
+
+	/**
+	 * @todo complete this:
+	 */
 
 	function lastThreeAdded($user, $thing) {
 		global $DATA;
 
-		$query = SQL::selectOneWhereLimit($thing, 'users', 'user', $user); 
+		$query = SQL::selectWhereLimit($thing, 'users', 'user', $user); 
 
 		if ($query)  {
 

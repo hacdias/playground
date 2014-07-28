@@ -3,7 +3,7 @@
 /**
  * USER CLASS
  *
- * @author Henrique Dias, Alexandre Reis
+ * @author Henrique Dias <me@henriquedias.com>
  * @package MathPocket
  */
 
@@ -36,7 +36,7 @@ class User {
     static public function exists($user) {
         global $DATA;
 
-        $confirmIfExists = SQL::selectOneWhereLimit('user', 'users', 'user', $user);
+        $confirmIfExists = SQL::selectWhereLimit('user', 'users', 'user', $user);
 
         if ($confirmIfExists) {
 
@@ -52,7 +52,7 @@ class User {
     static public function getInfo($user, $info) {
         global $DATA;
 
-        $results = SQL::selectOneWhereLimit($info, 'users', 'user', $user);
+        $results = SQL::selectWhereLimit($info, 'users', 'user', $user);
 
         if ($results) {
 
@@ -80,7 +80,7 @@ class User {
                         '3'    =>  '#e74c3c',
                         '4'    =>  '#FF9500');
 
-        $results = SQL::selectOneWhereLimit('color', 'users', 'user', $user);
+        $results = SQL::selectWhereLimit('color', 'users', 'user', $user);
 
         if ($results) {
             
@@ -119,7 +119,7 @@ class User {
     static public function isAdmin($user) {
         global $DATA;
 
-        $sql = SQL::selectOneWhere('type', 'users', 'user', $user);
+        $sql = SQL::selectWhere('type', 'users', 'user', $user);
 
         if ($sql) {
 
