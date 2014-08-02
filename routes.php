@@ -81,12 +81,12 @@ function dictionary() {
 
 		} else if ($DATA['url'][1] == 'favorites') {
 
-			($DATA['user']->loggedIn(true, false)) ? $page->listFavLater($_SESSION['user_user'], 'favs') : Base::needLogin();
+			($DATA['user']->loggedIn(true, false)) ? $page->listFavLater($_SESSION['user_user'], 'favs') : Helper::needLogin();
 
 
 		} else if ($DATA['url'][1] == 'readlater') {
 
-			($DATA['user']->loggedIn(true, false)) ? $page->listFavLater($_SESSION['user_user'], 'later') : Base::needLogin();
+			($DATA['user']->loggedIn(true, false)) ? $page->listFavLater($_SESSION['user_user'], 'later') : Helper::needLogin();
 
 		} else {
 
@@ -111,7 +111,7 @@ function profile() {
 
 		} else {
 
-			Base::needLogin();
+			Helper::needLogin();
 
 		}		
 	}
@@ -161,7 +161,7 @@ function user() {
 
 				} else {
 
-					Base::needLogin();
+					Helper::needLogin();
 				}
 
 				break;

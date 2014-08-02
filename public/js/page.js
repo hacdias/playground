@@ -16,7 +16,7 @@ function page(name) {
 
     history.pushState({ path: url },'',url);
 
-    $("#wrap").load("/router.php?url=" + name);
+    $("#wrap").load("/index.php?load=main&url=" + name);
 
     return false;
 }
@@ -32,7 +32,7 @@ $(window).bind('popstate', function(event) {
     }
 
     if (state) {
-        $('#wrap').load("/router.php?url=" + path);
+        $('#wrap').load("/index.php?load=main&url=" + path);
     }
 });
 
@@ -45,10 +45,10 @@ function actionFavLater(id, thing, action) {
     if (thing == 'fav' || thing == 'later') { 
 
         if (thing == 'fav') {
-            url = '/router.php?url=action/' + action + 'Fav';
+            url = '/index.php?load=main&url=action/' + action + 'Fav';
             list = 'Favoritos';
         } else if (thing == 'later') {
-            url = '/router.php?url=action/' + action + 'Later';
+            url = '/index.php?load=main&url=action/' + action + 'Later';
             list = 'Ler Mais Tarde';
         } 
 
@@ -155,7 +155,7 @@ function login() {
 
     $.ajax({
         type: 'POST',
-        url: '/router.php?url=action/login',
+        url: '/index.php?load=main&url=action/login',
         data: data,
         dataType: 'json'
     }).done(function(response) {
@@ -163,7 +163,7 @@ function login() {
         switch (response.status) {
 
             case 0:
-                $('#sidebar').load('/router.php?url=sidebar');
+                $('#sidebar').load('/index.php?load=main&url=sidebar');
                 history.go(-1);
                 break;
 
@@ -195,12 +195,12 @@ function login() {
 function logout() {
 
     $.ajax({
-        url: '/router.php?url=action/logout',
+        url: '/index.php?load=main&url=action/logout',
         dataType: 'json'
     }).done(function(response) {
 
         if(response.status == 0) {
-            $('#sidebar').load('/router.php?url=sidebar');
+            $('#sidebar').load('/index.php?load=main&url=sidebar');
             page('');
         }
 
@@ -218,7 +218,7 @@ function registration() {
 
     $.ajax({
         type: 'POST',
-        url: '/router.php?url=action/register',
+        url: '/index.php?load=main&url=action/register',
         data: data,
         dataType: 'json'
     }).done(function(response) {
@@ -259,7 +259,7 @@ function updateConfig() {
 
     $.ajax({
         type: 'POST', 
-        url: '/router.php?url=action/update_conf',
+        url: '/index.php?load=main&url=action/update_conf',
         data: data,
         dataType: 'json' 
     }).done(function(response) {
@@ -267,7 +267,7 @@ function updateConfig() {
         switch (response.status) {
 
             case 0:
-                $('#sidebar').load('/router.php?url=sidebar');
+                $('#sidebar').load('/index.php?load=main&url=sidebar');
                 page('profile/' + user.user);
                 break;
 

@@ -23,8 +23,8 @@ class Sql {
 	static public function select($column, $table) {
 		global $DATABASE;
 
-		$DATABASE->prepare("SELECT ? FROM ?");
-		return $DATABASE->execute($column, $table);
+		$query = $DATABASE->prepare("SELECT ? FROM ?");
+		return $query->execute(array($column, $table));
 	}
 
 	/**
@@ -35,8 +35,8 @@ class Sql {
 	static public function selectAll($table) {
 		global $DATABASE;
 
-		$DATABASE->prepare('SELECT * FROM ?');
-		return $DATABASE->execute($table);
+		$query = $DATABASE->prepare('SELECT * FROM ?');
+		return $query->execute(array($table));
 	}
 
 	/**
@@ -51,8 +51,8 @@ class Sql {
 	static public function selectWhere($column, $table, $first, $second) {
 		global $DATABASE;
 
-		$DATABASE->prepare("SELECT ? FROM ? WHERE ? = '?'");
-		return $DATABASE->execute($column, $table, $first, $second);
+		$query = "SELECT " . $column . " FROM " . $table . " WHERE " .  $first . " = '" . $second . "'";
+		return $DATABASE->query($query);
 	}
 
 	/**
@@ -66,8 +66,8 @@ class Sql {
 	static public function selectAllWhere($table, $first, $second) {
 		global $DATABASE;
 
-		$DATABASE->prepare("SELECT * FROM ? WHERE ? ='?'")
-		return $DATABASE->execute($table, $first, $second);
+		$query = "SELECT * FROM " . $table . " WHERE " .  $first . " = '" . $second . "'";
+		return $DATABASE->query($query);
 	}
 
 	/**
@@ -80,8 +80,8 @@ class Sql {
 	static public function selectOrder($column, $table, $something) {
 		global $DATABASE;
 
-		$DATABASE->prepare('SELECT ? FROM ? ORDER BY ?');
-		return $DATABASE->execute($column, $table, $something);
+		$query = $DATABASE->prepare('SELECT ? FROM ? ORDER BY ?');
+		return $query->execute(array($column, $table, $something));
 	}
 
 	/**
@@ -93,8 +93,8 @@ class Sql {
 	static public function selectAllOrder($table, $somthing) {
 		global $DATABASE;
 
-		$DATABASE->prepare('SELECT * FROM ? ORDER BY ?')
-		return $DATABASE->execute($table, $something);
+		$query = $DATABASE->prepare('SELECT * FROM ? ORDER BY ?');
+		return $query->execute(array($table, $something));
 	}
 
 	/**
@@ -107,8 +107,8 @@ class Sql {
 	static public function selectLimit($column, $table, $limit) {
 		global $DATABASE;
 
-		$DATABASE->prepare('SELECT ? FROM ? LIMIT ?');
-		return $DATABASE->execute($column, $table, $limit);
+		$query = $DATABASE->prepare('SELECT ? FROM ? LIMIT ?');
+		return $query->execute(array($column, $table, $limit));
 	}
 
 	/**
@@ -120,8 +120,8 @@ class Sql {
 	static public function selectAllLimit($table, $limit) {
 		global $DATABASE;
 
-		$DATABASE->prepare('SELECT * FROM ? LIMIT ?');
-		return $DATABASE->execute($table, $limit);
+		$query = $DATABASE->prepare('SELECT * FROM ? LIMIT ?');
+		return $query->execute(array($table, $limit));
 	}
 
 	/**
@@ -135,8 +135,8 @@ class Sql {
 	static public function selectLimitOffset($column, $table, $limit, $offset) {
 		global $DATABASE;
 
-		$DATABASE->prepare('SELECT ? FROM ? OFFSET ?');
-		return $DATABASE->execute($column, $table, $limit, $offset);
+		$query = $DATABASE->prepare('SELECT ? FROM ? OFFSET ?');
+		return $query->execute(array($column, $table, $limit, $offset));
 	}
 
 	/**
@@ -149,8 +149,8 @@ class Sql {
 	static public function selectAllLimitOffset($table, $limit, $offset) {
 		global $DATABASE;
 
-		$DATABASE->prepare('SELECT * FROM ? LIMIT ? OFFSET ?');
-		return $DATABASE->execute($table, $limit, $offset);
+		$query = $DATABASE->prepare('SELECT * FROM ? LIMIT ? OFFSET ?');
+		return $query->execute(array($table, $limit, $offset));
 	}
 
 

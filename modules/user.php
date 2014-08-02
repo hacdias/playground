@@ -98,21 +98,12 @@ class User {
     }
 
     static public function getPhoto($user) {
-        $filename = HOST_URL . '/imgs/users/' . $user . '_big.png';
-        $file_headers = @get_headers($filename);
-
-        if ($file_headers[0] == 'HTTP/1.1 404 Not Found' || $file_headers[0] == 'HTTP/1.0 404 Not Found'){
-
-            return 'default';
-
-        } else if ($file_headers[0] == 'HTTP/1.0 302 Found' && $file_headers[7] == 'HTTP/1.0 404 Not Found'){
-
-            return 'default';
-
-        } else {
-
+        $filename = ROOT . DS . 'public' . DS . 'imgs' . DS . 'users' . DS . $user . '_big.png';
+        
+        if (file_exists($filename)) {
             return $user;
-
+        } else {
+            return 'default';
         }
     }
 
@@ -145,7 +136,7 @@ class User {
 
         } else {
 
-            $page = new Template(Base::viewsDir('profile'));
+            $page = new Template(Helper::viewsDir('profile'));
             $page->COLOR = User::getColor($user);
 
             $name = User::getInfo($user, 'name');
@@ -177,7 +168,7 @@ class User {
 
         } else {
 
-            $page = new Template(Base::viewsDir('user.config'));
+            $page = new Template(Helper::viewsDir('user.config'));
 
             $color = User::getColor($user);
             $bio = User::getInfo($user, 'bio');
@@ -246,7 +237,7 @@ class User {
     }
     
     protected function confirmUser($user, $pass) {
-        global $DATA;
+        global $DATABASE;
 
         $pass = $this->encryptPass($pass);
 
@@ -257,7 +248,7 @@ class User {
                     AND
                      `{$this->fields['pass']}` = '{$pass}'";
 
-        $query = $DATA['db']->prepare($sql);
+        $query = $DATABASE->prepare($sql);
         $query->execute();
 
         if ($query) {
@@ -309,7 +300,8 @@ class User {
     }
 
     function login($user, $pass, $remember = false) {    
-        global $DATA;        
+        global $DATA;     
+        global $DATABASE;   
 
         $result = array();
 
@@ -343,7 +335,7 @@ class User {
                             FROM `{$this->database}`.`{$this->usersTable}`
                             WHERE `{$this->fields['user']}` = '{$user}'";
 
-                    $query = $DATA['db']->query($sql);
+                    $query = $DATABASE->query($sql);
                     
                     if (!$query) {
 
@@ -474,20 +466,21 @@ class User {
     }
 
     function registration($name, $user, $pass) {
-        global $DATA;       
+        global $DATA; 
+        global $DATABASE;      
 
         $result = array();
 
         if (!$name == '' && !$user == '' && !$pass == '')  {
 
-            $confirmIfExists = $DATA['db']->query("SELECT * FROM users WHERE user = '" . $user ."';");
+            $confirmIfExists = $DATABASE->query("SELECT * FROM users WHERE user = '" . $user ."';");
 
             if ($confirmIfExists->rowCount() == 0) {
 
                 $pass = $this->encryptPass($pass);
 
                 $query =  "INSERT INTO users(name, user, password) VALUES ('".$name."', '".$user."', '".$pass."')";
-                $DATA['db']->query($query);
+                $DATABASE->query($query);
 
                 $result['status'] = 0;
 

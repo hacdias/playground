@@ -7,8 +7,6 @@
 * @package MathPocket
 */
 
-require_once('config.php');
-
 class Dictionary {
 
 	/**
@@ -89,7 +87,7 @@ class Dictionary {
 
 		} else {
 
-			$page = new Template(Base::viewsDir("items"));
+			$page = new Template(Helper::viewsDir("items"));
 
 			foreach($items as $item){
 
@@ -106,10 +104,10 @@ class Dictionary {
 				}
 
 				$page->TITLE = $item['title'];
-				$page->UTITLE = Base::cleanString($item['title']);
+				$page->UTITLE = Helper::cleanString($item['title']);
 				$page->DESCRIPTION = $item['description'];
 				$page->CATEGORY = $item['category'];
-				$page->UCATEGORY = Base::cleanString($item['category']);
+				$page->UCATEGORY = Helper::cleanString($item['category']);
 				$page->block("ITEM");
 			}
 
@@ -148,8 +146,12 @@ class Dictionary {
 		} else {
 
 			$items = SQL::selectAllWhere('i_con', 'u_title', $utitle);
-			$this->display($items);
 
+			if (!$items) {
+				$page = new Piece('404', 'red');
+			} else  {
+				$this->display($items);
+			}
 		}
 	}
 
@@ -339,7 +341,7 @@ class Dictionary {
 
 		}
 		
-		$itemsNumber = ($DATA['db']->query($query))->rowCount();
+		$itemsNumber = ($DATABASE->query($query))->rowCount();
 
 		$query .= 	
 

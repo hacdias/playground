@@ -9,7 +9,7 @@
  * @subpackage	Base
  */
 
-class Base {
+class Helper {
 
 
 	/**
@@ -20,7 +20,7 @@ class Base {
 	 * @return	The method returns the URL to the HTML page ($page).
 	 */
 	static public function viewsDir($page) {
-		return HOST_DIR . '/views/' . $page . '.html';
+		return ROOT . DS . 'views' . DS . $page . '.html';
 	}
 
 	/**
@@ -45,7 +45,7 @@ htmlentities($string, ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8')), '-'));
 	 * @return	MD5 hash of the file.
 	 **/
 	static public function fileHash($dir) {
-		return md5_file(HOST_DIR . $dir);
+		return md5_file(ROOT . $dir);
 	}
 
 	static public function needLogin() {

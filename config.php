@@ -7,16 +7,28 @@
  * @package MathPocket
  */
 
-define('HOST_URL', 'http://' . $_SERVER['HTTP_HOST']);
+define('SITE_NAME', 'MathSpot');
+define('DEVELOPMENT_ENVIRONMENT', true);
 
-if ($_SERVER['REQUEST_URI'] == '/config.php' || $_SERVER['REQUEST_URI'] == '/router.php') {  
-	header( 'Location: ' . HOST_URL . '/404' );
+if (DEVELOPMENT_ENVIRONMENT == true) {
+
+    error_reporting(E_ALL);
+    ini_set('display_errors','On');
+
+} else {
+
+    error_reporting(E_ALL);
+    ini_set('display_errors','Off');
+    ini_set('log_errors', 'On');
+    ini_set('error_log', ROOT . DS. 'error.log');
+
 }
 
-define('HOST_DIR', 'D:/Dev/mathspot');
-define('SITE_NAME', 'MathSpot');
+if ($_SERVER['REQUEST_URI'] == '/config.php' || $_SERVER['REQUEST_URI'] == '/router.php') {  
+	header( 'Location: ' . URL . '/404' );
+}
 
-foreach (glob(HOST_DIR . "/modules/*.php") as $filename) {
+foreach (glob(ROOT . DS . 'modules' . DS . '*.php') as $filename) {
     require_once($filename);
 }
 
@@ -49,5 +61,3 @@ if (!$dbStatus) {
 
 	die;
 }
-
-?>

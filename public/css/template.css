@@ -73,7 +73,8 @@ a
 
 html,body
 {
-	background-color: #f5f5f5;
+	background: #f5f5f5 url(/imgs/background.png);
+	background-attachment: fixed;
 	font-family: 'Open Sans', sans-serif;
 	font-size:16px;
 	height:100%;

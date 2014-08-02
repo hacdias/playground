@@ -7,8 +7,6 @@
  * @package MathPocket
  */
 
-require_once('config.php');
-
 class Piece {
 
 	protected $page;
@@ -31,6 +29,11 @@ class Piece {
 				$this->sidebar();
 				break;
 
+			case '404':
+				header('HTTP/1.0 404 Not Found');
+				$this->index();
+				break;
+
 			default:
 				$this->index();
 				break;
@@ -39,10 +42,10 @@ class Piece {
 
 	protected function header() {
 
-		$header = new Template(Base::viewsDir('header'));
+		$header = new Template(Helper::viewsDir('header'));
 		$header->LANG = 'pt-PT';
-		$header->CSS_VERSION = Base::fileHash('/public_html/css/template.css');
-		$header->JS_VERSION = Base::fileHash('/public_html/js/page.js');
+		$header->CSS_VERSION = Helper::fileHash(DS . 'public' . DS . 'css' . DS . 'template.css');
+		$header->JS_VERSION = Helper::fileHash(DS . 'public' . DS . 'js' . DS . 'page.js');
 
 		$header->SITE_NAME = SITE_NAME;
 
@@ -51,7 +54,7 @@ class Piece {
 
 	protected function footer() {
 
-		$footer = new Template(Base::viewsDir('footer'));
+		$footer = new Template(Helper::viewsDir('footer'));
 
 		$footer->SITE_NAME = SITE_NAME;
 		$footer->ABOUT = _('Sobre');
@@ -62,7 +65,7 @@ class Piece {
 	protected function sidebar() {
 		global $DATA;
 
-		$sidebar = new Template(Base::viewsDir('sidebar'));
+		$sidebar = new Template(Helper::viewsDir('sidebar'));
 
 		if ($DATA['user']->loggedIn() === false ) {
 
@@ -87,8 +90,8 @@ class Piece {
 	protected function index() {
 		global $DATA;
 
-		$DATA['page'] = new Template(Base::viewsDir($this->page));
-		$DATA['page']->COLOR = Base::cleanString($this->color);
+		$DATA['page'] = new Template(Helper::viewsDir($this->page));
+		$DATA['page']->COLOR = Helper::cleanString($this->color);
 
 		if ($DATA['page']->exists('SITE_NAME')) {
 			$DATA['page']->SITE_NAME = SITE_NAME;
@@ -97,5 +100,3 @@ class Piece {
 		$DATA['page']->show();
 	}
 }
-
-?>
