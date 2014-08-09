@@ -11,10 +11,12 @@ class Piece {
 
 	protected $page;
 	protected $color;
+	protected $options;
 
-	public function __construct($page = '', $color = 'blue') {
+	public function __construct($page = '', $color = 'blue', $options = array()) {
 		$this->page = $page;
 		$this->color = $color;
+		$this->options = $options;
 
 		switch ($page) {
 			case 'header':
@@ -67,6 +69,10 @@ class Piece {
 
 		$sidebar = new Template(Helper::viewsDir('sidebar'));
 
+		if (isset($this->options['load']) && $this->options['load'] === 'all')  {
+			$sidebar->block('ALL_1');
+		}
+
 		if ($DATA['user']->loggedIn() === false ) {
 
 			$sidebar->USER = 'default';
@@ -83,7 +89,11 @@ class Piece {
 			$sidebar->USERNAME =  $_SESSION['user_name'];
 			$sidebar->block('NAV_USER');
 		}
-		
+
+		if (isset($this->options['load']) && $this->options['load'] === 'all')  {
+			$sidebar->block('ALL_2');
+		}
+
 		$sidebar->show();
 	}
 
@@ -95,6 +105,10 @@ class Piece {
 
 		if ($DATA['page']->exists('SITE_NAME')) {
 			$DATA['page']->SITE_NAME = SITE_NAME;
+		}
+
+		if ($DATA['page']->exists('BASE_URL')) {
+			$DATA['page']->BASE_URL = URL;
 		}
 
 		$DATA['page']->show();

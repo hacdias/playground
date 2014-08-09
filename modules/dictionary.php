@@ -86,7 +86,6 @@ class Dictionary {
 	 * @param	int $n			Current page number
 	 * @param	string $url		Current URL
 	 */
-
 	protected function display($items, $maxPages = 1, $n = 0, $url = 'dictionary/') {
 		global $DATA;
 
@@ -142,6 +141,11 @@ class Dictionary {
 		}
 	}
 
+	/**
+	 * Display the all Items.
+	 *
+	 * @param	int $n	Current page number
+	 */
 	public function allItems($n = 1) {
 		$maxPages = $this->getMaxPage(SQL::rowNumber('i_con'));
 
@@ -151,6 +155,11 @@ class Dictionary {
 
 	}
 
+	/**
+	 * Display one item.
+	 *
+	 * @param	string $utitle	Item's slugged title.
+	 */
 	public function item($utitle) {
 
 		if (SQL::rowNumberWhere('i_con', 'u_title', $utitle) == 0) {
@@ -162,13 +171,23 @@ class Dictionary {
 			$items = SQL::selectAllWhere('i_con', 'u_title', $utitle);
 
 			if (!$items) {
+
 				$page = new Piece('404', 'red');
+
 			} else  {
+
 				$this->display($items);
+
 			}
 		}
 	}
 
+	/**
+	 * Display the items of a category.
+	 *
+	 * @param	string $ucategory	The slugged name of the category
+	 * @param	int $n						The current page number
+	 */
 	public function category($ucategory, $n = 1) {
 
 		if (SQL::rowNumberWhere('i_con', 'u_category', $ucategory) == 0) {

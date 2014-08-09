@@ -10,48 +10,52 @@
  * @subpackage	SQL
  */
 
-require_once('config.php');
-
 class Sql {
 
 	/**
 	 * Select one column from a table.
 	 *
-	 * @param	string $column	The name of the column.
-	 * @param	string $table	The name of the table.
+	 * @param   array $options    The list of options
+     * @return  PDOStatement
 	 */
-	static public function select($column, $table) {
+	static public function select($options = array()) {
 		global $DATABASE;
 
 		$query = $DATABASE->prepare("SELECT ? FROM ?");
-		return $query->execute(array($column, $table));
+		return $query->execute([
+            $options['column'],
+            $options['table']
+        ]);
 	}
 
 	/**
 	 * Select all columns from a table.
 	 *
-	 * @param	string $table	The name of the table.
+	 * @param   array $options  The list of options
+     * @return  PDOStatement
 	 */
-	static public function selectAll($table) {
+	static public function selectAll($options = array()) {
 		global $DATABASE;
 
 		$query = $DATABASE->prepare('SELECT * FROM ?');
-		return $query->execute(array($table));
+		return $query->execute([
+            $options['table']
+        ]);
 	}
 
 	/**
 	 * Select one $column from a $table where $first is equal
 	 * to $second.
 	 *
-	 * @param	string $column	The name of the column.
-	 * @param	string $table	The name of the table.
-	 * @param	string $first	The name of the column to compare.
-	 * @param	string $second	The content of the column $first.
+	 * @param   array $options The list of options
+     * @return  PDOStatement
 	 */
-	static public function selectWhere($column, $table, $first, $second) {
+	static public function selectWhere($options = array()) {
 		global $DATABASE;
 
-		$query = "SELECT " . $column . " FROM " . $table . " WHERE " .  $first . " = '" . $second . "'";
+		$query = "SELECT " . $options['column'] . " FROM " . $options['table'];
+		$query .= " WHERE " .  $options['first'] . " = '" . $options['second'] . "'";
+
 		return $DATABASE->query($query);
 	}
 
@@ -59,139 +63,220 @@ class Sql {
 	 * Select all columns from a $table where $first is equal
 	 * to $second.
 	 *
-	 * @param	string $table	The name of the table.
-	 * @param	string $first	The name of the column to compare.
-	 * @param	string $second	The content of the column $first.
+	 * @param   array $options  The list of options
+     * @return  PDOStatement
 	 */
-	static public function selectAllWhere($table, $first, $second) {
+	static public function selectAllWhere($options = array()) {
 		global $DATABASE;
 
-		$query = "SELECT * FROM " . $table . " WHERE " .  $first . " = '" . $second . "'";
+		$query = "SELECT * FROM " . $options['table'] . " WHERE ";
+		$query .= $options['first'] . " = '" . $options['second'] . "'";
+
 		return $DATABASE->query($query);
 	}
 
 	/**
 	 * Select one column from a table and order by something.
 	 *
-	 * @param	string $column		The name of the column to select.
-	 * @param	string $table		The name of the table to execute the query.
-	 * @param	string $something	Order the results by this.
+	 * @param   array $options  The list of options
+     * @return  PDOStatement
 	 */
-	static public function selectOrder($column, $table, $something) {
+	static public function selectOrder($options = array()) {
 		global $DATABASE;
 
 		$query = $DATABASE->prepare('SELECT ? FROM ? ORDER BY ?');
-		return $query->execute(array($column, $table, $something));
+		return $query->execute([
+            $options['column'],
+			$options['table'],
+			$options['something']
+        ]);
 	}
 
 	/**
 	 * Select all columns from a table and order by something.
 	 *
-	 * @param	string $table		The name of the table to execute the query.
-	 * @param	string $something	Order the results by this.
+	 * @param   array $options  The list of options
+     * @return  PDOStatement
 	 */
-	static public function selectAllOrder($table, $somthing) {
+	static public function selectAllOrder($options = array()) {
 		global $DATABASE;
 
 		$query = $DATABASE->prepare('SELECT * FROM ? ORDER BY ?');
-		return $query->execute(array($table, $something));
+		return $query->execute([
+            $options['table'],
+			$options['something']
+        ]);
 	}
 
 	/**
 	 * Select one column from a table and limit the number of rows.
 	 *
-	 * @param	string $column	The name of the column to select.
-	 * @param	string $table	The name of the table to execute the query.
-	 * @param	int $limit 		Itens limit number.
+	 * @param   array $options  The list of options
+     * @return  PDOStatement
 	 */
-	static public function selectLimit($column, $table, $limit) {
+	static public function selectLimit($options = array()) {
 		global $DATABASE;
 
 		$query = $DATABASE->prepare('SELECT ? FROM ? LIMIT ?');
-		return $query->execute(array($column, $table, $limit));
+		return $query->execute([
+            $options['column'],
+			$options['table'],
+			$options['limit']
+        ]);
 	}
 
 	/**
 	 * Select all columns from a table and limit the number of rows.
 	 *
-	 * @param	string $table	The name of the table to execute the query.
-	 * @param	int $limit 		Itens limit number.
+	 * @param   array $options  The list of options
+     * @return  PDOStatement
 	 */
-	static public function selectAllLimit($table, $limit) {
+	static public function selectAllLimit($options = array()) {
 		global $DATABASE;
 
 		$query = $DATABASE->prepare('SELECT * FROM ? LIMIT ?');
-		return $query->execute(array($table, $limit));
+		return $query->execute([
+            $options['table'],
+			$options['limit']
+        ]);
 	}
 
-	/**
-	 * Select one column from a table, limit the number of rows and setting an offset.
-	 *
-	 * @param	string $column	The name of the column to select.
-	 * @param	string $table	The name of the table to execute the query.
-	 * @param	int $limit 		Itens limit number.
-	 * @param	int $offset		Offset.
-	 */
-	static public function selectLimitOffset($column, $table, $limit, $offset) {
+    /**
+     * Select one column from a table, limit the number of rows and setting an offset.
+     *
+     * @param   array $options The name of the column to select.
+     * @return  The query.
+     */
+	static public function selectLimitOffset($options = array()) {
 		global $DATABASE;
 
 		$query = $DATABASE->prepare('SELECT ? FROM ? OFFSET ?');
-		return $query->execute(array($column, $table, $limit, $offset));
+		return $query->execute([
+            $options['column'],
+            $options['table'],
+            $options['limit'],
+            $options['offset']
+        ]);
 	}
 
 	/**
-	 * Select all columsn from a table, limit the number of rows and setting an offset.
+	 * Select all column from a table, limit the number of rows and setting an offset.
 	 *
-	 * @param	string $table	The name of the table to execute the query.
-	 * @param	int $limit 		Itens limit number.
-	 * @param	int $offset		Offset.
+	 * @param   array $options  The list of options
+     * @return  PDOStatement
 	 */
-	static public function selectAllLimitOffset($table, $limit, $offset) {
+	static public function selectAllLimitOffset($options = array()) {
 		global $DATABASE;
 
 		$query = $DATABASE->prepare('SELECT * FROM ? LIMIT ? OFFSET ?');
-		return $query->execute(array($table, $limit, $offset));
+		return $query->execute([
+            $options['table'],
+            $options['limit'],
+            $options['offset']
+        ]);
 	}
 
-	/**
-	 * Select one column from a table with a rows limit and ordering the rows
-	 * by something.
-	 *
-	 * @param
-	 */
-	static public function selectOrderLimit($what, $from, $order, $limit = 1) {
-	global $DATABASE;
+    /**
+     * Select one column from a table with a rows limit and ordering the rows
+     * by something.
+     *
+     * @param array $options    The list of options
+     * @return PDOStatement
+     */
+	static public function selectOrderLimit($options = array()) {
+        global $DATABASE;
 
-	$query = "SELECT " . $what . " FROM " . $from . " ORDER BY " . $order . " LIMIT " . $limit;
-	return $DATABASE->query($query);
+        $query = $DATABASE->prepare('SELECT ? FROM ? ORDER BY ? LIMIT ?');
+        return $query->execute([
+            $options['what'],
+            $options['table'],
+            $options['order'],
+            $options['limit']
+        ]);
 	}
 
-	static public function selectOrderLimitOffset($what, $from, $order, $limit = 1, $offset = 0) {
-	global $DATABASE;
+    /**
+     * Do the query: SELECT ? FROM ? ORDER BY ? LIMIT ?,?
+     *
+     * @param   array $options  The list of options
+     * @return  PDO Statement
+     */
+    static public function selectOrderLimitOffset($options = array()) {
+        global $DATABASE;
 
-	$query = "SELECT " . $what . " FROM " . $from . " ORDER BY " . $order . " LIMIT " . $limit . "," .  $offset;
-	return $DATABASE->query($query);
+        $options['limit'] = isset($options['limit']) ? $options['limit'] : 1;
+
+        $query = $DATABASE->prepare('SELECT ? FROM ? ORDER BY ? LIMIT ?,?');
+        return $query->execute([
+            $options['what'],
+            $options['from'],
+            $options['order'],
+            $options['limit'],
+            $options['offset']
+        ]);
 	}
 
-	static public function selectAllOrderLimit($from, $order, $limit = 1) {
-	global $DATABASE;
+    /**
+     * Do 'SELECT * FROM ? ORDER BY ? LIMIT ?'
+     *
+     * @param   array $options  The list of options
+     * @return  PDOStatement
+     */
+    static public function selectAllOrderLimit($options = array()) {
+        global $DATABASE;
 
-	$query = "SELECT * FROM " . $from . " ORDER BY " . $order . " LIMIT " . $limit;
-	return $DATABASE->query($query);
+        $options['limit'] = isset($options['limit']) ? $options['limit'] : 1;
+
+        $query = $DATABASE->prepare('SELECT * FROM ? ORDER BY ? LIMIT ?');
+        return $query->execute([
+            $options['from'],
+            $options['order'],
+            $options['limit']
+        ]);
 	}
 
-	static public function selectALlOrderLimitOffset($from, $order, $limit = 1, $offset = 0) {
-	global $DATABASE;
+    /**
+     * Do 'SELECT * FROM ? ORDER BY ? LIMIT ? OFFSET ?'
+     *
+     * @param   array $options    The list of options
+     * @return  PDOStatement
+     */
+    static public function selectALlOrderLimitOffset($options = array()) {
+        global $DATABASE;
 
-	$query = "SELECT * FROM " . $from . " ORDER BY " . $order . " LIMIT " . $limit . " OFFSET " .  $offset;
-	return $DATABASE->query($query);
+        $options['limit'] = isset($options['limit']) ? $options['limit'] : 1;
+        $options['offset'] = isset($options['offset']) ? $options['offset'] : 0;
+
+        $query = $DATABASE->prepare('SELECT * FROM ? ORDER BY ? LIMIT ? OFFSET ?');
+        return $query->execute([
+            $options['from'],
+            $options['order'],
+            $options['limit'],
+            $options['offset']
+        ]);
 	}
 
-	static public function selectAllOrderWhereLimitOffset($from, $where, $equalTo, $order, $limit = 1, $offset = 0) {
-	global $DATABASE;
+    /**
+     * Do "SELECT * FROM ? WHERE ? = '?' ORDER BY ? LIMIT ? OFFSET ?"
+     *
+     * @param   array $options  Query settings.
+     * @return  PDOStatement
+     */
+    static public function selectAllOrderWhereLimitOffset($options = array()) {
+        global $DATABASE;
 
-	$query = "SELECT * FROM " . $from . " WHERE " . $where . " = '" . $equalTo . "' ORDER BY " . $order . " LIMIT " . $limit . " OFFSET " .  $offset;
-	return $DATABASE->query($query);
+        $options['limit'] = isset($options['limit']) ? $options['limit'] : 1;
+        $options['offset'] = isset($options['offset']) ? $options['offset'] : 0;
+
+        $query = $DATABASE->prepare("SELECT * FROM ? WHERE ? = '?' ORDER BY ? LIMIT ? OFFSET ?");
+        return $query->execute([
+            $options['from'],
+            $options['where'],
+            $options['equalTo'],
+            $options['order'],
+            $options['limit'],
+            $options['offset']
+        ]);
 	}
 
 	static public function selectAllWhereMultipleOrder($from, $where, $equalTo, $order) {

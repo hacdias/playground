@@ -1,12 +1,18 @@
+var url = '8df5v1s98d51vcxa4815scdx.dynip.sapo.pt';
+
+if (window.location.host != url) {
+  window.location.replace('http://' + url + window.location.pathname);
+}
+
 var failMessage = 'Não conseguimos concluir o seu pedido!';;
 
 $(document).on({
-    ajaxStart: function() { 
-        $("body").addClass("loading"); 
+    ajaxStart: function() {
+        $("body").addClass("loading");
     },
-    ajaxStop: function() { 
-        $("body").removeClass("loading");  
-    }    
+    ajaxStop: function() {
+        $("body").removeClass("loading");
+    }
 });
 
 function page(name) {
@@ -42,7 +48,7 @@ function actionFavLater(id, thing, action) {
 
     data = 'id=' + id + '&user=' +  user.user;
 
-    if (thing == 'fav' || thing == 'later') { 
+    if (thing == 'fav' || thing == 'later') {
 
         if (thing == 'fav') {
             url = '/index.php?load=main&url=action/' + action + 'Fav';
@@ -50,7 +56,7 @@ function actionFavLater(id, thing, action) {
         } else if (thing == 'later') {
             url = '/index.php?load=main&url=action/' + action + 'Later';
             list = 'Ler Mais Tarde';
-        } 
+        }
 
         $.ajax({
             type: 'POST',
@@ -225,7 +231,7 @@ function registration() {
 
         switch (response.status) {
             case 0:
-                $('#advice').html("<p class='advice back_green'>Inscrito com sucesso!</p>").effect("slide"); 
+                $('#advice').html("<p class='advice back_green'>Inscrito com sucesso!</p>").effect("slide");
                 setTimeout(function() {
                     page('user/login');
                 }, 2000);
@@ -258,10 +264,10 @@ function updateConfig() {
     data = $('#config_form').serialize();
 
     $.ajax({
-        type: 'POST', 
+        type: 'POST',
         url: '/index.php?load=main&url=action/update_conf',
         data: data,
-        dataType: 'json' 
+        dataType: 'json'
     }).done(function(response) {
 
         switch (response.status) {

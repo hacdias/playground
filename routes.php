@@ -93,7 +93,7 @@ function dictionary() {
 			$page->category($DATA['url'][1]);
 
 		}
-	}	
+	}
 }
 
 function profile() {
@@ -113,7 +113,7 @@ function profile() {
 
 			Helper::needLogin();
 
-		}		
+		}
 	}
 }
 

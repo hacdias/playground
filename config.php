@@ -24,7 +24,7 @@ if (DEVELOPMENT_ENVIRONMENT == true) {
 
 }
 
-if ($_SERVER['REQUEST_URI'] == '/config.php' || $_SERVER['REQUEST_URI'] == '/router.php') {  
+if ($_SERVER['REQUEST_URI'] == '/config.php' || $_SERVER['REQUEST_URI'] == '/router.php') {
 	header( 'Location: ' . URL . '/404' );
 }
 
@@ -37,7 +37,7 @@ $DATA = array(
 	'db'        	=> null      		);
 
 $host     = 'localhost';
-$username = 'root';
+$username = 'roota';
 $password = '5VcDgpPpJoyp';
 $db 	  = 'mathspot';
 
@@ -57,6 +57,7 @@ if (!$dbStatus) {
 
 	$page = new Piece('header');
 	$page = new Piece('tecnical',  'red');
+    $page = new Piece('sidebar');
 	$footer = new Piece('footer');
 
 	die;
