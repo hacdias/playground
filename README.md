@@ -1,17 +1,14 @@
-# README #
+# MathSpot #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+(Escrever aqui o que é o MathSpot.)
 
 ## Afazeres ##
 
 ### Funcionalidades ###
 
-* Página inicial para utilizadores logados, linda:
+* Página inicial para utilizadores logados:
 * Últimas novidades
 * Últimos +tarde adicionados
-
-* Para pensar
-* Adicionar um sistema de organização de notas de matemática com gráficos, etc.
 
 ### Bugs ####
 

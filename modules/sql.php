@@ -103,7 +103,7 @@ class Sql {
 	 * @param	string $column	The name of the column to select.
 	 * @param	string $table	The name of the table to execute the query.
 	 * @param	int $limit 		Itens limit number.
-	 */ 
+	 */
 	static public function selectLimit($column, $table, $limit) {
 		global $DATABASE;
 
@@ -116,7 +116,7 @@ class Sql {
 	 *
 	 * @param	string $table	The name of the table to execute the query.
 	 * @param	int $limit 		Itens limit number.
-	 */ 
+	 */
 	static public function selectAllLimit($table, $limit) {
 		global $DATABASE;
 
@@ -131,7 +131,7 @@ class Sql {
 	 * @param	string $table	The name of the table to execute the query.
 	 * @param	int $limit 		Itens limit number.
 	 * @param	int $offset		Offset.
-	 */ 
+	 */
 	static public function selectLimitOffset($column, $table, $limit, $offset) {
 		global $DATABASE;
 
@@ -145,7 +145,7 @@ class Sql {
 	 * @param	string $table	The name of the table to execute the query.
 	 * @param	int $limit 		Itens limit number.
 	 * @param	int $offset		Offset.
-	 */ 
+	 */
 	static public function selectAllLimitOffset($table, $limit, $offset) {
 		global $DATABASE;
 
@@ -153,7 +153,12 @@ class Sql {
 		return $query->execute(array($table, $limit, $offset));
 	}
 
-
+	/**
+	 * Select one column from a table with a rows limit and ordering the rows
+	 * by something.
+	 *
+	 * @param
+	 */
 	static public function selectOrderLimit($what, $from, $order, $limit = 1) {
 	global $DATABASE;
 
@@ -237,16 +242,16 @@ class Sql {
 	static public function rowNumber($table) {
 	global $DATABASE;
 
-	$result = $DATABASE->query("SELECT count(*) FROM " . $table); 
-	return $result->fetchColumn(); 
+	$result = $DATABASE->query("SELECT count(*) FROM " . $table);
+	return $result->fetchColumn();
 
 	}
 
 	static public function rowNumberWhere($table, $where, $equalTo) {
 	global $DATABASE;
 
-	$result = $DATABASE->query("SELECT count(*) FROM " . $table . " WHERE " . $where . " = '" . $equalTo . "'"); 
-	return $result->fetchColumn(); 
+	$result = $DATABASE->query("SELECT count(*) FROM " . $table . " WHERE " . $where . " = '" . $equalTo . "'");
+	return $result->fetchColumn();
 
 	}
 

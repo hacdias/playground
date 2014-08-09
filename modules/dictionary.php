@@ -1,11 +1,11 @@
 <?php
 
 /**
-* DICTIONARY CLASS
-*
-* @author Henrique Dias <me@henriquedias.com>
-* @package MathPocket
-*/
+ * DICTIONARY CLASS
+ *
+ * @author Henrique Dias <me@henriquedias.com>
+ * @package MathPocket
+ */
 
 class Dictionary {
 
@@ -32,13 +32,13 @@ class Dictionary {
 	 * @return	the max pages number.
 	 */
 	protected function getMaxPage($n) {
-		return ceil($n / $this->maxItens); 
+		return ceil($n / $this->maxItens);
 	}
 
 	/**
 	 * Confirm if the $user has the item on the $list.
 	 *
-	 * There are only two lists: 'favs' and  'later'. Any 
+	 * There are only two lists: 'favs' and  'later'. Any
 	 * other is invalid.
 	 *
 	 * @param	int $itemId		The ID of the item.
@@ -78,10 +78,24 @@ class Dictionary {
 		}
 	}
 
+	/**
+	 * Display the items with "items.html" template.
+	 *
+	 * @param	array $items	The items to display
+	 * @param	int $maxPages	The max pages number
+	 * @param	int $n			Current page number
+	 * @param	string $url		Current URL
+	 */
+
 	protected function display($items, $maxPages = 1, $n = 0, $url = 'dictionary/') {
 		global $DATA;
 
 		if ($n > $maxPages) {
+
+			/*
+			 * If the current page doen't exists i.e. the page number is higher than
+			 * max pages number, the 404 page is shown.
+			 */
 
 			$page = new Piece('404', 'red');
 
@@ -129,7 +143,7 @@ class Dictionary {
 	}
 
 	public function allItems($n = 1) {
-		$maxPages = $this->getMaxPage(SQL::rowNumber('i_con')); 
+		$maxPages = $this->getMaxPage(SQL::rowNumber('i_con'));
 
 		$items = SQL::selectAllOrderLimitOffset('i_con', 'title', $this->maxItens, $this->getOffset($n));
 
@@ -163,7 +177,7 @@ class Dictionary {
 
 		} else {
 
-			$maxPages = $this->getMaxPage(SQL::rowNumberWhere('i_con', 'u_category', $ucategory)); 
+			$maxPages = $this->getMaxPage(SQL::rowNumberWhere('i_con', 'u_category', $ucategory));
 
 			$items = SQL::selectAllOrderWhereLimitOffset('i_con', 'u_category', $ucategory, 'title', $this->maxItens, $this->getOffset($n));
 			$url = 'dictionary/' . $ucategory . '/';
@@ -214,7 +228,7 @@ class Dictionary {
 			if ( !$DATA['user']->loggedIn() && !$_SESSION['user_user'] == $user)
 				{ $result['status'] = 5; break; }
 
-			if ( $itemId < 1 ) 
+			if ( $itemId < 1 )
 				{ $result['status'] = 4; break; }
 
 			if ( !User::exists($user) )
@@ -222,7 +236,7 @@ class Dictionary {
 
 			$query = SQL::selectWhereLimit($thing, 'users', 'user', $user);
 
-			if ( !$query ) 
+			if ( !$query )
 				{ $result['status'] = 3; break; }
 
 			foreach ($query as $item) {
@@ -292,7 +306,7 @@ class Dictionary {
 	function lastThreeAdded($user, $thing) {
 		global $DATA;
 
-		$query = SQL::selectWhereLimit($thing, 'users', 'user', $user); 
+		$query = SQL::selectWhereLimit($thing, 'users', 'user', $user);
 
 		if ($query)  {
 
@@ -311,7 +325,7 @@ class Dictionary {
 
 	}
 
-	/* function search($words) { 
+	/* function search($words) {
 
 		global $DATA;
 
@@ -340,15 +354,15 @@ class Dictionary {
 			}
 
 		}
-		
+
 		$itemsNumber = ($DATABASE->query($query))->rowCount();
 
-		$query .= 	
+		$query .=
 
 
-		$page->show();  
+		$page->show();
 
-	} */ 
+	} */
 
 }
 
