@@ -170,7 +170,7 @@ function login() {
 
             case 0:
                 $('#sidebar').load('/index.php?load=main&url=sidebar');
-                history.go(-1);
+                page('');
                 break;
 
             case 7:
