@@ -154,7 +154,7 @@ namespace Model {
             }
         }
 
-        /* function listFavLater($user, $thing) {
+        function listFavLater($user, $thing) {
 
             $query = $this->db->query("SELECT {$thing} FROM users WHERE user ='{$user}'");
 
@@ -170,12 +170,20 @@ namespace Model {
 
                     $itemsIds = rtrim($itemsIds, ',');
 
-                    $items = SQL::selectAllWhereMultipleOrder('i_con', 'id', $itemsIds, 'title');
+                    $items = $this->db->select("SELECT * FROM i_con WHERE id IN (" . $itemsIds . ") ORDER BY title");
+
+                    $sth = array(
+                        'items' => $items
+                    );
+
+                    unset($items);
+                    return $sth;
 
                 } else {
 
-                    echo "<div class='main {COLOR}'>
-                <div class='content'><p>Ainda não adicionou itens a esta lista!</p></div></div>";
+                    $sth = false;
+
+                    return $sth;
 
                 }
 
@@ -184,7 +192,7 @@ namespace Model {
                 //Consulta mal sucedida
 
             }
-        } */
+        }
 
     }
 }

@@ -25,4 +25,24 @@ class User extends \Model {
 
     }
 
+    function config($sUser) {
+
+        if (!\Person::exists($sUser)) {
+
+            return false;
+
+        } else {
+
+            $aInfo = array(
+                'color' => \Person::getColor($sUser),
+                'cfg_bio'   => \Person::getInfo($sUser, 'bio'),
+                'cfg_user'  => $sUser
+            );
+
+            return $aInfo;
+
+        }
+
+    }
+
 }

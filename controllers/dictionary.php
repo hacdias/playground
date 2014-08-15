@@ -68,7 +68,27 @@ class Dictionary extends \Controller {
     }
 
     protected function lists($list) {
+        global $person;
 
+        if ($person->loggedIn()) {
+
+            $this->view->info = $this->model->listFavLater($_SESSION['user_user'], $list);
+
+            if ($this->view->info) {
+                $this->view->render('dictionary/index');
+            } else {
+                $this->view->render('');
+            }
+
+
+        } else {
+            $options = array();
+            $options['needLogin'] = true;
+
+            echo "<script> var options = eval('( " . json_encode($options) . ")'); </script>";
+
+            $this->view->render('user/login');
+        }
     }
 
 

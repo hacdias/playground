@@ -39,7 +39,10 @@ class User extends \Controller {
         global $person;
 
         if ($person->loggedIn()) {
+
+            $this->view->info = $this->model->config($_SESSION['user_user']);
             $this->view->render('user/config');
+
         } else {
             $options = array();
             $options['needLogin'] = true;

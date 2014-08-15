@@ -1,10 +1,11 @@
 <?php
 require 'config.php';
-$person = new \Person();
 
-function __autoload($class) {
-    require LIBS . $class .".php";
-}
+spl_autoload_register(function ($class) {
+    include LIBS . $class . '.php';
+});
+
+$person = new \Person();
 
 $bootstrap = new \Bootstrap();
 $bootstrap->init();

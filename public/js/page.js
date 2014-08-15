@@ -1,4 +1,4 @@
-var url = '8df5v1s98d51vcxa4815scdx.dynip.sapo.pt';
+var url = 'localhost';
 
 if (window.location.host != url) {
   window.location.replace('http://' + url + window.location.pathname);
@@ -274,7 +274,7 @@ function updateConfig() {
 
             case 0:
                 $('#sidebar').load('/index.php?load=main&url=sidebar');
-                page('profile/' + user.user);
+                page('user/profile/' + user.user);
                 break;
 
             default:

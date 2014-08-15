@@ -5,19 +5,24 @@
             <form class="config" id="config_form" action='javascript:updateConfig();' method='post'>
 
                 <p>Nome de Utilizador</p>
-                <input  type='text' name='user' value='<?php echo $_SESSION['user_user']; ?>' readonly>
+                <label>
+                    <input type='text' name='user' value='<?php echo $this->info['cfg_user']; ?>' readonly>
+                </label>
 
                 <p>Cor do Perfil</p>
-                <input type="radio" name="color" <!-- BEGIN COLOR_BLUE -->checked="checked"<!-- END COLOR_BLUE --> value="1">Azul<br>
 
-                <input type="radio" name="color" <!-- BEGIN COLOR_ORANGE -->checked="checked"<!-- END COLOR_ORANGE --> value="4">Cor de Laranja<br>
+                <input type="radio" name="color" <?php echo ($this->info['color'] === 'blue') ? 'checked="checked"' : '' ; ?> value="1">Azul<br>
 
-                <input type="radio" name="color" <!-- BEGIN COLOR_GREEN -->checked="checked"<!-- END COLOR_GREEN --> value="2">Verde<br>
+                <input type="radio" name="color" <?php echo ($this->info['color'] === 'orange') ? 'checked="checked"' : '' ; ?> value="4">Cor de Laranja<br>
 
-                <input type="radio" name="color" <!-- BEGIN COLOR_RED -->checked="checked"<!-- END COLOR_RED --> value="3">Vermelho
+                <input type="radio" name="color" <?php echo ($this->info['color'] === 'green') ? 'checked="checked"' : '' ; ?> value="2">Verde<br>
+
+                <input type="radio" name="color" <?php echo ($this->info['color'] === 'red') ? 'checked="checked"' : '' ; ?> value="3">Vermelho
 
                 <p>Sobre mim</p>
-                <textarea name="bio">{CFG_BIO}</textarea>
+                <label>
+                    <textarea name="bio"><?php echo $this->info['cfg_bio']; ?></textarea>
+                </label>
 
                 <input class='submit' type='submit'>
 

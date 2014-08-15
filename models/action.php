@@ -85,7 +85,13 @@ namespace Model {
 
                         $new = str_replace($itemId . ',', '', $new);
 
-                        $result['status'] = ($this->db->query("UPDATE users SET {$thing} ='{$new}' WHERE user ='{$user}';")) ? 0 : 3;
+                        if(empty($new)) {
+                            $new = "NULL";
+                        } else {
+                            $new = "'" . $new . "'";
+                        }
+
+                        $result['status'] = ($this->db->query("UPDATE users SET {$thing} ={$new} WHERE user ='{$user}';")) ? 0 : 3;
 
                     } else {
 

@@ -13,6 +13,7 @@
                 <button onclick="page('dictionary/favorites');">Favoritos</button>
             </div>
         </div>
+
     </section>
 </div>
 

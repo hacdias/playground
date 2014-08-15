@@ -6,9 +6,7 @@ class Bootstrap {
     private $_controller = null;
 
     private $_controllerPath = 'controllers/';
-    private $_modelPath = 'models/';
     private $_errorFile = 'error.php';
-    private $_defaultFile = 'index.php';
 
     /**
      * Starts the Bootstrap
@@ -23,8 +21,8 @@ class Bootstrap {
             $this->_url[0] = 'index';
         }
 
-        $this->_loadExistingController();
-        $this->_callControllerMethod();
+        $this->_controller();
+        $this->_method();
 
         return false;
     }
@@ -39,12 +37,7 @@ class Bootstrap {
         $this->_url = explode('/', $url);
     }
 
-    /**
-     * Load an existing controller if there IS a GET parameter passed
-     *
-     * @return boolean|string
-     */
-    private function _loadExistingController() {
+    private function _controller() {
         $file = $this->_controllerPath . $this->_url[0] . '.php';
 
         if (file_exists($file)) {
@@ -53,23 +46,16 @@ class Bootstrap {
             $controller = "Controller\\" . $this->_url[0];
 
             $this->_controller = new $controller($this->_url[0]);
+
+            return false;
         } else {
             $this->_error();
             return false;
         }
+
     }
 
-    /**
-     * If a method is passed in the GET url paremter
-     *
-     *  http://localhost/controller/method/(param)/(param)/(param)
-     *  url[0] = Controller
-     *  url[1] = Method
-     *  url[2] = Param
-     *  url[3] = Param
-     *  url[4] = Param
-     */
-    private function _callControllerMethod() {
+    private function _method() {
         $length = count($this->_url);
 
         if ($length > 1) {
