@@ -73,7 +73,7 @@ a
 
 html,body
 {
-    background: #fff;
+    background: #f8f8f8;
     background-attachment: fixed;
     font-family: 'Open Sans', sans-serif;
     font-size:16px;
@@ -109,16 +109,17 @@ input[type="submit"],
 input[type="reset"],
 input[type="file"],
 button {
-    padding: 5px 10px;
+    padding: 10px 30px;
     border: 0;
     background: #03a9f4;
     margin: 0.75em 0;
     color: #fff;
-    border-radius: 5px;
     transition: .5s ease all;
     outline: 0;
     font-size: 1em;
     cursor: pointer;
+    border: 3px solid #03a9f4;
+    font-weight: bold;
 }
 
 input[type="button"]:hover,
@@ -131,14 +132,14 @@ button:hover {
 
 #header
 {
-    background: rgba(245, 245, 245, 0.95) url(/public/imgs/background.png);
-    box-shadow: 0px 1px 2px rgba(0,0,0,.26);
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 2px solid rgba(0,0,0,0.12);
     height:3em;
     left:0;
     position:fixed;
     top:0;
     width:100%;
-    z-index: 3;
+    z-index: 99999999999999999;
     background-size: contain;
 }
 
@@ -263,7 +264,7 @@ button:hover {
     transition:all .2s;
     visibility:hidden;
     width:250px;
-    z-index: 2;
+    z-index: 999999999;
     /* box-shadow: 1px 0 5px rgba(0,0,0,.26); */
 }
 
@@ -294,7 +295,7 @@ button:hover {
     position:fixed;
     top:0;
     width:100%;
-    z-index: 1;
+    z-index: 99999999;
 }
 
 .user
@@ -405,22 +406,9 @@ button:hover {
 
 .main .author img
 {
-    border-radius:30px;
-    display:inline-block;
     padding:10px;
-    transition:all 1s ease;
     width:150px;
-}
-
-.main .author img:hover
-{
-    -moz-transition:background-color 1000ms linear;
-    -ms-transition:background-color 1000ms linear;
-    -o-transition:background-color 1000ms linear;
-    -webkit-transition:background-color 1000ms linear;
-    background-color:rgba(0,0,0,0.19);
-    border-radius:50%;
-    transition:background-color 1000ms linear;
+    border-radius: 50%;
 }
 
 .site_footer
@@ -779,8 +767,7 @@ button:hover {
     padding:10px 0;
     text-align:center;
     width:215px;
-    box-shadow: 0px 2px 5px rgba(0,0,0,.26);
-    border-radius: 5px;
+    border: 1px solid rgba(0,0,0,0.12);
     display: inline-block;
 }
 

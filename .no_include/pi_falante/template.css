@@ -1,0 +1,287 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* STYLE */
+
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro);
+
+html, body {
+    height: 100%;
+    width: 100%;
+    font-family: 'Source Sans Pro';
+}
+
+/* CLASSROOM */
+
+@font-face {
+    font-family: 'Chalk';
+    src: url('../../public/fonts/chalk.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+
+.container {
+    max-width: 1100px;
+    width: 90%;
+    margin: 0 auto;
+    display: inline-block;
+    vertical-align: bottom;
+    text-align: left;
+    height: 100%;
+    position: relative;
+}
+
+#classroom {
+
+}
+
+
+#classroom .bottom {
+    height: 15%;
+    width: 100%;
+    padding: 0;
+}
+
+#classroom .bottom .floor {
+    background: #f1e5cd;
+    width: 100%;
+    height: 95%;
+    display: block;
+}
+
+#classroom .bottom .footer {
+    height: 5%;
+    width: 100%;
+    background: #ada08d;
+    margin: 0;
+    display: block;
+}
+
+#classroom #wall {
+    height: 85%;
+    width: 100%;
+    background: rgba(225, 211, 184, 0.29);
+    text-align: center;
+}
+
+.blackboard {
+    /* IE10 Consumer Preview */
+    background: -ms-radial-gradient(center, circle farthest-corner, #0F7658 0%, #0D5642 100%);
+
+    /* Mozilla Firefox */
+    background: -moz-radial-gradient(center, circle farthest-corner, #0F7658 0%, #0D5642 100%);
+
+    /* Opera */
+    background: -o-radial-gradient(center, circle farthest-corner, #0F7658 0%, #0D5642 100%);
+
+    /* Webkit (Safari/Chrome 10) */
+    background: -webkit-gradient(radial, center center, 0, center center, 506, color-stop(0, #0F7658), color-stop(1, #0D5642));
+
+    /* Webkit (Chrome 11+) */
+    background: -webkit-radial-gradient(center, circle farthest-corner, #0F7658 0%, #0D5642 100%);
+
+    /* W3C Markup, IE10 Release Preview */
+    background: radial-gradient(circle farthest-corner at center, #0F7658 0%, #0D5642 100%);
+    height: 250px;
+    max-width: 700px;
+    width: 93%;
+    padding: 2%;
+    margin: 0 auto;
+    border: 10px solid #AF7B3F;
+    border-radius: 1px;
+    font-family: 'Chalk';
+    color: #fff;
+    font-size: 4em;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+}
+
+.blackboard p {
+    display: none;
+}
+
+.full-size {
+    height: 100%;
+    width: 100%;
+}
+
+.seventy-height {
+    height: 70%;
+    text-align: center;
+}
+
+.twenty-five-height {
+    height: 25%;
+}
+
+.sixty-height {
+    height: 60%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.design-material img {
+    -webkit-filter: drop-shadow(2px 2px 1px rgba(0,0,0,.4));
+    -moz-filter: drop-shadow(2px 2px 1px rgba(0,0,0,.4));
+    -ms-filter: drop-shadow(2px 2px 1px rgba(0,0,0,.4));
+    -o-filter: drop-shadow(2px 2px 1px rgba(0,0,0,.4));
+    filter: drop-shadow(2px 2px 1px rgba(0,0,0,.4));
+}
+
+/* */
+
+.left, .right {
+    width: 50%;
+    display: inline-block;
+    height: 100%;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.pi {
+    width: auto;
+    height: 45%;
+    z-index: 10;
+    position: absolute;
+    left: -3%;
+    bottom: -7%;
+}
+
+.ghost {
+    width: 1px;
+    margin: 0 -1px;
+    height: 100%;
+    vertical-align: middle;
+    display: inline-block;
+    padding: 0;
+    font-size: 0;
+}
+
+.center {
+    vertical-align: middle;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+
+
+.choice-yes, .choice-no {
+    border-radius: 10px;
+    display: none;
+    cursor: pointer;
+    margin: 10px;
+    float: left;
+    color: #fff;
+}
+
+.choice-yes {
+    background-color: #00CC00;
+    margin-right: 2.5%;
+}
+
+.choice-no {
+    background-color: #CC0000;
+    margin-left: 2.5%;
+}
+
+#show {
+    display: block;
+}
+
+#clock {
+    position: relative;
+    height: 100%;
+    background: url(/public/imgs/learn/clock.png)no-repeat center center;
+    border-radius: 50%;
+    list-style: none;
+    background-size: contain;
+    text-align: center;
+}
+
+#sec, #min, #hour {
+    position: absolute;
+    width: 5px;
+    height: 100px;
+    top: 0px;
+    left: 50px;
+    margin: 0 auto;
+}
+
+#sec {
+    background: url(http://css-tricks.com/examples/CSS3Clock/images/sechand.png);
+    z-index: 3;
+    background-size: contain;
+}
+
+#min {
+    background: url(http://css-tricks.com/examples/CSS3Clock/images/minhand.png);
+    z-index: 2;
+    background-size: contain;
+}
+
+#hour {
+    background: url(http://css-tricks.com/examples/CSS3Clock/images/hourhand.png);
+    z-index: 1;
+    background-size: contain;
+}
+
+.fifteen-height {
+    height: 15%;
+    text-align: center;
+}

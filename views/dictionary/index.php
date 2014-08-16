@@ -1,6 +1,25 @@
 <div class='main blue'>
     <div class='content'>
 
+        <?php
+
+            $iItemsNumber = count($this->info['items']);
+
+            $aItemsLeft = array();
+            $aItemsRight = array();
+
+            for ($i = 0; $i < $iItemsNumber; $i++) {
+
+                if ($i % 2 === 0) {
+                    $aItemsLeft[] = $this->info['items'][$i];
+                } else {
+                    $aItemsRight[] = $this->info['items'][$i];
+                }
+
+            }
+
+        ?>
+
         <?php foreach ($this->info['items'] as $item) : ?>
 
         <article class="items" id="item-<?php echo $item['id']; ?>">

@@ -47,7 +47,15 @@
 
             <ul class="menu_items">
 
-                <?php if (!$person->loggedIn() === false ) : ?>
+                <?php if ($person->loggedIn()) : ?>
+
+                    <?php if(\Person::isAdmin($_SESSION['user_user'])): ?>
+                        <a onClick="page('admin')"><li><img src='/public/imgs/icons/fav.png'><p>Admin Area</p></li></a>
+
+                        <div class='separator'></div>
+
+                    <?php endif; ?>
+
 
                 <a onClick="page('user/profile/<?php echo $_SESSION['user_user']; ?>')"><li><img src='/public/imgs/icons/profile.png'><p>Perfil</p></li></a>
                 <a onClick="page('dictionary/favorites')"><li><img src='/public/imgs/icons/fav.png'><p>Favoritos</p></li></a>

@@ -59,25 +59,25 @@ class Dictionary extends \Controller {
 
     }
 
-    function favorites() {
-        $this->lists('favs');
+    function favorites($n = 1) {
+        $this->lists('favs', $n);
     }
 
-    function readLater() {
-        $this->lists('later');
+    function readLater($n = 1) {
+        $this->lists('later', $n);
     }
 
-    protected function lists($list) {
+    protected function lists($list, $n = 1) {
         global $person;
 
         if ($person->loggedIn()) {
 
-            $this->view->info = $this->model->listFavLater($_SESSION['user_user'], $list);
+            $this->view->info = $this->model->listFavLater($_SESSION['user_user'], $list, $n);
 
             if ($this->view->info) {
                 $this->view->render('dictionary/index');
             } else {
-                $this->view->render('');
+                $this->view->render('dictionary/no-items');
             }
 
 

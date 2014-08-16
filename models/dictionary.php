@@ -10,10 +10,18 @@ namespace Model {
             parent::__construct();
         }
 
-        static public function isInList($itemId, $user, $list) {
+        /**
+         * Confirm if an item is on the list X
+         * 
+         * @param   int $iItemId     The ID of the item  to search
+         * @param   string $sUser    The username of the user
+         * @param   string $sList    The name of the list
+         * @return  bool|string
+         */
+        static public function isInList($iItemId, $sUser, $sList) {
             $db = new \Database(DB_TYPE, DB_HOST, DB_NAME, DB_USER, DB_PASS);
 
-            $sql = "SELECT {$list} FROM users WHERE user = '{$user}'";
+            $sql = "SELECT {$sList} FROM users WHERE user = '{$sUser}'";
             $query = $db->select($sql);
 
             $items = null;
@@ -21,7 +29,7 @@ namespace Model {
             if ($query) {
 
                 foreach ($query as $item) {
-                    $items = $item[$list];
+                    $items = $item[$sList];
                 }
 
                 $isInList = false;
@@ -30,7 +38,7 @@ namespace Model {
 
                 for ($i = 0; $i < count($items); $i++) {
 
-                    if ($items[$i] === $itemId) {
+                    if ($items[$i] === $iItemId) {
                         $isInList = true;
                         break;
                     }
@@ -66,7 +74,13 @@ namespace Model {
             $maxPages = $this->getMaxPage($max);
             $items = $this->db->select("SELECT * FROM i_con ORDER BY title LIMIT {$this->maxItems} OFFSET {$this->getOffset($n)}");
 
-            $sth = array('page' => $n, 'max_pages' => $maxPages, 'items' => $items, 'url' => 'dictionary/page/');
+            $sth = array(
+                'page' => $n,
+                'max_pages' => $maxPages,
+                'items' => $items,
+                'url' => 'dictionary/page/'
+            );
+
             return $sth;
         }
 
@@ -114,7 +128,11 @@ namespace Model {
 
                 } else {
 
-                    $sth = array('items' => $items, 'page' => 1, 'max_pages' => 1);
+                    $sth = array(
+                        'items' => $items,
+                        'page' => 1,
+                        'max_pages' => 1
+                    );
 
                     return $sth;
 
@@ -154,7 +172,7 @@ namespace Model {
             }
         }
 
-        function listFavLater($user, $thing) {
+        function listFavLater($user, $thing, $n = 1) {
 
             $query = $this->db->query("SELECT {$thing} FROM users WHERE user ='{$user}'");
 
@@ -169,11 +187,27 @@ namespace Model {
                 if ($itemsIds != '' && $itemsIds != null) {
 
                     $itemsIds = rtrim($itemsIds, ',');
+                    $offset = $this->getOffset($n);
+                    $items = $this->db->select("SELECT * FROM i_con WHERE id IN (" . $itemsIds . ") ORDER BY title LIMIT " . $this->maxItems . " OFFSET " . $offset);
 
-                    $items = $this->db->select("SELECT * FROM i_con WHERE id IN (" . $itemsIds . ") ORDER BY title");
+                    $max = $this->db->select("SELECT count(*) FROM i_con WHERE id IN (" . $itemsIds . ")");
+                    $max = $max[0]['count(*)'];
+
+                    $maxPages = $this->getMaxPage($max);
+
+                    $url = null;
+
+                    if ($thing == 'later') {
+                        $url = 'dictionary/readlater/';
+                    } else if ($thing === 'favs') {
+                        $url = 'dictionary/favorites/';
+                    }
 
                     $sth = array(
-                        'items' => $items
+                        'items' => $items,
+                        'page'  => $n,
+                        'max_pages' => $maxPages,
+                        'url'   => $url
                     );
 
                     unset($items);

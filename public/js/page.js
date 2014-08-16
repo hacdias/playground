@@ -149,7 +149,9 @@ function removeAnimation(id) {
 
         $('#item-' + id).fadeTo('fast', 0);
         setTimeout(function() {
-            $('#item-' + id).hide();
+            $('#item-' + id).hide(400, function() {
+                this.remove();
+            });
         }, 600);
     }
 

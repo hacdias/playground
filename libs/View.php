@@ -22,8 +22,11 @@ class View {
 
         require ROOT . 'views/' . $name . '.php';
 
-        if (LOAD === 'all') {
+        if (strpos($name, 'learn') !== 0 && LOAD === 'all') {
             require ROOT . 'views/footer.php';
+        }
+
+        if (LOAD === 'all') {
             require ROOT . 'views/sidebar.php';
         }
     }

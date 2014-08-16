@@ -1,237 +1,47 @@
-[14-Aug-2014 20:40:13 Europe/Berlin] PHP Warning:  PDO::__construct() expects at most 4 parameters, 5 given in D:\Dev\mathspot\libs\Person.php on line 27
-[14-Aug-2014 20:40:13 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 479
-[14-Aug-2014 20:40:13 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 483
-[14-Aug-2014 20:40:13 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 361
-[14-Aug-2014 20:40:13 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 479
-[14-Aug-2014 20:40:13 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 483
-[14-Aug-2014 20:40:13 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 361
-[14-Aug-2014 20:40:13 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 479
-[14-Aug-2014 20:40:13 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 483
-[14-Aug-2014 20:40:13 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 361
-[14-Aug-2014 20:40:13 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 479
-[14-Aug-2014 20:40:13 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 483
-[14-Aug-2014 20:40:13 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 361
-[14-Aug-2014 20:40:13 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 479
-[14-Aug-2014 20:40:13 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 483
-[14-Aug-2014 20:40:13 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 361
-[14-Aug-2014 20:40:15 Europe/Berlin] PHP Warning:  PDO::__construct() expects at most 4 parameters, 5 given in D:\Dev\mathspot\libs\Person.php on line 27
-[14-Aug-2014 20:40:15 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 479
-[14-Aug-2014 20:40:15 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 483
-[14-Aug-2014 20:40:15 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 361
-[14-Aug-2014 20:40:15 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 479
-[14-Aug-2014 20:40:15 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 483
-[14-Aug-2014 20:40:15 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 361
-[14-Aug-2014 20:40:15 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 479
-[14-Aug-2014 20:40:15 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 483
-[14-Aug-2014 20:40:15 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 361
-[14-Aug-2014 20:40:15 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 479
-[14-Aug-2014 20:40:15 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 483
-[14-Aug-2014 20:40:15 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 361
-[14-Aug-2014 21:05:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 484
-[14-Aug-2014 21:05:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 488
-[14-Aug-2014 21:05:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 366
-[14-Aug-2014 21:05:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 484
-[14-Aug-2014 21:05:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 488
-[14-Aug-2014 21:05:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 366
-[14-Aug-2014 21:05:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 484
-[14-Aug-2014 21:05:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 488
-[14-Aug-2014 21:05:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 366
-[14-Aug-2014 21:05:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 484
-[14-Aug-2014 21:05:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 488
-[14-Aug-2014 21:05:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 366
-[14-Aug-2014 21:05:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 484
-[14-Aug-2014 21:05:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 488
-[14-Aug-2014 21:05:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 366
-[14-Aug-2014 21:05:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 484
-[14-Aug-2014 21:05:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 488
-[14-Aug-2014 21:05:54 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 366
-[14-Aug-2014 21:05:54 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 484
-[14-Aug-2014 21:05:54 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 488
-[14-Aug-2014 21:05:54 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 366
-[14-Aug-2014 21:05:54 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 484
-[14-Aug-2014 21:05:54 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 488
-[14-Aug-2014 21:05:54 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 366
-[14-Aug-2014 21:05:54 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 484
-[14-Aug-2014 21:05:54 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 488
-[14-Aug-2014 21:05:54 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 366
-[14-Aug-2014 21:06:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 484
-[14-Aug-2014 21:06:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 488
-[14-Aug-2014 21:06:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 366
-[14-Aug-2014 21:06:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 484
-[14-Aug-2014 21:06:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 488
-[14-Aug-2014 21:06:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 366
-[14-Aug-2014 21:06:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 484
-[14-Aug-2014 21:06:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 488
-[14-Aug-2014 21:06:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 366
-[14-Aug-2014 21:06:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 484
-[14-Aug-2014 21:06:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 488
-[14-Aug-2014 21:06:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 366
-[14-Aug-2014 21:06:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 484
-[14-Aug-2014 21:06:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 488
-[14-Aug-2014 21:06:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 366
-[14-Aug-2014 21:06:38 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 484
-[14-Aug-2014 21:06:38 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 488
-[14-Aug-2014 21:06:38 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 366
-[14-Aug-2014 21:06:38 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 484
-[14-Aug-2014 21:06:38 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 488
-[14-Aug-2014 21:06:38 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 366
-[14-Aug-2014 21:06:38 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 484
-[14-Aug-2014 21:06:38 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 488
-[14-Aug-2014 21:06:38 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 366
-[14-Aug-2014 21:06:38 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 484
-[14-Aug-2014 21:06:38 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 488
-[14-Aug-2014 21:06:38 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 366
-[14-Aug-2014 21:16:52 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:16:52 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:16:52 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:16:52 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:16:52 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:16:52 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:16:52 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:16:52 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:16:52 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:16:52 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:16:52 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:16:52 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:16:52 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:16:52 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:16:52 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:16:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:16:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:16:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:16:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:16:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:16:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:16:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:16:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:16:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:16:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:16:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:16:53 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:37 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:39 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:39 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:39 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:39 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:39 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:39 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:39 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:39 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:39 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:39 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:39 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:39 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:41 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:41 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:41 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:41 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:41 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:41 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:41 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:41 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:41 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:41 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:41 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:41 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:41 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:41 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:41 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:46 Europe/Berlin] PHP Notice:  Undefined property: Person::$database in D:\Dev\mathspot\libs\Person.php on line 438
-[14-Aug-2014 21:17:46 Europe/Berlin] PHP Notice:  Undefined property: Person::$usersTable in D:\Dev\mathspot\libs\Person.php on line 438
-[14-Aug-2014 21:17:46 Europe/Berlin] PHP Notice:  Undefined property: Person::$fields in D:\Dev\mathspot\libs\Person.php on line 440
-[14-Aug-2014 21:17:46 Europe/Berlin] PHP Notice:  Undefined property: Person::$fields in D:\Dev\mathspot\libs\Person.php on line 442
-[14-Aug-2014 21:17:47 Europe/Berlin] PHP Notice:  Undefined property: Person::$database in D:\Dev\mathspot\libs\Person.php on line 438
-[14-Aug-2014 21:17:47 Europe/Berlin] PHP Notice:  Undefined property: Person::$usersTable in D:\Dev\mathspot\libs\Person.php on line 438
-[14-Aug-2014 21:17:47 Europe/Berlin] PHP Notice:  Undefined property: Person::$fields in D:\Dev\mathspot\libs\Person.php on line 440
-[14-Aug-2014 21:17:47 Europe/Berlin] PHP Notice:  Undefined property: Person::$fields in D:\Dev\mathspot\libs\Person.php on line 442
-[14-Aug-2014 21:17:48 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:48 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:48 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:48 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:48 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:48 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:48 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:48 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:48 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:48 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:48 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:48 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:48 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:48 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:48 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:49 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:49 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:49 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:49 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:49 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:49 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:49 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:49 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:49 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:49 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:49 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:49 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:49 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:49 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:49 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:50 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:50 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:50 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:50 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:50 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:50 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:50 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:50 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:50 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:17:50 Europe/Berlin] PHP Notice:  Undefined property: Person::$loginVar in D:\Dev\mathspot\libs\Person.php on line 211
-[14-Aug-2014 21:17:50 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 215
-[14-Aug-2014 21:17:50 Europe/Berlin] PHP Notice:  Undefined property: Person::$keyPrefix in D:\Dev\mathspot\libs\Person.php on line 331
-[14-Aug-2014 21:44:38 Europe/Berlin] PHP Notice:  Undefined variable: SESSION in D:\Dev\mathspot\views\index\index.user.php on line 17
-[14-Aug-2014 21:44:38 Europe/Berlin] PHP Fatal error:  Function name must be a string in D:\Dev\mathspot\views\index\index.user.php on line 17
-[14-Aug-2014 21:45:10 Europe/Berlin] PHP Notice:  Undefined variable: SESSION in D:\Dev\mathspot\views\index\index.user.php on line 19
-[14-Aug-2014 21:45:10 Europe/Berlin] PHP Fatal error:  Function name must be a string in D:\Dev\mathspot\views\index\index.user.php on line 19
-[14-Aug-2014 21:45:18 Europe/Berlin] PHP Fatal error:  Function name must be a string in D:\Dev\mathspot\views\index\index.user.php on line 19
-[14-Aug-2014 21:49:03 Europe/Berlin] PHP Warning:  PDO::__construct() expects at most 4 parameters, 5 given in D:\Dev\mathspot\libs\Person.php on line 502
-[14-Aug-2014 21:49:03 Europe/Berlin] PHP Fatal error:  Call to a member function query() on a non-object in D:\Dev\mathspot\libs\Person.php on line 504
-[14-Aug-2014 21:58:48 Europe/Berlin] PHP Notice:  Undefined index:  user_user in D:\Dev\mathspot\views\user\config.php on line 9
-[14-Aug-2014 22:02:29 Europe/Berlin] PHP Parse error:  syntax error, unexpected ''checked="checked"'' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ';' in D:\Dev\mathspot\views\user\config.php on line 14
-[14-Aug-2014 22:26:56 Europe/Berlin] PHP Warning:  require(D:\Dev\mathspot\/views/dictionary/items.php): failed to open stream: No such file or directory in D:\Dev\mathspot\libs\View.php on line 23
-[14-Aug-2014 22:26:56 Europe/Berlin] PHP Fatal error:  require(): Failed opening required 'D:\Dev\mathspot\/views/dictionary/items.php' (include_path='.;C:\xampp\php\PEAR') in D:\Dev\mathspot\libs\View.php on line 23
-[14-Aug-2014 22:26:57 Europe/Berlin] PHP Warning:  require(D:\Dev\mathspot\/views/dictionary/items.php): failed to open stream: No such file or directory in D:\Dev\mathspot\libs\View.php on line 23
-[14-Aug-2014 22:26:57 Europe/Berlin] PHP Fatal error:  require(): Failed opening required 'D:\Dev\mathspot\/views/dictionary/items.php' (include_path='.;C:\xampp\php\PEAR') in D:\Dev\mathspot\libs\View.php on line 23
-[14-Aug-2014 22:27:40 Europe/Berlin] PHP Warning:  require(D:\Dev\mathspot\/views/dictionary/items.php): failed to open stream: No such file or directory in D:\Dev\mathspot\libs\View.php on line 23
-[14-Aug-2014 22:27:40 Europe/Berlin] PHP Fatal error:  require(): Failed opening required 'D:\Dev\mathspot\/views/dictionary/items.php' (include_path='.;C:\xampp\php\PEAR') in D:\Dev\mathspot\libs\View.php on line 23
-[14-Aug-2014 22:27:49 Europe/Berlin] PHP Warning:  require(D:\Dev\mathspot\views/dictionary/items.php): failed to open stream: No such file or directory in D:\Dev\mathspot\libs\View.php on line 23
-[14-Aug-2014 22:27:49 Europe/Berlin] PHP Fatal error:  require(): Failed opening required 'D:\Dev\mathspot\views/dictionary/items.php' (include_path='.;C:\xampp\php\PEAR') in D:\Dev\mathspot\libs\View.php on line 23
-[14-Aug-2014 22:28:12 Europe/Berlin] PHP Warning:  Invalid argument supplied for foreach() in D:\Dev\mathspot\views\dictionary\index.php on line 4
-[14-Aug-2014 22:30:06 Europe/Berlin] PHP Warning:  Invalid argument supplied for foreach() in D:\Dev\mathspot\views\dictionary\index.php on line 4
-[14-Aug-2014 22:31:13 Europe/Berlin] PHP Warning:  require(D:\Dev\mathspot\views/.php): failed to open stream: No such file or directory in D:\Dev\mathspot\libs\View.php on line 23
-[14-Aug-2014 22:31:13 Europe/Berlin] PHP Fatal error:  require(): Failed opening required 'D:\Dev\mathspot\views/.php' (include_path='.;C:\xampp\php\PEAR') in D:\Dev\mathspot\libs\View.php on line 23
-[14-Aug-2014 22:32:53 Europe/Berlin] PHP Warning:  require(D:\Dev\mathspot\views/.php): failed to open stream: No such file or directory in D:\Dev\mathspot\libs\View.php on line 23
-[14-Aug-2014 22:32:53 Europe/Berlin] PHP Fatal error:  require(): Failed opening required 'D:\Dev\mathspot\views/.php' (include_path='.;C:\xampp\php\PEAR') in D:\Dev\mathspot\libs\View.php on line 23
-[15-Aug-2014 18:54:49 Europe/Berlin] PHP Notice:  Undefined variable: nome in D:\Dev\mathspot\tst\process.php on line 22
-[15-Aug-2014 18:55:31 Europe/Berlin] PHP Notice:  Undefined index: name in D:\Dev\mathspot\tst\process.php on line 8
-[15-Aug-2014 18:55:31 Europe/Berlin] PHP Notice:  Undefined index: password in D:\Dev\mathspot\tst\process.php on line 9
-[15-Aug-2014 18:55:31 Europe/Berlin] PHP Notice:  Undefined index: email in D:\Dev\mathspot\tst\process.php on line 10
-[15-Aug-2014 18:55:32 Europe/Berlin] PHP Notice:  Undefined index: name in D:\Dev\mathspot\tst\process.php on line 8
-[15-Aug-2014 18:55:32 Europe/Berlin] PHP Notice:  Undefined index: password in D:\Dev\mathspot\tst\process.php on line 9
-[15-Aug-2014 18:55:32 Europe/Berlin] PHP Notice:  Undefined index: email in D:\Dev\mathspot\tst\process.php on line 10
-[15-Aug-2014 19:08:12 Europe/Berlin] PHP Fatal error:  Call to undefined method PDOStatement::exec() in D:\Dev\mathspot\tst\process.php on line 48
-[15-Aug-2014 19:08:14 Europe/Berlin] PHP Fatal error:  Call to undefined method PDOStatement::exec() in D:\Dev\mathspot\tst\process.php on line 48
-[15-Aug-2014 19:08:14 Europe/Berlin] PHP Fatal error:  Call to undefined method PDOStatement::exec() in D:\Dev\mathspot\tst\process.php on line 48
-[15-Aug-2014 19:08:15 Europe/Berlin] PHP Fatal error:  Call to undefined method PDOStatement::exec() in D:\Dev\mathspot\tst\process.php on line 48
-[15-Aug-2014 19:08:15 Europe/Berlin] PHP Fatal error:  Call to undefined method PDOStatement::exec() in D:\Dev\mathspot\tst\process.php on line 48
+[15-Aug-2014 21:11:38 Europe/Berlin] PHP Warning:  require(D:\Dev\mathspot\views/.php): failed to open stream: No such file or directory in D:\Dev\mathspot\libs\View.php on line 23
+[15-Aug-2014 21:11:38 Europe/Berlin] PHP Fatal error:  require(): Failed opening required 'D:\Dev\mathspot\views/.php' (include_path='.;C:\xampp\php\PEAR') in D:\Dev\mathspot\libs\View.php on line 23
+[15-Aug-2014 21:19:02 Europe/Berlin] PHP Notice:  Undefined index: page in D:\Dev\mathspot\views\dictionary\index.php on line 65
+[15-Aug-2014 21:19:02 Europe/Berlin] PHP Notice:  Undefined index: page in D:\Dev\mathspot\views\dictionary\index.php on line 69
+[15-Aug-2014 21:19:02 Europe/Berlin] PHP Notice:  Undefined index: max_pages in D:\Dev\mathspot\views\dictionary\index.php on line 69
+[15-Aug-2014 21:19:05 Europe/Berlin] PHP Notice:  Undefined index: page in D:\Dev\mathspot\views\dictionary\index.php on line 65
+[15-Aug-2014 21:19:05 Europe/Berlin] PHP Notice:  Undefined index: page in D:\Dev\mathspot\views\dictionary\index.php on line 69
+[15-Aug-2014 21:19:05 Europe/Berlin] PHP Notice:  Undefined index: max_pages in D:\Dev\mathspot\views\dictionary\index.php on line 69
+[15-Aug-2014 21:21:21 Europe/Berlin] PHP Notice:  Undefined index: page in D:\Dev\mathspot\views\dictionary\index.php on line 65
+[15-Aug-2014 21:21:21 Europe/Berlin] PHP Notice:  Undefined index: page in D:\Dev\mathspot\views\dictionary\index.php on line 69
+[15-Aug-2014 21:21:21 Europe/Berlin] PHP Notice:  Undefined index: max_pages in D:\Dev\mathspot\views\dictionary\index.php on line 69
+[15-Aug-2014 21:21:54 Europe/Berlin] PHP Notice:  Undefined variable: n in D:\Dev\mathspot\models\dictionary.php on line 192
+[15-Aug-2014 21:22:02 Europe/Berlin] PHP Notice:  Undefined index: url in D:\Dev\mathspot\views\dictionary\index.php on line 70
+[15-Aug-2014 21:26:29 Europe/Berlin] PHP Notice:  Undefined index: url in D:\Dev\mathspot\views\dictionary\index.php on line 70
+[16-Aug-2014 16:33:57 Europe/Berlin] PHP Fatal error:  Call to undefined method Controller\Learn::index() in D:\Dev\mathspot\libs\Bootstrap.php on line 89
+[16-Aug-2014 16:34:02 Europe/Berlin] PHP Fatal error:  Cannot access parent:: when current class scope has no parent in D:\Dev\mathspot\controllers\learn.php on line 9
+[16-Aug-2014 16:34:14 Europe/Berlin] PHP Warning:  include(libs/Controller\Controller.php): failed to open stream: No such file or directory in D:\Dev\mathspot\index.php on line 6
+[16-Aug-2014 16:34:14 Europe/Berlin] PHP Warning:  include(): Failed opening 'libs/Controller\Controller.php' for inclusion (include_path='.;C:\xampp\php\PEAR') in D:\Dev\mathspot\index.php on line 6
+[16-Aug-2014 16:34:14 Europe/Berlin] PHP Fatal error:  Class 'Controller\Controller' not found in D:\Dev\mathspot\controllers\learn.php on line 5
+[16-Aug-2014 16:34:16 Europe/Berlin] PHP Warning:  include(libs/Controller\Controller.php): failed to open stream: No such file or directory in D:\Dev\mathspot\index.php on line 6
+[16-Aug-2014 16:34:16 Europe/Berlin] PHP Warning:  include(): Failed opening 'libs/Controller\Controller.php' for inclusion (include_path='.;C:\xampp\php\PEAR') in D:\Dev\mathspot\index.php on line 6
+[16-Aug-2014 16:34:16 Europe/Berlin] PHP Fatal error:  Class 'Controller\Controller' not found in D:\Dev\mathspot\controllers\learn.php on line 5
+[16-Aug-2014 16:34:19 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:26) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 16:34:24 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\sidebar.php:5) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 16:35:48 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:26) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 16:35:53 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:26) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 16:36:26 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:27) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 16:36:40 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:27) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 16:37:59 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:27) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 16:38:44 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:27) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 16:40:09 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:27) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 16:40:10 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:27) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 16:40:37 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:27) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 16:42:11 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:27) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 16:42:14 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:27) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 18:29:04 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:26) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 18:29:14 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:26) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 18:29:43 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:29) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 19:04:02 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:29) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 19:04:05 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:29) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 19:13:57 Europe/Berlin] PHP Notice:  Undefined property: View::$title in D:\Dev\mathspot\views\error\index.php on line 6
+[16-Aug-2014 19:13:57 Europe/Berlin] PHP Notice:  Undefined property: View::$msg in D:\Dev\mathspot\views\error\index.php on line 14
+[16-Aug-2014 19:14:12 Europe/Berlin] PHP Notice:  Undefined property: View::$title in D:\Dev\mathspot\views\error\index.php on line 6
+[16-Aug-2014 19:14:12 Europe/Berlin] PHP Notice:  Undefined property: View::$msg in D:\Dev\mathspot\views\error\index.php on line 14
+[16-Aug-2014 19:15:07 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:29) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 19:16:55 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:31) in D:\Dev\mathspot\libs\Person.php on line 218
+[16-Aug-2014 19:17:02 Europe/Berlin] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at D:\Dev\mathspot\views\footer.php:29) in D:\Dev\mathspot\libs\Person.php on line 218
