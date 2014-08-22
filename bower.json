@@ -1,0 +1,8 @@
+{
+  "name": "MathSpot",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery": "master",
+    "jquery-ui": "master"
+  }
+}

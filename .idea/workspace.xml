@@ -2,29 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e502918a-340c-47e3-90b2-dcd735fcb5c9" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/chalk.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/error/404.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/admin.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.no_include/pi_falante/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/learn/index.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/css/learn.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/learn.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/learn.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/dictionary/no-items.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.no_include/pi_falante/talkingPi1.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.no_include/pi_falante/template.css" />
-      <change type="DELETED" beforePath="D:\Dev\mathspot\.no_include\pi blue eyes.svg" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/View.php" afterPath="$PROJECT_DIR$/libs/View.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/dictionary.php" afterPath="$PROJECT_DIR$/controllers/dictionary.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/dictionary.php" afterPath="$PROJECT_DIR$/models/dictionary.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/error.log" afterPath="$PROJECT_DIR$/error.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/footer.php" afterPath="$PROJECT_DIR$/views/footer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/dictionary/index.php" afterPath="$PROJECT_DIR$/views/dictionary/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/page.js" afterPath="$PROJECT_DIR$/public/js/page.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/sidebar.php" afterPath="$PROJECT_DIR$/views/sidebar.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/template.css" afterPath="$PROJECT_DIR$/public/css/template.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="DELETED" beforePath="D:\Dev\mathspot\error.log" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/header.php" afterPath="$PROJECT_DIR$/views/header.php" />
     </list>
     <ignored path="mathspot.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -147,6 +126,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -327,7 +307,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -420,11 +399,11 @@
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32921174" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32921174" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32921174" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -581,11 +560,6 @@
         <state line="51" column="46" selection-start="1103" selection-end="1309" vertical-scroll-proportion="0.62857145" vertical-offset="493" max-vertical-offset="1343" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/error.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="0" selection-start="1568" selection-end="1568" vertical-scroll-proportion="0.0" vertical-offset="374" max-vertical-offset="544" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/action.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="93" column="96" selection-start="2424" selection-end="2424" vertical-scroll-proportion="-29.423077" vertical-offset="816" max-vertical-offset="1989" />
@@ -633,16 +607,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="6" selection-end="6" vertical-scroll-proportion="-0.65384614" vertical-offset="0" max-vertical-offset="289">
-          <folding />
-        </state>
+        <state line="1" column="0" selection-start="6" selection-end="6" vertical-scroll-proportion="-0.65384614" vertical-offset="0" max-vertical-offset="289" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/libs/View.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="58" selection-start="662" selection-end="662" vertical-scroll-proportion="0.6857143" vertical-offset="0" max-vertical-offset="663">
-          <folding />
-        </state>
+        <state line="24" column="58" selection-start="662" selection-end="662" vertical-scroll-proportion="0.6857143" vertical-offset="0" max-vertical-offset="663" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/dictionary/no-items.php">
@@ -652,9 +622,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/dictionary/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="62" selection-start="0" selection-end="3158" vertical-scroll-proportion="0.43814433" vertical-offset="0" max-vertical-offset="1666">
-          <folding />
-        </state>
+        <state line="15" column="62" selection-start="0" selection-end="3158" vertical-scroll-proportion="0.43814433" vertical-offset="0" max-vertical-offset="1666" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/css/template.css">
@@ -684,9 +652,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/libs/Person.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="203" column="23" selection-start="4689" selection-end="4705" vertical-scroll-proportion="-7.5384617" vertical-offset="3255" max-vertical-offset="10183">
-          <folding />
-        </state>
+        <state line="203" column="23" selection-start="4689" selection-end="4705" vertical-scroll-proportion="-7.5384617" vertical-offset="3255" max-vertical-offset="10183" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/footer.php">
@@ -696,30 +662,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/user/profile.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="35" selection-start="226" selection-end="226" vertical-scroll-proportion="0.2" vertical-offset="0" max-vertical-offset="595">
-          <folding />
-        </state>
+        <state line="7" column="35" selection-start="226" selection-end="226" vertical-scroll-proportion="0.2" vertical-offset="0" max-vertical-offset="595" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/page.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="204" column="4" selection-start="5824" selection-end="5824" vertical-scroll-proportion="0.33223686" vertical-offset="3266" max-vertical-offset="5151">
-          <folding />
-        </state>
+        <state line="204" column="4" selection-start="5824" selection-end="5824" vertical-scroll-proportion="0.33223686" vertical-offset="3266" max-vertical-offset="5151" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/learn.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="37" selection-start="609" selection-end="609" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2057">
-          <folding />
-        </state>
+        <state line="28" column="37" selection-start="609" selection-end="609" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2057" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/models/dictionary.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="0" selection-start="769" selection-end="769" vertical-scroll-proportion="0.23367697" vertical-offset="323" max-vertical-offset="4029">
-          <folding />
-        </state>
+        <state line="27" column="0" selection-start="769" selection-end="769" vertical-scroll-proportion="0.23367697" vertical-offset="323" max-vertical-offset="4029" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/sidebar.php">

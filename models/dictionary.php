@@ -12,7 +12,7 @@ namespace Model {
 
         /**
          * Confirm if an item is on the list X
-         * 
+         *
          * @param   int $iItemId     The ID of the item  to search
          * @param   string $sUser    The username of the user
          * @param   string $sList    The name of the list
@@ -72,7 +72,12 @@ namespace Model {
             $max = $max[0]['count(*)'];
 
             $maxPages = $this->getMaxPage($max);
-            $items = $this->db->select("SELECT * FROM i_con ORDER BY title LIMIT {$this->maxItems} OFFSET {$this->getOffset($n)}");
+            $items = $this->db->select(
+              "SELECT *
+              FROM i_con
+              ORDER BY title
+              LIMIT {$this->maxItems}
+              OFFSET {$this->getOffset($n)}");
 
             $sth = array(
                 'page' => $n,
@@ -158,7 +163,13 @@ namespace Model {
 
             } else {
 
-                $items = $this->db->select("SELECT * FROM i_con WHERE u_category ='{$ucategory}' ORDER  BY title LIMIT {$this->maxItems} OFFSET {$this->getOffset($n)}");
+                $items = $this->db->select(
+                  "SELECT *
+                  FROM i_con
+                  WHERE u_category ='{$ucategory}'
+                  ORDER BY title
+                  LIMIT {$this->maxItems}
+                  OFFSET {$this->getOffset($n)}");
 
                 $sth = array(
                     'max_pages' => $this->getMaxPage($count),
@@ -188,7 +199,13 @@ namespace Model {
 
                     $itemsIds = rtrim($itemsIds, ',');
                     $offset = $this->getOffset($n);
-                    $items = $this->db->select("SELECT * FROM i_con WHERE id IN (" . $itemsIds . ") ORDER BY title LIMIT " . $this->maxItems . " OFFSET " . $offset);
+                    $items = $this->db->select(
+                      "SELECT *
+                      FROM i_con
+                      WHERE id
+                      IN (" . $itemsIds . ")
+                      ORDER BY title
+                      LIMIT " . $this->maxItems . " OFFSET " . $offset);
 
                     $max = $this->db->select("SELECT count(*) FROM i_con WHERE id IN (" . $itemsIds . ")");
                     $max = $max[0]['count(*)'];
