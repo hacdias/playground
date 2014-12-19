@@ -11,7 +11,8 @@
  *
  * Always provide a trailing slash (/) after a path.
  *
- * @package InMVC
+ * @package     InMVC
+ * @subpackage  Configuration
  */
 
 //1. Base Constants

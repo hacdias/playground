@@ -1,13 +1,19 @@
 <?php
 
 /**
- * Class Model
+ * Model Class
  *
- * @package InMVC
+ * This is the base class for every model
+ * on the application.
+ *
+ * @package     InMVC
+ * @subpackage  Library
  */
 class Model
 {
     /**
+     * Construct
+     *
      * The constructor of this class automatically initializes
      * the Database.
      */

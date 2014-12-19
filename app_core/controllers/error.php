@@ -4,7 +4,6 @@ namespace Controller;
 
 class Error extends \Controller
 {
-
     function __construct()
     {
         parent::__construct('error');
@@ -28,6 +27,13 @@ class Error extends \Controller
 
         $this->view->setTitle($data['title']);
         $this->view->setData($data);
+
+        $meta = array(
+            'keywords'      =>  'error, ' . $error,
+            'description'   =>  $data['msg']
+        );
+
+        $this->view->setMetaTags($meta);
         $this->view->render('error/index');
     }
 

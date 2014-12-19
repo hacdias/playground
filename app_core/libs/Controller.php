@@ -1,18 +1,24 @@
 <?php
 
 /**
- * Class Controller
+ * Controller Class
  *
- * @package InMVC
+ * This is the base class for every controller
+ * on the application.
+ *
+ * @package     InMVC
+ * @subpackage  Library
  */
 class Controller
 {
     /**
+     * Constructor
+     *
      * The constructor of this class automatically initializes
      * the View and sets the corresponding model path. If the
      * model file exists, it calls it.
      *
-     * @param $name
+     * @param string $name The name of the current Controller.
      */
     function __construct($name)
     {

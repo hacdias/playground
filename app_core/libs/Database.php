@@ -1,13 +1,28 @@
 <?php
 
 /**
- * Class Database
+ * Database Class
  *
- * @package InMVC
+ * This is the base class for every database connection and
+ * it contains some shortcuts.
+ *
+ * @package     InMVC
+ * @subpackage  Library
  */
 class Database extends PDO
 {
-
+    /**
+     * Constructor
+     *
+     * This function establish the connection to the database
+     * with the data provided.
+     *
+     * @param string $DB_TYPE The type of the database.
+     * @param string $DB_HOST Where is the database hosted.
+     * @param string $DB_NAME The name of the database.
+     * @param string $DB_USER The username to access the database.
+     * @param string $DB_PASS The password used to login.
+     */
     public function __construct($DB_TYPE, $DB_HOST, $DB_NAME, $DB_USER, $DB_PASS)
     {
         parent::__construct($DB_TYPE . ':host=' . $DB_HOST . ';dbname=' . $DB_NAME, $DB_USER, $DB_PASS);
@@ -15,11 +30,15 @@ class Database extends PDO
     }
 
     /**
-     * Function used to select something of the database.
+     * Select Function
      *
-     * @param string $sql An SQL string
+     * This function is a shortcut for the SELECT command
+     * of the database and has some other benefits.
+     *
+     * @param string $sql The SQL command.
      * @param array $array Parameters to bind
-     * @param \const|int $fetchMode A PDO Fetch mode
+     * @param int $fetchMode A PDO Fetch mode
+     *
      * @return mixed
      */
     public function select($sql, $array = array(), $fetchMode = PDO::FETCH_ASSOC)
@@ -35,10 +54,12 @@ class Database extends PDO
     }
 
     /**
+     * Insert Function
+     *
      * Function used to insert things in the database.
      *
-     * @param string $table A name of table to insert into
-     * @param string $data An associative array
+     * @param string $table A name of table to insert into.
+     * @param string $data An associative array.
      */
     public function insert($table, $data)
     {
@@ -57,6 +78,8 @@ class Database extends PDO
     }
 
     /**
+     * Update Function
+     *
      * Function used to update things on the database.
      *
      * @param string $table A name of table to insert into
@@ -85,6 +108,8 @@ class Database extends PDO
     }
 
     /**
+     * Delete Function
+     *
      * Function used to delete things from the database.
      *
      * @param string $table

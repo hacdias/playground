@@ -2,9 +2,14 @@
 <html lang='en-EN'>
 
 <head>
+
 <title><?php echo (isset($this->_pageInfo['title'])) ? $this->_pageInfo['title'] : SITE_TITLE; ?></title>
+
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta name='keyword' content='<?php echo $this->_pageMeta['keywords']; ?>'>
+<meta name='description' content='<?php echo $this->_pageMeta['description']; ?>'>
+
 <?php
 
 $files = array(

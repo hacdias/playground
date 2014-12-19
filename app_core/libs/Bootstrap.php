@@ -1,19 +1,29 @@
 <?php
 
 /**
- * Class Bootstrap
+ * Bootstrap
  *
- * @package InMVC
+ * This is where everything is controlled. This file coordinates
+ * decides what controller and method is called and what arguments
+ * are passed from the URL to the application.
+ *
+ * @package     InMVC
+ * @subpackage  Library
  */
 class Bootstrap
 {
+    /** @var string|null $_url his variable should store the current URL. */
     private $_url = null;
+    /** @var Controller|null $_controller The controller of the current request. */
     private $_controller = null;
-
+    /** @var string          $_errorFile     The name of the error file. */
     private $_errorFile = 'error.php';
 
     /**
      * Starts the Bootstrap
+     *
+     * This function is used to initialize the application
+     * and call the other main functions.
      *
      * @return boolean
      */
@@ -32,6 +42,8 @@ class Bootstrap
     }
 
     /**
+     * Get URL
+     *
      * This function get the content of 'url' variable
      * of HTTP GET method. See the .htaccess for more
      * information.
@@ -45,6 +57,8 @@ class Bootstrap
     }
 
     /**
+     * Initialize the Controller
+     *
      * This function initializes the controller that
      * matches with the current url.
      *
@@ -70,6 +84,8 @@ class Bootstrap
     }
 
     /**
+     * Calls the Method
+     *
      * This function calls the method depending on the
      * url fetched above.
      */
@@ -111,6 +127,8 @@ class Bootstrap
     }
 
     /**
+     * Error
+     *
      * Display an error page if there's no controller
      * that corresponds with the current url.
      */
