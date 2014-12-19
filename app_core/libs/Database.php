@@ -3,7 +3,7 @@
 /**
  * Class Database
  *
- * @package MVC PHP Bootstrap
+ * @package InMVC
  */
 class Database extends PDO
 {

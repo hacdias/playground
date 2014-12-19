@@ -3,7 +3,7 @@
 /**
  * Class Model
  *
- * @package MVC PHP Bootstrap
+ * @package InMVC
  */
 class Model
 {

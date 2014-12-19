@@ -10,12 +10,14 @@
  *  4. Errors settings
  *
  * Always provide a trailing slash (/) after a path.
+ *
+ * @package InMVC
  */
 
 //1. Base Constants
 define('ROOT', dirname(__FILE__) . '/');
 define('URL', 'http://localhost/mvc/');
-define('SITE_TITLE', 'Simple MVC Structure Model');
+define('SITE_TITLE', 'InMVC');
 
 //2. Directories Constants
 define('DIR_LIBS', ROOT . 'libs/');
@@ -26,10 +28,10 @@ define('DIR_PUBLIC', '../public_html/');
 
 //3. Database Configuration Data
 define('DB_TYPE', 'mysql');
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'mvc');
-define('DB_USER', 'root');
-define('DB_PASS', 'root');
+define('DB_HOST', 'dbhost');
+define('DB_NAME', 'dbname');
+define('DB_USER', 'dbuser');
+define('DB_PASS', 'dbpass');
 
 /*
  * 4. Errors settings
@@ -38,5 +40,5 @@ define('DB_PASS', 'root');
  *  to -1 to display all PHP errors;
  *  to 0 to hide all PHP errors;
  */
-error_reporting(-1);
-ini_set('display_errors', '-1');
+ini_set('error_reporting', 0);
+error_reporting(0);

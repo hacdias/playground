@@ -3,7 +3,7 @@
 /**
  * Class View
  *
- * @package MVC PHP Bootstrap
+ * @package InMVC
  */
 class View
 {
@@ -31,6 +31,29 @@ class View
     public function setTitle($title)
     {
         $this->_pageInfo['title'] = $title . ' | ' . SITE_TITLE;
+    }
+
+    public function printAssets($arr)
+    {
+        $css = $arr['css'];
+        $js = $arr['js'];
+
+        $this->printAssetsHelper('css', $css);
+        $this->printAssetsHelper('js', $js);
+    }
+
+    protected function printAssetsHelper($type, $arr)
+    {
+        $cssModel = "<link rel='stylesheet' href='%s?v=%s' type='text/css' media='all'/>\n";
+        $jsModel = "<script src='%s?v=%s'></script>\n";
+
+        foreach ($arr as $item) {
+
+            $link = URL . $item . '.' . $type;
+            $hash = md5(DIR_PUBLIC . $item . '.' . $type);
+
+            printf(${$type . 'Model'}, $link, $hash);
+        }
     }
 
 }
