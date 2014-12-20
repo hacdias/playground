@@ -25,8 +25,15 @@ class Database extends PDO
      */
     public function __construct($DB_TYPE, $DB_HOST, $DB_NAME, $DB_USER, $DB_PASS)
     {
-        parent::__construct($DB_TYPE . ':host=' . $DB_HOST . ';dbname=' . $DB_NAME, $DB_USER, $DB_PASS);
-        $this->exec("SET NAMES 'utf8';");
+        try {
+            parent::__construct($DB_TYPE . ':host=' . $DB_HOST . ';dbname=' . $DB_NAME, $DB_USER, $DB_PASS);
+            $this->exec("SET NAMES 'utf8';");
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            header('Location: ' . URL . '500');
+            die();
+        }
+
     }
 
     /**
@@ -39,7 +46,7 @@ class Database extends PDO
      * @param array $array Parameters to bind
      * @param int $fetchMode A PDO Fetch mode
      *
-     * @return mixed
+     * @return array
      */
     public function select($sql, $array = array(), $fetchMode = PDO::FETCH_ASSOC)
     {
@@ -50,7 +57,16 @@ class Database extends PDO
         }
 
         $sth->execute();
-        return $sth->fetchAll($fetchMode);
+
+        $data = $sth->fetchAll($fetchMode);
+
+        if (!$data) {
+            error_log("An error occurred when trying to run the query '" . $sql . "'.");
+            header('Location: ' . URL . '500');
+            die();
+        } else {
+            return $data;
+        }
     }
 
     /**
@@ -74,7 +90,9 @@ class Database extends PDO
             $sth->bindValue(":$key", $value);
         }
 
-        $sth->execute();
+        if (!$sth->execute()) {
+            header('Location: ' . URL . '500');
+        }
     }
 
     /**
@@ -103,8 +121,9 @@ class Database extends PDO
             $sth->bindValue(":$key", $value);
         }
 
-        $sth->execute();
-
+        if (!$sth->execute()) {
+            header('Location: ' . URL . '500');
+        }
     }
 
     /**

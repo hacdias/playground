@@ -28,18 +28,32 @@ define('DIR_CONTROLLERS', ROOT . 'controllers/');
 define('DIR_PUBLIC', '../public_html/');
 
 //3. Database Configuration Data
-define('DB_TYPE', 'mysql');
+define('DB_TYPE', 'dbtype');
 define('DB_HOST', 'dbhost');
 define('DB_NAME', 'dbname');
 define('DB_USER', 'dbuser');
 define('DB_PASS', 'dbpass');
 
+// 4. Errors settings
 /*
- * 4. Errors settings
- *
- * Set error_reporting:
- *  to -1 to display all PHP errors;
- *  to 0 to hide all PHP errors;
+ * Set display_errors:
+ *  to Off to hide all PHP errors;
+ *  to On to display all PHP errors;
  */
-ini_set('error_reporting', 0);
-error_reporting(0);
+ini_set('display_errors','On');
+/*
+ * Set error_reporting:
+ *  to -1 to report all PHP errors;
+ *  to 0 to report none of PHP errors;
+ */
+ini_set('error_reporting', -1);
+/*
+ * Set log_errors:
+ *  to Off if you don't want to log the errors;
+ *  to On if you want to log the errors;
+ */
+ini_set('log_errors','On');
+/*
+ * Define the file where the log will be saved.
+ */
+ini_set('error_log', ROOT . 'errors.log');
