@@ -2,7 +2,9 @@
 
 namespace Controller;
 
-class Index extends \Controller
+use \Core\Controller;
+
+class Index extends Controller
 {
 
     function __construct()

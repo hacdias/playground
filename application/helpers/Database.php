@@ -1,5 +1,9 @@
 <?php
 
+namespace Helpers;
+
+use \PDO;
+
 /**
  * Database Class
  *

@@ -2,7 +2,9 @@
 
 namespace Controller;
 
-class Posts extends \Controller
+use \Core\Controller;
+
+class Posts extends Controller
 {
 
     function __construct()

@@ -2,7 +2,9 @@
 
 namespace Model;
 
-class Posts extends \Model
+use \Core\Model;
+
+class Posts extends Model
 {
 
     function __construct()

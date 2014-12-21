@@ -9,8 +9,8 @@
  *
  * @package     InMVC
  */
-if(file_exists('../app_core/config.php')) {
-    require '../app_core/config.php';
+if(file_exists('../application/config.php')) {
+    require '../application/config.php';
 } else {
     die("There's no configuration file.");
 }
@@ -25,10 +25,10 @@ if(file_exists('../app_core/config.php')) {
  */
 function autoLoad($className)
 {
-    require DIR_LIBS . strtolower($className) . '.php';
+    require ROOT . strtolower($className) . '.php';
 }
 
 spl_autoload_register('autoLoad');
 
-$bootstrap = new \Bootstrap();
+$bootstrap = new \Core\Bootstrap();
 $bootstrap->init();

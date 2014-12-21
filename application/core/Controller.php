@@ -1,5 +1,7 @@
 <?php
 
+namespace Core;
+
 /**
  * Controller Class
  *
@@ -22,7 +24,7 @@ class Controller
      */
     function __construct($name)
     {
-        $this->view = new \View();
+        $this->view = new View();
 
         $path = ROOT . 'models/' . $name . '.php';
 

@@ -2,7 +2,9 @@
 
 namespace Controller;
 
-class Error extends \Controller
+use \Core\Controller;
+
+class Error extends Controller
 {
     function __construct()
     {

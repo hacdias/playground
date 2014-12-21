@@ -2,7 +2,9 @@
 
 namespace Controller;
 
-class Page extends \Controller
+use \Core\Controller;
+
+class Page extends Controller
 {
 
     function __construct()
