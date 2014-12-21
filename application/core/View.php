@@ -9,16 +9,22 @@ namespace Core;
  * on the application.
  *
  * @package     InMVC
- * @subpackage  Library
+ * @subpackage  Core
  */
 class View
 {
-    /** @var array $_data An array with the data to be used in HTML view. */
-    protected $_data;
-    /** @var array $_pageInfo An array with the main information of the page. */
-    protected $_pageInfo;
-    /** @var array $_pageMeta An array with the meta information of the page. */
-    protected $_pageMeta;
+    /** @var array $headerInfo The information to <head> section */
+    private static $headerInfo = array();
+
+    /** @var array $file The main files to "stylish" the page. */
+    private static $files = array(
+        'css'   => array(
+            'css/template',
+            'assets/normalize.css/normalize'),
+        'js'    => array(
+            'js/page'
+        )
+    );
 
     /**
      * Constructor
@@ -33,97 +39,74 @@ class View
     /**
      * Render
      *
-     * This function is used to render the page. The header,
-     * the main content and the footer are called here.
+     * This function is used to render a part of the page.
      *
      * @param string $name The name of the main file.
+     * @param mixed $data Data to be inserted into the view.
      */
-    public function render($name)
+    public static function render($name, $data = array())
     {
-        require DIR_VIEWS . 'header.php';
-        require DIR_VIEWS . $name . '.php';
-        require DIR_VIEWS . 'footer.php';
+        if ($name === 'header') {
+            $data = self::$headerInfo;
 
-    }
-
-    /**
-     * Set Data
-     *
-     * This function is used to set the $_data variable.
-     *
-     * @param array $data The data that will be shown on the front-end.
-     */
-    public function setData($data)
-    {
-        $this->_data = $data;
-    }
-
-    /**
-     * Set Title
-     *
-     * This function is used to set the title of the page.
-     *
-     * @param $title
-     */
-    public function setTitle($title)
-    {
-        $this->_pageInfo['title'] = $title . ' | ' . SITE_TITLE;
-    }
-
-    /**
-     * Set Meta Tags content
-     *
-     * This function is used to set the content of the meta
-     * tags that are placed in the page header.
-     *
-     * @param array $meta An array with the information.
-     */
-    public function setMetaTags($meta = array())
-    {
-        $meta['description'] = isset($meta['description']) ? $meta['description'] : '';
-        $meta['keywords'] = isset($meta['keywords']) ? $meta['keywords'] : '';
-
-        $this->_pageMeta = $meta;
-    }
-
-    /**
-     * Print Assets
-     *
-     * This function is used to print the assets calls like
-     * css and js  in the page header.
-     *
-     * @param array $arr The array with the assets locations
-     */
-    protected function printAssets($arr)
-    {
-        $css = $arr['css'];
-        $js = $arr['js'];
-
-        $this->printAssetsHelper('css', $css);
-        $this->printAssetsHelper('js', $js);
-    }
-
-    /**
-     * Print Assets Helper
-     *
-     * This helper is used to print the assets calls
-     * from the function above.
-     *
-     * @param string $type The type of the assets (css or js)
-     * @param array $arr The array with the paths to assets
-     */
-    private function printAssetsHelper($type, $arr)
-    {
-        $cssModel = "<link rel='stylesheet' href='%s?v=%s' type='text/css' media='all'/>\n";
-        $jsModel = "<script src='%s?v=%s'></script>\n";
-
-        foreach ($arr as $item) {
-
-            $link = URL . $item . '.' . $type;
-            $hash = md5(DIR_PUBLIC . $item . '.' . $type);
-
-            printf(${$type . 'Model'}, $link, $hash);
+            if (!isset($data['assets'])) {
+                $data['assets'] = View::renderAssetsCode(self::$files);
+            }
         }
+
+        require DIR_VIEWS . $name . '.php';
+    }
+
+    /**
+     * Set Header Tag
+     *
+     * This function is used to set some tag that will be used
+     * in the <head> section of the page.
+     *
+     * @param string $name  The name that corresponds with the content.
+     * @param string $content The content.
+     */
+    public static function setHeaderTag($name, $content)
+    {
+        self::$headerInfo[$name] = $content;
+    }
+
+    /**
+     * Render Assets Code
+     *
+     * This function is used to render the assets code, ie, the
+     * code to call CSS and JS assets.
+     *
+     * @param $arr
+     * @return string
+     */
+    public static function renderAssetsCode($arr)
+    {
+        $cssModel = "<link rel='stylesheet' href='{{link}}?v={{hash}}' type='text/css' media='all'/>\n";
+        $jsModel = "<script src='{{link}}?v={{hash}}'></script>\n";
+
+        $css = isset($arr['css']) ? $arr['css'] : array();
+        $js = isset($arr['js']) ? $arr['js'] : array();
+
+        $code = '';
+
+        for ($i = 0; $i < 2; $i++) {
+
+            $type = ($i === 0) ? 'css' : 'js';
+
+            foreach (${$type} as $item) {
+
+                $link = URL . $item . '.' . $type;
+                $hash = md5(DIR_PUBLIC . $item . '.' . $type);
+
+                $string = str_replace('{{link}}', $link, ${$type . 'Model'});
+                $string = str_replace('{{hash}}', $hash, $string);
+
+                $code.= $string;
+            }
+        }
+
+        return $code;
     }
 
 }

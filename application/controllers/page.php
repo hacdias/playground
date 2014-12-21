@@ -3,6 +3,7 @@
 namespace Controller;
 
 use \Core\Controller;
+use \Core\View;
 
 class Page extends Controller
 {
@@ -14,8 +15,10 @@ class Page extends Controller
 
     function index()
     {
-        $this->view->setTitle('Page');
-        $this->view->render('page/index');
+        View::setHeaderTag('title', 'Page');
+        View::render('header');
+        View::render('page/index');
+        View::render('footer');
     }
 
 }

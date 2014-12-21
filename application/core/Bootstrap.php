@@ -10,7 +10,7 @@ namespace Core;
  * are passed from the URL to the application.
  *
  * @package     InMVC
- * @subpackage  Library
+ * @subpackage  Core
  */
 class Bootstrap
 {
@@ -140,7 +140,7 @@ class Bootstrap
 
         $error = ($this->_url[0] == '500') ? '500' : '404';
 
-        $this->_controller = new Controller\Error();
+        $this->_controller = new \Controller\Error();
         $this->_controller->index($error);
 
         exit;

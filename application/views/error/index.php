@@ -1,3 +1,3 @@
-<h1> <?php echo $this->_data['title'] ?></h1>
+<h1> <?php echo $data['title'] ?></h1>
 
-<p><?php echo $this->_data['msg']; ?></p>
+<p><?php echo $data['msg']; ?></p>

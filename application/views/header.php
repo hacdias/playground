@@ -3,25 +3,14 @@
 
 <head>
 
-<title><?php echo (isset($this->_pageInfo['title'])) ? $this->_pageInfo['title'] : SITE_TITLE; ?></title>
+<title><?php echo (isset($data['title'])) ? $data['title'] : SITE_TITLE; ?></title>
 
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
-<meta name='keyword' content='<?php echo $this->_pageMeta['keywords']; ?>'>
-<meta name='description' content='<?php echo $this->_pageMeta['description']; ?>'>
+<meta name='keyword' content='<?php echo (isset($data['keywords'])) ? $data['keywords'] : DEFAULT_KEYWORDS; ?>'>
+<meta name='description' content='<?php echo (isset($data['description'])) ? $data['description'] : DEFAULT_DESCRIPTION; ?>'>
 
-<?php
-
-$files = array(
-    'css'   => array(
-        'css/template',
-        'assets/normalize.css/normalize'),
-    'js'    => array(
-        'js/page'
-    )
-);
-
-$this->printAssets($files); ?>
+<?=$data['assets']?>
 </head>
 
 <body>

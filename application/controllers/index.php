@@ -3,10 +3,10 @@
 namespace Controller;
 
 use \Core\Controller;
+use \Core\View;
 
 class Index extends Controller
 {
-
     function __construct()
     {
         parent::__construct('index');
@@ -14,8 +14,11 @@ class Index extends Controller
 
     function index()
     {
-        $this->view->setTitle('Home');
-        $this->view->render('index/index');
+        View::setHeaderTag('title', 'Home');
+
+        View::render('header');
+        View::render('index/index');
+        View::render('footer');
     }
 
 }

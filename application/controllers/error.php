@@ -3,6 +3,7 @@
 namespace Controller;
 
 use \Core\Controller;
+use \Core\View;
 
 class Error extends Controller
 {
@@ -27,16 +28,15 @@ class Error extends Controller
                 break;
         }
 
-        $this->view->setTitle($data['title']);
-        $this->view->setData($data);
+        $keywords = 'error, ' . $error;
 
-        $meta = array(
-            'keywords'      =>  'error, ' . $error,
-            'description'   =>  $data['msg']
-        );
+        View::setHeaderTag('title', $data['title']);
+        View::setHeaderTag('keywords', $keywords);
+        View::setHeaderTag('description', $data['msg']);
 
-        $this->view->setMetaTags($meta);
-        $this->view->render('error/index');
+        View::render('header');
+        View::render('error/index', $data);
+        View::render('footer');
     }
 
 }

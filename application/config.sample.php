@@ -34,6 +34,11 @@ define('DB_NAME', 'dbname');
 define('DB_USER', 'dbuser');
 define('DB_PASS', 'dbpass');
 
+date_default_timezone_set('Europe/London');
+
+define('DEFAULT_DESCRIPTION', '');
+define('DEFAULT_KEYWORDS', '');
+
 // 4. Errors settings
 /*
  * Set display_errors:

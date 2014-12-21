@@ -11,7 +11,7 @@ use \Helpers\Database as Database;
  * on the application.
  *
  * @package     InMVC
- * @subpackage  Library
+ * @subpackage  Core
  */
 class Model
 {

@@ -11,7 +11,7 @@ use \PDO;
  * it contains some shortcuts.
  *
  * @package     InMVC
- * @subpackage  Library
+ * @subpackage  Core
  */
 class Database extends PDO
 {

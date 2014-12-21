@@ -9,7 +9,7 @@ namespace Core;
  * on the application.
  *
  * @package     InMVC
- * @subpackage  Library
+ * @subpackage  Core
  */
 class Controller
 {

@@ -3,6 +3,7 @@
 namespace Controller;
 
 use \Core\Controller;
+use \Core\View;
 
 class Posts extends Controller
 {
@@ -15,10 +16,11 @@ class Posts extends Controller
     function index()
     {
         $data = $this->model->getPosts();
-        $this->view->setData($data);
-        $this->view->setTitle('Posts');
 
-        $this->view->render('posts/index');
+        View::setHeaderTag('title', 'Posts');
+        View::render('header');
+        View::render('posts/index', $data);
+        View::render('footer');
     }
 
 }
