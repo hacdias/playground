@@ -9,8 +9,11 @@
  *
  * @package     InMVC
  */
-
-require '../app_core/config.php';
+if(file_exists('../app_core/config.php')) {
+    require '../app_core/config.php';
+} else {
+    die("There's no configuration file.");
+}
 
 /**
  * Auto Load Function
