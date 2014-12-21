@@ -1,0 +1,37 @@
+<html>
+
+<head>
+
+    <title>PHP + Ajax Calls</title>
+
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="js/script.js"></script>
+
+</head>
+
+<body>
+
+    <h1>Registry</h1>
+
+    <!--
+
+    The formulary to be filled by the user with the info to send to the server with Ajax.
+    The form action calls a javascript function that is in js/script.js file.
+
+    In this example, we use an registry formulary.
+
+    -->
+
+    <form id="form" method="post" action="javascript:ajaxCall();">
+
+        <input type="text" id="name" name="name" placeholder="Name"><br>
+        <input type="password" id="password" name="password" placeholder="Password"><br>
+        <input type="email" id="email" name="email" placeholder="Email"><br>
+        <input type="submit" value="Submit">
+
+    </form>
+
+</body>
+</html>
