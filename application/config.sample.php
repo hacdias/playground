@@ -38,7 +38,7 @@ define('MODE', 'DEVELOPMENT');
  * @cons string DIR_PUBLIC The path to the public_html directory;
  */
 define('DIR_VIEWS', ROOT . 'views/');
-define('DIR_PUBLIC', '../public_html/');
+define('DIR_PUBLIC', '../www/');
 
 /**
  * 3. Database Configuration Data

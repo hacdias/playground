@@ -1,5 +1,8 @@
-ErrorDocument 404 /404
-ErrorDocument 500 /500
+ErrorDocument 404 /mvc/404
+ErrorDocument 500 /mvc/500
+ErrorDocument 403 /mvc/404
+
+Options -indexes
 
 <IfModule mod_rewrite.c>
 
