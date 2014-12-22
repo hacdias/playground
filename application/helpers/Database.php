@@ -34,7 +34,10 @@ class Database extends PDO
             $this->exec("SET NAMES 'utf8';");
         } catch (\PDOException $e) {
             error_log($e->getMessage());
-            header('Location: ' . URL . '500');
+
+            $error = new \Controllers\Error;
+            $error->index('500');
+
             die();
         }
 
@@ -66,7 +69,10 @@ class Database extends PDO
 
         if (!$data) {
             error_log("An error occurred when trying to run the query '" . $sql . "'.");
-            header('Location: ' . URL . '500');
+
+            $error = new \Controllers\Error;
+            $error->index('500');
+
             die();
         } else {
             return $data;
@@ -95,7 +101,9 @@ class Database extends PDO
         }
 
         if (!$sth->execute()) {
-            header('Location: ' . URL . '500');
+            $error = new \Controllers\Error;
+            $error->index('500');
+            die();
         }
     }
 
@@ -126,7 +134,9 @@ class Database extends PDO
         }
 
         if (!$sth->execute()) {
-            header('Location: ' . URL . '500');
+            $error = new \Controllers\Error;
+            $error->index('500');
+            die();
         }
     }
 

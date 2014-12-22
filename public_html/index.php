@@ -1,5 +1,7 @@
 <?php
 
+define('START_TIME', microtime(true));
+
 /**
  * Main File
  *
@@ -35,5 +37,3 @@ spl_autoload_register('autoLoad');
 
 
 \Core\Bootstrap::init();
-
-
