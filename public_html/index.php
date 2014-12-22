@@ -25,10 +25,15 @@ if(file_exists('../application/config.php')) {
  */
 function autoLoad($className)
 {
-    require ROOT . strtolower($className) . '.php';
+    $file = ROOT . strtolower($className) . '.php';
+
+    if (file_exists($file))
+        require $file;
 }
 
 spl_autoload_register('autoLoad');
 
-$bootstrap = new \Core\Bootstrap();
-$bootstrap->init();
+
+\Core\Bootstrap::init();
+
+

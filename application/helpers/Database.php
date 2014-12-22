@@ -32,7 +32,7 @@ class Database extends PDO
         try {
             parent::__construct($DB_TYPE . ':host=' . $DB_HOST . ';dbname=' . $DB_NAME, $DB_USER, $DB_PASS);
             $this->exec("SET NAMES 'utf8';");
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             error_log($e->getMessage());
             header('Location: ' . URL . '500');
             die();

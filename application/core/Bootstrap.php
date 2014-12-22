@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use \Controllers;
+
 /**
  * Bootstrap
  *
@@ -15,11 +17,9 @@ namespace Core;
 class Bootstrap
 {
     /** @var string|null $_url his variable should store the current URL. */
-    private $_url = null;
+    private static $_url = null;
     /** @var Controller|null $_controller The controller of the current request. */
-    private $_controller = null;
-    /** @var string          $_errorFile     The name of the error file. */
-    private $_errorFile = 'error.php';
+    private static $_controller = null;
 
     /**
      * Starts the Bootstrap
@@ -29,16 +29,16 @@ class Bootstrap
      *
      * @return boolean
      */
-    public function init()
+    public static function init()
     {
-        $this->_getUrl();
+        self::_getUrl();
 
-        if (empty($this->_url[0])) {
-            $this->_url[0] = 'index';
+        if (empty(self::$_url[0])) {
+            self::$_url[0] = 'index';
         }
 
-        $this->_controller();
-        $this->_method();
+        self::_controller();
+        self::_method();
 
         return false;
     }
@@ -50,12 +50,12 @@ class Bootstrap
      * of HTTP GET method. See the .htaccess for more
      * information.
      */
-    private function _getUrl()
+    private static function _getUrl()
     {
         $url = isset($_GET['url']) ? $_GET['url'] : null;
         $url = rtrim($url, '/');
         $url = filter_var($url, FILTER_SANITIZE_URL);
-        $this->_url = explode('/', $url);
+        self::$_url = explode('/', $url);
     }
 
     /**
@@ -66,23 +66,21 @@ class Bootstrap
      *
      * @return bool
      */
-    private function _controller()
+    private static function _controller()
     {
-        $file = DIR_CONTROLLERS . $this->_url[0] . '.php';
+        $controllerClass = "Controllers\\" . self::$_url[0];
 
-        if (file_exists($file)) {
-            require $file;
+        if (class_exists($controllerClass)) {
 
-            $controller = "Controller\\" . $this->_url[0];
-
-            $this->_controller = new $controller($this->_url[0]);
-
+            self::$_controller = new $controllerClass(self::$_url[0]);
             return false;
+
         } else {
-            $this->_error();
-            return false;
-        }
 
+            self::_error();
+            return false;
+
+        }
     }
 
     /**
@@ -91,39 +89,39 @@ class Bootstrap
      * This function calls the method depending on the
      * url fetched above.
      */
-    private function _method()
+    private static function _method()
     {
-        $length = count($this->_url);
+        $length = count(self::$_url);
 
         if ($length > 1) {
-            if (!method_exists($this->_controller, $this->_url[1])) {
-                $this->_error();
+            if (!method_exists(self::$_controller, self::$_url[1])) {
+                self::_error();
             }
         }
 
         switch ($length) {
             case 5:
                 //Controller->Method(Param1, Param2, Param3)
-                $this->_controller->{$this->_url[1]}($this->_url[2], $this->_url[3], $this->_url[4]);
+                self::$_controller->{self::$_url[1]}(self::$_url[2], self::$_url[3], self::$_url[4]);
                 break;
 
             case 4:
                 //Controller->Method(Param1, Param2)
-                $this->_controller->{$this->_url[1]}($this->_url[2], $this->_url[3]);
+                self::$_controller->{self::$_url[1]}(self::$_url[2], self::$_url[3]);
                 break;
 
             case 3:
                 //Controller->Method(Param1, Param2)
-                $this->_controller->{$this->_url[1]}($this->_url[2]);
+                self::$_controller->{self::$_url[1]}(self::$_url[2]);
                 break;
 
             case 2:
                 //Controller->Method(Param1, Param2)
-                $this->_controller->{$this->_url[1]}();
+                self::$_controller->{self::$_url[1]}();
                 break;
 
             default:
-                $this->_controller->index();
+                self::$_controller->index();
                 break;
         }
     }
@@ -134,14 +132,12 @@ class Bootstrap
      * Display an error page if there's no controller
      * that corresponds with the current url.
      */
-    private function _error()
+    private static function _error()
     {
-        require DIR_CONTROLLERS . $this->_errorFile;
+        $error = (self::$_url[0] == '500') ? '500' : '404';
 
-        $error = ($this->_url[0] == '500') ? '500' : '404';
-
-        $this->_controller = new \Controller\Error();
-        $this->_controller->index($error);
+        self::$_controller = new Controllers\Error();
+        self::$_controller->index($error);
 
         exit;
     }

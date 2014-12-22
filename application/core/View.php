@@ -96,13 +96,17 @@ class View
 
             foreach (${$type} as $item) {
 
-                $link = URL . $item . '.' . $type;
-                $hash = md5(DIR_PUBLIC . $item . '.' . $type);
+                $file = DIR_PUBLIC . $item . '.' . $type;
 
-                $string = str_replace('{{link}}', $link, ${$type . 'Model'});
-                $string = str_replace('{{hash}}', $hash, $string);
+                if (file_exists($file)) {
+                    $link = URL . $item . '.' . $type;
+                    $hash = md5(DIR_PUBLIC . $item . '.' . $type);
 
-                $code.= $string;
+                    $string = str_replace('{{link}}', $link, ${$type . 'Model'});
+                    $string = str_replace('{{hash}}', $hash, $string);
+
+                    $code.= $string;
+                }
             }
         }
 
