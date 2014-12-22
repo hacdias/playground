@@ -18,7 +18,7 @@
 
 date_default_timezone_set('Europe/London');
 
-/**
+/*
  * 1. Base Constants
  *
  * @cons string ROOT This constant contains the absolute path to the main folder ('application');
@@ -31,7 +31,7 @@ define('URL', 'http://localhost/mvc/');
 define('SITE_TITLE', 'InMVC');
 define('MODE', 'DEVELOPMENT');
 
-/**
+/*
  * 2. Directories Constants
  *
  * @cons string DIR_VIEWS The absolute path to the views directory;
@@ -40,7 +40,7 @@ define('MODE', 'DEVELOPMENT');
 define('DIR_VIEWS', ROOT . 'views/');
 define('DIR_PUBLIC', '../www/');
 
-/**
+/*
  * 3. Database Configuration Data
  *
  * This configuration is only needed if you want to use
@@ -52,7 +52,7 @@ define('DB_NAME', 'dbname');
 define('DB_USER', 'dbuser');
 define('DB_PASS', 'dboass');
 
-/**
+/*
  * 4. Some SEO settings
  *
  * @cons string DEFAULT_DESCRIPTION The default description to appear in <meta> tags;
