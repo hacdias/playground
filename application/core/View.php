@@ -44,7 +44,7 @@ class View
      * @param string $name The name of the main file.
      * @param mixed $data Data to be inserted into the view.
      */
-    public static function render($name, $data = array())
+    public static function render($name, $data = array(), $headers = '')
     {
         if ($name === 'header') {
             $data = self::$headerInfo;
@@ -52,6 +52,10 @@ class View
             if (!isset($data['assets'])) {
                 $data['assets'] = View::renderAssetsCode(self::$files);
             }
+        }
+
+        if (!headers_sent()) {
+            header($headers);
         }
 
         require DIR_VIEWS . $name . '.php';

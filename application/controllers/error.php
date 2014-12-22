@@ -17,15 +17,18 @@ class Error extends Controller
         $data = array();
 
         switch ($error) {
-            case '404':
-                $data['title'] = 'Error 404';
-                $data['msg'] = "Not found. There is nothing here.";
-                break;
             case '500':
-            default:
+                $data['headers'] = 'HTTP/1.0 500 Internal Server Error';
                 $data['title'] = 'Error 500';
                 $data['msg'] = "Internal Server Error. Probably we did something wrong.";
                 break;
+            case '404':
+            default:
+                $data['headers'] = 'HTTP/1.0 404 Not Found';
+                $data['title'] = 'Error 404';
+                $data['msg'] = "Not found. There is nothing here.";
+                break;
+
         }
 
         $keywords = 'error, ' . $error;
@@ -34,7 +37,7 @@ class Error extends Controller
         View::setHeaderTag('keywords', $keywords);
         View::setHeaderTag('description', $data['msg']);
 
-        View::render('header');
+        View::render('header', array(), $data['headers']);
         View::render('error/index', $data);
         View::render('footer');
     }
