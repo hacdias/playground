@@ -11,7 +11,7 @@ namespace Core;
  * @package     InMVC
  * @subpackage  Core
  */
-class Controller
+abstract class Controller
 {
     /**
      * Constructor

@@ -13,7 +13,7 @@ use \Helpers\Database as Database;
  * @package     InMVC
  * @subpackage  Core
  */
-class Model
+abstract class Model
 {
     /**
      * Construct
