@@ -1,0 +1,11 @@
+class Triangulo {
+	public static void main(String[] args) {
+		String linha ="*";
+		for (int c = 0; c < 2; c++) {
+			for (int i = 1; i <= 4; i++) {
+				System.out.println(linha);
+				linha += "*";
+			}
+		}	
+	}
+}

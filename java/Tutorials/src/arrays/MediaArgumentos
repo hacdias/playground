@@ -1,0 +1,8 @@
+class MediaArgumentos {
+	public static void main(String[] args) {
+		for(String arg : args) {
+			double args1 = Double.parseDouble(arg);
+			System.out.println(args1);
+		}
+	}
+}
