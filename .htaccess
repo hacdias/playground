@@ -1,0 +1,9 @@
+#Enable this file if you want to put all files into servers public_html folder
+
+<IfModule mod_rewrite.c>
+
+    RewriteEngine on
+    RewriteRule    ^$    public_html/    [L]
+    RewriteRule    (.*) public_html/$1    [L]
+
+</IfModule>
