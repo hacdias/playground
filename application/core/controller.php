@@ -26,7 +26,7 @@ abstract class Controller
     {
         $this->view = new View();
 
-        $path = ROOT . 'models/' . $name . '.php';
+        $path = str_replace("\\", "/", ROOT . 'models/' . $name . '.php');
 
         if (file_exists($path)) {
             require $path;
