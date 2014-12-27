@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use \Helpers\Dir as Dir;
+
 /**
  * Controller Class
  *
@@ -26,7 +28,7 @@ abstract class Controller
     {
         $this->view = new View();
 
-        $path = str_replace("\\", "/", ROOT . 'models/' . $name . '.php');
+        $path = Dir::preparePath(ROOT . 'models/' . $name . '.php');
 
         if (file_exists($path)) {
             require $path;

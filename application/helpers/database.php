@@ -5,14 +5,14 @@ namespace Helpers;
 use \PDO;
 
 /**
-* Database Class
-*
-* This is the base class for every database connection and
-* it contains some shortcuts.
-*
-* @package     InMVC
-* @subpackage  Core
-*/
+ * Database Class
+ *
+ * This is the base class for every database connection and
+ * it contains some shortcuts.
+ *
+ * @package     InMVC
+ * @subpackage  Helpers
+ */
 class Database extends PDO
 {
     /**
