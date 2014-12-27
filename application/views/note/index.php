@@ -1,3 +1,5 @@
+<script src="//cdn.ckeditor.com/4.4.6/standard/ckeditor.js"></script>
+
 <h2>New Note</h2>
 
 <div class="advice-box hidden"></div>
@@ -9,3 +11,7 @@
     <input class="form-item" id="password"  type="password" name="password">
     <button class="buttons form-item" type="submit" name="submit">Create</button>
 </form>
+
+<script>
+    CKEDITOR.replace( 'content' );
+</script>

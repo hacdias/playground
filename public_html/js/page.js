@@ -51,7 +51,7 @@ var createNote = function() {
 
     } else {
 
-        content = escapeHtmlEntities(content);
+        //content = escapeHtmlEntities(content);
         var encryption = encryptContent(content);
 
         password = passwordHash(password);
@@ -101,7 +101,7 @@ var submitViewPassword = function() {
         var data = {
             password: password,
             id: id
-        }
+        };
 
         $.ajax({
             type: 'POST',
@@ -195,8 +195,9 @@ var decryptContent = function(content, iv) {
     decipher.finish();
     var decipheredText = decipher.output.toString();
 
-    $('#note-content').html(decipheredText);
-}
+    var decoded = $('<textarea/>').html(decipheredText).text();
+    $('#note-content').html(decoded);
+};
 
 if(typeof escapeHtmlEntities == 'undefined') {
     escapeHtmlEntities = function (text) {

@@ -3,7 +3,7 @@
 namespace Controllers\Api;
 
 use \Core\Controller;
-use \Core\View;
+use \Helpers\Json;
 
 class Note extends Controller
 {
@@ -14,7 +14,7 @@ class Note extends Controller
 
     function index()
     {
-        //Index Function
+        Json::echo_json();
     }
 
     function add()
@@ -25,19 +25,13 @@ class Note extends Controller
             'iv'        =>  isset($_POST['iv']) ? $_POST['iv'] : NULL);
 
         $result = $this->model->addNote($data);
-        Note::echo_json($result);
+        Json::echo_json($result);
     }
 
     function view($id = NULL)
     {
         $note = $this->model->getContent($_POST['id'], $_POST['password']);
-        Note::echo_json($note);
-    }
-
-    public static function echo_json($array)
-    {
-        header('Content-type: application/json');
-        echo json_encode($array);
+        Json::echo_json($note);
     }
 
 }

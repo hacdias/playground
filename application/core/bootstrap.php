@@ -37,6 +37,8 @@ class Bootstrap
             self::$_url[0] = 'index';
         }
 
+        define('SEND_JSON', (self::$_url[0] === 'api') ? true : false);
+
         self::_route();
 
         return false;
@@ -61,6 +63,9 @@ class Bootstrap
     {
         $controllerClass = "Controllers\\";
 
+        self::$_url[1] = (isset(self::$_url[1])) ? self::$_url[1] : 'index';
+        self::$_url[2] = (isset(self::$_url[2])) ? self::$_url[2] : 'index';
+
         switch (self::$_url[0]) {
             case 'index':
                 $controllerClass .= 'index';
@@ -81,8 +86,6 @@ class Bootstrap
         if (class_exists($controllerClass)) {
 
             self::$_controller = new $controllerClass();
-
-            self::$_url[1] = (isset(self::$_url[1])) ? self::$_url[1] : NULL;
 
             switch (self::$_url[0]) {
                 case 'index':
