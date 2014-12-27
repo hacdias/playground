@@ -37,6 +37,8 @@ class Bootstrap
             self::$_url[0] = 'index';
         }
 
+        define('SEND_JSON', (self::$_url[0] === 'api') ? true : false);
+
         self::_controller();
         self::_method();
 

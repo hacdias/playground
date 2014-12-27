@@ -4,6 +4,7 @@ namespace Controllers;
 
 use \Core\Controller;
 use \Core\View;
+use \Helpers\Json;
 
 class Error extends Controller
 {
@@ -20,26 +21,34 @@ class Error extends Controller
             case '500':
                 $data['headers'] = 'HTTP/1.0 500 Internal Server Error';
                 $data['title'] = 'Error 500';
-                $data['msg'] = "Internal Server Error. Probably we did something wrong.";
+                $data['message'] = "Internal Server Error. Probably we did something wrong.";
                 break;
             case '404':
             default:
                 $data['headers'] = 'HTTP/1.0 404 Not Found';
                 $data['title'] = 'Error 404';
-                $data['msg'] = "Not found. There is nothing here.";
+                $data['message'] = "Not found. There is nothing here.";
                 break;
 
         }
 
-        $keywords = 'error, ' . $error;
+        if (!SEND_JSON) {
 
-        View::setHeaderTag('title', $data['title']);
-        View::setHeaderTag('keywords', $keywords);
-        View::setHeaderTag('description', $data['msg']);
+            $keywords = 'error, ' . $error;
 
-        View::render('header', array(), $data['headers']);
-        View::render('error/index', $data);
-        View::render('footer');
+            View::setHeaderTag('title', $data['title']);
+            View::setHeaderTag('keywords', $keywords);
+            View::setHeaderTag('description', $data['message']);
+
+            View::render('header', array(), $data['headers']);
+            View::render('error/index', $data);
+            View::render('footer');
+
+        } else {
+
+            Json::echo_json($data);
+
+        }
     }
 
 }

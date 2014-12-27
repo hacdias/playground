@@ -17,6 +17,9 @@ if(file_exists('../application/config.php')) {
     die("There's no configuration file.");
 }
 
+require '../application/helpers/dir.php';
+use \Helpers\Dir as Dir;
+
 /**
 * Auto Load Function
 *
@@ -27,12 +30,11 @@ if(file_exists('../application/config.php')) {
 */
 function autoLoad($className)
 {
-    $file = ROOT . strtolower(str_replace("\\", "/", $className)) . '.php';
+    $file = Dir::preparePath(ROOT . $className . '.php');
 
     if (file_exists($file))
     require $file;
 }
 
 spl_autoload_register('autoLoad');
-
 \Core\Bootstrap::init();
