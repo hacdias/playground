@@ -1,0 +1,9 @@
+{
+  "name": "Secure Notes",
+  "version": "0.0.1",
+  "dependencies": {
+    "normalize.css" : "master",
+    "jquery": "~2.1.3",
+    "jquery-ui": "~1.11.2"
+  }
+}

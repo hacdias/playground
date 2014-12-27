@@ -1,0 +1,8 @@
+[x] Url structure
+[ ] Without password
+
+Ao criar a nota, onde mostra o campo senha, mostrar uma URL encurtada pra ficar mais fácil a distribuição, se for o caso.
+
+Nesta mesma tela, ter opção de enviar por e-mail ou compartilhar o link da nota.
+
+Sobre a edição, adicionar um campo e-mail no form de criação da nota, e enviar um link de edição para este e-mail, desta forma a senha será somente pra visualização.
