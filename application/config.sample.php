@@ -29,7 +29,7 @@ date_default_timezone_set('Europe/London');
 * @cons string MODE The current mode of the application (DEVELOPMENT or PRODUCTION).
 */
 define('ROOT', dirname(__FILE__) . '/');
-define('URL', 'http://inmvc.demo/');
+define('URL', 'http://inmvc.dev/');
 define('SITE_TITLE', 'InMVC');
 define('MODE', 'DEVELOPMENT');
 define('FORCE_HTTPS', false);
@@ -41,7 +41,7 @@ define('FORCE_HTTPS', false);
 * @cons string DIR_PUBLIC The path to the public_html directory;
 */
 define('DIR_VIEWS', ROOT . 'views/');
-define('DIR_PUBLIC', '../public_html/');
+define('DIR_PUBLIC', '../wwwroot/');
 
 /*
 * 3. Database Configuration Data
@@ -85,12 +85,12 @@ define('DEFAULT_KEYWORDS', '');
 */
 switch (MODE) {
     case 'DEVELOPMENT':
-    ini_set('display_errors','On');
-    break;
+        ini_set('display_errors','On');
+        break;
     case 'PRODUCTION':
     default:
-    ini_set('display_errors','Off');
-    break;
+        ini_set('display_errors','Off');
+        break;
 }
 
 ini_set('error_reporting', -1);
@@ -105,12 +105,12 @@ ini_set('error_log', ROOT . 'errors.log');
 * array.
 */
 define('ASSETS', serialize(array(
-'css'   => array(
-'css/template',
-'assets/normalize.css/normalize'),
-'js'    => array(
-'js/page'
-)
+    'css'   => array(
+        'css/template',
+        'assets/normalize.css/normalize'),
+    'js'    => array(
+        'js/page'
+    )
 )));
 
 /*
