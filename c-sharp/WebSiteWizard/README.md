@@ -31,7 +31,7 @@ And repeat the same process every time is boring so I've created this C# console
 
 You just have to change the following lines into "Program.cs" and recompile it.
 
-```c-sharp
+```c#
 string devDir = @"D:\Dev\www",
     hostsFile = @"C:\Windows\System32\drivers\etc\hosts",
 ```
