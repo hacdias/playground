@@ -1,9 +1,0 @@
-D:\Dev\labs\c#\WebSiteWizard\WebSiteWizard\bin\Debug\WebSiteWizard.exe.config
-D:\Dev\labs\c#\WebSiteWizard\WebSiteWizard\bin\Debug\WebSiteWizard.exe.manifest
-D:\Dev\labs\c#\WebSiteWizard\WebSiteWizard\bin\Debug\WebSiteWizard.application
-D:\Dev\labs\c#\WebSiteWizard\WebSiteWizard\bin\Debug\WebSiteWizard.exe
-D:\Dev\labs\c#\WebSiteWizard\WebSiteWizard\bin\Debug\WebSiteWizard.pdb
-D:\Dev\labs\c#\WebSiteWizard\WebSiteWizard\obj\Debug\WebSiteWizard.exe.manifest
-D:\Dev\labs\c#\WebSiteWizard\WebSiteWizard\obj\Debug\WebSiteWizard.application
-D:\Dev\labs\c#\WebSiteWizard\WebSiteWizard\obj\Debug\WebSiteWizard.exe
-D:\Dev\labs\c#\WebSiteWizard\WebSiteWizard\obj\Debug\WebSiteWizard.pdb

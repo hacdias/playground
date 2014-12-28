@@ -19,15 +19,9 @@ So if I want to create the ```hello.dev``` site, I have to create the folder ```
 127.0.0.1   hello.dev
 ```
 
-As Windows doesn't support wildcards in its hosts file, I can't simply write the following:
+As Windows doesn't support wildcards in its hosts file, I can't simply put ```127.0.0.1 *.dev```. And repeat the same process every time is boring.
 
-```
-127.0.0.1   *.dev
-```
-
-And repeat the same process every time is boring so I've created this C# console application that creates the folders and adds the information to the Windows hosts file.
-
-You just have to change the following lines into "Program.cs" and recompile it.
+So I've created this C# console application that creates the folders and adds the information to the Windows hosts file. You just have to change the following lines into "Program.cs" and recompile it.
 
 ```c#
 string devDir = @"D:\Dev\www",
