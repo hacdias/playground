@@ -20,8 +20,8 @@ void main()
 	}
 	else if (nota < 7 && nota >= 4)
 	{
-		puts("tem direito de fazer uma prova de recuperação");
-	} 
+		puts("tem direito de fazer uma prova de recuperaÃ§Ã£o");
+	}
 	else
 	{
 		puts("Reprovou.");
