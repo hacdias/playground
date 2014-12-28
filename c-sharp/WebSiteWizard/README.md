@@ -11,11 +11,9 @@ My web programming environment has the following setup to the apache virtual hos
 </Virtualhost>
 ```
 
-Here is everything automated: I only have to create the folders to access their content with an URL similar to this: ```*.dev``` .
+Here is everything automated: I only have to create the folders to access their content with an URL similar to this: ```*.dev```.
 
-So if I want to create the ```hello.dev``` site, I have to create the folder ```D:/Dev/www/hello/wwwroot``` and add the following information to the
-
-But when I want to create a new site I have to create the folders and add the following information to the Windows hosts file:
+So if I want to create the ```hello.dev``` site, I have to create the folder ```D:/Dev/www/hello/wwwroot``` and add the following information to the Windows hosts file:
 
 ```
 127.0.0.1   hello.dev
