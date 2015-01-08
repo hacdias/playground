@@ -32,6 +32,7 @@ class Bootstrap
     public static function init()
     {
         self::_getUrl();
+        self::_routesExceptions();
 
         if (empty(self::$_url[0])) {
             self::$_url[0] = 'index';
@@ -125,6 +126,49 @@ class Bootstrap
             default:
                 self::$_controller->index();
                 break;
+        }
+    }
+
+    /**
+     * Routes Exceptions
+     *
+     * Confirms if there is some router exception declared
+     * into the routes.php file.
+     */
+    private static function _routesExceptions()
+    {
+        if (!file_exists(ROOT . 'routes.php'))
+            exit("There is no routes.php file.");
+
+        $routes = file_get_contents(ROOT . 'routes.php');
+        $routes = rtrim($routes, "\n");
+        $routes = explode("\n", $routes);
+
+        for ($i = 0; $i < count($routes); $i++) {
+
+            $url = explode('#', $routes[$i]);
+
+            if (count($url) < 2) {
+                continue;
+            }
+
+            $link = rtrim($url[0]);
+            $link = explode('/', $link);
+
+            if (self::$_url[0] === $link[0]) {
+
+                $routeTo = $url[1];
+                $routeTo = explode('/', $routeTo);
+
+                self::$_url = array();
+
+                for ($j = 0; $j < count($routeTo); $j++) {
+                    self::$_url[$j] = $routeTo[$j];
+                }
+
+            } else {
+                continue;
+            }
         }
     }
 
