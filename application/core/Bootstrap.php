@@ -124,6 +124,9 @@ class Bootstrap
                 break;
 
             default:
+                if (!method_exists(self::$_controller, 'index')) {
+                    self::_error();
+                }
                 self::$_controller->index();
                 break;
         }
