@@ -6,7 +6,7 @@ if (version_compare(phpversion(), '5.5.0', '<')) {
     require ROOT . 'lib/password.php';
 }
 
-use \Core\Model;
+use Core\Model;
 
 class Note extends Model
 {
@@ -19,9 +19,9 @@ class Note extends Model
     function addNote($arr)
     {
         $data = array(
-            'content'   =>  $arr['content'],
-            'password'  =>  password_hash($arr['password'], PASSWORD_BCRYPT),
-            'iv'        =>  $arr['iv']
+            'content' => $arr['content'],
+            'password' => password_hash($arr['password'], PASSWORD_BCRYPT),
+            'iv' => $arr['iv']
         );
 
         $this->db->insert('notes', $data);
@@ -33,7 +33,7 @@ class Note extends Model
         }
 
         $result = array(
-            'url'   =>  URL . $id
+            'url' => URL . $id
         );
 
         return $result;
@@ -44,16 +44,16 @@ class Note extends Model
         $query = $this->db->select("SELECT * FROM notes WHERE id = " . $id . " LIMIT 1;");
 
         $result = array(
-            'status'    =>  false
+            'status' => false
         );
 
         foreach ($query as $note) {
 
             if (password_verify($password, $note['password'])) {
                 $result = array(
-                    'status'    =>  true,
-                    'content'   =>  $note['content'],
-                    'iv'        =>  $note['iv']
+                    'status' => true,
+                    'content' => $note['content'],
+                    'iv' => $note['iv']
                 );
             }
 

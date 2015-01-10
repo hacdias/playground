@@ -2,7 +2,7 @@
 
 namespace Helpers;
 
-use \PDO;
+use PDO;
 
 /**
  * Database Class
@@ -12,21 +12,22 @@ use \PDO;
  *
  * @package     InMVC
  * @subpackage  Helpers
+ * @version      0.0.5
  */
 class Database extends PDO
 {
     /**
-    * Constructor
-    *
-    * This function establish the connection to the database
-    * with the data provided.
-    *
-    * @param string $DB_TYPE The type of the database.
-    * @param string $DB_HOST Where is the database hosted.
-    * @param string $DB_NAME The name of the database.
-    * @param string $DB_USER The username to access the database.
-    * @param string $DB_PASS The password used to login.
-    */
+     * Constructor
+     *
+     * This function establish the connection to the database
+     * with the data provided.
+     *
+     * @param string $DB_TYPE The type of the database.
+     * @param string $DB_HOST Where is the database hosted.
+     * @param string $DB_NAME The name of the database.
+     * @param string $DB_USER The username to access the database.
+     * @param string $DB_PASS The password used to login.
+     */
     public function __construct($DB_TYPE, $DB_HOST, $DB_NAME, $DB_USER, $DB_PASS)
     {
         try {
@@ -44,17 +45,17 @@ class Database extends PDO
     }
 
     /**
-    * Select Function
-    *
-    * This function is a shortcut for the SELECT command
-    * of the database and has some other benefits.
-    *
-    * @param string $sql The SQL command.
-    * @param array $array Parameters to bind
-    * @param int $fetchMode A PDO Fetch mode
-    *
-    * @return array
-    */
+     * Select Function
+     *
+     * This function is a shortcut for the SELECT command
+     * of the database and has some other benefits.
+     *
+     * @param string $sql The SQL command.
+     * @param array $array Parameters to bind
+     * @param int $fetchMode A PDO Fetch mode
+     *
+     * @return array
+     */
     public function select($sql, $array = array(), $fetchMode = PDO::FETCH_ASSOC)
     {
         $sth = $this->prepare($sql);
@@ -71,13 +72,13 @@ class Database extends PDO
     }
 
     /**
-    * Insert Function
-    *
-    * Function used to insert things in the database.
-    *
-    * @param string $table A name of table to insert into.
-    * @param string $data An associative array.
-    */
+     * Insert Function
+     *
+     * Function used to insert things in the database.
+     *
+     * @param string $table A name of table to insert into.
+     * @param string $data An associative array.
+     */
     public function insert($table, $data)
     {
         ksort($data);
@@ -100,14 +101,14 @@ class Database extends PDO
     }
 
     /**
-    * Update Function
-    *
-    * Function used to update things on the database.
-    *
-    * @param string $table A name of table to insert into
-    * @param string $data An associative array
-    * @param string $where the WHERE query part
-    */
+     * Update Function
+     *
+     * Function used to update things on the database.
+     *
+     * @param string $table A name of table to insert into
+     * @param string $data An associative array
+     * @param string $where the WHERE query part
+     */
     public function update($table, $data, $where)
     {
         ksort($data);
@@ -133,15 +134,15 @@ class Database extends PDO
     }
 
     /**
-    * Delete Function
-    *
-    * Function used to delete things from the database.
-    *
-    * @param string $table
-    * @param string $where
-    * @param integer $limit
-    * @return integer Affected Rows
-    */
+     * Delete Function
+     *
+     * Function used to delete things from the database.
+     *
+     * @param string $table
+     * @param string $where
+     * @param integer $limit
+     * @return integer Affected Rows
+     */
     public function delete($table, $where, $limit = 1)
     {
         return $this->exec("DELETE FROM $table WHERE $where LIMIT $limit");

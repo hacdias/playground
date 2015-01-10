@@ -27,12 +27,18 @@ date_default_timezone_set('Europe/London');
  * @cons string URL The URL of the application;
  * @cons string SITE_TITLE The title of the application;
  * @cons string MODE The current mode of the application (DEVELOPMENT or PRODUCTION).
+ * @cons boolean JSON_API true if you want to use a Json Api (with the URL /api) or FALSE if not.
+ * @cons boolean JSON_IGNORE_ROUTES Ignore routes file if the URL is related with the api.
  */
 define('ROOT', dirname(__FILE__) . '/');
-define('URL', 'http://securenotes.demo/');
+define('URL', 'http://securenotes.dev/');
 define('SITE_TITLE', 'Secure Notes');
+
 define('MODE', 'DEVELOPMENT');
 define('FORCE_HTTPS', false);
+
+define('JSON_API', true);
+define('JSON_IGNORE_ROUTES', true);
 
 /*
  * 2. Directories Constants
@@ -85,16 +91,16 @@ define('DEFAULT_KEYWORDS', '');
  */
 switch (MODE) {
     case 'DEVELOPMENT':
-        ini_set('display_errors','On');
+        ini_set('display_errors', 'On');
         break;
     case 'PRODUCTION':
     default:
-        ini_set('display_errors','Off');
+        ini_set('display_errors', 'Off');
         break;
 }
 
 ini_set('error_reporting', -1);
-ini_set('log_errors','On');
+ini_set('log_errors', 'On');
 ini_set('error_log', ROOT . 'errors.log');
 
 
@@ -104,16 +110,16 @@ ini_set('error_log', ROOT . 'errors.log');
  * Set the paths to the assets in the following
  * array.
  */
- define('ASSETS', serialize(array(
-     'css'   => array(
-         'css/template',
-         'vendor/normalize.css/normalize'),
-     'js'    => array(
-         'vendor/jquery/dist/jquery.min',
-         'vendor/jquery-ui/jquery-ui.min',
-         'js/forge.min',
-         'js/page'
-     )
+define('ASSETS', serialize(array(
+    'css' => array(
+        'css/template',
+        'vendor/normalize.css/normalize'),
+    'js' => array(
+        'vendor/jquery/dist/jquery.min',
+        'vendor/jquery-ui/jquery-ui.min',
+        'js/forge.min',
+        'js/page'
+    )
 )));
 
 /*
@@ -122,7 +128,7 @@ ini_set('error_log', ROOT . 'errors.log');
  * This function force the use of https.
  */
 
-if(FORCE_HTTPS && $_SERVER["HTTPS"] != "on") {
- header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
- exit();
+if (FORCE_HTTPS && $_SERVER["HTTPS"] != "on") {
+    header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+    exit();
 }

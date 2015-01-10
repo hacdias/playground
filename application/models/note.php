@@ -2,7 +2,7 @@
 
 namespace Model;
 
-use \Core\Model;
+use Core\Model;
 
 class Note extends Model
 {

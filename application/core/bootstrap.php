@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use \Controllers;
+use Controllers;
 
 /**
  * Bootstrap
@@ -13,13 +13,14 @@ use \Controllers;
  *
  * @package     InMVC
  * @subpackage  Core
+ * @version     0.0.5
  */
 class Bootstrap
 {
-    /** @var string|null $_url his variable should store the current URL. */
-    private static $_url = null;
-    /** @var Controller|null $_controller The controller of the current request. */
-    private static $_controller = null;
+    /** @var string|null $url his variable should store the current URL. */
+    private static $url = null;
+    /** @var Controller|null $controller The controller of the current request. */
+    private static $controller = null;
 
     /**
      * Starts the Bootstrap
@@ -31,15 +32,22 @@ class Bootstrap
      */
     public static function init()
     {
-        self::_getUrl();
+        self::getUrl();
 
-        if (empty(self::$_url[0])) {
-            self::$_url[0] = 'index';
+        switch(self::$url[0]) {
+            case 'api':
+                if (!JSON_IGNORE_ROUTES)
+                    self::routingExceptions();
+                break;
+            default:
+                self::routingExceptions();
+                break;
         }
 
-        define('SEND_JSON', (self::$_url[0] === 'api') ? true : false);
+        define('SEND_JSON', (self::$url[0] === 'api' && JSON_API) ? true : false);
 
-        self::_route();
+        self::initializeController();
+        self::callMethod();
 
         return false;
     }
@@ -51,68 +59,136 @@ class Bootstrap
      * of HTTP GET method. See the .htaccess for more
      * information.
      */
-    private static function _getUrl()
+    private static function getUrl()
     {
         $url = isset($_GET['url']) ? $_GET['url'] : null;
         $url = rtrim($url, '/');
         $url = filter_var($url, FILTER_SANITIZE_URL);
-        self::$_url = explode('/', $url);
+        $url = explode('/', $url);
+
+        if (empty($url[0]))
+            $url[0] = 'index';
+
+        if ($url[0] === 'api' && JSON_API && empty($url[1]))
+            $url[1] = 'index';
+
+        self::$url = $url;
     }
 
-    private static function _route()
+    /**
+     * Routes Exceptions
+     *
+     * Confirms if there is some router exception declared
+     * into the routes file.
+     */
+    private static function routingExceptions()
+    {
+        if (!file_exists(ROOT . 'routes'))
+            exit("There is no routes file.");
+
+        $routes = file_get_contents(ROOT . 'routes');
+        $routes = rtrim($routes, "\n");
+        $routes = explode("\n", $routes);
+
+        $routeDefined = false;
+
+        for ($i = 0; $i < count(self::$url); $i++) {
+
+            self::$url[$i] = rtrim(self::$url[$i]);
+
+            if ($routeDefined)
+                break;
+
+            for ($j = 0; $j < count($routes); $j++) {
+
+                if ($routeDefined)
+                    break;
+
+                if ($routes[$j][0] === '#' || $routes[$j][0] === "\n")
+                    continue;
+
+                $url = explode('!', $routes[$j]);
+
+                if (count($url) < 2)
+                    continue;
+
+                $link = rtrim($url[0]);
+                $link = explode('/', $link);
+
+                $isThisRoute = false;
+
+                for ($k = 0; $k < count($link); $k++) {
+
+                    if ($k === $i) {
+
+                        if ($link[$k] === self::$url[$i]) {
+
+                            unset(self::$url[$i]);
+                            $isThisRoute = true;
+                            self::$url = array_values(self::$url);
+
+                        } elseif ($link[$k][0] === '{' && $link[$k][strlen($link[$k]) - 1] === '}') {
+
+                            $regex = $link[$k];
+                            $regex = str_replace('{', '/', $regex);
+                            $regex = str_replace('}', '/', $regex);
+
+                            if (preg_match($regex, self::$url[$i])) {
+                                $isThisRoute = true;
+                            }
+                        }
+                    }
+                }
+
+                if ($isThisRoute) {
+
+                    $routeTo = $url[1];
+                    $routeTo = explode('/', $routeTo);
+
+                    for ($y = count($routeTo) - 1; $y >= 0; $y--) {
+                        array_unshift(self::$url, $routeTo[$y]);
+                    }
+
+                    $routeDefined = true;
+                }
+            }
+        }
+    }
+
+    /**
+     * Initialize the Controller
+     *
+     * This function initializes the controller that
+     * matches with the current url.
+     *
+     * @return bool
+     */
+    private static function initializeController()
     {
         $controllerClass = "Controllers\\";
 
-        self::$_url[1] = (isset(self::$_url[1])) ? self::$_url[1] : 'index';
-        self::$_url[2] = (isset(self::$_url[2])) ? self::$_url[2] : 'index';
+        if (self::$url[0] === 'api' && JSON_API) {
 
-        switch (self::$_url[0]) {
-            case 'index':
-                $controllerClass .= 'index';
-                break;
-            case 'about':
-                $controllerClass .= 'about';
-                break;
-            case 'api':
-                $controllerClass .= 'Api\\' . self::$_url[1];
-                break;
-            case 'new':
-            case 'add':
-            default:
-                $controllerClass .= 'note';
-                break;
+            $controllerClass .= "Api\\" . self::$url[1];
+            array_shift(self::$url);
+
+        } else {
+
+            $controllerClass .= self::$url[0];
+
         }
 
         if (class_exists($controllerClass)) {
 
-            self::$_controller = new $controllerClass();
-
-            switch (self::$_url[0]) {
-                case 'index':
-                case 'about':
-                case 'new':
-                    self::$_controller->index();
-                    break;
-                case 'add':
-                    self::$_controller->add();
-                    break;
-                case 'api':
-                    self::$_controller->{self::$_url[2]}();
-                    break;
-                default:
-                    self::$_controller->view(self::$_url[0]);
-                    break;
-            }
-
+            self::$controller = new $controllerClass(self::$url[0]);
             return false;
 
         } else {
 
-            self::_error();
+            self::error();
             return false;
 
         }
-
     }
 
     /**
@@ -121,14 +197,60 @@ class Bootstrap
      * Display an error page if there's no controller
      * that corresponds with the current url.
      */
-    private static function _error()
+    private static function error()
     {
-        $error = (self::$_url[0] == '500') ? '500' : '404';
+        $error = (self::$url[0] == '500') ? '500' : '404';
 
-        self::$_controller = new Controllers\Error();
-        self::$_controller->index($error);
+        self::$controller = new Controllers\Error();
+        self::$controller->index($error);
 
         exit;
+    }
+
+    /**
+     * Calls the Method
+     *
+     * This function calls the method depending on the
+     * url fetched above.
+     */
+    private static function callMethod()
+    {
+        $length = count(self::$url);
+
+        if ($length > 1) {
+            if (!method_exists(self::$controller, self::$url[1])) {
+                self::error();
+            }
+        }
+
+        switch ($length) {
+            case 5:
+                //Controller->Method(Param1, Param2, Param3)
+                self::$controller->{self::$url[1]}(self::$url[2], self::$url[3], self::$url[4]);
+                break;
+
+            case 4:
+                //Controller->Method(Param1, Param2)
+                self::$controller->{self::$url[1]}(self::$url[2], self::$url[3]);
+                break;
+
+            case 3:
+                //Controller->Method(Param1, Param2)
+                self::$controller->{self::$url[1]}(self::$url[2]);
+                break;
+
+            case 2:
+                //Controller->Method(Param1, Param2)
+                self::$controller->{self::$url[1]}();
+                break;
+
+            default:
+                if (!method_exists(self::$controller, 'index')) {
+                    self::error();
+                }
+                self::$controller->index();
+                break;
+        }
     }
 
 }

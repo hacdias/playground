@@ -11,14 +11,14 @@ define('START_TIME', microtime(true));
  *
  * @package     InMVC
  */
-if(file_exists('../application/config.php')) {
+if (file_exists('../application/config.php')) {
     require '../application/config.php';
 } else {
     die("There's no configuration file.");
 }
 
 require '../application/helpers/dir.php';
-use \Helpers\Dir as Dir;
+use Helpers\Dir as Dir;
 
 /**
  * Auto Load Function

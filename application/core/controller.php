@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use \Helpers\Dir as Dir;
+use Helpers\Dir as Dir;
 
 /**
  * Controller Class
@@ -12,6 +12,7 @@ use \Helpers\Dir as Dir;
  *
  * @package     InMVC
  * @subpackage  Core
+ * @version     0.0.5
  */
 abstract class Controller
 {

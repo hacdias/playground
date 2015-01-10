@@ -10,6 +10,7 @@ namespace Core;
  *
  * @package     InMVC
  * @subpackage  Core
+ * @version     0.0.5
  */
 class View
 {
@@ -53,20 +54,6 @@ class View
     }
 
     /**
-     * Set Header Tag
-     *
-     * This function is used to set some tag that will be used
-     * in the <head> section of the page.
-     *
-     * @param string $name  The name that corresponds with the content.
-     * @param string $content The content.
-     */
-    public static function setHeaderTag($name, $content)
-    {
-        self::$headerInfo[$name] = $content;
-    }
-
-    /**
      * Render Assets Code
      *
      * This function is used to render the assets code, ie, the
@@ -100,12 +87,26 @@ class View
                     $string = str_replace('{{link}}', $link, ${$type . 'Model'});
                     $string = str_replace('{{hash}}', $hash, $string);
 
-                    $code.= $string;
+                    $code .= $string;
                 }
             }
         }
 
         return $code;
+    }
+
+    /**
+     * Set Header Tag
+     *
+     * This function is used to set some tag that will be used
+     * in the <head> section of the page.
+     *
+     * @param string $name The name that corresponds with the content.
+     * @param string $content The content.
+     */
+    public static function setHeaderTag($name, $content)
+    {
+        self::$headerInfo[$name] = $content;
     }
 
 }

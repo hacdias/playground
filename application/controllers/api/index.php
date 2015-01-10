@@ -2,8 +2,8 @@
 
 namespace Controllers\Api;
 
-use \Core\Controller;
-use \Helpers\Json;
+use Core\Controller;
+use Helpers\Json;
 
 class Index extends Controller
 {
@@ -14,6 +14,6 @@ class Index extends Controller
 
     function index()
     {
-        Json::echo_json();
+        Json::echoJson();
     }
 }

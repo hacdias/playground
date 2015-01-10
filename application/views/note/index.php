@@ -7,11 +7,12 @@
 <form class="note-form" method="post" action="javascript:createNote()">
     <p>Your note:</p>
     <textarea name="content" id="content" class="form-item"></textarea>
+
     <p>Password:</p>
-    <input class="form-item" id="password"  type="password" name="password">
+    <input class="form-item" id="password" type="password" name="password">
     <button class="buttons form-item" type="submit" name="submit">Create</button>
 </form>
 
 <script>
-    CKEDITOR.replace( 'content' );
+    CKEDITOR.replace('content');
 </script>
