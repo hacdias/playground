@@ -2,8 +2,8 @@
 
 namespace Controllers;
 
-use \Core\Controller;
-use \Core\View;
+use Core\Controller;
+use Core\View;
 
 class Page extends Controller
 {

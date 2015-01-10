@@ -2,7 +2,7 @@
 
 namespace Helpers;
 
-use \PDO;
+use PDO;
 
 /**
  * Database Class
@@ -12,6 +12,7 @@ use \PDO;
  *
  * @package     InMVC
  * @subpackage  Helpers
+ * @version      0.0.5
  */
 class Database extends PDO
 {

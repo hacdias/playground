@@ -9,15 +9,17 @@ namespace Helpers;
  *
  * @package     InMVC
  * @subpackage  Helpers
+ * @version     0.0.5
  */
 abstract class Json
 {
+    /** @var mixed $baseInfo Some info to be sent in every json request. */
     private static $baseInfo = array(
-        'application'   =>  SITE_TITLE,
-        'version'       =>  '0.0.1'
+        'application' => SITE_TITLE,
+        'version' => '0.0.5'
     );
 
-    public static function echo_json($array = array())
+    public static function echoJson($array = array())
     {
         header('Content-type: application/json');
 

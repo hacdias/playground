@@ -10,6 +10,7 @@ namespace Helpers;
  *
  * @package     InMVC
  * @subpackage  Helpers
+ * @version     0.0.5
  */
 abstract class Dir
 {
@@ -23,7 +24,8 @@ abstract class Dir
      * @param string $path The path to be treated.
      * @return string The path treated.
      */
-    public static function preparePath($path) {
+    public static function preparePath($path)
+    {
         return strtolower(str_replace("\\", "/", $path));
     }
 }

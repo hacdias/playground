@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use \Helpers\Database as Database;
+use Helpers\Database as Database;
 
 /**
  * Model Class
@@ -12,6 +12,7 @@ use \Helpers\Database as Database;
  *
  * @package     InMVC
  * @subpackage  Core
+ * @version     0.0.5
  */
 abstract class Model
 {

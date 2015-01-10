@@ -2,9 +2,9 @@
 
 namespace Controllers;
 
-use \Core\Controller;
-use \Core\View;
-use \Helpers\Json;
+use Core\Controller;
+use Core\View;
+use Helpers\Json;
 
 class Error extends Controller
 {
@@ -46,7 +46,7 @@ class Error extends Controller
 
         } else {
 
-            Json::echo_json($data);
+            Json::echoJson($data);
 
         }
     }
