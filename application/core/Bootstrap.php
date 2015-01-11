@@ -37,6 +37,8 @@ abstract class Bootstrap
         if ((self::$url[0] === 'api' && !JSON_IGNORE_ROUTES) || self::$url[0] != 'api')
             self::routingExceptions();
 
+        self::prepareUrl();
+
         define('SEND_JSON', (self::$url[0] === 'api' && JSON_API) ? true : false);
 
         self::initializeController();
@@ -66,6 +68,20 @@ abstract class Bootstrap
             $url[1] = 'index';
 
         self::$url = $url;
+    }
+
+    /**
+     * Prepare Url
+     *
+     * This function is used to prepare the URL array, ie, it strips
+     * the white spaces of the begin and the end of each element.
+     */
+    private static function prepareUrl()
+    {
+        for ($i = 0; $i < count(self::$url); $i++) {
+            self::$url[$i] = rtrim(self::$url[$i]);
+            self::$url[$i] = ltrim(self::$url[$i]);
+        }
     }
 
     /**
@@ -107,7 +123,6 @@ abstract class Bootstrap
                 continue;
 
             $isThisRoute = false;
-            $hasRegex = false;
 
             for ($j = 0; $j < count($link); $j++) {
 
@@ -121,8 +136,6 @@ abstract class Bootstrap
 
                 if (preg_match($regex, self::$url[$j])) {
                     $isThisRoute = true;
-                    $hasRegex = true;
-
                     continue;
                 }
 
@@ -130,7 +143,7 @@ abstract class Bootstrap
             }
 
             if ($isThisRoute)
-                self::modifyUrlWithExceptions($link, $routeTo, $hasRegex);
+                self::modifyUrlWithExceptions($link, $routeTo);
 
         }
     }
@@ -174,9 +187,8 @@ abstract class Bootstrap
      *
      * @param array $itemsToRemove
      * @param array $itemsToAdd
-     * @param bool $hasRegex
      */
-    private static function modifyUrlWithExceptions($itemsToRemove, $itemsToAdd, $hasRegex = false)
+    private static function modifyUrlWithExceptions($itemsToRemove, $itemsToAdd)
     {
         $url = self::$url;
 
@@ -185,8 +197,6 @@ abstract class Bootstrap
             if ($itemsToRemove[$i] === $url[$i])
                 unset($url[$i]);
 
-            if ($hasRegex && self::isItRegex($itemsToRemove[$i]) && preg_match($itemsToRemove[$i], self::$url[$i]))
-                unset($url[$i]);
         }
 
         $url = array_values($url);

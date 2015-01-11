@@ -9,11 +9,18 @@
 #
 # If you want to use regex in your url parameters, you can do it putting the
 # regex code between curly braces ( "{regexCode}" ). Example:
-#   {\d+}!posts/id
+#   {\d+}!posts/view
+#
+# And the line above will generate the following flow:
+#   Controller  => Posts
+#   Method      => View
+#   Param1      => The number ({\d+})
+#
+# You MUST write always the method.
 #
 # If JSON API mode is turned on and the url is /api/something this file will
 # be ignored by default. Change it in your config.php file.
 
-this/{\d+}/dog!page
+this/{\d+}/dog!page/index
 {\d+}!page
 pg!page
