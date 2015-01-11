@@ -83,48 +83,68 @@ abstract class Bootstrap
         $routes = rtrim($routes, "\n");
         $routes = explode("\n", $routes);
 
-        for ($i = 0; $i < count(self::$url); $i++) {
+        for ($i = 0; $i < count($routes); $i++) {
 
-            self::$url[$i] = rtrim(self::$url[$i]);
+            if (empty($routes[$i]) || $routes[$i][0] === '#')
+                continue;
 
-            for ($j = 0; $j < count($routes); $j++) {
+            $url = explode('!', $routes[$i]);
 
-                if (empty($routes[$j]) || $routes[$j][0] === '#')
-                    continue;
+            if (count($url) < 2)
+                continue;
 
-                $url = explode('!', $routes[$j]);
+            $link = rtrim($url[0]);
+            $link = explode('/', $link);
 
-                if (count($url) < 2)
-                    continue;
+            $routeTo = $url[1];
 
-                $link = rtrim($url[0]);
-                $link = explode('/', $link);
-
-                $routeTo = $url[1];
-
-                for ($k = 0; $k < count($link); $k++) {
-
-                    if ($k === $i && $link[$k] === self::$url[$i]) {
-
-                        self::modifyUrlWithExceptions($link, $routeTo);
-                        return;
-
-                    } elseif ($k === $i && $link[$k][0] === '{' && $link[$k][strlen($link[$k]) - 1] === '}') {
-
-                        $regex = $link[$k];
-                        $regex = str_replace('{', '/', $regex);
-                        $regex = str_replace('}', '/', $regex);
-
-                        if (preg_match($regex, self::$url[$i])) {
-
-                            self::modifyUrlWithExceptions($link, $routeTo);
-                            return;
-
-                        }
-                    }
-                }
+            if ($link === self::$url) {
+                self::modifyUrlWithExceptions($link, $routeTo);
+                return;
             }
+
+            if (count($link) != count(self::$url))
+                continue;
+
+            $isThisRoute = false;
+            $hasRegex = false;
+
+            for ($j = 0; $j < count($link); $j++) {
+
+                if ($link[$j] != self::$url[$j] && !self::isItRegex($link[$j]))
+                    break;
+
+                if ($link[$j] === self::$url[$j] && !self::isItRegex($link[$j]))
+                    continue;
+
+                $regex = self::prepareRegex($link[$j]);
+
+                if (preg_match($regex, self::$url[$j])) {
+                    $isThisRoute = true;
+                    $hasRegex = true;
+
+                    continue;
+                }
+
+                $isThisRoute = false;
+            }
+
+            if ($isThisRoute)
+                self::modifyUrlWithExceptions($link, $routeTo, $hasRegex);
+
         }
+    }
+
+    private static function isItRegex($snippet)
+    {
+        return ($snippet[0] === '{' && $snippet[strlen($snippet) - 1] === '}');
+    }
+
+    private static function prepareRegex($snippet)
+    {
+        $snippet = str_replace('{', '/', $snippet);
+        $snippet = str_replace('}', '/', $snippet);
+        return $snippet;
     }
 
     /**
@@ -136,17 +156,21 @@ abstract class Bootstrap
      *
      * @param array $itemsToRemove
      * @param array $itemsToAdd
+     * @param boolean $hasRegex
      */
-    private static function modifyUrlWithExceptions($itemsToRemove, $itemsToAdd)
+    private static function modifyUrlWithExceptions($itemsToRemove, $itemsToAdd, $hasRegex = false)
     {
         $url = self::$url;
 
-        for ($i = 0; $i < count($url); $i++) {
-            for ($j = 0; $j < count($itemsToRemove); $j++) {
+        for ($i = 0; $i < count($itemsToRemove); $i++) {
 
-                if ($j === $i && $url[$i] === $itemsToRemove[$j])
-                    unset($url[$i]);
-            }
+            if ($itemsToRemove[$i] != $url[$i] && !$hasRegex)
+                continue;
+
+            if ($hasRegex && self::isItRegex($itemsToRemove[$i]) && !preg_match($itemsToRemove[$i], self::$url[$i]))
+                continue;
+
+            unset($url[$i]);
         }
 
         $url = array_values($url);
@@ -206,23 +230,19 @@ abstract class Bootstrap
 
         switch ($length) {
             case 5:
-                //Controller->Method(Param1, Param2, Param3)
                 self::$controller->{$method}($param1, $param2, $param3);
                 break;
 
             case 4:
-                //Controller->Method(Param1, Param2)
                 self::$controller->{$method}($param1, $param2);
                 break;
 
             case 3:
-                //Controller->Method(Param1, Param2)
                 self::$controller->{$method}($param1);
                 break;
 
             case 2:
             default:
-                //Controller->Method(Param1, Param2)
                 self::$controller->{$method}();
                 break;
         }

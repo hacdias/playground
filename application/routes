@@ -13,3 +13,7 @@
 #
 # If JSON API mode is turned on and the url is /api/something this file will
 # be ignored by default. Change it in your config.php file.
+
+this/{\d+}/dog!page
+{\d+}!page
+pg!page
