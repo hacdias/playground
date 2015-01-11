@@ -116,9 +116,6 @@ define('ASSETS', serialize(array(
         'css/template',
         'vendor/normalize.css/normalize'),
     'js' => array(
-        'vendor/jquery/dist/jquery.min',
-        'vendor/jquery-ui/jquery-ui.min',
-        'js/forge.min',
         'js/page'
     )
 )));
