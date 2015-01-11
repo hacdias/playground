@@ -28,7 +28,7 @@ abstract class Bootstrap
      * This function is used to initialize the application
      * and call the other main functions.
      *
-     * @return boolean
+     * @return bool
      */
     public static function init()
     {
@@ -135,11 +135,29 @@ abstract class Bootstrap
         }
     }
 
+    /**
+     * Is it Regex
+     *
+     * Verifies if a code snippet between curly braces is
+     * of regex code.
+     *
+     * @param string $snippet The code snippet.
+     * @return bool
+     */
     private static function isItRegex($snippet)
     {
         return ($snippet[0] === '{' && $snippet[strlen($snippet) - 1] === '}');
     }
 
+    /**
+     * Prepare Regex
+     *
+     * Prepare regex code that is between curly braces
+     * to be used.
+     *
+     * @param string $snippet The code snippet.
+     * @return bool
+     */
     private static function prepareRegex($snippet)
     {
         $snippet = str_replace('{', '/', $snippet);
@@ -156,7 +174,7 @@ abstract class Bootstrap
      *
      * @param array $itemsToRemove
      * @param array $itemsToAdd
-     * @param boolean $hasRegex
+     * @param bool $hasRegex
      */
     private static function modifyUrlWithExceptions($itemsToRemove, $itemsToAdd, $hasRegex = false)
     {
