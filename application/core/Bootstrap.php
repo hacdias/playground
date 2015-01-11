@@ -15,7 +15,7 @@ use Controllers;
  * @subpackage  Core
  * @version     0.0.6
  */
-class Bootstrap
+abstract class Bootstrap
 {
     /** @var string|null $url his variable should store the current URL. */
     private static $url = null;
@@ -197,10 +197,9 @@ class Bootstrap
         $length = count(self::$url);
         $method = isset(self::$url[1]) ? self::$url[1] : 'index';
 
-        for ($i= 1; $i < count(self::$url); $i++) {
+        for ($i= 1; $i < count(self::$url); $i++)
             if ($i != 1)
                 ${'param' . ($i - 1)} = self::$url[$i];
-        }
 
         if (!method_exists(self::$controller, $method))
             self::error();

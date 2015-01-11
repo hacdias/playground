@@ -19,15 +19,23 @@ abstract class Json
         'version' => '0.0.5'
     );
 
-    public static function echoJson($array = array())
+    /**
+     * Echo Json
+     *
+     * This function is used to print JSON to the page with both a predefined
+     * information and another array of information.
+     *
+     * @param array $data Data to be sent in JSON format.
+     */
+    public static function echoJson($data = array())
     {
         header('Content-type: application/json');
 
-        if (isset($array['headers'])) {
-            header($array['headers']);
+        if (isset($data['headers'])) {
+            header($data['headers']);
         }
 
-        $array = array_merge($array, self::$baseInfo);
+        $array = array_merge($data, self::$baseInfo);
         echo json_encode($array, JSON_PRETTY_PRINT);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Helpers;
 
+use \Controllers\Error;
 use PDO;
 
 /**
@@ -31,12 +32,15 @@ class Database extends PDO
     public function __construct($DB_TYPE, $DB_HOST, $DB_NAME, $DB_USER, $DB_PASS)
     {
         try {
+
             parent::__construct($DB_TYPE . ':host=' . $DB_HOST . ';dbname=' . $DB_NAME, $DB_USER, $DB_PASS);
             $this->exec("SET NAMES 'utf8';");
+
         } catch (\PDOException $e) {
+
             error_log($e->getMessage());
 
-            $error = new \Controllers\Error;
+            $error = new Error;
             $error->index('500');
 
             die();
@@ -77,7 +81,7 @@ class Database extends PDO
      * Function used to insert things in the database.
      *
      * @param string $table A name of table to insert into.
-     * @param string $data An associative array.
+     * @param string $data An associative array
      */
     public function insert($table, $data)
     {
@@ -93,8 +97,8 @@ class Database extends PDO
         }
 
         if (!$sth->execute()) {
-            error_log('Problem');
-            $error = new \Controllers\Error;
+            error_log('Problem ');
+            $error = new Error;
             $error->index('500');
             die();
         }
@@ -127,7 +131,7 @@ class Database extends PDO
         }
 
         if (!$sth->execute()) {
-            $error = new \Controllers\Error;
+            $error = new Error;
             $error->index('500');
             die();
         }
