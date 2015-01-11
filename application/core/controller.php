@@ -25,7 +25,7 @@ abstract class Controller
      *
      * @param string $name The name of the current Controller.
      */
-    function __construct($name)
+    public function __construct($name)
     {
         $this->view = new View();
 

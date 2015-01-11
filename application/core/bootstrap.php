@@ -13,9 +13,9 @@ use Controllers;
  *
  * @package     InMVC
  * @subpackage  Core
- * @version     0.0.5
+ * @version     0.0.6
  */
-class Bootstrap
+abstract class Bootstrap
 {
     /** @var string|null $url his variable should store the current URL. */
     private static $url = null;
@@ -28,28 +28,23 @@ class Bootstrap
      * This function is used to initialize the application
      * and call the other main functions.
      *
-     * @return boolean
+     * @return bool
      */
     public static function init()
     {
         self::getUrl();
 
-        switch(self::$url[0]) {
-            case 'api':
-                if (!JSON_IGNORE_ROUTES)
-                    self::routingExceptions();
-                break;
-            default:
-                self::routingExceptions();
-                break;
-        }
+        if ((self::$url[0] === 'api' && !JSON_IGNORE_ROUTES) || self::$url[0] != 'api')
+            self::routingExceptions();
+
+        self::prepareUrl();
 
         define('SEND_JSON', (self::$url[0] === 'api' && JSON_API) ? true : false);
 
         self::initializeController();
         self::callMethod();
 
-        return false;
+        return;
     }
 
     /**
@@ -76,6 +71,20 @@ class Bootstrap
     }
 
     /**
+     * Prepare Url
+     *
+     * This function is used to prepare the URL array, ie, it strips
+     * the white spaces of the begin and the end of each element.
+     */
+    private static function prepareUrl()
+    {
+        for ($i = 0; $i < count(self::$url); $i++) {
+            self::$url[$i] = rtrim(self::$url[$i]);
+            self::$url[$i] = ltrim(self::$url[$i]);
+        }
+    }
+
+    /**
      * Routes Exceptions
      *
      * Confirms if there is some router exception declared
@@ -90,69 +99,115 @@ class Bootstrap
         $routes = rtrim($routes, "\n");
         $routes = explode("\n", $routes);
 
-        $routeDefined = false;
+        for ($i = 0; $i < count($routes); $i++) {
 
-        for ($i = 0; $i < count(self::$url); $i++) {
+            if (empty($routes[$i]) || $routes[$i][0] === '#')
+                continue;
 
-            self::$url[$i] = rtrim(self::$url[$i]);
+            $url = explode('!', $routes[$i]);
 
-            if ($routeDefined)
-                break;
+            if (count($url) < 2)
+                continue;
 
-            for ($j = 0; $j < count($routes); $j++) {
+            $link = rtrim($url[0]);
+            $link = explode('/', $link);
 
-                if ($routeDefined)
+            $routeTo = $url[1];
+
+            if ($link === self::$url) {
+                self::modifyUrlWithExceptions($link, $routeTo);
+                return;
+            }
+
+            if (count($link) != count(self::$url))
+                continue;
+
+            $isThisRoute = false;
+
+            for ($j = 0; $j < count($link); $j++) {
+
+                if ($link[$j] != self::$url[$j] && !self::isItRegex($link[$j]))
                     break;
 
-                if ($routes[$j][0] === '#' || $routes[$j][0] === "\n")
+                if ($link[$j] === self::$url[$j] && !self::isItRegex($link[$j]))
                     continue;
 
-                $url = explode('!', $routes[$j]);
+                $regex = self::prepareRegex($link[$j]);
 
-                if (count($url) < 2)
+                if (preg_match($regex, self::$url[$j])) {
+                    $isThisRoute = true;
                     continue;
-
-                $link = rtrim($url[0]);
-                $link = explode('/', $link);
+                }
 
                 $isThisRoute = false;
-
-                for ($k = 0; $k < count($link); $k++) {
-
-                    if ($k === $i) {
-
-                        if ($link[$k] === self::$url[$i]) {
-
-                            unset(self::$url[$i]);
-                            $isThisRoute = true;
-                            self::$url = array_values(self::$url);
-
-                        } elseif ($link[$k][0] === '{' && $link[$k][strlen($link[$k]) - 1] === '}') {
-
-                            $regex = $link[$k];
-                            $regex = str_replace('{', '/', $regex);
-                            $regex = str_replace('}', '/', $regex);
-
-                            if (preg_match($regex, self::$url[$i])) {
-                                $isThisRoute = true;
-                            }
-                        }
-                    }
-                }
-
-                if ($isThisRoute) {
-
-                    $routeTo = $url[1];
-                    $routeTo = explode('/', $routeTo);
-
-                    for ($y = count($routeTo) - 1; $y >= 0; $y--) {
-                        array_unshift(self::$url, $routeTo[$y]);
-                    }
-
-                    $routeDefined = true;
-                }
             }
+
+            if ($isThisRoute)
+                self::modifyUrlWithExceptions($link, $routeTo);
+
         }
+    }
+
+    /**
+     * Is it Regex
+     *
+     * Verifies if a code snippet between curly braces is
+     * of regex code.
+     *
+     * @param string $snippet The code snippet.
+     * @return bool
+     */
+    private static function isItRegex($snippet)
+    {
+        return ($snippet[0] === '{' && $snippet[strlen($snippet) - 1] === '}');
+    }
+
+    /**
+     * Prepare Regex
+     *
+     * Prepare regex code that is between curly braces
+     * to be used.
+     *
+     * @param string $snippet The code snippet.
+     * @return bool
+     */
+    private static function prepareRegex($snippet)
+    {
+        $snippet = str_replace('{', '/', $snippet);
+        $snippet = str_replace('}', '/', $snippet);
+        return $snippet;
+    }
+
+    /**
+     * Modify Url With Exceptions
+     *
+     * If some routing exception is detected, this function will convert
+     * the current class URL variable into the new one with the correct
+     * controller and method.
+     *
+     * @param array $itemsToRemove
+     * @param array $itemsToAdd
+     */
+    private static function modifyUrlWithExceptions($itemsToRemove, $itemsToAdd)
+    {
+        $url = self::$url;
+
+        for ($i = 0; $i < count($itemsToRemove); $i++) {
+
+            if ($itemsToRemove[$i] === $url[$i])
+                unset($url[$i]);
+
+        }
+
+        $url = array_values($url);
+        $itemsToAdd = explode('/', $itemsToAdd);
+
+        for ($y = count($itemsToAdd) - 1; $y >= 0; $y--) {
+            array_unshift($url, $itemsToAdd[$y]);
+        }
+
+        self::$url = $url;
+        return;
     }
 
     /**
@@ -168,26 +223,54 @@ class Bootstrap
         $controllerClass = "Controllers\\";
 
         if (self::$url[0] === 'api' && JSON_API) {
-
             $controllerClass .= "Api\\" . self::$url[1];
             array_shift(self::$url);
-
         } else {
-
             $controllerClass .= self::$url[0];
-
         }
 
-        if (class_exists($controllerClass)) {
-
-            self::$controller = new $controllerClass(self::$url[0]);
-            return false;
-
-        } else {
-
+        if (!class_exists($controllerClass))
             self::error();
-            return false;
 
+        self::$controller = new $controllerClass(self::$url[0]);
+        return;
+    }
+
+    /**
+     * Calls the Method
+     *
+     * This function calls the method depending on the
+     * url fetched above.
+     */
+    private static function callMethod()
+    {
+        $length = count(self::$url);
+        $method = isset(self::$url[1]) ? self::$url[1] : 'index';
+
+        for ($i= 1; $i < count(self::$url); $i++)
+            if ($i != 1)
+                ${'param' . ($i - 1)} = self::$url[$i];
+
+        if (!method_exists(self::$controller, $method))
+            self::error();
+
+        switch ($length) {
+            case 5:
+                self::$controller->{$method}($param1, $param2, $param3);
+                break;
+
+            case 4:
+                self::$controller->{$method}($param1, $param2);
+                break;
+
+            case 3:
+                self::$controller->{$method}($param1);
+                break;
+
+            case 2:
+            default:
+                self::$controller->{$method}();
+                break;
         }
     }
 
@@ -205,52 +288,6 @@ class Bootstrap
         self::$controller->index($error);
 
         exit;
-    }
-
-    /**
-     * Calls the Method
-     *
-     * This function calls the method depending on the
-     * url fetched above.
-     */
-    private static function callMethod()
-    {
-        $length = count(self::$url);
-
-        if ($length > 1) {
-            if (!method_exists(self::$controller, self::$url[1])) {
-                self::error();
-            }
-        }
-
-        switch ($length) {
-            case 5:
-                //Controller->Method(Param1, Param2, Param3)
-                self::$controller->{self::$url[1]}(self::$url[2], self::$url[3], self::$url[4]);
-                break;
-
-            case 4:
-                //Controller->Method(Param1, Param2)
-                self::$controller->{self::$url[1]}(self::$url[2], self::$url[3]);
-                break;
-
-            case 3:
-                //Controller->Method(Param1, Param2)
-                self::$controller->{self::$url[1]}(self::$url[2]);
-                break;
-
-            case 2:
-                //Controller->Method(Param1, Param2)
-                self::$controller->{self::$url[1]}();
-                break;
-
-            default:
-                if (!method_exists(self::$controller, 'index')) {
-                    self::error();
-                }
-                self::$controller->index();
-                break;
-        }
     }
 
 }
