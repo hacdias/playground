@@ -164,13 +164,11 @@ abstract class Bootstrap
 
         for ($i = 0; $i < count($itemsToRemove); $i++) {
 
-            if ($itemsToRemove[$i] != $url[$i] && !$hasRegex)
-                continue;
+            if ($itemsToRemove[$i] === $url[$i])
+                unset($url[$i]);
 
-            if ($hasRegex && self::isItRegex($itemsToRemove[$i]) && !preg_match($itemsToRemove[$i], self::$url[$i]))
-                continue;
-
-            unset($url[$i]);
+            if ($hasRegex && self::isItRegex($itemsToRemove[$i]) && preg_match($itemsToRemove[$i], self::$url[$i]))
+                unset($url[$i]);
         }
 
         $url = array_values($url);
