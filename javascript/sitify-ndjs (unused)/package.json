@@ -1,0 +1,25 @@
+{
+    "name": "sitify",
+    "version": "0.0.1",
+    "description": "",
+    "author": {
+        "name": "Henrique Dias",
+        "email": "me@henriquedias.com",
+        "url": "http://henriquedias.com"
+    },
+    "main": "index.js",
+    "bin": "bin/sitify",
+    "licenses": {
+        "type": "MIT",
+        "url": "http://license.henriquedias.com/mit/"
+    },
+    "dependencies": {
+        "commander": "^2.6.0",
+        "path": "^0.4.9",
+        "prompt": "^0.2.14"
+    },
+    "config": {
+        "devDir": "D:/test/www",
+        "hostsFile": "D:/test/hosts"
+    }
+}
