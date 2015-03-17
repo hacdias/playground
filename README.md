@@ -12,4 +12,4 @@ Right now I have some experiments about a small number of languages but I think 
 
 #License
 
-[MIT License](http://license.henriquedias.com/mit/) &copy; Henrique Dias
+MIT License &copy; Henrique Dias
