@@ -2,6 +2,7 @@ var srtSync = {
 
     setInput: function (input) {
         this.input = input;
+        console.log(decodeURIComponent(encodeURI(input)));
     },
 
     setChange: function (hours, minutes, seconds, milliseconds) {
