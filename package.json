@@ -2,8 +2,7 @@
   "name": "sitify",
   "version": "0.0.1",
   "description": "",
-  "keywords": [
-  ],
+  "keywords": [],
   "homepage": "https://github.com/hacdias/sitify",
   "bugs": {
     "url": "https://github.com/hacdias/sitify/issues",
@@ -25,12 +24,6 @@
     "sitify": "./bin/sitify"
   },
   "dependencies": {
-    "commander": "^2.7.1",
-    "prompt": "^0.2.14"
-  },
-  "config": {
-    "www": "D:/dev/test",
-    "wwwSub": "wwwroot",
-    "hosts": "D:/dev/test/hosts"
+    "commander": "^2.7.1"
   }
 }

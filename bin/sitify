@@ -1,15 +1,13 @@
 #! /usr/bin/env node
-
 //printLogo();
-
-console.log(process);
 
 process.bin = process.title = 'sitify';
 
 var sitify = require('commander'),
     backup = require('../lib/backup'),
-    modifyHosts = require('../lib/hosts'),
-    modifyWebsite = require('../lib/website');
+    hostsCommand = require('../lib/hosts'),
+    websiteCommand = require('../lib/website'),
+    configCommand = require('../lib/config');
 
 sitify
     .version('0.0.1')
@@ -42,15 +40,18 @@ sitify
     .command('config')
     .description('Sitify configuration')
     .option('-l, --list', 'List your sitify configuration')
-    .action(function() {
-
+    .action(function () {
+        if (this.opts()['list']) {
+            configCommand().list();
+        } else {
+            configCommand().change();
+        }
     });
-
 
 sitify
     .command('*')
     .description('Show help')
-    .action(function(){
+    .action(function () {
         sitify.help();
     });
 
@@ -62,30 +63,30 @@ function actionOfNewDelete(action, opts, projectName) {
     if (opts['entry'] === true && opts['website'] === true) {
         this.outputHelp();
     } else if (opts['entry'] === true) {
-        modifyHosts(action, projectName);
+        hostsCommand(action, projectName);
     } else if (opts['website'] === true) {
-        modifyWebsite(action, projectName);
+        websiteCommand(action, projectName);
     } else {
         this.outputHelp();
     }
 }
 /*
-function printLogo() {
-    var logo = [
-        "                    ____        __           ___             ",
-        "                   /\\  _`\\   __/\\ \\__  __  /'___\\            ",
-        "                   \\ \\,\\L\\_\\/\\_\\ \\ ,_\\/\\_\\/\\ \\__/  __  __    ",
-        "                    \\/_\\__ \\\\/\\ \\ \\ \\/\\/\\ \\ \\ ,__\\/\\ \\/\\ \\   ",
-        "                      /\\ \\L\\ \\ \\ \\ \\ \\_\\ \\ \\ \\ \\_/\\ \\ \\_\\ \\  ",
-        "                      \\ `\\____\\ \\_\\ \\__\\\\ \\_\\ \\_\\  \\/`____ \\ ",
-        "                       \\/_____/\\/_/\\/__/ \\/_/\\/_/   `/___/> \\",
-        "                                                       /\\___/",
-        "                                                       \\/__/ "
-    ];
+ function printLogo() {
+ var logo = [
+ "                    ____        __           ___             ",
+ "                   /\\  _`\\   __/\\ \\__  __  /'___\\            ",
+ "                   \\ \\,\\L\\_\\/\\_\\ \\ ,_\\/\\_\\/\\ \\__/  __  __    ",
+ "                    \\/_\\__ \\\\/\\ \\ \\ \\/\\/\\ \\ \\ ,__\\/\\ \\/\\ \\   ",
+ "                      /\\ \\L\\ \\ \\ \\ \\ \\_\\ \\ \\ \\ \\_/\\ \\ \\_\\ \\  ",
+ "                      \\ `\\____\\ \\_\\ \\__\\\\ \\_\\ \\_\\  \\/`____ \\ ",
+ "                       \\/_____/\\/_/\\/__/ \\/_/\\/_/   `/___/> \\",
+ "                                                       /\\___/",
+ "                                                       \\/__/ "
+ ];
 
-    console.log();
-    for (var i = 0; i < logo.length; i++) {
-        console.log(logo[i]);
-    }
-    console.log();
-} */
+ console.log();
+ for (var i = 0; i < logo.length; i++) {
+ console.log(logo[i]);
+ }
+ console.log();
+ } */
