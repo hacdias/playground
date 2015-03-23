@@ -1,7 +1,7 @@
 {
   "name": "sitify",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.0.2",
+  "description": "A site manager",
   "keywords": [],
   "homepage": "https://github.com/hacdias/sitify",
   "bugs": {
