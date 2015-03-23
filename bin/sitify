@@ -1,0 +1,91 @@
+#! /usr/bin/env node
+
+//printLogo();
+
+console.log(process);
+
+process.bin = process.title = 'sitify';
+
+var sitify = require('commander'),
+    backup = require('../lib/backup'),
+    modifyHosts = require('../lib/hosts'),
+    modifyWebsite = require('../lib/website');
+
+sitify
+    .version('0.0.1')
+    .option('-c, --config', 'Change configuration');
+
+sitify
+    .command('new <name>')
+    .description('Create a new website or hosts entry')
+    .option('-e, --entry', 'To create a new hosts entry')
+    .option('-w, --website', 'To create a new website')
+    .action(function (projectName) {
+        actionOfNewDelete('add', this.opts(), projectName);
+    });
+
+sitify
+    .command('rem <name>')
+    .description('Remove a website or hosts entry')
+    .option('-e, --entry', 'To delete an hosts entry')
+    .option('-w, --website', 'To delete a website')
+    .action(function (projectName) {
+        actionOfNewDelete('remove', this.opts(), projectName);
+    });
+
+sitify
+    .command('backup')
+    .description('Backup your hosts file')
+    .action(backup);
+
+sitify
+    .command('config')
+    .description('Sitify configuration')
+    .option('-l, --list', 'List your sitify configuration')
+    .action(function() {
+
+    });
+
+
+sitify
+    .command('*')
+    .description('Show help')
+    .action(function(){
+        sitify.help();
+    });
+
+sitify.parse(process.argv);
+
+if (process.argv.length === 2) sitify.help();
+
+function actionOfNewDelete(action, opts, projectName) {
+    if (opts['entry'] === true && opts['website'] === true) {
+        this.outputHelp();
+    } else if (opts['entry'] === true) {
+        modifyHosts(action, projectName);
+    } else if (opts['website'] === true) {
+        modifyWebsite(action, projectName);
+    } else {
+        this.outputHelp();
+    }
+}
+/*
+function printLogo() {
+    var logo = [
+        "                    ____        __           ___             ",
+        "                   /\\  _`\\   __/\\ \\__  __  /'___\\            ",
+        "                   \\ \\,\\L\\_\\/\\_\\ \\ ,_\\/\\_\\/\\ \\__/  __  __    ",
+        "                    \\/_\\__ \\\\/\\ \\ \\ \\/\\/\\ \\ \\ ,__\\/\\ \\/\\ \\   ",
+        "                      /\\ \\L\\ \\ \\ \\ \\ \\_\\ \\ \\ \\ \\_/\\ \\ \\_\\ \\  ",
+        "                      \\ `\\____\\ \\_\\ \\__\\\\ \\_\\ \\_\\  \\/`____ \\ ",
+        "                       \\/_____/\\/_/\\/__/ \\/_/\\/_/   `/___/> \\",
+        "                                                       /\\___/",
+        "                                                       \\/__/ "
+    ];
+
+    console.log();
+    for (var i = 0; i < logo.length; i++) {
+        console.log(logo[i]);
+    }
+    console.log();
+} */
