@@ -1,5 +1,6 @@
 {
-  "www": "asa",
+  "www": "D:\\Dev\\test",
   "wwwSub": "wwwroot",
-  "hosts": "teste"
+  "tld": "dev",
+  "hosts": "D:\\Dev\\test\\hosts"
 }

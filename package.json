@@ -1,8 +1,14 @@
 {
   "name": "sitify",
-  "version": "0.0.3",
-  "description": "A dynamic web project environment manager.",
-  "keywords": [],
+  "version": "0.0.4",
+  "description": "An hosts file manager and virtual hosts manager.",
+  "keywords": [
+    "sitify",
+    "hosts",
+    "virtual hosts",
+    "virtual",
+    "manager"
+  ],
   "homepage": "https://github.com/hacdias/sitify",
   "bugs": {
     "url": "https://github.com/hacdias/sitify/issues",
