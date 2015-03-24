@@ -1,6 +1,6 @@
 {
   "name": "sitify",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "An hosts file manager and virtual hosts manager.",
   "keywords": [
     "sitify",
@@ -30,6 +30,7 @@
     "sitify": "./bin/sitify"
   },
   "dependencies": {
+    "chalk": "^1.0.0",
     "commander": "^2.7.1"
   }
 }
