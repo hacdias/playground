@@ -1,0 +1,5 @@
+D:\Dev\Sitify\Sitify\bin\Debug\Sitify.exe.config
+D:\Dev\Sitify\Sitify\bin\Debug\Sitify.exe
+D:\Dev\Sitify\Sitify\bin\Debug\Sitify.pdb
+D:\Dev\Sitify\Sitify\obj\Debug\Sitify.exe
+D:\Dev\Sitify\Sitify\obj\Debug\Sitify.pdb
