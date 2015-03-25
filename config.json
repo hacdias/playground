@@ -1,6 +1,6 @@
 {
-  "www": "D:\\Dev\\test",
+  "www": "D:\\Dev\\www",
   "wwwSub": "wwwroot",
   "tld": "dev",
-  "hosts": "D:\\Dev\\test\\hosts"
+  "hosts": "C:\\Windows\\System32\\drivers\\etc\\hosts"
 }
