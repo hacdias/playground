@@ -5,17 +5,20 @@ var application = require('commander'),
     backup = require('../lib/backup'),
     hosts = require('../lib/hosts'),
     website = require('../lib/website'),
-    config = require('../lib/config');
+    config = require('../lib/config'),
+    welcome = require('../lib/helpers/welcome');
 
-function actionOfNewDelete(action, opts, projectName) {
+function actionOfNewDelete(action, opts, projectName, context) {
+    welcome[action + 'Thing']();
+
     if (opts['entry'] === true && opts['website'] === true) {
-        this.outputHelp();
+        context.outputHelp();
     } else if (opts['entry'] === true) {
         hosts().make(action, projectName);
     } else if (opts['website'] === true) {
         website().make(action, projectName);
     } else {
-        this.outputHelp();
+        context.outputHelp();
     }
 }
 
@@ -26,6 +29,7 @@ application
     .command('backup')
     .description('Backup your hosts file')
     .action(function () {
+        welcome.backup();
         backup();
     });
 
@@ -35,6 +39,8 @@ application
     .option('-c, --change', 'Change the configuration')
     .option('-s, --show', 'Show the configuration (default)')
     .action(function () {
+        welcome.config();
+
         if (this.opts()['change']) {
             config().change();
         } else {
@@ -49,6 +55,8 @@ application
     .option('-s, --show', 'Sho the hosts file content (default)')
     .option('-w, --wipe', 'Wipe the hosts file content')
     .action(function () {
+        welcome.hosts();
+
         if (this.opts()['clean']) {
             hosts().clean();
         } else if (this.opts()['wipe']) {
@@ -65,7 +73,7 @@ application
     .option('-e, --entry', 'To create a new hosts entry')
     .option('-w, --website', 'To create a new website')
     .action(function (projectName) {
-        actionOfNewDelete('add', this.opts(), projectName);
+        actionOfNewDelete('add', this.opts(), projectName, this);
     });
 
 application
@@ -74,7 +82,7 @@ application
     .option('-e, --entry', 'To delete an hosts entry')
     .option('-w, --website', 'To delete a website')
     .action(function (projectName) {
-        actionOfNewDelete('remove', this.opts(), projectName);
+        actionOfNewDelete('remove', this.opts(), projectName, this);
     });
 
 application

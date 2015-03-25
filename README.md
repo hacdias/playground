@@ -30,5 +30,7 @@ $ [sudo] npm install sitify -g
 First of all, you must configure Sitify. To do it you should run the following command and set all of the configurations:
 
 ```bash
-$ sitify config
+$ sitify config -c
 ```
+
+To get more information about all of the commands, you just have to run ```sitify``` or even ```sitify -h```.
