@@ -1,6 +1,6 @@
 {
   "name": "sitify",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "An hosts file manager and virtual hosts manager.",
   "keywords": [
     "sitify",
@@ -14,7 +14,7 @@
     "url": "https://github.com/hacdias/sitify/issues",
     "email": "hacdias@gmail.com"
   },
-  "main": "./bin/sitify",
+  "main": "lib",
   "author": {
     "name": "Henrique Dias",
     "email": "hacdias@gmail.com",
