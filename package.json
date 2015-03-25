@@ -1,6 +1,6 @@
 {
   "name": "sitify",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "An hosts file manager and virtual hosts manager.",
   "keywords": [
     "sitify",
