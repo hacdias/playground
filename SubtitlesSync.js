@@ -1,35 +1,34 @@
-var srtSync = {
+var SubtitlesSync = function () {
+    var self = this;
 
-    setInput: function (input) {
-        this.input = input;
-        console.log(decodeURIComponent(encodeURI(input)));
-    },
+    this.setInput = function (input) {
+        self.input = input;
+    };
 
-    setChange: function (hours, minutes, seconds, milliseconds) {
-        this.timeChange = this.timeToMilliseconds(hours, minutes, seconds, milliseconds);
-        alert(this.timeChange);
+    this.setChange = function (hours, minutes, seconds, milliseconds) {
+        self.timeChange = self.timeToMilliseconds(hours, minutes, seconds, milliseconds);
         return false;
-    },
+    };
 
-    timeToMilliseconds: function(hours, minutes, seconds, milliseconds) {
+    this.timeToMilliseconds = function (hours, minutes, seconds, milliseconds) {
         return milliseconds + seconds * 1000 + minutes * 60000 + hours * 3600000;
-    },
+    };
 
-    modifyLine: function(initialLine) {
+    this.modifyLine = function (initialLine) {
         initialLine = initialLine.split(" --> ");
         var finalLineElements = [];
 
         for (var a = 0; a < initialLine.length; a++) {
-            var time = this.getTime(initialLine[a]);
-            time += this.timeChange;
-            time = this.convertTimeToString(time);
+            var time = self.getTime(initialLine[a]);
+            time += self.timeChange;
+            time = self.convertTimeToString(time);
             finalLineElements[a] = time;
         }
 
         return finalLineElements.join(" --> ");
-    },
+    };
 
-    getTime: function (time) {
+    this.getTime = function (time) {
         time = time.split(":");
 
         if (time.length > 3)
@@ -50,14 +49,14 @@ var srtSync = {
         if (time.length < 4)
             return false;
 
-        return this.timeToMilliseconds(time[0], time[1], time[2], time[3]);
-    },
+        return self.timeToMilliseconds(time[0], time[1], time[2], time[3]);
+    };
 
-    convertTimeToString: function(duration) {
-        var milliseconds = parseInt((duration%1000))
-            , seconds = parseInt((duration/1000)%60)
-            , minutes = parseInt((duration/(1000*60))%60)
-            , hours = parseInt((duration/(1000*60*60))%24);
+    this.convertTimeToString = function (duration) {
+        var milliseconds = parseInt((duration % 1000)),
+            seconds = parseInt((duration / 1000) % 60),
+            minutes = parseInt((duration / (1000 * 60)) % 60),
+            hours = parseInt((duration / (1000 * 60 * 60)) % 24);
 
         hours = (hours < 10) ? "0" + hours : hours;
         minutes = (minutes < 10) ? "0" + minutes : minutes;
@@ -72,22 +71,23 @@ var srtSync = {
         }
 
         return hours + ":" + minutes + ":" + seconds + "," + milliseconds;
-    },
+    };
 
-    process: function () {
+    this.process = function (callback) {
         var regex = /\d{0,2}:\d{0,2}:\d{0,2},\d{0,3} --> \d{0,2}:\d{0,2}:\d{0,2},\d{0,3}/;
 
-        var lines = this.input.split("\n");
-        this.output = "";
+        var lines = self.input.split("\n");
+        self.output = "";
 
         for (var lineNumber = 0; lineNumber < lines.length; lineNumber++) {
             if (regex.test(lines[lineNumber])) {
-                this.output += this.modifyLine(lines[lineNumber]) + "\n";
+                self.output += self.modifyLine(lines[lineNumber]) + "\n";
                 continue;
             }
-            this.output += lines[lineNumber] + "\n";
+            self.output += lines[lineNumber] + "\n";
         }
 
+        if (typeof callback === 'function') callback();
         return false;
-    }
+    };
 };
