@@ -73,11 +73,9 @@ class View
         $code = '';
 
         for ($i = 0; $i < 2; $i++) {
-
             $type = ($i === 0) ? 'css' : 'js';
 
             foreach (${$type} as $item) {
-
                 $file = DIR_PUBLIC . $item . '.' . $type;
 
                 if (file_exists($file)) {

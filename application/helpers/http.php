@@ -32,8 +32,8 @@ abstract class Http
      *          'info3' =>  "What is found in 'info2' field of POST."
      *      );
      *
-     * @param array $elementsToGet          Array with information to get.
-     * @param bool  $returnInfoIfMissing    Do you want to return false if some information is missing?
+     * @param array $elementsToGet Array with information to get.
+     * @param bool $returnInfoIfMissing Do you want to return false if some information is missing?
      *
      * @return array|bool   An associative array with the obtained information OR false in case of failure.
      */
@@ -42,12 +42,10 @@ abstract class Http
         $data = array();
 
         for ($i = 0; $i < count($elementsToGet); $i++) {
-
             if (!isset($_POST[$elementsToGet[$i]]) && !$returnInfoIfMissing)
                 return false;
 
             $data[$elementsToGet[$i]] = $_POST[$elementsToGet[$i]];
-
         }
 
         return $data;

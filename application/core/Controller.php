@@ -12,7 +12,7 @@ use Helpers\Dir as Dir;
  *
  * @package     InMVC
  * @subpackage  Core
- * @version     0.0.5
+ * @version     0.0.6
  */
 abstract class Controller
 {

@@ -71,20 +71,6 @@ abstract class Bootstrap
     }
 
     /**
-     * Prepare Url
-     *
-     * This function is used to prepare the URL array, ie, it strips
-     * the white spaces of the begin and the end of each element.
-     */
-    private static function prepareUrl()
-    {
-        for ($i = 0; $i < count(self::$url); $i++) {
-            self::$url[$i] = rtrim(self::$url[$i]);
-            self::$url[$i] = ltrim(self::$url[$i]);
-        }
-    }
-
-    /**
      * Routes Exceptions
      *
      * Confirms if there is some router exception declared
@@ -99,8 +85,9 @@ abstract class Bootstrap
         $routes = rtrim($routes, "\n");
         $routes = explode("\n", $routes);
 
-        for ($i = 0; $i < count($routes); $i++) {
+        $routesLength = count($routes);
 
+        for ($i = 0; $i < $routesLength; $i++) {
             if (empty($routes[$i]) || $routes[$i][0] === '#')
                 continue;
 
@@ -123,9 +110,9 @@ abstract class Bootstrap
                 continue;
 
             $isThisRoute = false;
+            $linkLength = count($link);
 
-            for ($j = 0; $j < count($link); $j++) {
-
+            for ($j = 0; $j < $linkLength; $j++) {
                 if ($link[$j] != self::$url[$j] && !self::isItRegex($link[$j]))
                     break;
 
@@ -144,8 +131,38 @@ abstract class Bootstrap
 
             if ($isThisRoute)
                 self::modifyUrlWithExceptions($link, $routeTo);
-
         }
+    }
+
+    /**
+     * Modify Url With Exceptions
+     *
+     * If some routing exception is detected, this function will convert
+     * the current class URL variable into the new one with the correct
+     * controller and method.
+     *
+     * @param array $itemsToRemove
+     * @param array $itemsToAdd
+     */
+    private static function modifyUrlWithExceptions($itemsToRemove, $itemsToAdd)
+    {
+        $url = self::$url;
+        $itemsToRemoveLength = count($itemsToRemove);
+
+        for ($i = 0; $i < $itemsToRemoveLength; $i++) {
+            if ($itemsToRemove[$i] === $url[$i])
+                unset($url[$i]);
+        }
+
+        $url = array_values($url);
+        $itemsToAdd = explode('/', $itemsToAdd);
+
+        for ($y = count($itemsToAdd) - 1; $y >= 0; $y--) {
+            array_unshift($url, $itemsToAdd[$y]);
+        }
+
+        self::$url = $url;
+        return;
     }
 
     /**
@@ -179,35 +196,17 @@ abstract class Bootstrap
     }
 
     /**
-     * Modify Url With Exceptions
+     * Prepare Url
      *
-     * If some routing exception is detected, this function will convert
-     * the current class URL variable into the new one with the correct
-     * controller and method.
-     *
-     * @param array $itemsToRemove
-     * @param array $itemsToAdd
+     * This function is used to prepare the URL array, ie, it strips
+     * the white spaces of the begin and the end of each element.
      */
-    private static function modifyUrlWithExceptions($itemsToRemove, $itemsToAdd)
+    private static function prepareUrl()
     {
-        $url = self::$url;
-
-        for ($i = 0; $i < count($itemsToRemove); $i++) {
-
-            if ($itemsToRemove[$i] === $url[$i])
-                unset($url[$i]);
-
+        for ($i = 0; $i < count(self::$url); $i++) {
+            self::$url[$i] = rtrim(self::$url[$i]);
+            self::$url[$i] = ltrim(self::$url[$i]);
         }
-
-        $url = array_values($url);
-        $itemsToAdd = explode('/', $itemsToAdd);
-
-        for ($y = count($itemsToAdd) - 1; $y >= 0; $y--) {
-            array_unshift($url, $itemsToAdd[$y]);
-        }
-
-        self::$url = $url;
-        return;
     }
 
     /**
@@ -237,44 +236,6 @@ abstract class Bootstrap
     }
 
     /**
-     * Calls the Method
-     *
-     * This function calls the method depending on the
-     * url fetched above.
-     */
-    private static function callMethod()
-    {
-        $length = count(self::$url);
-        $method = isset(self::$url[1]) ? self::$url[1] : 'index';
-
-        for ($i= 1; $i < count(self::$url); $i++)
-            if ($i != 1)
-                ${'param' . ($i - 1)} = self::$url[$i];
-
-        if (!method_exists(self::$controller, $method))
-            self::error();
-
-        switch ($length) {
-            case 5:
-                self::$controller->{$method}($param1, $param2, $param3);
-                break;
-
-            case 4:
-                self::$controller->{$method}($param1, $param2);
-                break;
-
-            case 3:
-                self::$controller->{$method}($param1);
-                break;
-
-            case 2:
-            default:
-                self::$controller->{$method}();
-                break;
-        }
-    }
-
-    /**
      * Error
      *
      * Display an error page if there's no controller
@@ -288,6 +249,43 @@ abstract class Bootstrap
         self::$controller->index($error);
 
         exit;
+    }
+
+    /**
+     * Calls the Method
+     *
+     * This function calls the method depending on the
+     * url fetched above.
+     */
+    private static function callMethod()
+    {
+        $length = count(self::$url);
+        $method = isset(self::$url[1]) ? self::$url[1] : 'index';
+
+        $urlLength = count(self::$url);
+
+        for ($i = 1; $i < $urlLength; $i++)
+            if ($i != 1)
+                ${'param' . ($i - 1)} = self::$url[$i];
+
+        if (!method_exists(self::$controller, $method))
+            self::error();
+
+        switch ($length) {
+            case 5:
+                self::$controller->{$method}($param1, $param2, $param3);
+                break;
+            case 4:
+                self::$controller->{$method}($param1, $param2);
+                break;
+            case 3:
+                self::$controller->{$method}($param1);
+                break;
+            case 2:
+            default:
+                self::$controller->{$method}();
+                break;
+        }
     }
 
 }

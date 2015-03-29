@@ -15,9 +15,8 @@ class Index extends Controller
     function index()
     {
         $content = array(
-            'title'  =>  'This is the API Index'
+            'title' => 'This is the API Index'
         );
-
         Json::echoJson($content);
     }
 }

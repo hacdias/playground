@@ -29,11 +29,9 @@ class Error extends Controller
                 $data['title'] = 'Error 404';
                 $data['message'] = "Not found. There is nothing here.";
                 break;
-
         }
 
         if (!SEND_JSON) {
-
             $keywords = 'error, ' . $error;
 
             View::setHeaderTag('title', $data['title']);
@@ -43,11 +41,8 @@ class Error extends Controller
             View::render('header', array(), $data['headers']);
             View::render('error/index', $data);
             View::render('footer');
-
         } else {
-
             Json::echoJson($data);
-
         }
     }
 

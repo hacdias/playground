@@ -2,7 +2,7 @@
 
 namespace Helpers;
 
-use \Controllers\Error;
+use Controllers\Error;
 use PDO;
 
 /**
@@ -32,12 +32,9 @@ class Database extends PDO
     public function __construct($DB_TYPE, $DB_HOST, $DB_NAME, $DB_USER, $DB_PASS)
     {
         try {
-
             parent::__construct($DB_TYPE . ':host=' . $DB_HOST . ';dbname=' . $DB_NAME, $DB_USER, $DB_PASS);
             $this->exec("SET NAMES 'utf8';");
-
         } catch (\PDOException $e) {
-
             error_log($e->getMessage());
 
             $error = new Error;
@@ -69,10 +66,7 @@ class Database extends PDO
         }
 
         $sth->execute();
-
-        $data = $sth->fetchAll($fetchMode);
-
-        return $data;
+        return $sth->fetchAll($fetchMode);
     }
 
     /**
