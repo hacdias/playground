@@ -34,3 +34,7 @@ $ sitify config -c
 ```
 
 To get more information about all of the commands, you just have to run ```sitify``` or even ```sitify -h```.
+
+# License
+
+MIT License © Henrique Dias
