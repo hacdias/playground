@@ -1,6 +1,8 @@
-# What is Sitify? [![npm version](https://badge.fury.io/js/sitify.svg)](http://badge.fury.io/js/sitify) [![GitHub version](https://badge.fury.io/gh/hacdias%2Fsitify.svg)](http://badge.fury.io/gh/hacdias%2Fsitify)
+# What is Sitify? 
 
-[![NPM](https://nodei.co/npm/sitify.png?downloads=true)](https://nodei.co/npm/sitify/)
+[![Latest Version](https://img.shields.io/npm/v/sitify.svg)](https://www.npmjs.com/package/sitify) 
+[![Downloads per Month](https://img.shields.io/npm/dm/localeval.svg)(https://www.npmjs.com/package/sitify)
+[![License](https://img.shields.io/npm/l/express.svg)(http://opensource.org/licenses/MIT)
 
 If you, like me, have a dynamic web projects environment, it means, if you have something like this on your Apache configurations (or whatever you use):
 
