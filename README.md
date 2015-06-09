@@ -5,6 +5,27 @@
 [![Downloads per Month](https://img.shields.io/npm/dm/subtitles-sync.svg?style=flat-square)][1]
 [![License](https://img.shields.io/npm/l/subtitles-sync.svg?style=flat-square)](http://opensource.org/licenses/MIT)
 
-This simple, mini-project, has as an objective creating a JavaScript script which can be added to websites to sync subtitles. The user puts how much he wants to add/remove, upload the file and it generates the new file with synchronize subtitles.
+This package can be used to synchronize .srt subtitles. It is very simple to use and allows you to advance or delay your subtitles.
+
+## Install
+
+```
+$ npm install --save subtitles-sync
+```
+
+## Usage
+
+```js
+var subtitles = require('subtitles-sync');
+
+subtitles.sync(input, [hours, minutes, seconds, milliseconds]);
+// => A string with the new subtitles
+
+```
+
+
+## License
+
+MIT © [Henrique Dias](http://henriquedias.com)
 
 [1]: https://www.npmjs.com/package/subtitles-sync
