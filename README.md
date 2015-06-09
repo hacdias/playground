@@ -19,7 +19,7 @@ You know that if you go to ```webproj.dev``` it will show you the content of the
 
 After mounted this system, I wanted for a tool which function is the automatic creation of those folders and the respective ```hosts``` entry.
 
-# Installation
+## Installation
 
 Firstly, make sure if you have Node.js installed. After that you should run:
 
@@ -27,7 +27,7 @@ Firstly, make sure if you have Node.js installed. After that you should run:
 $ [sudo] npm install sitify -g
 ```
 
-# Usage
+## Usage
 
 First of all, you must configure Sitify. To do it you should run the following command and set all of the configurations:
 
@@ -37,6 +37,6 @@ $ sitify config -c
 
 To get more information about all of the commands, you just have to run ```sitify``` or even ```sitify -h```.
 
-# License
+## License
 
 MIT License © Henrique Dias
