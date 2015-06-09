@@ -1,6 +1,6 @@
 {
   "name": "subtitles-sync",
-  "version": "1.0.0",
+  "version": "0.0.9",
   "description": "Synchronize (modify the time of) SRT subtitles",
   "main": "index.js",
   "scripts": {
