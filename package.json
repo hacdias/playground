@@ -1,6 +1,6 @@
 {
   "name": "subtitles-sync",
-  "version": "0.0.9",
+  "version": "1.0.0",
   "description": "Synchronize (modify the time of) SRT subtitles",
   "main": "index.js",
   "scripts": {
@@ -26,8 +26,5 @@
   "bugs": {
     "url": "https://github.com/hacdias/subtitles-sync/issues"
   },
-  "homepage": "https://github.com/hacdias/subtitles-sync",
-  "dependencies": {
-    "moment": "^2.10.3"
-  }
+  "homepage": "https://github.com/hacdias/subtitles-sync"
 }

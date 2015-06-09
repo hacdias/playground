@@ -1,32 +1,21 @@
-/**
- * subtitles-sync package
- * @author: Henrique Dias <hacdias@gmail.com> (http://henriquedias.com)
- */
 'use strict';
 
-var moment = require('moment');
-
 module.exports = {
-  sync: function(input, time) {
-    var sync = new SubtitlesSync();
-    sync.setInput(input);
-    sync.setChange.apply(this, time);
-    sync.process();
-    return sync.output;
-  }
-}
+   sync: function(input, time) {
+     var sync = new SubtitlesSync();
+     return sync.sync(input, time);
+   }
+ }
 
 var SubtitlesSync = function () {
     var self = this;
 
-    this.setInput = function (input) {
-        self.input = input;
-    };
-
-    this.setChange = function (hours, minutes, seconds, milliseconds) {
-        self.timeChange = self.timeToMilliseconds(hours, minutes, seconds, milliseconds);
-        return false;
-    };
+    this.sync = function(input, time) {
+      self.input = input;
+      self.timeChange = self.timeToMilliseconds.apply(this, time);
+      self.process();
+      return self.output;
+    }
 
     this.timeToMilliseconds = function (hours, minutes, seconds, milliseconds) {
         return milliseconds + seconds * 1000 + minutes * 60000 + hours * 3600000;
