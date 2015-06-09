@@ -1,0 +1,33 @@
+{
+  "name": "subtitles-sync",
+  "version": "1.0.0",
+  "description": "Synchronize (modify the time of) SRT subtitles",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hacdias/subtitles-sync.git"
+  },
+  "keywords": [
+    "subtitles",
+    "srt",
+    "synchronize",
+    "media",
+    "movies",
+    "films"
+  ],
+  "author": "Henrique Dias <hacdias@gmail.com> (http://henriquedias.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hacdias/subtitles-sync/issues"
+  },
+  "homepage": "https://github.com/hacdias/subtitles-sync",
+  "dependencies": {
+    "moment": "^2.10.3"
+  }
+}

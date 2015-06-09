@@ -1,3 +1,21 @@
+/**
+ * subtitles-sync package
+ * @author: Henrique Dias <hacdias@gmail.com> (http://henriquedias.com)
+ */
+'use strict';
+
+var moment = require('moment');
+
+module.exports = {
+  sync: function(input, time) {
+    var sync = new SubtitlesSync();
+    sync.setInput(input);
+    sync.setChange.apply(this, time);
+    sync.process();
+    return sync.output;
+  }
+}
+
 var SubtitlesSync = function () {
     var self = this;
 
@@ -55,8 +73,8 @@ var SubtitlesSync = function () {
     this.convertTimeToString = function (duration) {
         var milliseconds = parseInt((duration % 1000)),
             seconds = parseInt((duration / 1000) % 60),
-            minutes = parseInt((duration / (1000 * 60)) % 60),
-            hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+            minutes = parseInt((duration / (60000)) % 60),
+            hours = parseInt((duration / (3600000)) % 24);
 
         hours = (hours < 10) ? "0" + hours : hours;
         minutes = (minutes < 10) ? "0" + minutes : minutes;
