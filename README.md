@@ -1,4 +1,4 @@
-# What is Sitify? 
+# sitify
 
 [![Latest Version](https://img.shields.io/npm/v/sitify.svg?style=flat-square)](https://www.npmjs.com/package/sitify) 
 [![Downloads per Month](https://img.shields.io/npm/dm/localeval.svg?style=flat-square)](https://www.npmjs.com/package/sitify)
