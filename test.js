@@ -1,5 +1,6 @@
 var shell = require('./');
-shell('git add -A');
-shell('git commit -m "Some updates"', {
-  suppressblank: true
+shell('git add -A', {sync: true});
+shell("git commit -m 'Some'", {
+  suppressblank: false,
+  sync: true
 });

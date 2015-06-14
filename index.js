@@ -54,7 +54,7 @@ InteractiveShell.prototype.parseOptions = function (opts) {
   }
 
   for (var thing in defaultOptions) {
-    if (!opts[thing]) {
+    if (typeof opts[thing] === 'undefined') {
       opts[thing] = defaultOptions[thing];
     }
   }
@@ -73,6 +73,8 @@ InteractiveShell.prototype.shell = function () {
 
     this.cmd = 'cmd.exe';
   }
+
+  console.log(this.args)
 
   var shellOpts = {
     cwd: this.opts.cwd,
