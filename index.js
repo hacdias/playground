@@ -95,7 +95,6 @@ InteractiveShell.prototype.shell = function () {
 };
 
 module.exports = function() {
-
   var createInstance = (function() {
       function F(args) {
           return InteractiveShell.apply(this, args);
