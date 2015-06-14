@@ -24,8 +24,5 @@
   "bugs": {
     "url": "https://github.com/hacdias/interactive-command/issues"
   },
-  "homepage": "https://github.com/hacdias/interactive-command#readme",
-  "dependencies": {
-    "node_issue_25339_workaround": "0.0.1"
-  }
+  "homepage": "https://github.com/hacdias/interactive-command#readme"
 }
