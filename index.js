@@ -74,8 +74,6 @@ InteractiveShell.prototype.shell = function () {
     this.cmd = 'cmd.exe';
   }
 
-  console.log(this.args)
-
   var shellOpts = {
     cwd: this.opts.cwd,
     env: process.env,
