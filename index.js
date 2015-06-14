@@ -66,6 +66,8 @@ module.exports = function (cmd /*, args, cwd, callback */) {
   });
 
   child.on('close', function(code) {
-    callback();
+    if (typeof callback === 'function') {
+      callback();
+    }
   });
 };
