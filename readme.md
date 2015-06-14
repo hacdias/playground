@@ -29,8 +29,17 @@ Where:
 * ```cwd``` is the working directory where you want the execute the command;
 * ```callback``` is the... callback.
 
+Example:
+
+```js
+var system = require('interactive-command.');
+system('bower', 'init');
+```
+
+It will run ```bower init``` as it runs directly from the console.
+
 ## License
 
 MIT © [Henrique Dias](http://henriquedias.com)
 
-[1]: https://www.npmjs.com/package/interactive-command.
+[1]: https://www.npmjs.com/package/interactive-command
