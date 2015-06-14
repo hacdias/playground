@@ -1,73 +1,112 @@
 'use strict';
 
-function checkIf(thing, is, where, what) {
-  if (typeof thing === is) {
-    if (typeof where === 'undefined') {
-      return true;
-    } else {
-      throw new SyntaxError('You have defined more than one ' + what);
-    }
-  } else {
-    return;
+var os = require('os');
+var childProcess = require('child_process');
+var isWindows = os.platform() === 'win32';
+
+var InteractiveShell = function(cmd /*, args, opts, callback */) {
+  if (typeof cmd === 'undefined') {
+    throw new SyntaxError('You must pass a command');
   }
+
+  var opts = this.parseArguments(arguments);
+  this.cmd = cmd;
+  this.opts = opts.opts;
+  this.args = opts.args;
+  this.callback = opts.callback;
 }
 
-function parseArguments(args) {
+InteractiveShell.prototype.parseArguments = function (args) {
   var opts = {};
 
-  for (var i = args.length - 1; i > 0; i--) {
-    if (checkIf(args[i], 'function', opts.callback, 'callback function')) {
-      opts.callback = args[i];
-      continue;
-    }
-
-    if (checkIf(args[i], 'object', opts.args, 'array of arguments')) {
-      opts.args = args[i];
-      continue;
-    }
-
-    if (checkIf(args[i], 'string', opts.cwd, 'working directory')) {
-      opts.cwd = args[i];
-    }
+  var types = {
+    args: 'array',
+    opts: 'object',
+    callback: 'function'
   }
 
-  opts.cwd = (typeof opts.cwd === 'undefined') ? process.cwd() : opts.cwd;
-  opts.args = (typeof opts.args === 'undefined') ? [] : opts.args;
+  for (var i = 1; i < args.length; i++) {
+      for (var name in types) {
+        if (types[name] === 'array' && Array.isArray(args[i])) {
+          opts[name] = args[i];
+          break;
+        }
+
+        if (typeof args[i] === types[name]) {
+          opts[name] = args[i];
+        }
+      }
+  }
+
+  if (!opts.args) opts.args = [];
+  if (!opts.callback) opts.callback = function() {};
+  if (!opts.opts) opts.opts = {};
+
+  opts.opts = this.parseOptions(opts.opts);
+  return opts;
+};
+
+InteractiveShell.prototype.parseOptions = function (opts) {
+  var defaultOptions = {
+    cwd: process.cwd(),
+    sync: false,
+    suppressblank: true
+  }
+
+  for (var thing in defaultOptions) {
+    if (!opts[thing]) {
+      opts[thing] = defaultOptions[thing];
+    }
+  }
 
   return opts;
-}
+};
 
-module.exports = function (cmd /*, args, cwd, callback */) {
-  var os = require('os'),
-      path = require('path'),
-      childProcess = require('child_process'),
-      isWindows = os.platform() === 'win32',
-      opts = parseArguments(arguments),
-      args = opts.args,
-      cwd = opts.cwd,
-      callback = opts.callback;
-
+InteractiveShell.prototype.shell = function () {
   if (isWindows) {
-    args.unshift(cmd);
+    this.args.unshift(this.cmd);
+    this.args.unshift('/c');
 
-    args = [
-      '/s',
-      '/c',
-      args.join(' ')
-    ];
+    if (this.opts.suppressblank) {
+      this.args.unshift('/s');
+    }
 
-    cmd = 'cmd.exe';
+    this.cmd = 'cmd.exe';
   }
 
-  var child = childProcess.spawn(cmd, args, {
-    cwd: cwd,
+  var shellOpts = {
+    cwd: this.opts.cwd,
     env: process.env,
     stdio: 'inherit'
-  });
+  };
 
-  child.on('close', function(code) {
-    if (typeof callback === 'function') {
+  var callback = this.callback;
+
+  if (this.opts.sync) {
+    var child = childProcess.spawnSync(this.cmd, this.args, shellOpts);
+    callback();
+  } else {
+    var child = childProcess.spawn(this.cmd, this.args, shellOpts);
+
+    child.on('close', function(code) {
       callback();
-    }
-  });
+    });
+  }
 };
+
+module.exports = function() {
+
+  var createInstance = (function() {
+      function F(args) {
+          return InteractiveShell.apply(this, args);
+      }
+      F.prototype = InteractiveShell.prototype;
+
+      return function(args) {
+          return new F(args);
+      }
+  })();
+
+  var shell = createInstance(arguments);
+  shell.shell();
+}

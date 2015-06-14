@@ -26,7 +26,7 @@ Where:
 
 * ```cmd``` is the command;
 * ```args``` is an array of arguments for the command;
-* ```cwd``` is the working directory where you want the execute the command;
+* ```options``` is the working directory where you want the execute the command;
 * ```callback``` is the... callback.
 
 Example:
