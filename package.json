@@ -1,0 +1,28 @@
+{
+  "name": "interactive-command",
+  "version": "0.0.1",
+  "description": "Run a command interactively in all OSs",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hacdias/interactive-command.git"
+  },
+  "keywords": [
+    "interactive",
+    "shell",
+    "command",
+    "execute",
+    "interactively",
+    "windows",
+    "linux",
+    "spawn",
+    "os",
+    "x"
+  ],
+  "author": "Henrique Dias <hacdias@gmail.com> (http://henriquedias.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hacdias/interactive-command/issues"
+  },
+  "homepage": "https://github.com/hacdias/interactive-command#readme"
+}
