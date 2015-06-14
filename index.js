@@ -63,6 +63,8 @@ InteractiveShell.prototype.parseOptions = function (opts) {
 };
 
 InteractiveShell.prototype.shell = function () {
+  console.log(this);
+
   if (isWindows) {
     this.args.unshift(this.cmd);
     this.args.unshift('/c');
