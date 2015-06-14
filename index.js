@@ -63,6 +63,9 @@ InteractiveShell.prototype.parseOptions = function (opts) {
 };
 
 InteractiveShell.prototype.shell = function () {
+  var fixArgsOnWindows = require('node_issue_25339_workaround');
+  this.args = fixArgsOnWindows(this.args);
+
   if (isWindows) {
     this.args.unshift(this.cmd);
     this.args.unshift('/c');
