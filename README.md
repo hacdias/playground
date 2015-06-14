@@ -1,8 +1,8 @@
 # sitify
 
 [![Latest Version](https://img.shields.io/npm/v/sitify.svg?style=flat-square)](https://www.npmjs.com/package/sitify) 
-[![Downloads per Month](https://img.shields.io/npm/dm/localeval.svg?style=flat-square)](https://www.npmjs.com/package/sitify)
-[![License](https://img.shields.io/npm/l/express.svg?style=flat-square)](http://opensource.org/licenses/MIT)
+[![Downloads per Month](https://img.shields.io/npm/dm/sitify.svg?style=flat-square)](https://www.npmjs.com/package/sitify)
+[![License](https://img.shields.io/npm/l/sitify.svg?style=flat-square)](http://opensource.org/licenses/MIT)
 
 If you, like me, have a dynamic web projects environment, it means, if you have something like this on your Apache configurations (or whatever you use):
 
