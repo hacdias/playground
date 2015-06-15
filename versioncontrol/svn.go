@@ -6,6 +6,8 @@ import(
   "path"
   "log"
   "os"
+
+  "github.com/termie/go-shutil"
 )
 
 type Svn struct {

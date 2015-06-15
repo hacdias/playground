@@ -1,11 +1,10 @@
 package main
 
 import (
-  "./vcs"
+  "./dep"
 )
 
 func main() {
-  gitt := vcs.Git{}
-  gitt.SetCommit("teste")
-  gitt.Update()
+  gitt := dep.Bower{}
+  gitt.Update();
 }

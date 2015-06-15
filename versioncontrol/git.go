@@ -25,7 +25,7 @@ func (g Git) Update() bool {
     helpers.Run("git", "tag", g.tag)
   }
 
-  helpers.Run("git", "commit", "-m", "\"" + g.commit + "\"")
+  helpers.Run("git", "commit", "-m", g.commit)
   helpers.Run("git", "push", "origin", "master")
 
   if g.tag != "" {
