@@ -1,42 +1,43 @@
-package dep
+package dependencies
 
 import(
-  "../helpers"
   "encoding/json"
   "os"
   "log"
   "io/ioutil"
+
+  "github.com/hacdias/wp-sync/command"
 )
 
 type Bower struct {
   folder string "bower_components"
 }
 
-func (b Bower) Update() bool {
+func (b Bower) Update() error {
   b.CheckFolder()
 
-  helpers.Run("bower", "install")
+  command.Run("bower", "install")
 
   if _, err := os.Stat(b.folder); err == nil {
-    helpers.Run("bower", "update")
+    command.Run("bower", "update")
   }
 
-  return true;
+  return err;
 }
 
-func (b *Bower) CheckFolder() {
+func (b *Bower) CheckFolder() error {
   if _, err := os.Stat(".bowerrc"); err == nil {
     var data interface{}
     file, err := ioutil.ReadFile(".bowerrc")
 
     if err != nil {
-        log.Fatal(err)
+      return err
     }
 
     err = json.Unmarshal(file, &data)
 
     if err != nil {
-        log.Fatal(err)
+      return err
     }
 
     info := data.(map[string]interface{})
@@ -45,12 +46,6 @@ func (b *Bower) CheckFolder() {
       b.folder = info["directory"].(string)
     }
   }
+
+  return nil
 }
-
-
-/*
-
-
-
-    def update(self):
-      */

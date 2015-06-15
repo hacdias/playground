@@ -1,4 +1,4 @@
-package vcs
+package versioncontrol
 
 import(
 	"errors"
@@ -7,11 +7,7 @@ import(
 )
 
 type Git struct {
-	commit, tag string
-}
-
-func (g *Git) SetCommit(commit string) {
-	g.commit = commit
+	Commit, Tag string
 }
 
 func (g Git) Update() error {

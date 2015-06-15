@@ -1,4 +1,4 @@
-package vcs
+package versioncontrol
 
 import(
   "errors"
@@ -11,7 +11,7 @@ import(
 )
 
 type Svn struct {
-  commit, tag string
+  Commit, Tag string
 }
 
 func Update(s Svn) error {
