@@ -1,36 +1,36 @@
 package vcs
 
 import(
-  "../helpers"
-  "errors"
+	"errors"
+
+	"github.com/hacdias/wp-sync/command"
 )
 
 type Git struct {
-  commit, tag string
+	commit, tag string
 }
 
 func (g *Git) SetCommit(commit string) {
-    g.commit = commit
+	g.commit = commit
 }
 
-func (g Git) Update() bool {
-  if g.commit == "" {
-    errors.New("git: you haven't mentioned the commit message")
-    return false
-  }
+func (g Git) Update() error {
+	if g.commit == "" {
+		return errors.New("git: you haven't mentioned the commit message")
+	}
 
-  helpers.Run("git", "add", "-A")
+	command.Run("git", "add", "-A")
 
-  if g.tag != "" {
-    helpers.Run("git", "tag", g.tag)
-  }
+	if g.tag != "" {
+		command.Run("git", "tag", g.tag)
+	}
 
-  helpers.Run("git", "commit", "-m", g.commit)
-  helpers.Run("git", "push", "origin", "master")
+	command.Run("git", "commit", "-m", g.commit)
+	command.Run("git", "push", "origin", "master")
 
-  if g.tag != "" {
-    helpers.Run("git", "push", "--tags")
-  }
+	if g.tag != "" {
+		command.Run("git", "push", "--tags")
+	}
 
-  return true
+	return nil
 }

@@ -6,13 +6,10 @@ import (
   "fmt"
 )
 
-func Run(command string, args ...string) {
+func Run(command string, args ...string) err {
   cmd := exec.Command(command, args...)
   cmd.Stdin = os.Stdin;
   cmd.Stdout = os.Stdout;
   cmd.Stderr = os.Stderr;
-  err := cmd.Run()
-  if err != nil {
-      fmt.Printf("%v\n", err)
-  }
+  return cmd.Run()
 }

@@ -1,12 +1,12 @@
 package vcs
 
 import(
-  "../helpers"
   "errors"
   "path"
   "log"
   "os"
 
+  "github.com/hacdias/wp-sync/command"
   "github.com/termie/go-shutil"
 )
 
@@ -14,18 +14,16 @@ type Svn struct {
   commit, tag string
 }
 
-func Update(s Svn) (bool) {
+func Update(s Svn) error {
   if s.commit == "" {
-    errors.New("svn: you haven't mentioned the commit message")
-    return false
+    return errors.New("svn: you haven't mentioned the commit message")
   }
 
   if s.tag != "" {
     dir, err := os.Getwd()
 
     if err != nil {
-      log.Fatal(err)
-      return false
+      return err
     }
 
     trunk := path.Join(dir, "trunk")
@@ -37,5 +35,5 @@ func Update(s Svn) (bool) {
   helpers.Run("svn", "add", "*", "--force")
   helpers.Run("svn", "commit", "-m", "\"" + s.commit + "\"")
 
-  return true
+  return nil
 }
