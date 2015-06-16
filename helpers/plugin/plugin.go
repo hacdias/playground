@@ -22,7 +22,7 @@ const (
 
 func main() {
 	pp := Plugin{}
-	pp.PluginFile = "isto"
+	pp.PluginFile = "isso"
 	pp.ReadmeFile = "assa"
 	pp.Index = "build"
 	pp.Update()
@@ -192,6 +192,9 @@ func (p Plugin) updateWordPressRepo() {
 	command.Run("svn", "checkout", p.WordpressSvn, ".")
 
 	trunk := filepath.Join(tempPath, "trunk")
+
+	fmt.Println(trunk)
+	os.Exit(0)
 
 	// clean trunk folder
 	os.RemoveAll(trunk)
