@@ -1,7 +1,6 @@
 package action
 
 import (
-	"encoding/json"
 	"io/ioutil"
 	"log"
 	"os"
@@ -10,37 +9,13 @@ import (
 	"github.com/hacdias/wp-sync/config"
 	"github.com/hacdias/wp-sync/helpers/dependencies"
 	"github.com/hacdias/wp-sync/helpers/plugin"
+	"github.com/likexian/simplejson-go"
 )
 
 // Do is
 func Do() {
 	if _, err := os.Stat(config.File); err != nil {
 		log.Fatal(err)
-	}
-
-	var data interface{}
-	file, err := ioutil.ReadFile(config.File)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	err = json.Unmarshal(file, &data)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	info := data.(map[string]interface{})
-
-	if info["wordpress-svn"] == nil {
-		log.Fatal("you haven't defined the WordPress SVN url")
-	}
-
-	wordpressSvn := info["wordpress-svn"].(string)
-
-	if strings.Contains(wordpressSvn, "trunk") {
-		wordpressSvn = strings.Replace(wordpressSvn, "trunk", "", -1)
 	}
 
 	if _, err := os.Stat("composer.json"); err == nil {
@@ -53,21 +28,51 @@ func Do() {
 		bower.Update()
 	}
 
+	file, err := ioutil.ReadFile(config.File)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	json, _ := simplejson.Loads(string(file))
+
 	plugin := plugin.Plugin{}
 
+	if !json.Has("wordpress-svn") {
+		log.Fatal("you haven't defined the WordPress SVN url")
+	}
+
+	plugin.WordpressSvn, _ = json.Get("wordpress-svn").String()
+
+	if strings.Contains(plugin.WordpressSvn, "trunk") {
+		plugin.WordpressSvn = strings.Replace(plugin.WordpressSvn, "trunk", "", -1)
+	}
+
 	plugin.PluginFile = "plugin.php"
-	if info["main"] != nil {
-		plugin.PluginFile = info["main"].(string)
+	if json.Has("main") {
+		plugin.PluginFile, _ = json.Get("main").String()
+	}
+
+	plugin.ReadmeFile = "readme.txt"
+	if json.Has("readme") {
+		plugin.ReadmeFile, _ = json.Get("readme").String()
 	}
 
 	plugin.Index = "build"
-	if info["increase"] != nil {
-		plugin.Index = info["increase"].(string)
+	if json.Has("increase") {
+		plugin.Index, _ = json.Get("increase").String()
 	}
 
 	plugin.FilesIgnore = []string{}
-	if info["ignore"] != nil {
-		plugin.FilesIgnore = info["ignore"].([string]string)
+	if json.Has("ignore") {
+		fi, _ := json.Get("ignore").Array()
+		ignore := make([]string, len(fi))
+
+		for index, content := range fi {
+			ignore[index] = content.(string)
+		}
+
+		plugin.FilesIgnore = ignore
 	}
 
 	plugin.Update()

@@ -1,49 +1,23 @@
 package dependencies
 
 import (
-	"encoding/json"
 	"io/ioutil"
+	"log"
 	"os"
 
 	"github.com/hacdias/wp-sync/helpers/command"
+	"github.com/likexian/simplejson-go"
 )
 
-// Composer type
+// Composer is the type for composer dependencies manager object
 type Composer struct {
-	folder string `string:"vendor"`
+	folder string
 }
 
-func (c *Composer) checkFolder() error {
-	if _, err := os.Stat("composer.json"); err == nil {
-		var data interface{}
-		file, err := ioutil.ReadFile("composer.json")
-
-		if err != nil {
-			return err
-		}
-
-		err = json.Unmarshal(file, &data)
-
-		if err != nil {
-			return err
-		}
-
-		info := data.(map[string]interface{})
-
-		if info["config"] != nil {
-			config := info["config"].(map[string]interface{})
-
-			if config["vendor-dir"] != nil {
-				c.folder = config["vendor-dir"].(string)
-			}
-		}
-	}
-
-	return nil
-}
-
-// Update asa
+// Update updates the composer dependencies
 func (c Composer) Update() {
+	c.checkFolder()
+
 	if _, err := os.Stat("composer.lock"); err == nil {
 		os.Remove("composer.lock")
 	}
@@ -53,4 +27,26 @@ func (c Composer) Update() {
 	}
 
 	command.Run("composer", "install")
+}
+
+func (c *Composer) checkFolder() error {
+	c.folder = "vendor"
+
+	file, err := ioutil.ReadFile("composer.json")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	json, _ := simplejson.Loads(string(file))
+
+	if json.Has("config") {
+		config := json.Get("config")
+
+		if config.Has("vendor-dir") {
+			c.folder, _ = config.Get("vendor-dir").String()
+		}
+	}
+
+	return nil
 }

@@ -190,7 +190,12 @@ func (p Plugin) updateWordPressRepo() {
 
 	// set the files to ignore
 	options := shutil.CopyTreeOptions{}
-	//options.Ignore = func ("", p.FilesIgnore)
+	options.Symlinks = false
+	options.Ignore = func(string, []os.FileInfo) []string {
+		return p.FilesIgnore
+	}
+	options.CopyFunction = shutil.Copy
+	options.IgnoreDanglingSymlinks = false
 
 	// copy the new plugin files to the temporary_folder, ignoring some files
 	shutil.CopyTree(mainPath, trunk, &options)

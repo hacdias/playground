@@ -1,51 +1,40 @@
 package dependencies
 
 import (
-	"encoding/json"
 	"io/ioutil"
+	"log"
 	"os"
 
 	"github.com/hacdias/wp-sync/helpers/command"
+	"github.com/likexian/simplejson-go"
 )
 
 // Bower is a type for Bower objects
 type Bower struct {
-	folder string `string:"bower_components"`
+	folder string
 }
 
-// Update is used to update bower dependencies
-func (b Bower) Update() error {
+// Update updates bower dependencies
+func (b Bower) Update() {
 	b.checkFolder()
-
+	os.RemoveAll(b.folder)
 	command.Run("bower", "install")
-	_, err := os.Stat(b.folder)
-
-	if err == nil {
-		command.Run("bower", "update")
-	}
-
-	return err
 }
 
 func (b *Bower) checkFolder() error {
+	b.folder = "bower_components"
+
 	if _, err := os.Stat(".bowerrc"); err == nil {
-		var data interface{}
 		file, err := ioutil.ReadFile(".bowerrc")
 
 		if err != nil {
-			return err
+			log.Fatal(err)
 		}
 
-		err = json.Unmarshal(file, &data)
+		json, _ := simplejson.Loads(string(file))
 
-		if err != nil {
-			return err
-		}
-
-		info := data.(map[string]interface{})
-
-		if info["directory"] != nil {
-			b.folder = info["directory"].(string)
+		if json.Has("directory") {
+			b.folder, _ = json.Get("directory").String()
 		}
 	}
 
