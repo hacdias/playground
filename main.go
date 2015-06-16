@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/codegangsta/cli"
+	"github.com/hacdias/wp-sync/action"
 )
 
 func main() {
@@ -11,7 +12,7 @@ func main() {
 	app.Name = "wpsync"
 	app.Usage = ""
 	app.Version = "1.0.0"
-	app.Commands = []cli.Command{
+	/*app.Commands = []cli.Command{
 		{
 			Name:    "init",
 			Aliases: []string{"i"},
@@ -20,9 +21,9 @@ func main() {
 				// init
 			},
 		},
-	}
+	} */
 	app.Action = func(c *cli.Context) {
-		// main
+		action.Do()
 	}
 	app.Run(os.Args)
 }

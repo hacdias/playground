@@ -1,48 +1,74 @@
-package app
+package action
 
-/*  config_file =   .wpsync
-    if not os.path.isfile(config_file):
-        print('There is no configuration file.')
-        exit(1)
+import (
+	"encoding/json"
+	"io/ioutil"
+	"log"
+	"os"
+	"strings"
 
-    config = json.loads(open(config_file).read())
+	"github.com/hacdias/wp-sync/config"
+	"github.com/hacdias/wp-sync/helpers/dependencies"
+	"github.com/hacdias/wp-sync/helpers/plugin"
+)
 
-    if 'plugin' not in config:
-        print('You have problems in the configuration file.')
-        exit(1)
+// Do is
+func Do() {
+	if _, err := os.Stat(config.File); err != nil {
+		log.Fatal(err)
+	}
 
-    if 'wordpress-svn' not in config:
-        print("You haven't defined the WordPress SVN link.")
-        exit(1)
+	var data interface{}
+	file, err := ioutil.ReadFile(config.File)
 
-    if 'trunk' in config['wordpress-svn']:
-        print('Please remove "trunk" from the SVN link.')
-        exit(1)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    if os.path.isfile('composer.json'):
-        composer = Composer()
-        composer.update()
+	err = json.Unmarshal(file, &data)
 
-    if os.path.isfile('bower.json'):
-        bower = Bower()
-        bower.update()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    plugin = Plugin()
-    plugin.plugin_file = config['plugin']['main'] if 'main' in config['plugin'] else 'plugin.php'
-    plugin.index = config['increase'] if 'increase' in config else 'build'
+	info := data.(map[string]interface{})
 
-    if os.path.isdir('.svn'):
-        plugin.version_control = 'svn'
+	if info["wordpress-svn"] == nil {
+		log.Fatal("you haven't defined the WordPress SVN url")
+	}
 
-    plugin.wordpress_svn = config['wordpress-svn']
+	wordpressSvn := info["wordpress-svn"].(string)
 
-    if 'ignore' in config:
-        plugin.ignore_files = config['ignore']
+	if strings.Contains(wordpressSvn, "trunk") {
+		wordpressSvn = strings.Replace(wordpressSvn, "trunk", "", -1)
+	}
 
-    plugin.update()
+	if _, err := os.Stat("composer.json"); err == nil {
+		composer := dependencies.Composer{}
+		composer.Update()
+	}
 
-    try:
-        input("Press any key to continue...")
-    except SyntaxError:
-        pass
-*/
+	if _, err := os.Stat("bower.json"); err == nil {
+		bower := dependencies.Bower{}
+		bower.Update()
+	}
+
+	plugin := plugin.Plugin{}
+
+	plugin.PluginFile = "plugin.php"
+	if info["main"] != nil {
+		plugin.PluginFile = info["main"].(string)
+	}
+
+	plugin.Index = "build"
+	if info["increase"] != nil {
+		plugin.Index = info["increase"].(string)
+	}
+
+	plugin.FilesIgnore = []string{}
+	if info["ignore"] != nil {
+		plugin.FilesIgnore = info["ignore"].([string]string)
+	}
+
+	plugin.Update()
+}

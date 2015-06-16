@@ -20,14 +20,6 @@ const (
 	readmeFileRegex = "Stable tag:[ \\t]*[\\d+\\.]+\\d"
 )
 
-func main() {
-	pp := Plugin{}
-	pp.PluginFile = "isso"
-	pp.ReadmeFile = "assa"
-	pp.Index = "build"
-	pp.Update()
-}
-
 // Plugin is
 type Plugin struct {
 	PluginFile, ReadmeFile, Index            string

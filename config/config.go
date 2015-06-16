@@ -1,6 +1,6 @@
 package config
 
 const (
-	// ConfigFile is the default config file
-	ConfigFile = ".wpsync"
+	// File is the default config file
+	File = ".wpsync"
 )
