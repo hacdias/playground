@@ -1,4 +1,4 @@
-package main
+package plugin
 
 import (
 	"fmt"
@@ -184,7 +184,7 @@ func (p *Plugin) updateMainRepo() {
 func (p Plugin) updateWordPressRepo() {
 	// save the path where we're working and creates a temporary one
 	mainPath, _ := os.Getwd()
-	tempPath, _ := ioutil.TempDir("wpsync", "temp")
+	tempPath, _ := ioutil.TempDir(os.TempDir(), "wpsync")
 
 	// changes the working directory to the temporary path
 	os.Chdir(tempPath)
@@ -192,9 +192,6 @@ func (p Plugin) updateWordPressRepo() {
 	command.Run("svn", "checkout", p.WordpressSvn, ".")
 
 	trunk := filepath.Join(tempPath, "trunk")
-
-	fmt.Println(trunk)
-	os.Exit(0)
 
 	// clean trunk folder
 	os.RemoveAll(trunk)
