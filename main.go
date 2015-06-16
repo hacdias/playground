@@ -1,23 +1,33 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
+	"os"
+
+	"github.com/codegangsta/cli"
 )
 
 func main() {
-	var data interface{}
-	file, _ := ioutil.ReadFile("composer.json")
-	json.Unmarshal(file, &data)
-
-	info := data.(map[string]interface{})
-
-	fmt.Println(info)
+	app := cli.NewApp()
+	app.Name = "wpsync"
+	app.Usage = ""
+	app.Version = "1.0.0"
+	app.Commands = []cli.Command{
+		{
+			Name:    "init",
+			Aliases: []string{"i"},
+			Usage:   "",
+			Action: func(c *cli.Context) {
+				println("Your trying to init a file")
+			},
+		},
+	}
+	app.Action = func(c *cli.Context) {
+		println("Main action")
+	}
+	app.Run(os.Args)
 }
 
 /*  config_file = 'wpsync.json'
-
     if not os.path.isfile(config_file):
         print('There is no configuration file.')
         exit(1)
