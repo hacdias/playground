@@ -1,36 +1,56 @@
 package dependencies
 
+import (
+	"encoding/json"
+	"io/ioutil"
+	"os"
+
+	"github.com/hacdias/wp-sync/command"
+)
+
 // Composer type
 type Composer struct {
 	folder string `string:"vendor"`
 }
 
-func (c *Composer) checkFolder() {
+func (c *Composer) checkFolder() error {
+	if _, err := os.Stat("composer.json"); err == nil {
+		var data interface{}
+		file, err := ioutil.ReadFile("composer.json")
 
+		if err != nil {
+			return err
+		}
+
+		err = json.Unmarshal(file, &data)
+
+		if err != nil {
+			return err
+		}
+
+		info := data.(map[string]interface{})
+
+		if info["config"] != nil {
+			config := info["config"].(map[string]interface{})
+
+			if config["vendor-dir"] != nil {
+				c.folder = config["vendor-dir"].(string)
+			}
+		}
+	}
+
+	return nil
 }
 
-/*
-class Composer:
-    def __init__(self):
-        self.main = 'composer.json'
-        self.lock = 'composer.lock'
-        self.json = json.loads(open(self.main).read())
-        self.folder = 'vendor'
-        self.__check_folder()
+// Update asa
+func (c Composer) Update() {
+	if _, err := os.Stat("composer.lock"); err == nil {
+		os.Remove("composer.lock")
+	}
 
-    def __check_folder(self):
-        if 'config' in self.json:
-            if 'vendor-dir' in self.json['config']:
-                self.folder = self.json['config']['vendor-dir']
+	if _, err := os.Stat(c.folder); err == nil {
+		os.RemoveAll(c.folder)
+	}
 
-        self.folder = os.path.normpath(self.folder)
-
-    def update(self):
-        if os.path.isfile(self.lock):
-            os.remove(self.lock)
-
-        if os.path.isdir(self.folder):
-            shutil.rmtree(self.folder)
-
-        subprocess.call('composer install', shell=True)
-*/
+	command.Run("composer", "install")
+}

@@ -1,6 +1,19 @@
 package main
 
+import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+)
+
 func main() {
+	var data interface{}
+	file, _ := ioutil.ReadFile("composer.json")
+	json.Unmarshal(file, &data)
+
+	info := data.(map[string]interface{})
+
+	fmt.Println(info)
 }
 
 /*  config_file = 'wpsync.json'
