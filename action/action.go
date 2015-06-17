@@ -6,9 +6,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/hacdias/wp-sync/config"
-	"github.com/hacdias/wp-sync/helpers/dependencies"
-	"github.com/hacdias/wp-sync/helpers/plugin"
+	"github.com/hacdias/wpsync/config"
+	"github.com/hacdias/wpsync/helpers/dependencies"
+	"github.com/hacdias/wpsync/helpers/plugin"
 	"github.com/likexian/simplejson-go"
 )
 

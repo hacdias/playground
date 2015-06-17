@@ -4,7 +4,7 @@ import (
 	"os"
 
 	"github.com/codegangsta/cli"
-	"github.com/hacdias/wp-sync/action"
+	"github.com/hacdias/wpsync/action"
 )
 
 func main() {

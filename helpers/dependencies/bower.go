@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/hacdias/wp-sync/helpers/command"
+	"github.com/hacdias/wpsync/helpers/command"
 	"github.com/likexian/simplejson-go"
 )
 
