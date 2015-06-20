@@ -20,9 +20,9 @@ const (
 	readmeFileRegex = "Stable tag:[ \\t]*[\\d+\\.]+\\d"
 )
 
-// Plugin is
+// Plugin type
 type Plugin struct {
-	PluginFile, ReadmeFile, Index            string
+	PluginFile, ReadmeFile, Index, Message   string
 	pluginFileContent, readmeFileContent     string
 	oldVersion, newVersion                   []int
 	FilesIgnore                              []string
@@ -83,13 +83,23 @@ func (p *Plugin) getCurrentVersion() {
 	versionArray := []int{0, 0, 0, 0}
 
 	for index, num := range versionStringMap {
-		aa, err := strconv.Atoi(num)
+		content, err := strconv.Atoi(num)
 
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		versionArray[index] = aa
+		versionArray[index] = content
+	}
+
+	if len(versionStringMap) != len(versionArray) {
+		diff := len(versionArray) - len(versionStringMap)
+
+		for diff > 0 {
+			versionArray = versionArray[:len(versionArray)-1]
+			diff--
+		}
+
 	}
 
 	p.oldVersion = versionArray
@@ -107,6 +117,14 @@ func (p *Plugin) getNewVersion() {
 
 	p.index = indexList[p.Index]
 	p.newVersion = p.oldVersion
+
+	indexDiff := len(p.newVersion) - 1 - p.index
+
+	for indexDiff > 0 {
+		p.newVersion[len(p.newVersion)-indexDiff] = 0
+		indexDiff--
+	}
+
 	p.getNewVersionRecursively()
 
 	for _, value := range p.newVersion {
@@ -121,6 +139,7 @@ func (p *Plugin) getNewVersionRecursively() {
 		p.newVersion[p.index] = 0
 		p.index--
 		p.getNewVersionRecursively()
+
 	} else {
 		p.newVersion[p.index]++
 	}
@@ -181,6 +200,7 @@ func (p Plugin) updateWordPressRepo() {
 	// changes the working directory to the temporary path
 	os.Chdir(tempPath)
 
+	// checkout the WP SVN repository
 	command.Run("svn", "checkout", p.WordpressSvn, ".")
 
 	trunk := filepath.Join(tempPath, "trunk")

@@ -28,8 +28,6 @@ func Do(options Options) {
 		if _, err := os.Stat("bower.json"); err == nil {
 			bower := dependencies.Bower{}
 			bower.Update()
-		} else {
-			log.Panic(err)
 		}
 	}
 
@@ -37,8 +35,6 @@ func Do(options Options) {
 		if _, err := os.Stat("composer.json"); err == nil {
 			composer := dependencies.Composer{}
 			composer.Update()
-		} else {
-			log.Panic(err)
 		}
 	}
 
@@ -53,7 +49,7 @@ func Do(options Options) {
 	plugin := plugin.Plugin{}
 
 	if !json.Has("wordpress-svn") {
-		log.Fatal("you haven't defined the WordPress SVN url")
+		log.Fatal("wordpress-svn not defined in .wpsync file")
 	}
 
 	plugin.WordpressSvn, _ = json.Get("wordpress-svn").String()
@@ -72,8 +68,8 @@ func Do(options Options) {
 		plugin.ReadmeFile, _ = json.Get("readme").String()
 	}
 
-	plugin.Index = "build"
-	if json.Has("increase") {
+	plugin.Index = options.Increase
+	if json.Has("increase") && options.Increase == "build" {
 		plugin.Index, _ = json.Get("increase").String()
 	}
 
@@ -89,5 +85,6 @@ func Do(options Options) {
 		plugin.FilesIgnore = ignore
 	}
 
+	plugin.Message = options.Message
 	plugin.Update()
 }
