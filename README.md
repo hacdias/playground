@@ -27,11 +27,11 @@ Go to [downloads page](https://github.com/hacdias/wpsync/releases) and download 
 
 ### Linux and OS X
 
-Just run the following commands, replacing ```$VERSION``` by the current version, ```$SYSTEM``` by your operating system name and ```$ARCH``` by your operating system's architecture.
+Just run the following commands, replacing ```$VERSION``` by the current version, ```$YSTEM``` by your operating system name and ```$ARCH``` by your operating system's architecture.
 
 ```bash
-curl -LOk https://github.com/hacdias/wpsync/releases/download/$VERSION/wpsync_$SYSTEM_$ARCH.zip
-unzip wpsync_$SYSTEM_$ARCH.zip
+curl -LOk https://github.com/hacdias/wpsync/releases/download/$VERSION/wpsync_$YSTEM_$ARCH.zip
+unzip wpsync_$YSTEM_$ARCH.zip
 sudo cp wpsync /usr/local/bin
 ```
 
