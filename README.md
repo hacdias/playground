@@ -11,7 +11,7 @@ Do you use a GitHub, or any other git or svn repository, for the development of 
 
 - [Features](#features)
 - [Installation](#installation)
-  + [Linux and OS X](#linux-and-os-ox)
+  + [Linux and OS X](#linux-and-os-x)
   + [Windows](#windows)
 
 ## Features
