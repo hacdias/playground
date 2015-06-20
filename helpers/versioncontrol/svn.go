@@ -33,7 +33,7 @@ func (s Svn) Update() error {
 		shutil.CopyTree(trunk, tagfolder, nil)
 	}
 
-	command.Run("svn", "add", "*", "--force")
+	command.Run("svn", "add", "--force", ".")
 	command.Run("svn", "commit", "-m", s.Commit)
 
 	return nil

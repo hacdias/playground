@@ -10,10 +10,9 @@ Do you use a GitHub, or any other git or svn repository, for the development of 
 ### Menu
 
 - [Features](#features)
-- [Running from Source](#running-from-source)
-- [Quick Start](#quick-start)
-- [Contributing](#contributing)
-- [About the Project](#about-the-project)
+- [Installation](#installation)
+  + [Linux and OS X](#linux-and-os-ox)
+  + [Windows](#windows)
 
 ## Features
 
@@ -71,9 +70,4 @@ After having a ```.wpsync``` file on the root of your project, you just have to 
 wpsync [commands] [options]
 ```
 
-### The available options are:
-
-
-## Do you have ideas?
-
-Tell us in the issues section.
+Run ```wpsync -h``` to know more.
