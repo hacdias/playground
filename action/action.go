@@ -12,20 +12,34 @@ import (
 	"github.com/likexian/simplejson-go"
 )
 
-// Do is
-func Do() {
+// Options is the type of options for main action of WPSync
+type Options struct {
+	Bower, Composer   bool
+	Increase, Message string
+}
+
+// Do does the main action of WPSync
+func Do(options Options) {
 	if _, err := os.Stat(config.File); err != nil {
 		log.Fatal(err)
 	}
 
-	if _, err := os.Stat("composer.json"); err == nil {
-		composer := dependencies.Composer{}
-		composer.Update()
+	if options.Bower {
+		if _, err := os.Stat("bower.json"); err == nil {
+			bower := dependencies.Bower{}
+			bower.Update()
+		} else {
+			log.Panic(err)
+		}
 	}
 
-	if _, err := os.Stat("bower.json"); err == nil {
-		bower := dependencies.Bower{}
-		bower.Update()
+	if options.Composer {
+		if _, err := os.Stat("composer.json"); err == nil {
+			composer := dependencies.Composer{}
+			composer.Update()
+		} else {
+			log.Panic(err)
+		}
 	}
 
 	file, err := ioutil.ReadFile(config.File)

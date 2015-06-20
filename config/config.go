@@ -1,6 +1,14 @@
 package config
 
+import "log"
+
 const (
-	// File is the default config file
-	File = ".wpsync"
+	File    = ".wpsync"
+	Name    = "wpsync"
+	Usage   = "Sync WordPress SVN with your Git or SVN repository"
+	Version = "1.0.0"
 )
+
+func init() {
+	log.SetFlags(0)
+}

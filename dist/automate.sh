@@ -37,11 +37,14 @@ do
 	if [[ $f == *.exe ]]
 	then
 		bin=$bin.exe
+		mv $f $bin
+		# Compress distributable with "install.bat"
+		zip -j $zipname $bin $DistDir/LICENSE.txt $DistDir/README.txt $DistDir/install.bat
+	else
+		mv $f $bin
+		# Compress distributable
+		zip -j $zipname $bin $DistDir/LICENSE.txt $DistDir/README.txt
 	fi
-	mv $f $bin
-
-	# Compress distributable
-	zip -j $zipname $bin $DistDir/LICENSE.txt $DistDir/README.txt # Next version add $DistDir/CHANGES.txt
 
 	# Put binary filename back to original
 	mv $bin $f

@@ -1,32 +1,48 @@
 # WPSync
 
+![Latest Tag](https://img.shields.io/github/tag/hacdias/wpsync.svg?style=flat-square)
+![Latest Release](https://img.shields.io/github/release/hacdias/wpsync.svg?style=flat-square)
+![Latest Release Downloads](https://img.shields.io/github/downloads/hacdias/wpsync/latest/total.svg?style=flat-square)
+![License](https://img.shields.io/github/license/hacdias/wpsync.svg?style=flat-square)
+
 Do you use a GitHub, or any other git or svn repository, for the development of your WordPress plugin? Are you bored of copying and pasting all of the files when you launch a new version of your plugin? Are you bored of changing the plugin version every time? This is the perfect solution for you!
+
+### Menu
+
+- [Features](#features)
+- [Running from Source](#running-from-source)
+- [Quick Start](#quick-start)
+- [Contributing](#contributing)
+- [About the Project](#about-the-project)
 
 ## Features
 
-Short version:
-
-* Setting the new version of the plugin;
-* Updating the WordPress SVN;
-* Updating the development repository (git or svn);
-* And more.
-
-Long version:
-
-* Update the bower and composer files;
-* Check the current version of your plugin;
-* Set the new version of your plugin, updating ```readme.txt``` and ```plugin.php``` files;
-* Update the WordPress SVN trunk and create a new tag;
-* Update the Git/SVN repository, tagging it;
-* Ignore the files/folders you don't want to put in the WordPress SVN repository (like bower and composer setup files);
+* Updates [bower](https://github.com/bower/bower) and [composer](https://github.com/composer/composer) dependencies;
+* Edits the files and sets the new version of the plugin;
+* Updates both DEV and WP SVN repositories, creating a tag;
+* Ignores the folders/files you want.
 
 ## Installation
 
-TODO
+Go to [downloads page](https://github.com/hacdias/wpsync/releases) and download the package for your operating system and architecture. Then, unzip the files, and put the executable somewhere covered by PATH variable.
+
+### Linux and OS X
+
+Just run the following commands, replacing ```$VERSION``` by the current version, ```$SYSTEM``` by your operating system name and ```$ARCH``` by your operating system's architecture.
+
+```bash
+curl -LOk https://github.com/hacdias/wpsync/releases/download/$VERSION/wpsync_$SYSTEM_$ARCH.zip
+unzip wpsync_$SYSTEM_$ARCH.zip
+sudo cp wpsync /usr/local/bin
+```
+
+### Windows
+
+After downloading the zip folder, unzip it. Then, execute ```install.bat``` as admin.
 
 ## Usage
 
-Firstly, you need to create a ```wpsync.json``` file like this:
+You need to create a ```.wpsync``` file in the root of your project. Should have a content like this:
 
 ```json
 {
@@ -41,21 +57,22 @@ Firstly, you need to create a ```wpsync.json``` file like this:
 }
 ```
 
-The first element (```increase```) is used to set the default increase type on the version. By default it's used ```build```. The nomenclature is the following:
+* ```increase``` is the default version increase (nomenclature: ```major.minor[.build[.revision]]```);
+
+* ```main``` and ```readme``` refers to the plugin's main file and its readme.
+
+* ```wordpress-svn``` is the link for the WordPress SVN;
+
+* ```ignore``` is an array of files/folders you don't want to upload to the WordPress SVN.
+
+After having a ```.wpsync``` file on the root of your project, you just have to run the following command from console:
 
 ```
-major.minor[.build[.revision]]
+wpsync [commands] [options]
 ```
 
-The elements in ```plugin``` section are very obvious.
+### The available options are:
 
-The ```ignore``` section is one of the most interesting here. You can add the folders (or files) you don't want to upload to the SVN repository.
-
-Example: you use bower, but you don't want the users to download ```bower.json``` everytime they download the plugin. So you can ignore it here.
-
-The ```wordpress-svn``` element consists on the permanent link to the plugin's SVN repository. You must put ```trunk``` in the end of the URL.
-
-Then you just have to run ```wpsync``` on the directory of you plugin.
 
 ## Do you have ideas?
 
