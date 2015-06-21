@@ -1,0 +1,23 @@
+{
+  "author": "Henrique Dias",
+  "manifest_version": 2,
+  "version": "1.0",
+  "name": "Blue Paper",
+  "theme": {
+    "images" : {
+	 "theme_frame": "images/frame.png",
+	 "theme_ntp_background" : "images/background.jpg"
+    },
+    "colors" : {
+	  "tab_text" : [0, 0, 0],
+	  "tab_background_text" : [0, 0, 0],
+	  "ntp_background" : [255, 255, 253],
+	  "ntp_section" : [255, 255, 255],
+	  "toolbar" : [255, 255, 255],
+	  "bookmark_text" : [0, 0, 0]
+    },
+    "properties" : {
+	  "ntp_background_repeat" : "repeat"
+    }
+  }
+}
