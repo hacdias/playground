@@ -1,0 +1,29 @@
+{
+  "author": "Henrique Dias",
+  "manifest_version": 2,
+  "version": "1.0",
+  "name": "Pplware Kids",
+  "theme": {
+    "images" : {
+	 "theme_frame": "images/frame.png",
+	 "theme_ntp_background" : "images/background.png",
+	 "theme_toolbar": "images/bar.png",
+	 "theme_ntp_attribution" : "images/criado.png"
+    },
+    "colors" : {
+	  "tab_text" : [255, 255, 255],
+	  "tab_background_text" : [0, 0, 0],
+	  "ntp_background" : [62, 185, 253],
+	  "ntp_section" : [255, 255, 255],
+	  "toolbar" : [251, 200, 65],
+	  "bookmark_text" : [255, 255, 255]
+    },
+    "tints" : {
+      "buttons" : [0.33, 0.5, 0.47]
+    },
+    "properties" : {
+      "ntp_background_alignment" : "bottom center",
+	  "ntp_background_repeat" : "repeat-x"
+    }
+  }
+}
