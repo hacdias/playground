@@ -223,7 +223,7 @@ func (p Plugin) updateWordPressRepo() {
 	// update the repository
 	svn := versioncontrol.Svn{}
 	svn.Commit = "v" + p.theVersion
-	svn.Tag = "v" + p.theVersion
+	svn.Tag = p.theVersion
 	svn.Update()
 
 	// remove temporary folder and return to the main working directory
