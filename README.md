@@ -1,8 +1,7 @@
 # WPSync
 
-![Latest Tag](https://img.shields.io/github/tag/hacdias/wpsync-cli.svg?style=flat-square)
 ![Build](https://img.shields.io/travis/hacdias/wpsync-cli.svg?style=flat-square)
-![Latest Release](https://img.shields.io/github/release/hacdias/wpsync-cli.svg?style=flat-square)
+![Latest Stable Release](https://img.shields.io/github/release/hacdias/wpsync-cli.svg?style=flat-square)
 ![License](https://img.shields.io/github/license/hacdias/wpsync-cli.svg?style=flat-square)
 
 Do you use a GitHub, or any other git or svn repository, for the development of your WordPress plugin? Are you bored of copying and pasting all of the files when you launch a new version of your plugin? Are you bored of changing the plugin version every time? This is the perfect solution for you!
@@ -27,11 +26,11 @@ Go to [downloads page](https://github.com/hacdias/wpsync/releases) and download 
 
 ### Linux and OS X
 
-Just run the following commands, replacing ```$VERSION``` by the current version, ```$YSTEM``` by your operating system name and ```$ARCH``` by your operating system's architecture.
+Just run the following commands, replacing ```$VERSION``` by the current version, ```$OS``` by your operating system name and ```$ARCH``` by your operating system's architecture.
 
 ```bash
-curl -LOk https://github.com/hacdias/wpsync/releases/download/$VERSION/wpsync_$YSTEM_$ARCH.zip
-unzip wpsync_$YSTEM_$ARCH.zip
+curl -LOk https://github.com/hacdias/wpsync/releases/download/$VERSION/wpsync_$OS_$ARCH.zip
+unzip wpsync_$OS_$ARCH.zip
 sudo cp wpsync /usr/local/bin
 ```
 
