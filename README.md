@@ -1,6 +1,7 @@
 # WPSync
 
 ![Latest Tag](https://img.shields.io/github/tag/hacdias/wpsync-cli.svg?style=flat-square)
+![Build](https://img.shields.io/travis/hacdias/wpsync-cli.svg?style=flat-square)
 ![Latest Release](https://img.shields.io/github/release/hacdias/wpsync-cli.svg?style=flat-square)
 ![License](https://img.shields.io/github/license/hacdias/wpsync-cli.svg?style=flat-square)
 
