@@ -1,8 +1,8 @@
 # WPSync
 
-![Build](https://img.shields.io/travis/hacdias/wpsync-cli.svg?style=flat-square)
-![Latest Stable Release](https://img.shields.io/github/release/hacdias/wpsync-cli.svg?style=flat-square)
-![License](https://img.shields.io/github/license/hacdias/wpsync-cli.svg?style=flat-square)
+[![Build](https://img.shields.io/travis/hacdias/wpsync-cli.svg?style=flat-square)](https://travis-ci.org/hacdias/wpsync-cli)
+[![Latest Stable Release](https://img.shields.io/github/release/hacdias/wpsync-cli.svg?style=flat-square)](https://github.com/hacdias/wpsync-cli/releases)
+[![License](https://img.shields.io/github/license/hacdias/wpsync-cli.svg?style=flat-square)](https://github.com/hacdias/wpsync-cli/blob/master/LICENSE)
 
 Do you use a GitHub, or any other git or svn repository, for the development of your WordPress plugin? Are you bored of copying and pasting all of the files when you launch a new version of your plugin? Are you bored of changing the plugin version every time? This is the perfect solution for you!
 
