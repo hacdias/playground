@@ -1,0 +1,15 @@
+{
+  "increase": "build",
+  "plugin": {
+    "main": "plugin.php",
+    "readme": "readme.txt",
+    "svn": "https://plugins.svn.wordpress.org/hackerrank-profile-widget/"
+  },
+  "dependencies": {
+    "bower": true,
+    "composer": true
+  },
+  "ignore": [
+    ".idea"
+  ]
+}

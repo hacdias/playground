@@ -6,7 +6,7 @@ shopt -s nullglob # if no files match glob, assume empty list instead of string 
 
 
 ## PACKAGE TO BUILD
-Package=github.com/hacdias/wpsync
+Package=github.com/hacdias/wpsync-cli
 
 
 ## PATHS TO USE

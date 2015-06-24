@@ -1,14 +1,15 @@
 package action
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
 	"strings"
 
-	"github.com/hacdias/wpsync/config"
-	"github.com/hacdias/wpsync/helpers/dependencies"
-	"github.com/hacdias/wpsync/helpers/plugin"
+	"github.com/hacdias/wpsync-cli/config"
+	"github.com/hacdias/wpsync-cli/helpers/dependencies"
+	"github.com/hacdias/wpsync-cli/helpers/plugin"
 	"github.com/likexian/simplejson-go"
 )
 
@@ -20,6 +21,31 @@ type Options struct {
 
 // Do does the main action of WPSync
 func Do(options Options) {
+	file, err := ioutil.ReadFile(config.File)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	json, _ := simplejson.Loads(string(file))
+
+	if json.Has("dependencies") {
+		dependencies := json.Get("dependencies")
+
+		if dependencies.Has("bower") {
+			options.Bower, _ = dependencies.Get("bower").Bool()
+		}
+
+		if dependencies.Has("composer") {
+			options.Composer, _ = dependencies.Get("composer").Bool()
+		}
+	}
+
+	//@todo: give priority to CLI options like --bower
+
+	fmt.Println(options.Composer)
+	os.Exit(0)
+
 	if _, err := os.Stat(config.File); err != nil {
 		log.Fatal(err)
 	}
@@ -37,14 +63,6 @@ func Do(options Options) {
 			composer.Update()
 		}
 	}
-
-	file, err := ioutil.ReadFile(config.File)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	json, _ := simplejson.Loads(string(file))
 
 	plugin := plugin.Plugin{}
 

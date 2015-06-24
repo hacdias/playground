@@ -3,7 +3,7 @@ package config
 import "log"
 
 const (
-	File    = ".wpsync"
+	File    = "wpsync.json"
 	Name    = "wpsync"
 	Usage   = "Sync WordPress SVN with your Git or SVN repository"
 	Version = "1.0.0"

@@ -1,1 +1,1 @@
-See here: https://github.com/hacdias/wpsync/blob/master/README.md
+See here: https://github.com/hacdias/wpsync-cli/blob/master/README.md

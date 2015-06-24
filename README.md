@@ -22,14 +22,14 @@ Do you use a GitHub, or any other git or svn repository, for the development of 
 
 ## Installation
 
-Go to [downloads page](https://github.com/hacdias/wpsync/releases) and download the package for your operating system and architecture. Then, unzip the files, and put the executable somewhere covered by PATH variable.
+Go to [downloads page](https://github.com/hacdias/wpsync-cli/releases) and download the package for your operating system and architecture. Then, unzip the files, and put the executable somewhere covered by PATH variable.
 
 ### Linux and OS X
 
 Just run the following commands, replacing ```$VERSION``` by the current version, ```$OS``` by your operating system name and ```$ARCH``` by your operating system's architecture.
 
 ```bash
-curl -LOk https://github.com/hacdias/wpsync/releases/download/$VERSION/wpsync_$OS_$ARCH.zip
+curl -LOk https://github.com/hacdias/wpsync-cli/releases/download/$VERSION/wpsync_$OS_$ARCH.zip
 unzip wpsync_$OS_$ARCH.zip
 sudo cp wpsync /usr/local/bin
 ```
@@ -45,21 +45,27 @@ You need to create a ```.wpsync``` file in the root of your project. Should have
 ```json
 {
   "increase": "build",
-  "main": "plugin.php",
-  "readme": "readme.txt",
-  "wordpress-svn": "https://plugins.svn.wordpress.org/hackerrank-profile-widget/",
+  "plugin": {
+    "main": "plugin.php",
+    "readme": "readme.txt",
+    "svn": "https://plugins.svn.wordpress.org/hackerrank-profile-widget/",
+  },
+  "dependencies": {
+    "bower": true,
+    "composer": true
+  },
   "ignore": [
-    ".git",
     ".idea"
   ]
 }
+
 ```
 
 * ```increase``` is the default version increase (nomenclature: ```major.minor[.build[.revision]]```);
 
 * ```main``` and ```readme``` refers to the plugin's main file and its readme.
 
-* ```wordpress-svn``` is the link for the WordPress SVN;
+* ```svn``` is the link for the WordPress SVN;
 
 * ```ignore``` is an array of files/folders you don't want to upload to the WordPress SVN.
 

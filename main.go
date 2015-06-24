@@ -4,8 +4,8 @@ import (
 	"os"
 
 	"github.com/codegangsta/cli"
-	"github.com/hacdias/wpsync/action"
-	"github.com/hacdias/wpsync/config"
+	"github.com/hacdias/wpsync-cli/action"
+	"github.com/hacdias/wpsync-cli/config"
 )
 
 func main() {
