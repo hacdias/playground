@@ -4,8 +4,8 @@ import (
 	"os"
 
 	"github.com/codegangsta/cli"
-	"github.com/hacdias/wpsync-cli/action"
 	"github.com/hacdias/wpsync-cli/config"
+	"github.com/hacdias/wpsync-cli/runner"
 )
 
 func main() {
@@ -34,13 +34,17 @@ func main() {
 		},
 	}
 	app.Action = func(c *cli.Context) {
-		options := action.Options{}
+		conf := config.GetConfig()
+
+		os.Exit(0)
+
+		options := runner.Options{}
 		options.Bower = c.BoolT("bower")
 		options.Composer = c.BoolT("composer")
 		options.Increase = c.String("increase")
 		options.Message = c.String("message")
 
-		action.Do(options)
+		runner.Do(options)
 	}
 	app.Run(os.Args)
 }
