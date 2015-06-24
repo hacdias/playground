@@ -36,15 +36,23 @@ func main() {
 	app.Action = func(c *cli.Context) {
 		conf := config.GetConfig()
 
-		os.Exit(0)
+		if c.IsSet("bower") {
+			conf.Bower = c.BoolT("bower")
+		}
 
-		options := runner.Options{}
-		options.Bower = c.BoolT("bower")
-		options.Composer = c.BoolT("composer")
-		options.Increase = c.String("increase")
-		options.Message = c.String("message")
+		if c.IsSet("composer") {
+			conf.Composer = c.BoolT("composer")
+		}
 
-		runner.Do(options)
+		if c.IsSet("increase") {
+			conf.Increase = c.String("increase")
+		}
+
+		if c.IsSet("message") {
+			conf.Message = c.String("message")
+		}
+
+		runner.Do(conf)
 	}
 	app.Run(os.Args)
 }

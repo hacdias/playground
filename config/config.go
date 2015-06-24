@@ -67,8 +67,8 @@ func GetConfig() Config {
 
 	config.Svn, _ = plugin.Get("svn").String()
 
-	if plugin.Has("dependencies") {
-		dependencies := plugin.Get("dependencies")
+	if json.Has("dependencies") {
+		dependencies := json.Get("dependencies")
 
 		if dependencies.Has("bower") {
 			config.Bower, _ = dependencies.Get("bower").Bool()

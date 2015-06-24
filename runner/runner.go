@@ -10,35 +10,14 @@ import (
 	"github.com/hacdias/wpsync-cli/config"
 	"github.com/hacdias/wpsync-cli/helpers/dependencies"
 	"github.com/hacdias/wpsync-cli/helpers/plugin"
-	"github.com/likexian/simplejson-go"
 )
 
-// Options is the type of options for main action of WPSync
-type Options struct {
-	Bower, Composer   bool
-	Increase, Message string
-}
-
 // Do does the main action of WPSync
-func Do(options Options) {
+func Do(options config.Config) {
 	file, err := ioutil.ReadFile(config.File)
 
 	if err != nil {
 		log.Fatal(err)
-	}
-
-	json, _ := simplejson.Loads(string(file))
-
-	if json.Has("dependencies") {
-		dependencies := json.Get("dependencies")
-
-		if dependencies.Has("bower") {
-			options.Bower, _ = dependencies.Get("bower").Bool()
-		}
-
-		if dependencies.Has("composer") {
-			options.Composer, _ = dependencies.Get("composer").Bool()
-		}
 	}
 
 	//@todo: give priority to CLI options like --bower

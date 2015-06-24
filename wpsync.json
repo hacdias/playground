@@ -5,7 +5,7 @@
     "svn": "https://plugins.svn.wordpress.org/hackerrank-profile-widget/"
   },
   "dependencies": {
-    "bower": true,
+    "bower": false,
     "composer": true
   },
   "ignore": [
