@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"os"
 
 	"github.com/codegangsta/cli"
@@ -13,7 +14,13 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "wpsync"
 	app.Usage = "Sync WordPress SVN with your Git or SVN repository"
-	app.Version = "1.0.1" // @todo update to 1.1.0
+	app.Version = "1.1.0"
+	app.Authors = []cli.Author{
+		cli.Author{
+			Name:  "Henrique Dias",
+			Email: "hacdias@gmail.com",
+		},
+	}
 	app.Flags = []cli.Flag{
 		cli.BoolTFlag{
 			Name:  "bower, b",
@@ -76,8 +83,19 @@ func main() {
 			Name:    "init",
 			Aliases: []string{"i"},
 			Usage:   "init the " + config.File + " file",
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "link, l",
+					Value: "",
+					Usage: "the wordpress svn url",
+				},
+			},
 			Action: func(c *cli.Context) {
-				config.Init()
+				if c.String("link") == "" {
+					log.Fatal("please define the wordpress svn url, check \"wpsync init -h\" to know more")
+				}
+
+				config.Init(c.String("link"))
 			},
 		},
 	}

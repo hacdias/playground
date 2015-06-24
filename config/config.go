@@ -1,8 +1,11 @@
 package config
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"log"
+	"os"
+	"path/filepath"
 
 	"github.com/likexian/simplejson-go"
 )
@@ -87,25 +90,54 @@ func GetConfig() Config {
 	return config
 }
 
-// Init the config.File for a folder
-
-/*
-{
-  "increase": "build",
-  "plugin": {
-    "file": "plugin.php",
-    "svn": "https://plugins.svn.wordpress.org/hackerrank-profile-widget/"
-  },
-  "dependencies": {
-    "bower": false,
-    "composer": true
-  },
-  "ignore": [
-    ".idea"
-  ]
+type jsonFile struct {
+	Increase string `json:"increase"`
+	Plugin   struct {
+		File string `json:"file"`
+		Svn  string `json:"svn"`
+	} `json:"plugin"`
+	Dependencies struct {
+		Bower    bool `json:"bower"`
+		Composer bool `json:"composer"`
+	} `json:"dependencies"`
+	Ignore []string `json:"ignore"`
 }
 
-*/
-func Init() {
+// Init configures the config.File
+func Init(svn string) {
+	confFile := jsonFile{}
+	confFile.Increase = "build"
+	confFile.Plugin.File = "plugin.php"
+	confFile.Plugin.Svn = svn
+	confFile.Dependencies.Bower = false
+	confFile.Dependencies.Composer = false
+	confFile.Ignore = []string{".git", File}
 
+	if _, err := os.Stat("bower.json"); err == nil {
+		confFile.Dependencies.Bower = true
+	}
+
+	if _, err := os.Stat("composer.json"); err == nil {
+		confFile.Dependencies.Composer = true
+	}
+
+	if path, err := os.Getwd(); err == nil {
+		_, file := filepath.Split(path)
+
+		if _, err := os.Stat(file + ".php"); err == nil {
+			confFile.Plugin.File = file + ".php"
+		}
+	}
+
+	json, err := json.MarshalIndent(confFile, "", "	")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = ioutil.WriteFile(File, json, 0777)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 }

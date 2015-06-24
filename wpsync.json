@@ -1,14 +1,15 @@
 {
-  "increase": "build",
-  "plugin": {
-    "file": "plugin.php",
-    "svn": "https://plugins.svn.wordpress.org/hackerrank-profile-widget/"
-  },
-  "dependencies": {
-    "bower": false,
-    "composer": true
-  },
-  "ignore": [
-    ".idea"
-  ]
+	"increase": "build",
+	"plugin": {
+		"file": "plugin.php",
+		"svn": "Teste"
+	},
+	"dependencies": {
+		"bower": false,
+		"composer": false
+	},
+	"ignore": [
+		".git",
+		"wpsync.json"
+	]
 }
