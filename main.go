@@ -71,5 +71,15 @@ func main() {
 		plugin.Config = conf
 		plugin.Update()
 	}
+	app.Commands = []cli.Command{
+		{
+			Name:    "init",
+			Aliases: []string{"i"},
+			Usage:   "init the " + config.File + " file",
+			Action: func(c *cli.Context) {
+				config.Init()
+			},
+		},
+	}
 	app.Run(os.Args)
 }

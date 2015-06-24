@@ -86,3 +86,26 @@ func GetConfig() Config {
 
 	return config
 }
+
+// Init the config.File for a folder
+
+/*
+{
+  "increase": "build",
+  "plugin": {
+    "file": "plugin.php",
+    "svn": "https://plugins.svn.wordpress.org/hackerrank-profile-widget/"
+  },
+  "dependencies": {
+    "bower": false,
+    "composer": true
+  },
+  "ignore": [
+    ".idea"
+  ]
+}
+
+*/
+func Init() {
+
+}
