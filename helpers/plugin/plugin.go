@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/hacdias/wpsync-cli/config"
 	"github.com/hacdias/wpsync-cli/helpers/command"
 	"github.com/hacdias/wpsync-cli/helpers/versioncontrol"
 	"github.com/termie/go-shutil"
@@ -22,10 +23,9 @@ const (
 
 // Plugin type
 type Plugin struct {
-	PluginFile, ReadmeFile, Index, Message   string
+	Config                                   config.Config
 	pluginFileContent, readmeFileContent     string
 	oldVersion, newVersion                   []int
-	FilesIgnore                              []string
 	index                                    int
 	theVersion, versionControl, WordpressSvn string
 }
@@ -49,7 +49,7 @@ func (p Plugin) Update() {
 }
 
 func (p *Plugin) getPluginFileContent() {
-	file, err := ioutil.ReadFile(p.PluginFile)
+	file, err := ioutil.ReadFile(p.Config.File)
 
 	if err != nil {
 		log.Fatal(err)
@@ -59,7 +59,7 @@ func (p *Plugin) getPluginFileContent() {
 }
 
 func (p *Plugin) getReadmeFileContent() {
-	file, err := ioutil.ReadFile(p.ReadmeFile)
+	file, err := ioutil.ReadFile(p.Config.Readme)
 
 	if err != nil {
 		log.Fatal(err)
@@ -73,7 +73,7 @@ func (p *Plugin) getCurrentVersion() {
 	match := re.FindString(p.pluginFileContent)
 
 	if match == "" {
-		log.Fatal("unknown version in " + p.PluginFile + " file")
+		log.Fatal("unknown version in " + p.Config.File + " file")
 	}
 
 	re = regexp.MustCompile("[\\d+\\.]+\\d")
@@ -115,7 +115,7 @@ func (p *Plugin) getNewVersion() {
 	indexList["build"] = 2
 	indexList["revision"] = 3
 
-	p.index = indexList[p.Index]
+	p.index = indexList[p.Config.Increase]
 	p.newVersion = p.oldVersion
 
 	indexDiff := len(p.newVersion) - 1 - p.index
@@ -150,7 +150,7 @@ func (p *Plugin) changeVersionFiles() {
 	re := regexp.MustCompile(pluginFileRegex)
 	p.pluginFileContent = re.ReplaceAllLiteralString(p.pluginFileContent, pluginReplaceText)
 
-	err := ioutil.WriteFile(p.PluginFile, []byte(p.pluginFileContent), 0777)
+	err := ioutil.WriteFile(p.Config.File, []byte(p.pluginFileContent), 0777)
 
 	if err != nil {
 		log.Fatal(err)
@@ -160,7 +160,7 @@ func (p *Plugin) changeVersionFiles() {
 	re = regexp.MustCompile(readmeFileRegex)
 	p.readmeFileContent = re.ReplaceAllLiteralString(p.readmeFileContent, readmeReplaceText)
 
-	err = ioutil.WriteFile(p.ReadmeFile, []byte(p.readmeFileContent), 0777)
+	err = ioutil.WriteFile(p.Config.Readme, []byte(p.readmeFileContent), 0777)
 
 	if err != nil {
 		log.Fatal(err)
@@ -212,7 +212,7 @@ func (p Plugin) updateWordPressRepo() {
 	options := shutil.CopyTreeOptions{}
 	options.Symlinks = false
 	options.Ignore = func(string, []os.FileInfo) []string {
-		return p.FilesIgnore
+		return p.Config.Ignore
 	}
 	options.CopyFunction = shutil.Copy
 	options.IgnoreDanglingSymlinks = false

@@ -8,14 +8,8 @@ import (
 )
 
 const (
-	// File is
+	// File is the name of the configuration file of WPSync
 	File = "wpsync.json"
-	// Name is
-	Name = "wpsync"
-	// Usage is
-	Usage = "Sync WordPress SVN with your Git or SVN repository"
-	// Version is
-	Version = "1.0.0"
 )
 
 func init() {
@@ -29,7 +23,7 @@ type Config struct {
 	Ignore                               []string
 }
 
-// GetConfig is used to get the configuration
+// GetConfig is used to get the configuration from config.File
 func GetConfig() Config {
 	file, err := ioutil.ReadFile(File)
 

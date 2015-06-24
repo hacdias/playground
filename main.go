@@ -5,14 +5,15 @@ import (
 
 	"github.com/codegangsta/cli"
 	"github.com/hacdias/wpsync-cli/config"
-	"github.com/hacdias/wpsync-cli/runner"
+	"github.com/hacdias/wpsync-cli/helpers/dependencies"
+	"github.com/hacdias/wpsync-cli/helpers/plugin"
 )
 
 func main() {
 	app := cli.NewApp()
-	app.Name = config.Name
-	app.Usage = config.Usage
-	app.Version = config.Version
+	app.Name = "wpsync"
+	app.Usage = "Sync WordPress SVN with your Git or SVN repository"
+	app.Version = "1.0.1" // @todo update to 1.1.0
 	app.Flags = []cli.Flag{
 		cli.BoolTFlag{
 			Name:  "bower, b",
@@ -52,7 +53,23 @@ func main() {
 			conf.Message = c.String("message")
 		}
 
-		runner.Do(conf)
+		if conf.Bower {
+			if _, err := os.Stat("bower.json"); err == nil {
+				bower := dependencies.Bower{}
+				bower.Update()
+			}
+		}
+
+		if conf.Composer {
+			if _, err := os.Stat("composer.json"); err == nil {
+				composer := dependencies.Composer{}
+				composer.Update()
+			}
+		}
+
+		plugin := plugin.Plugin{}
+		plugin.Config = conf
+		plugin.Update()
 	}
 	app.Run(os.Args)
 }
