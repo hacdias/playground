@@ -6,8 +6,6 @@
 
 Do you use a GitHub, or any other git or svn repository, for the development of your WordPress plugin? Are you bored of copying and pasting all of the files when you launch a new version of your plugin? Are you bored of changing the plugin version every time? This is the perfect solution for you!
 
-## The docs bellow refers to the next version!
-
 ### Menu
 
 - [Features](#features)
