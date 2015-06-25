@@ -29,7 +29,7 @@ Go to [downloads page](https://github.com/hacdias/wpsync-cli/releases) and downl
 Just run the following commands, replacing ```$VERSION``` by the current version, ```$OS``` by your operating system name and ```$ARCH``` by your operating system's architecture.
 
 ```bash
-curl -LOk https://github.com/hacdias/wpsync-cli/releases/download/$VERSION/wpsync_$OS_$ARCH.zip
+curl -LOk https://github.com/hacdias/wpsync-cli/releases/download/$VERSION/$OS_$ARCH.zip
 unzip wpsync_$OS_$ARCH.zip
 sudo cp wpsync /usr/local/bin
 ```
