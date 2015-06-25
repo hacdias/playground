@@ -49,3 +49,5 @@ do
 	# Put binary filename back to original
 	mv $bin $f
 done
+
+rename 's/wpsync-cli_//g' ./*
