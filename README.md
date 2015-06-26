@@ -47,7 +47,6 @@ You should run the command ```wpsync init --link="WORDPRESS_SVN_URL"``` in the r
   "increase": "build",
   "plugin": {
     "main": "plugin.php",
-    "readme": "readme.txt",
     "svn": "https://plugins.svn.wordpress.org/hackerrank-profile-widget/",
   },
   "dependencies": {
@@ -63,7 +62,7 @@ You should run the command ```wpsync init --link="WORDPRESS_SVN_URL"``` in the r
 
 * ```increase``` is the default version increase (nomenclature: ```major.minor[.build[.revision]]```);
 
-* ```main``` and ```readme``` refers to the plugin's main file and its readme.
+* ```main``` refers to plugin's main file;
 
 * ```svn``` is the link for the WordPress SVN;
 
