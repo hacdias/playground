@@ -23,6 +23,8 @@ cd $BuildDir
 rm -f *
 gox $Package
 
+rename 's/wpsync-cli_//g' ./*
+
 # Zip them up with release notes and stuff
 mkdir -p $ReleaseDir
 cd $ReleaseDir
@@ -49,5 +51,3 @@ do
 	# Put binary filename back to original
 	mv $bin $f
 done
-
-rename 's/wpsync-cli_//g' ./*
