@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/hacdias/wpsync-cli/helpers/command"
+	"github.com/hacdias/wpsync/helpers/command"
 	"github.com/likexian/simplejson-go"
 )
 

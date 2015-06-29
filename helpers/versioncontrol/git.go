@@ -3,7 +3,7 @@ package versioncontrol
 import (
 	"errors"
 
-	"github.com/hacdias/wpsync-cli/helpers/command"
+	"github.com/hacdias/wpsync/helpers/command"
 )
 
 // Git type for Git objects

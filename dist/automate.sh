@@ -6,7 +6,7 @@ shopt -s nullglob # if no files match glob, assume empty list instead of string 
 
 
 ## PACKAGE TO BUILD
-Package=github.com/hacdias/wpsync-cli
+Package=github.com/hacdias/wpsync
 
 
 ## PATHS TO USE
@@ -23,7 +23,7 @@ cd $BuildDir
 rm -f *
 gox $Package
 
-rename 's/wpsync-cli_//g' ./*
+rename 's/wpsync_//g' ./*
 
 # Zip them up with release notes and stuff
 mkdir -p $ReleaseDir

@@ -10,9 +10,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/hacdias/wpsync-cli/config"
-	"github.com/hacdias/wpsync-cli/helpers/command"
-	"github.com/hacdias/wpsync-cli/helpers/versioncontrol"
+	"github.com/hacdias/wpsync/config"
+	"github.com/hacdias/wpsync/helpers/command"
+	"github.com/hacdias/wpsync/helpers/versioncontrol"
 	"github.com/termie/go-shutil"
 )
 
@@ -27,7 +27,7 @@ type Plugin struct {
 	pluginFileContent, readmeFileContent     string
 	oldVersion, newVersion                   []int
 	index                                    int
-	theVersion, versionControl, WordpressSvn string
+	theVersion, versionControl string
 }
 
 // Update is
@@ -201,7 +201,7 @@ func (p Plugin) updateWordPressRepo() {
 	os.Chdir(tempPath)
 
 	// checkout the WP SVN repository
-	command.Run("svn", "checkout", p.WordpressSvn, ".")
+	command.Run("svn", "checkout", p.Config.Svn, ".")
 
 	trunk := filepath.Join(tempPath, "trunk")
 

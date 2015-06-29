@@ -1,8 +1,8 @@
 # WPSync
 
-[![Build](https://img.shields.io/travis/hacdias/wpsync-cli.svg?style=flat-square)](https://travis-ci.org/hacdias/wpsync-cli)
-[![Latest Stable Release](https://img.shields.io/github/release/hacdias/wpsync-cli.svg?style=flat-square)](https://github.com/hacdias/wpsync-cli/releases)
-[![License](https://img.shields.io/github/license/hacdias/wpsync-cli.svg?style=flat-square)](https://github.com/hacdias/wpsync-cli/blob/master/LICENSE)
+[![Build](https://img.shields.io/travis/hacdias/wpsync.svg?style=flat-square)](https://travis-ci.org/hacdias/wpsync)
+[![Latest Stable Release](https://img.shields.io/github/release/hacdias/wpsync.svg?style=flat-square)](https://github.com/hacdias/wpsync/releases)
+[![License](https://img.shields.io/github/license/hacdias/wpsync.svg?style=flat-square)](https://github.com/hacdias/wpsync/blob/master/LICENSE)
 
 Do you use a GitHub, or any other git or svn repository, for the development of your WordPress plugin? Are you bored of copying and pasting all of the files when you launch a new version of your plugin? Are you bored of changing the plugin version every time? This is the perfect solution for you!
 
@@ -22,14 +22,14 @@ Do you use a GitHub, or any other git or svn repository, for the development of 
 
 ## Installation
 
-Go to [downloads page](https://github.com/hacdias/wpsync-cli/releases) and download the package for your operating system and architecture. Then, unzip the files, and put the executable somewhere covered by PATH variable.
+Go to [downloads page](https://github.com/hacdias/wpsync/releases) and download the package for your operating system and architecture. Then, unzip the files, and put the executable somewhere covered by PATH variable.
 
 ### Linux and OS X
 
 Just run the following commands, replacing ```$VERSION``` by the current version, ```$OS``` by your operating system name and ```$ARCH``` by your operating system's architecture.
 
 ```bash
-curl -LOk https://github.com/hacdias/wpsync-cli/releases/download/$VERSION/$OS_$ARCH.zip
+curl -LOk https://github.com/hacdias/wpsync/releases/download/$VERSION/$OS_$ARCH.zip
 unzip wpsync_$OS_$ARCH.zip
 sudo cp wpsync /usr/local/bin
 ```

@@ -5,9 +5,9 @@ import (
 	"os"
 
 	"github.com/codegangsta/cli"
-	"github.com/hacdias/wpsync-cli/config"
-	"github.com/hacdias/wpsync-cli/helpers/dependencies"
-	"github.com/hacdias/wpsync-cli/helpers/plugin"
+	"github.com/hacdias/wpsync/config"
+	"github.com/hacdias/wpsync/helpers/dependencies"
+	"github.com/hacdias/wpsync/helpers/plugin"
 )
 
 func main() {
