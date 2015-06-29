@@ -92,7 +92,7 @@ func main() {
 			},
 			Action: func(c *cli.Context) {
 				if c.String("link") == "" {
-					log.Fatal("please define the wordpress svn url, check \"wpsync init -h\" to know more")
+					log.Fatal("please define the wordpress svn link, check \"wpsync init -h\" to know more")
 				}
 
 				config.Init(c.String("link"))
