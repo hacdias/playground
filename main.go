@@ -30,7 +30,7 @@ func main() {
 			Name:  "composer, c",
 			Usage: "update composer dependencies",
 		},
-		cli.BoolTFlag{
+		cli.BoolFlag{
 			Name:  "keep, k",
 			Usage: "synchronize repositories without changing the version",
 		},
@@ -56,9 +56,7 @@ func main() {
 			conf.Composer = c.BoolT("composer")
 		}
 
-		if c.IsSet("keep") {
-			conf.Keep = c.BoolT("keep")
-		}
+		conf.Keep = c.Bool("keep")
 
 		if c.IsSet("increase") {
 			conf.Increase = c.String("increase")
