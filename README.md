@@ -40,7 +40,7 @@ After downloading the zip folder, unzip it. Then, execute ```install.bat``` as a
 
 ## Usage
 
-You should run the command ```wpsync init --link="WORDPRESS_SVN_URL"``` in the root of your project. It will create a ```wpsync.json``` file. Should have a content like this:
+You should run the command ```wpsync init --link="WORDPRESS_SVN_URL"``` in the root of your project. It creates a ```wpsync.json``` file. Should have a content like this:
 
 ```json
 {
