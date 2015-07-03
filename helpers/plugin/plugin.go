@@ -23,24 +23,27 @@ const (
 
 // Plugin type
 type Plugin struct {
-	Config                                   config.Config
-	pluginFileContent, readmeFileContent     string
-	oldVersion, newVersion                   []int
-	index                                    int
-	theVersion, versionControl string
+	Config                               config.Config
+	pluginFileContent, readmeFileContent string
+	oldVersion, newVersion               []int
+	index                                int
+	theVersion, versionControl           string
 }
 
 // Update is
 func (p Plugin) Update() {
 	p.getPluginFileContent()
 	p.getReadmeFileContent()
-	p.getCurrentVersion()
-	p.getNewVersion()
 
-	fmt.Println("Confirm you want to update your plugin to v" + p.theVersion + " (y/n)")
+	if !p.Config.Keep {
+		p.getCurrentVersion()
+		p.getNewVersion()
 
-	if !command.AskForConfirmation() {
-		os.Exit(0)
+		fmt.Println("Confirm you want to update your plugin to v" + p.theVersion + " (y/n)")
+
+		if !command.AskForConfirmation() {
+			os.Exit(0)
+		}
 	}
 
 	p.changeVersionFiles()

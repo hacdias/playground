@@ -14,7 +14,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "wpsync"
 	app.Usage = "Sync WordPress SVN with your Git or SVN repository"
-	app.Version = "1.1.0"
+	app.Version = "1.1.1"
 	app.Authors = []cli.Author{
 		cli.Author{
 			Name:  "Henrique Dias",
@@ -29,6 +29,10 @@ func main() {
 		cli.BoolTFlag{
 			Name:  "composer, c",
 			Usage: "update composer dependencies",
+		},
+		cli.BoolTFlag{
+			Name:  "keep, k",
+			Usage: "synchronize repositories without changing the version",
 		},
 		cli.StringFlag{
 			Name:  "increase, i",
@@ -50,6 +54,10 @@ func main() {
 
 		if c.IsSet("composer") {
 			conf.Composer = c.BoolT("composer")
+		}
+
+		if c.IsSet("keep") {
+			conf.Keep = c.BoolT("keep")
 		}
 
 		if c.IsSet("increase") {

@@ -22,7 +22,7 @@ func init() {
 // Config is the type of options for main action of WPSync
 type Config struct {
 	Increase, File, Readme, Svn, Message string
-	Bower, Composer                      bool
+	Bower, Composer, Keep                bool
 	Ignore                               []string
 }
 
