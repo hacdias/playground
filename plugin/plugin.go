@@ -10,9 +10,9 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/hacdias/wpsync/command"
 	"github.com/hacdias/wpsync/config"
-	"github.com/hacdias/wpsync/helpers/command"
-	"github.com/hacdias/wpsync/helpers/versioncontrol"
+	"github.com/hacdias/wpsync/versioncontrol"
 	"github.com/termie/go-shutil"
 )
 

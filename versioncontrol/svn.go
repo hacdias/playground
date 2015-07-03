@@ -5,7 +5,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/hacdias/wpsync/helpers/command"
+	"github.com/hacdias/wpsync/command"
 	"github.com/termie/go-shutil"
 )
 

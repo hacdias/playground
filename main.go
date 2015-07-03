@@ -6,8 +6,8 @@ import (
 
 	"github.com/codegangsta/cli"
 	"github.com/hacdias/wpsync/config"
-	"github.com/hacdias/wpsync/helpers/dependencies"
-	"github.com/hacdias/wpsync/helpers/plugin"
+	"github.com/hacdias/wpsync/dependencies"
+	"github.com/hacdias/wpsync/plugin"
 )
 
 func main() {
