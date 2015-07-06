@@ -18,7 +18,8 @@ Do you use a GitHub, or any other git or svn repository, for the development of 
 * Updates [bower](https://github.com/bower/bower) and [composer](https://github.com/composer/composer) dependencies;
 * Edits the files and sets the new version of the plugin;
 * Updates both DEV and WP SVN repositories, creating a tag;
-* Ignores the folders/files you want.
+* Ignores the folders/files you want;
+* Synchronize main repository's "\_assets" folder with WordPress SVN "assets".
 
 ## Installation
 

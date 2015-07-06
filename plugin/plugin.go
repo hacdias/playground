@@ -44,7 +44,7 @@ func (p Plugin) Update() {
 	}
 
 	p.changeVersionFiles()
-	//	p.updateMainRepo()
+	p.updateMainRepo()
 	p.updateWordPressRepo()
 }
 
