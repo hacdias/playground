@@ -36,7 +36,7 @@ sudo cp wpsync /usr/local/bin
 
 ### Windows
 
-After downloading the zip folder, unzip it. Then, execute ```install.bat``` as admin.
+Unzip the downloaded folder and run ```install.bat``` as admin.
 
 ## Usage
 
