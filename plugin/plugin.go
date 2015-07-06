@@ -34,16 +34,13 @@ type Plugin struct {
 func (p Plugin) Update() {
 	p.getPluginFileContent()
 	p.getReadmeFileContent()
+	p.getCurrentVersion()
+	p.getNewVersion()
 
-	if !p.Config.Keep {
-		p.getCurrentVersion()
-		p.getNewVersion()
+	fmt.Println("Confirm you want to update your plugin to v" + p.theVersion + " (y/n)")
 
-		fmt.Println("Confirm you want to update your plugin to v" + p.theVersion + " (y/n)")
-
-		if !command.AskForConfirmation() {
-			os.Exit(0)
-		}
+	if !command.AskForConfirmation() {
+		os.Exit(0)
 	}
 
 	p.changeVersionFiles()
@@ -121,14 +118,16 @@ func (p *Plugin) getNewVersion() {
 	p.index = indexList[p.Config.Increase]
 	p.newVersion = p.oldVersion
 
-	indexDiff := len(p.newVersion) - 1 - p.index
+	if !p.Config.Keep {
+		indexDiff := len(p.newVersion) - 1 - p.index
 
-	for indexDiff > 0 {
-		p.newVersion[len(p.newVersion)-indexDiff] = 0
-		indexDiff--
+		for indexDiff > 0 {
+			p.newVersion[len(p.newVersion)-indexDiff] = 0
+			indexDiff--
+		}
+
+		p.getNewVersionRecursively()
 	}
-
-	p.getNewVersionRecursively()
 
 	for _, value := range p.newVersion {
 		p.theVersion += "." + strconv.Itoa(value)
