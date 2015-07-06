@@ -44,7 +44,7 @@ func (p Plugin) Update() {
 	}
 
 	p.changeVersionFiles()
-	p.updateMainRepo()
+	//	p.updateMainRepo()
 	p.updateWordPressRepo()
 }
 
@@ -197,13 +197,30 @@ func (p *Plugin) updateMainRepo() {
 func (p Plugin) updateWordPressRepo() {
 	// save the path where we're working and creates a temporary one
 	mainPath, _ := os.Getwd()
+	mainAssetsPath := filepath.Join(mainPath, "_assets")
 	tempPath, _ := ioutil.TempDir(os.TempDir(), "wpsync")
+	tempAssetsPath := filepath.Join(tempPath, "assets")
 
 	// changes the working directory to the temporary path
 	os.Chdir(tempPath)
 
 	// checkout the WP SVN repository
 	command.Run("svn", "checkout", p.Config.Svn, ".")
+
+	if _, err := os.Stat(mainAssetsPath); err == nil {
+		os.RemoveAll(tempAssetsPath)
+
+		// TODO: there is no default??
+		opts := shutil.CopyTreeOptions{}
+		opts.Symlinks = false
+		opts.Ignore = func(string, []os.FileInfo) []string {
+			return p.Config.Ignore
+		}
+		opts.CopyFunction = shutil.Copy
+		opts.IgnoreDanglingSymlinks = false
+
+		shutil.CopyTree(mainAssetsPath, tempAssetsPath, &opts)
+	}
 
 	trunk := filepath.Join(tempPath, "trunk")
 
