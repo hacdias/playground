@@ -14,7 +14,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "wpsync"
 	app.Usage = "Sync WordPress SVN with your Git or SVN repository"
-	app.Version = "1.2.0"
+	app.Version = "1.3.0-beta"
 	app.Authors = []cli.Author{
 		cli.Author{
 			Name:  "Henrique Dias",
@@ -32,17 +32,17 @@ func main() {
 		},
 		cli.BoolFlag{
 			Name:  "keep, k",
-			Usage: "synchronize repositories without changing the version",
+			Usage: "sync only, keep the version",
 		},
 		cli.StringFlag{
 			Name:  "increase, i",
-			Value: "build",
-			Usage: "version increase (major.minor.build.revision)",
+			Value: "patch",
+			Usage: "version increase (major.minor.patch)",
 		},
 		cli.StringFlag{
 			Name:  "message, m",
 			Value: "",
-			Usage: "commit message (default is the version number)",
+			Usage: "commit message (default: version number)",
 		},
 	}
 	app.Action = func(c *cli.Context) {

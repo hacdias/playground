@@ -37,7 +37,7 @@ func GetConfig() Config {
 	json, _ := simplejson.Loads(string(file))
 
 	config := Config{}
-	config.Increase = "build"
+	config.Increase = "patch"
 	config.File = "plugin.php"
 	config.Readme = "readme.txt"
 	config.Bower = true
@@ -106,7 +106,7 @@ type jsonFile struct {
 // Init configures the config.File
 func Init(svn string) {
 	confFile := jsonFile{}
-	confFile.Increase = "build"
+	confFile.Increase = "patch"
 	confFile.Plugin.File = "plugin.php"
 	confFile.Plugin.Svn = svn
 	confFile.Dependencies.Bower = false

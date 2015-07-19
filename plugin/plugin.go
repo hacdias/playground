@@ -80,7 +80,7 @@ func (p *Plugin) getCurrentVersion() {
 	match = re.FindString(match)
 	versionStringMap := strings.Split(match, ".")
 
-	versionArray := []int{0, 0, 0, 0}
+	versionArray := []int{0, 0, 0}
 
 	for index, num := range versionStringMap {
 		content, err := strconv.Atoi(num)
@@ -107,13 +107,17 @@ func (p *Plugin) getCurrentVersion() {
 
 func (p *Plugin) getNewVersion() {
 	// get the version index to update
-	// major.minor[.build[.revision]]
+	// major.minor[.patch]
 	// default is build
 	indexList := map[string]int{}
 	indexList["major"] = 0
 	indexList["minor"] = 1
-	indexList["build"] = 2
-	indexList["revision"] = 3
+	indexList["patch"] = 2
+	indexList["build"] = 2 // support old versions
+
+	if _, ok := indexList[p.Config.Increase]; !ok {
+		log.Fatal("undefined version index " + p.Config.Increase)
+	}
 
 	p.index = indexList[p.Config.Increase]
 	p.newVersion = p.oldVersion
