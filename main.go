@@ -14,7 +14,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "wpsync"
 	app.Usage = "Sync WordPress SVN with your Git or SVN repository"
-	app.Version = "1.3.0-beta"
+	app.Version = "1.3.0-beta1"
 	app.Authors = []cli.Author{
 		cli.Author{
 			Name:  "Henrique Dias",
