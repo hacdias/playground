@@ -1,7 +1,25 @@
-// Do you use a GitHub, or any other git or svn repository, for the development
-// of your WordPress plugin? Are you bored of copying and pasting all of the
-// files when you launch a new version of your plugin? Are you bored of changing
-// the plugin version every time? This is the perfect solution for you!
+/*
+Do you use a GitHub, or any other git or svn repository, for the development
+of your WordPress plugin? Are you bored of copying and pasting all of the
+files when you launch a new version of your plugin? Are you bored of changing
+the plugin version every time? This is the perfect solution for you!
+
+USAGE:
+	{
+	  "increase": "build",
+	  "plugin": {
+	    "main": "plugin.php",
+	    "svn": "https://plugins.svn.wordpress.org/hackerrank-profile-widget/",
+	  },
+	  "dependencies": {
+	    "bower": true,
+	    "composer": true
+	  },
+	  "ignore": [
+	    ".idea"
+	  ]
+	}
+*/
 package main
 
 import (
