@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var input = event.target.result;
       var nContent = sync(input, [hours, minutes, seconds, milliseconds]);
       var element = document.createElement('a');
-      element.setAttribute('href', 'data:text/plain;charset=iso-8859-1,' + encodeURIComponent(nContent));
+      element.setAttribute('href', 'data:text/plain;charset=windows-1252,' + encodeURIComponent(nContent));
       element.setAttribute('download', name);
 
       element.style.display = 'none';
