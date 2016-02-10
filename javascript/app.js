@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
       document.body.removeChild(element);
     };
 
-    reader.readAsText(files[0]);
+    reader.readAsText(files[0], 'windows-1252');
     return false;
   }
 
