@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     return false;
   }
 
-  // When the form is submited
+  // When the file is changed
   file.onchange = function(event) {
     event.preventDefault();
 
@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return isNaN(time) ? 0 : time;
     }
 
+    // Get the values from the form
     var hours = parseInt(document.getElementById('h').value);
     var minutes = parseInt(document.getElementById('m').value);
     var seconds = parseInt(document.getElementById('s').value);
@@ -29,6 +30,10 @@ document.addEventListener('DOMContentLoaded', function() {
     milliseconds = NaNToZero(milliseconds);
 
     var files = file.files;
+
+    if (files.length < 1) {
+      return false;
+    }
 
     if (files.length > 1) {
       alert('Something is wrong.');
