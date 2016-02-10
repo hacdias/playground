@@ -113,3 +113,9 @@ footer {
   font-size: .9em;
   color: #505050;
 }
+
+@media screen and (max-width: 40em){
+    form {
+      font-size: 1em;
+    }
+}
