@@ -1,0 +1,115 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #212121;
+}
+
+a {
+  color: #1e6bb8;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+header p {
+  color: #606060;
+}
+
+.container {
+  width: 90%;
+  max-width: 40em;
+  margin: 0 auto;
+}
+
+form {
+  text-align: center;
+  font-size: 1.894em;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+form span {
+  font-size: 2em;
+  color: #E91E63;
+}
+
+::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  color: #fff;
+}
+
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #fff;
+  opacity: 1;
+}
+
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #fff;
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #fff;
+}
+
+:placeholder-shown {
+  /* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
+  color: #fff;
+}
+
+input,
+input:hover,
+input:focus,
+input:active {
+  outline: 0;
+}
+
+input[type="submit"],
+input[type="number"] {
+  display: inline-block;
+  color: #fff;
+  background-color: #E91E63;
+  border: 0;
+  height: 3em;
+  border-radius: .5em;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+  padding: 0 1em;
+}
+
+input[type="submit"]:hover {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  background-color: #C2185B;
+}
+
+input[type="number"] {
+  width: 3em;
+  text-align: center;
+  background-color: #2196F3;
+}
+
+footer {
+  text-align: center;
+  font-size: .9em;
+  color: #505050;
+}

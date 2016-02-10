@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Subtitles Sync</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+
+  <script src="javascript/app.js"></script>
+</head>
+
+<body>
+  <div class="container">
+  <header>
+    <h1>Subtitles Sync</h1>
+    <p>If you, like me, have a lot of <code>.srt</code> files which are not synced with its movie, you came to the right place. Below, tell how much time you want to delay or advance, press the button, choose the file, and then download the synced subtitles.</p>
+  </header>
+
+  <section class="main-content">
+    <!-- <div class="message">
+      Lorem ipsum sin dolor amet.
+    </div> -->
+
+    <form id="form">
+      <input type="file" id="file" accept=".srt">
+
+      <p>
+        <input type="number" id="h" placeholder="H"><span> : </span>
+        <input type="number" id="m" placeholder="M"><span> : </span>
+        <input type="number" id="s" placeholder="S"><span> . </span>
+        <input type="number" id="ms" placeholder="m">
+        <input type="submit" value="Sync">
+      </p>
+    </form>
+
+    <footer>
+      <p>Made with &#9829; by <a href="https://henriquedias.com">Henrique Dias</a>. Find it on <span class="site-footer-owner"><a href="https://github.com/hacdias/srt-sync">GitHub</a>.</p>
+    </footer>
+  </section>
+</div>
+</body>
+
+</html>
