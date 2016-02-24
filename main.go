@@ -55,7 +55,19 @@ func main() {
 						return nil
 					})
 				} else {
+					files, err := ioutil.ReadDir(args[0])
 
+					if err != nil {
+						log.Fatal(err)
+					}
+
+					for _, file := range files {
+						if file.IsDir() {
+							continue
+						}
+
+						hashFile(file.Name())
+					}
 				}
 			} else {
 				hashFile(args[0])
