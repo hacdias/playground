@@ -1,6 +1,12 @@
 # lshash
 
+[![Build](https://img.shields.io/travis/hacdias/lshash.svg?style=flat-square)](https://travis-ci.org/hacdias/lshash)
+[![Latest Stable Release](https://img.shields.io/github/release/hacdias/lshash.svg?style=flat-square)](https://github.com/hacdias/lshash/releases)
+[![License](https://img.shields.io/github/license/hacdias/lshash.svg?style=flat-square)](https://github.com/hacdias/lshash/blob/master/LICENSE)
+
+
 `ls + hash = list your files and print their [md5/sha1/sha256/sha512] hash`
+
 
 To use this CLI, you need to have Go 1.5+ installed on your computer. Then ,you just have to run the following commands:
 
