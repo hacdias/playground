@@ -18,22 +18,20 @@ As *strings* podem conter, tal como as variáveis do tipo `char`, apenas um car�
 
 Em C, as *strings* são *arrays* de caracteres, ou seja, *arrays* do tipo `char`. Podem ser declaradas de diversas formas.
 
-Uma forma de declarar \textit{strings} em C, é criar um \textit{array} do tipo \texttt{char} com um número de caracteres pré-definidos. Por exemplo:
+Uma forma de declarar *strings* em C, é criar um *array* do tipo `char` com um número de caracteres pré-definidos. Por exemplo:
 
-\begin{lstlisting}
+```c
 // o mesmo que: char nome[8] = {'P', 'p', 'l', 'w', 'a', 'r', 'e', '\0'};
 char nome[8] = "Pplware";
-\end{lstlisting}
+```
 
-No exemplo anterior, é declarada a \textit{string} \texttt{nome} que pode armazenar uma frase com 7 caracteres. Porquê 7 se foram declaradas 8 posições no \textit{array}? Isto acontece porque o último carácter, o oitavo carácter, é o delimitador do final da frase \texttt{\textbackslash 0}.
+No exemplo anterior, é declarada a *string* \texttt{nome} que pode armazenar uma frase com 7 caracteres. Porquê 7 se foram declaradas 8 posições no \textit{array}? Isto acontece porque o último carácter, o oitavo carácter, é o delimitador do final da frase \texttt{\textbackslash 0}.
 
 Existem, no total, três formas de declarar \textit{strings} em C: 
 
-\begin{itemize}
-\item A primeira consiste na criação de um \textit{array} com o tamanho pré-determinado;
-\item A segunda consiste na criação de um \textit{array} sem especificar o seu comprimento, tendo que ser inicializada no momento da declaração de forma a que o espaço na memória seja alocado dependendo do tamanho da \textit{string} colocada;
-\item Ou através de um apontador.
-\end{itemize}
++ A primeira consiste na criação de um \textit{array} com o tamanho pré-determinado;
++ A segunda consiste na criação de um \textit{array} sem especificar o seu comprimento, tendo que ser inicializada no momento da declaração de forma a que o espaço na memória seja alocado dependendo do tamanho da \textit{string} colocada;
++ Ou através de um apontador.
 
 \begin{lstlisting}
 char nome[8] = "Pplware";
