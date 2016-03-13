@@ -1,22 +1,22 @@
 Na programação, os tipos de dados não se limitam aos já abordados no capítulo 2: `char`, `int`, `float`, `double`, etc. O tipo `char` permite armazenar um carácter. Mas, não é um carácter muito pouco? E se for necessário armazenar uma frase? Aí entram as *strings*.
 
-\begin{defi}
-\textbf{\textit{Strings}} são sequências de caracteres. Qualquer frase é considerada uma \textit{string}, pois é uma sequência de caracteres.
-\end{defi}
+{{% concept %}}
+**Strings** são sequências de caracteres. Qualquer frase é considerada uma *string*, pois é uma sequência de caracteres.
+{{% /concept %}}
 
-Em C, todas as \textit{strings} terminam com o carácter \quotes{\textbackslash 0}, um delimitador ASCII para indicar o final da \textit{string}.
+Em C, todas as *strings* terminam com o carácter `\0`, um delimitador ASCII para indicar o final da *string*.
 
-\section{Declaração e inicialização de \textit{strings}}
+## Declaração e inicialização de *strings*
 
-As \textit{strings} podem conter, tal como as variáveis do tipo \texttt{char}, apenas um carácter. A diferença entre ambas prende-se com a utilização de aspas ou plicas. As aspas são utilizadas para delimitar \textit{strings} e as plicas para delimitar caracteres. Visualize o seguinte exemplo:
+As *strings* podem conter, tal como as variáveis do tipo `char`, apenas um carácter. A diferença entre ambas prende-se com a utilização de aspas ou plicas. As aspas são utilizadas para delimitar *strings* e as plicas para delimitar caracteres. Visualize o seguinte exemplo:
 
-\begin{lstlisting}
+```
 "Programar" -> String
 "P" -> String
 'P' -> Caracter
-\end{lstlisting}
+```
 
-Em C, as \textit{strings} são \textit{arrays} de caracteres, ou seja, \textit{arrays} do tipo \texttt{char}. Podem ser declaradas de diversas formas.
+Em C, as *strings* são *arrays* de caracteres, ou seja, *arrays* do tipo `char`. Podem ser declaradas de diversas formas.
 
 Uma forma de declarar \textit{strings} em C, é criar um \textit{array} do tipo \texttt{char} com um número de caracteres pré-definidos. Por exemplo:
 
