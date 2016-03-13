@@ -1,6 +1,8 @@
 {{ partial "header" . }}
 
 <main role="main">
+
+	<img src="images/cover.png">
 	<div class="mosaic sans">
 		{{ $paginator := .Paginate (where .Data.Pages "Type" "page") }}
 		{{ range $paginator.Pages }}

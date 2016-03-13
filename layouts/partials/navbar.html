@@ -1,3 +1,19 @@
 <header>
-
+  <div>
+    {{ if not .IsNode}}{{ if .Prev }}
+    <a href="{{ .Prev.Permalink  }}" class="prev">
+      <div>{{ .Prev.Title }}</div>
+    </a>
+    {{ end }}{{ end }}
+  </div>
+  <div>
+    <a href="/aprenda-a-programar/"><span>Aprenda a Programar</span></a>
+  </div>
+  <div>
+    {{ if not .IsNode}}{{ if .Next }}
+    <a href="{{ .Next.Permalink  }}" class="next">
+      <div>{{ .Next.Title }}</div>
+    </a>
+    {{ end }}{{ end }}
+  </div>
 </header>
