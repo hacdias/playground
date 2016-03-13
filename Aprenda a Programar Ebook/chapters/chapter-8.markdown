@@ -159,25 +159,23 @@ int main() {
 }
 ```
 
-Analisando o código é possível verificar que com esta função não é preciso limpar o \textit{buffer} de forma a não obter caracteres indevidos. Isto acontece porque a função \texttt{gets} os ignora.
+Analisando o código é possível verificar que com esta função não é preciso limpar o *buffer* de forma a não obter caracteres indevidos. Isto acontece porque a função `gets` os ignora.
 
-\subsection{Com a função \texttt{fgets}}
+### Com a função `fgets`
 
-Tanto a função \texttt{gets} como a função \texttt{scanf} têm alguns contratempos; a primeira tem alguns problemas quando as \textit{strings} incluem caracteres como espaços e a segunda obtém caracteres desnecessários. Devido à falta de uma solução efetiva a estes problemas, a função \texttt{fgets} poderá ser a melhor opção.
+Tanto a função `gets` como a função `scanf` têm alguns contratempos; a primeira tem alguns problemas quando as *strings* incluem caracteres como espaços e a segunda obtém caracteres desnecessários. Devido à falta de uma solução efetiva a estes problemas, a função `fgets` poderá ser a melhor opção.
 
-A função \texttt{fgets} permite obter dados, não só do teclado, como de outros locais. Ora veja a sua sintaxe:
+A função `fgets` permite obter dados, não só do teclado, como de outros locais. Ora veja a sua sintaxe:
 
-\begin{lstlisting}
+```c
 fgets(char *str, int n, FILE *stream);
-\end{lstlisting}
+```
 
 Onde:
 
-\begin{itemize}
-\item \texttt{str} corresponde ao apontador para um \textit{array} de caracteres onde os dados obtidos serão armazenados;
-\item \texttt{n} é o número máximo de caracteres a serem lidos (incluindo o delimitador final). Geralmente é igual ao tamanho do \textit{arrar};
-\item \texttt{stream} corresponde ao apontador para o ficheiro ou objeto donde serão lidos os dados.
-\end{itemize}
++ `str` corresponde ao apontador para um \textit{array} de caracteres onde os dados obtidos serão armazenados;
++ `n` é o número máximo de caracteres a serem lidos (incluindo o delimitador final). Geralmente é igual ao tamanho do \textit{arrar};
++ `stream` corresponde ao apontador para o ficheiro ou objeto donde serão lidos os dados.
 
 Imaginando agora que é necessário converter o programa da criação do boletim de informação do utilizador para utilizar a função \texttt{fgets}. Ficaria da seguinte forma:
 
