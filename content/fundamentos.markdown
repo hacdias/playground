@@ -35,11 +35,11 @@ Vejamos então a primeira forma de representar algoritmos, os fluxogramas.
 
 Existem várias vantagens na criação de fluxogramas como, por exemplo, a sua facilidade de criar, a facilidade na partilha e ajuda a criar modelos mentais.
 
-Um fluxograma pode fazer uso de muitos símbolos. No entanto, apenas iremos necessitar dos básicos para ter uma boa compreensão de como funcionam os fluxogramas. Pode visualizar estes símbolos na Figura 1.2.
+Um fluxograma pode fazer uso de muitos símbolos. No entanto, apenas iremos necessitar dos básicos para ter uma boa compreensão de como funcionam os fluxogramas. Pode visualizar estes símbolos abaixo.
 
 {{< figure src="/aprenda-a-programar/images/simbolos.png" title="Símbolos primários dos fluxogramas" alt="Símbolos primários dos fluxogramas" >}}
 
-Na Figura 1.3 pode visualizar um fluxograma, baseado no processo de confeção de um bolo.
+Na figura mais à frente pode visualizar um fluxograma, baseado no processo de confeção de um bolo.
 
 ### Pseudocódigo
 
@@ -47,7 +47,7 @@ Uma forma mais aproximada do código final é a utilização de pseudocódigo. S
 
 > **Pseudocódigo** é uma forma de representação de algoritmos que se assemelha a linguagens de programação mas que utiliza a língua nativa do utilizador de forma a ser facilmente entendida por quem não tem quaisquer conhecimentos da sintaxe de uma linguagem de programação.
 
-Os programadores cuja língua nativa é português, costumam referir-se ao pseudocódigo como *Portugol*, também conhecido por "Português Estruturado}. O seguinte trecho de Portugol representa o algoritmo anteriormente representado com um fluxograma, a confeção de uma receita:
+Os programadores cuja língua nativa é português, costumam referir-se ao pseudocódigo como *Portugol*, também conhecido por "Português Estruturado". O seguinte trecho de Portugol representa o algoritmo anteriormente representado com um fluxograma, a confeção de uma receita:
 
 ```
 inicio      
@@ -70,7 +70,7 @@ Como pode verificar, o algoritmo acima, em Portugol, é extremamente simples de 
 
 ## Constantes e variáveis
 
-Na quarta linha do trecho de código que visualizou em **1.2.2**, pôde encontrar o seguinte código:
+Na segunda linha do último trecho de código apresentado, pode encontrar o seguinte código:
 
 ```
 variavel caracter receita <- "A minha receita"    
@@ -250,7 +250,7 @@ endif
 
 Neste tipo de estrutura, também conhecido como repetição, um trecho de código é repetido um número finito de vezes dependendo do resultado de um teste lógico.
 
-Abaixo encontra a repetição "não saio de casa enquanto não estiver vestido} em pseudocódigo:
+Abaixo encontra a repetição "não saio de casa enquanto não estiver vestido" em pseudocódigo:
 
 ```
 do {        
@@ -344,7 +344,7 @@ C é uma linguagem de programação, em relação aos paradigmas, **estruturada*
 
 Linguagens de Programação Compiladas são aquelas que passam pelo processo de compilação, ou seja, onde o seu código fonte é diretamente transformado na linguagem da máquina por via de um compilador.
 
-{{% concept %}} **Código fonte** é um conjunto de instruções lógicas, escritas de acordo com uma linguagem de programação existente.{{% /concept %}}
+{{% concept %}}**Código fonte** é um conjunto de instruções lógicas, escritas de acordo com uma linguagem de programação existente.{{% /concept %}}
 
 Aprendendo a linguagem C, fica preparado para se iniciar com muitas outras linguagens de programação pois tem uma sintaxe muito utilizada e, além disso, sabe a lógica.
 
