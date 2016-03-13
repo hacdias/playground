@@ -1,0 +1,32 @@
+<footer>
+  <div class="buttons container sans">
+    {{ if not (eq .Type "photography") }}{{ if .Next }}
+    <a href="{{ .Next.Permalink  }}" class="prev">
+      <div></div>
+    </a>{{ end }}{{ end }}
+    <a class="twitter social" target="_blank" href="https://twitter.com/share?url={{ .Permalink }}&via={{ .Site.Social.Twitter }}">
+      <div><i class="fa fa-twitter"></i></div>
+    </a>
+    <a class="facebook social" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ .Permalink }}">
+      <div><i class="fa fa-facebook"></i></div>
+    </a>
+    <a class="gplus social" target="_blank" href="https://plus.google.com/share?url={{ .Permalink }}">
+      <div><i class="fa fa-google-plus"></i></div>
+    </a>
+    <a class="linkedin social" target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{ .Permalink }}&title={{ .Title }}&source=Henrique%Dias">
+      <div><i class="fa fa-linkedin"></i></div>
+    </a>
+    {{ if not (eq .Type "photography") }}{{ if .Prev }}
+    <a href="{{ .Prev.Permalink  }}" class="next">
+      <div></div>
+    </a>{{ end }}{{ end }}
+  </div>
+  <div style="clear:both"></div>
+  <div class="newsletter container sans">
+    <h2>Newsletter</h2>
+    <form action="https://tinyletter.com/hacdias" method="post" target="popupwindow" onsubmit="window.open('https://tinyletter.com/hacdias', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true">
+      <input placeholder="Your email address" type="text" name="email" id="tlemail" /><input type="hidden" value="1" name="embed"/><input type="submit" value="Subscribe" />
+    </form>
+  </div>
+  {{ partial "disqus" . }}
+</footer>

@@ -1,0 +1,351 @@
+
+Neste capítulo constam dois desafios para terminar a introdução à linguagem de programação C. Ambos têm 
+
+\section{Jogo do Galo}
+
+\subsection{Proposta de Resolução}
+
+\begin{lstlisting}
+#include <stdio.h>
+#include <stdlib.h>
+
+#define CLEAR_INPUT while (!getchar ())
+
+/* Define-se a largura (e altura) do tabuleiro. 
+Por padrão é utilizado 3. */
+#define DIM 3
+
+/* É definida uma variável global "vez" que contém o núme-
+ro da jogada atual. */
+int vez;
+
+/* Aqui são declaradas todas as funções utilizadas ao lon-
+go do programa. São declaradas aqui, mas só são definidas
+posteriormente. Desta forma, podemos chamar as funções de
+qualquer local, independemente da sua posição relativa no
+código.*/
+int mostrarMenu(void);
+void jogar(int tabuleiro[][DIM]);
+void mostrarTabuleiro(int tabuleiro[][DIM]);
+void limparTabuleiro(int tabuleiro[][DIM]);
+void efetuarJogada(int tabuleiro[][DIM]);
+int verificarPosicao(int tabuleiro[][DIM], int linha, int coluna);
+int verificarFim(int tabuleiro[][DIM], int vez);
+int verificarLinhas(int tabuleiro[][DIM]);
+int verificarColunas(int tabuleiro[][DIM]);
+int verificarDiagonais(int tabuleiro[][DIM]);
+int verificarEmpate(int tabuleiro[][DIM]);
+void limparEcra(void);
+
+int main()
+{
+	int tabuleiro[DIM][DIM],
+		continuar;
+
+	do
+	{
+		vez = 1;
+		continuar = mostrarMenu();
+
+		if (continuar == 1)
+			jogar(tabuleiro);
+
+		CLEAR_INPUT;
+
+	} while (continuar);
+
+	return 0;
+}
+
+/* Função cujo objetivo principal é mostrar o menu e recolher
+a opção selecionada. */
+int mostrarMenu(void)
+{
+	int opcao;
+
+	printf("\n        __                          _           ___      _ ");
+	printf("\n        \\ \\  ___   __ _  ___     __| | ___     / _ \\__ _| | ___  ");
+	printf("\n         \\ \\/ _ \\ / _` |/ _ \\   / _` |/ _ \\   / /_\\/ _` | |/ _ \\ ");
+	printf("\n      /\\_/ / (_) | (_| | (_) | | (_| | (_) | / /_\\\\ (_| | | (_) |");
+	printf("\n      \\___/ \\___/ \\__, |\\___/   \\__,_|\\___/  \\____/\\__,_|_|\\___/ ");
+	printf("\n                  |___/                                          \n");
+
+	printf("1 - Jogar\n");
+	printf("0 - Sair\n");
+	printf("\nOpção: ");
+
+	scanf(" %d", &opcao);
+
+	if (opcao != 0 || opcao != 1) {
+		printf("\nOpção Inválida. Tente novamente.\n");
+	}
+
+	limparEcra();
+	return opcao;
+}
+
+/* Este método é o principal responsável pelo andamento do jo-
+go, contendo o loop principal. */
+void jogar(int tabuleiro[][DIM])
+{
+	int continua;
+
+	/* Primeiro limpa o tabuleiro que recebeu.*/
+	limparTabuleiro(tabuleiro);
+
+	do
+	{
+		/* Depois, limpa o ecrã, mostra o tabuleiro e permite-
+		efetuar as jogadas até ao jogo acabar. */
+		limparEcra();
+		mostrarTabuleiro(tabuleiro);
+		efetuarJogada(tabuleiro);
+
+	} while (verificarFim(tabuleiro, vez) != 1);
+}
+
+/* Este procedimento é utilizado para mostrar o tabuleiro no ecrã.
+Um dos parâmetros consiste no tabuleiro para ser imprimido. Infor-
+mações:
+
+	0 corresponde a nada (espaço branco);
+	1 corresponde ao X;
+	Qualquer outro valor corresponde à O. */
+void mostrarTabuleiro(int tabuleiro[][DIM])
+{
+	int linha, coluna;
+	printf("\n\a\7");
+
+	for (linha = 0; linha < DIM; linha++)
+	{
+		for (coluna = 0; coluna < DIM; coluna++)
+		{
+			if (tabuleiro[linha][coluna] == 0)
+				printf("   ");
+			else
+				if (tabuleiro[linha][coluna] == 1)
+					printf(" X ");
+				else
+					printf(" O ");
+
+			if (coluna != (DIM - 1))
+				printf(" | ");
+		}
+		putchar('\n');
+	}
+	putchar('\n');
+}
+
+/* O objetivo desta função é limpar o tabuleiro, colocando to-
+dos os espaços com 0, pois estes podem conter "lixo" da memó-
+ria RAM. */
+void limparTabuleiro(int tabuleiro[][DIM])
+{
+	int linha, coluna;
+
+	for (linha = 0; linha < DIM; linha++)
+		for (coluna = 0; coluna < DIM; coluna++)
+			tabuleiro[linha][coluna] = 0;
+}
+
+/* Este procedimento está encarregue da jogada atual, adicio-
+nando-a ao tabuleiro ou não.*/
+void efetuarJogada(int tabuleiro[][DIM])
+{
+	int linha, coluna;
+
+	/* Incrementa-se um valor à variável vez.*/
+	vez++;
+	printf("\n--> Jogador %d \n", (vez % 2) + 1);
+
+	do
+	{
+		/* Neste ciclo, é pedida a linha e a coluna para efetu-
+		ar a jogada. É decrementado um valor da variável da co-
+		luna e da linha, pois o tabuleiro está armazenado  num
+		array e os arrays são zero-indexed. */
+
+		printf("Linha: ");
+		scanf("%d", &linha);
+		linha--;
+
+		CLEAR_INPUT;
+
+		printf("Coluna: ");
+		scanf("%d", &coluna);
+		coluna--;
+
+		CLEAR_INPUT;
+
+		/* Aqui confirma-se se a posição está livre e se efeti-
+		vamente existe. */
+		if (verificarPosicao(tabuleiro, linha, coluna) == 0)
+			printf("Posição ocupada ou inexistente. Tente novamente.\n");
+
+	} while (verificarPosicao(tabuleiro, linha, coluna) == 0);
+
+	/* Coloca-se o valor corresponde ao jogador que  jogou  na
+	linha e coluna corretas. */
+	if (vez % 2)
+		tabuleiro[linha][coluna] = -1;
+	else
+		tabuleiro[linha][coluna] = 1;
+}
+
+/* Nesta função que pede como argumentos o tabuleiro, linha  e
+coluna, é verificada a existência e disponibilidade de uma po-
+sição no tabuleiro.
+
+Retorna 0 se a posição estiver indisponível ou em caso de inexis-
+tência e retorna 1 se estiver disponível. */
+int verificarPosicao(int tabuleiro[][DIM], int linha, int coluna)
+{
+	if (linha < 0 || linha > (DIM - 1))
+		return 0;
+
+	if (coluna < 0 || coluna > (DIM - 1))
+		return 0;
+
+	if (tabuleiro[linha][coluna] != 0)
+		return 0;
+
+	return 1;
+}
+
+/* Com esta função, verificamos se já estamos no fim do jogo ou
+não. Verificam-se as linhas, colunas, diagonais ou se há  algum
+empate. Caso nenhum dos casos ocorra, é retornado o valor 0 e o
+jogo continua. */
+int verificarFim(int tabuleiro[][DIM], int vez)
+{
+	char mensagem[] = "\n\nFim do jogo. O Jogador %d venceu!\n\n";
+	int jogadorAtual = (vez % 2) + 1;
+
+	if (verificarLinhas(tabuleiro))
+	{
+		printf(mensagem, jogadorAtual);
+		mostrarTabuleiro(tabuleiro);
+		return 1;
+	}
+
+	if (verificarColunas(tabuleiro))
+	{
+		printf(mensagem, jogadorAtual);
+		mostrarTabuleiro(tabuleiro);
+		return 1;
+	}
+
+	if (verificarDiagonais(tabuleiro))
+	{
+		printf(mensagem, jogadorAtual);
+		mostrarTabuleiro(tabuleiro);
+		return 1;
+	}
+
+	if (verificarEmpate(tabuleiro))
+	{
+		printf("Fim do Jogo. Houve um empate.\n\n");
+		mostrarTabuleiro(tabuleiro);
+		return 1;
+	}
+
+	return 0;
+}
+
+/* Nesta função são verificadas as somas do conteúdo de to-
+das as linhas do tabuleiro. se alguma for igual a DIM ou a 
+-DIM, quer dizer que algum jogador ganhou. */
+int verificarLinhas(int tabuleiro[][DIM])
+{
+	int linha, coluna,
+		soma;
+
+	for (linha = 0; linha < DIM; linha++)
+	{
+		soma = 0;
+
+		for (coluna = 0; coluna < DIM; coluna++)
+			soma += tabuleiro[linha][coluna];
+
+		if (soma == DIM || soma == (-1)*DIM)
+			return 1;
+	}
+
+	return 0;
+}
+
+/* Nesta função são verificadas as somas do conteúdo de to-
+das as colunas do tabuleiro. se alguma for igual a DIM ou a
+-DIM, quer dizer que algum jogador ganhou. */
+int verificarColunas(int tabuleiro[][DIM])
+{
+	int linha, coluna,
+		soma;
+
+	for (coluna = 0; coluna < DIM; coluna++)
+	{
+		soma = 0;
+
+		for (linha = 0; linha < DIM; linha++)
+			soma += tabuleiro[linha][coluna];
+
+		if (soma == DIM || soma == (-1)*DIM)
+			return 1;
+	}
+
+	return 0;
+}
+
+/* Esta função faz o mesmo que as funções anteriores
+só que verificando a soma das duas diagonais do tabuleiro. */
+int verificarDiagonais(int tabuleiro[][DIM])
+{
+	int linha,
+		primeiraDiagonal = 0,
+		segundaDiagonal = 0;
+
+	for (linha = 0; linha < DIM; linha++)
+	{
+		primeiraDiagonal += tabuleiro[linha][linha];
+		segundaDiagonal += tabuleiro[linha][DIM - linha - 1];
+	}
+
+	if (primeiraDiagonal == DIM || primeiraDiagonal == (-1)*DIM ||
+		segundaDiagonal == DIM || segundaDiagonal == (-1)*DIM)
+		return 1;
+
+	return 0;
+}
+
+/* Se nenhum utilizador tiver ganho, esta função é chamada de forma
+a saber se há alguma casa vazia ou não. Caso haja, quer dizer que o 
+jogo ainda não terminou. Caso não haja, quer dizer que os jogadores
+ficaram empatados. */
+int verificarEmpate(int tabuleiro[][DIM])
+{
+	int linha, coluna;
+
+	for (linha = 0; linha < DIM; linha++)
+		for (coluna = 0; coluna < DIM; coluna++)
+			if (tabuleiro[linha][coluna] == 0)
+				return 0;
+
+	return 1;
+}
+
+/* Utilizamos este método para limpar a janela da linha de co-
+mandos, imprimindo 100 linhas em branco. Poderíamos, simples-
+mente, utilizar os comandos de sistema "cls" e "clear", mas por
+motivos de segurança não se deve fazê-lo. */
+void limparEcra(void)
+{
+	int count = 0;
+
+	while (count != 100)
+	{
+		putchar('\n');
+		count++;
+	}
+}\end{lstlisting}
+
+\section{Batalha Naval}
