@@ -1,3 +1,9 @@
+---
+weight: 10
+type: page
+title: Anexos
+---
+
 \section{Anexo I - Tabela ASCII}
 
 \begin{verbatim}
@@ -24,7 +30,7 @@ Char  Dec  Oct  Hex | Char  Dec  Oct  Hex | Char  Dec  Oct  Hex |
 (dc2)  18 0022 0x12 | 2      50 0062 0x32 | R      82 0122 0x52 |
 (dc3)  19 0023 0x13 | 3      51 0063 0x33 | S      83 0123 0x53 |
 (dc4)  20 0024 0x14 | 4      52 0064 0x34 | T      84 0124 0x54 |
-(nak)  21 0025 0x15 | 5      53 0065 0x35 | U      85 0125 0x55 | 
+(nak)  21 0025 0x15 | 5      53 0065 0x35 | U      85 0125 0x55 |
 (syn)  22 0026 0x16 | 6      54 0066 0x36 | V      86 0126 0x56 |
 (etb)  23 0027 0x17 | 7      55 0067 0x37 | W      87 0127 0x57 |
 (can)  24 0030 0x18 | 8      56 0070 0x38 | X      88 0130 0x58 |
