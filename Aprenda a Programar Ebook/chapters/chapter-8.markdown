@@ -50,37 +50,37 @@ As *strings* podem ser imprimidas recorrendo a diversas funções. Aqui são abo
 Para imprimir uma *string* utilizando a função `printf`, basta utilizar o especificador `\%s`. Por exemplo:
 
 ```c
-printf("Esta é uma string: \%s", nomeDaString);
+printf("Esta é uma string: %s", nomeDaString);
 ```
 
 A função `printf` é útil quando é necessário imprimir uma *string* que pode variar.
 
 ### Com a função `puts`
 
-Temos também a função \texttt{puts}, já abordada no capítulo 5, cujo nome quer dizer \textit{put string}, ou seja, colocar \textit{string}. Esta função é excelente para imprimir uma \textit{string} que não esteja intercalada noutra \textit{string}. Ora veja o seguinte exemplo:
+Temos também a função `puts`, já abordada no capítulo 5, cujo nome quer dizer *put string*, ou seja, colocar *string*. Esta função é excelente para imprimir uma *string* que não esteja intercalada noutra *string*. Ora veja o seguinte exemplo:
 
-\begin{lstlisting}
+```c
 char* nome = "José";
 puts(nome);
-\end{lstlisting}
+```
 
-\section{Como ler \textit{strings}}
+## Como ler *strings*
 
-Quando é necessário um dado do utilizador como o nome, por exemplo, saber como se leem \textit{strings} é importante. A leitura de \textit{strings} pode ser feita de diversas formas.
+Quando é necessário um dado do utilizador como o nome, por exemplo, saber como se leem *strings* é importante. A leitura de *strings* pode ser feita de diversas formas.
 
-\subsection{Com a função \texttt{scanf}}
+### Com a função `scanf`
 
-A função \texttt{scanf} já foi falada diversas vezes ao longo deste livro. Tal como o que acontece com a função \texttt{printf}, deve-se utilizar o especificador \texttt{\%s} para ler \textit{strings}. Ora veja como se lê uma \textit{string}:
+A função `scanf` já foi falada diversas vezes ao longo deste livro. Tal como o que acontece com a função `printf`, deve-se utilizar o especificador `%s` para ler *strings*. Ora veja como se lê uma *string*:
 
-\begin{lstlisting}
+```c
 scanf("%s", variavelParaArmazenarAString);
-\end{lstlisting}
+```
 
-Analisando o excerto anterior é possível verificar que, ao contrário do que acontece com os restantes tipos de dados, neste não colocamos o \quotes{e} comercial no início do nome da variável que é utilizada para armazenar a \textit{string}. Isto acontece porque as variáveis que contêm \textit{strings} são, ou \textit{arrays} ou apontadores, logo o seu nome já aponta para o endereço da memória.
+Analisando o excerto anterior é possível verificar que, ao contrário do que acontece com os restantes tipos de dados, neste não colocamos o "e" comercial no início do nome da variável que é utilizada para armazenar a *string*. Isto acontece porque as variáveis que contêm *strings* são, ou *arrays*, ou apontadores, logo o seu nome já aponta para o endereço da memória.
 
 Imagine agora que precisa do nome, apelido, morada e código postal de um utilizador para criar o seu cartão de identificação. Poderia proceder da seguinte forma:
 
-\begin{lstlisting}
+```c
 #include <stdio.h>
 #include <stdlib.h>
  
@@ -112,9 +112,9 @@ int main() {
     printf("Código Postal: %s\n", codigoPostal);
     return 0;
 }
-\end{lstlisting}
+```
 
-Relembro que a utilização de comandos para limpar o \textit{buffer} não é recomendável e que devem ser utilizadas outras funções que não a \texttt{scanf} de forma a obter dados do utilizador sem \quotes{lixo}.
+Relembro que a utilização de comandos para limpar o *buffer* não é recomendável e que devem ser utilizadas outras funções que não a `scanf` de forma a obter dados do utilizador sem "lixo".
 
 \subsection{Com a função \texttt{gets}}
 
