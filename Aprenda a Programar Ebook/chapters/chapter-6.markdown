@@ -1,37 +1,35 @@
-Até este ponto do livro, apenas têm sido abordadas variáveis que contêm um e apenas um valor. Chegou a altura de falar de uma estrutura de dados muito importante no mundo da programação, os \textit{arrays}.
+Até este ponto do livro, apenas têm sido abordadas variáveis que contêm um e apenas um valor. Chegou a altura de falar de uma estrutura de dados muito importante no mundo da programação, os *arrays*.
 
-\begin{defi}
-\textit{Arrays} (também conhecidos por \quotes{tabelas} ou \quotes{vetores}) são estruturas de dados que permitem armazenar múltiplos valores em posições bem definidas.
+{{% concept %}}
+*Arrays* (também conhecidos por "tabelas" ou "vetores") são estruturas de dados que permitem armazenar múltiplos valores em posições bem definidas.
 \end{defi}
 
-Os \textit{arrays} são como matrizes/tabelas de dados onde cada dado se encontra localizado numa determinada posição que pode ser acedida através de \quotes{coordenadas}, através de um índice (por exemplo, índice 4 para a quarta posição). Existem os \textit{arrays} unidimensionais e multidimensionais.
+Os *arrays* são como matrizes/tabelas de dados onde cada dado se encontra localizado numa determinada posição que pode ser acedida através de "coordenadas", através de um índice (por exemplo, índice 4 para a quarta posição). Existem os *arrays* unidimensionais e multidimensionais.
 
-\section{Arrays unidimensionais}
+## Arrays unidimensionais
 
-Os \textit{arrays} unidimensionais podem ser comparados a tabelas com uma única coluna, mas com diversas linhas. São o tipo mais simples de \textit{array}. Eis a declaração geral de um \textit{array}:
+Os *arrays* unidimensionais podem ser comparados a tabelas com uma única coluna, mas com diversas linhas. São o tipo mais simples de *array*. Eis a declaração geral de um *array*:
 
-\begin{lstlisting}
+```c
 tipo nomeVariavel[numeroDeElementos];
-\end{lstlisting}
+```
 
 Onde:
 
-\begin{itemize}
-\item \texttt{tipo} corresponde ao tipo de dados que o \textit{array} vai armazenar;
-\item \texttt{nomeVariavel} corresponde ao nome do \textit{array};
-\item \texttt{numeroDeElementos} corresponde ao número máximo de elementos que o \textit{array} irá conter.
-\end{itemize}
++ `tipo` corresponde ao tipo de dados que o *array* vai armazenar;
++ `nomeVariavel` corresponde ao nome do *array*;
++ `numeroDeElementos` corresponde ao número máximo de elementos que o *array* irá conter.
 
-Os \textit{arrays} são \textit{zero-index}, ou seja, a primeira posição é 0 e não 1. Para aceder à última posição de um \textit{array} com 6 linhas, deve-se pedir o que está contido na posição 5. Ora veja um exemplo:
+Os *arrays* são *zero-index*, ou seja, a primeira posição é 0 e não 1. Para aceder à última posição de um *array* com 6 linhas, deve-se pedir o que está contido na posição 5. Ora veja um exemplo:
 
-\begin{lstlisting}
+```c
 int idades[10]; // array de 10 elementos
  
 idades[0] = 14; // atribuição correta
 idades[4] = 12; // atribuição correta
 idades[7] = 15; // atribuição correta
 idades[10] = 20; // atribuição incorreta (tamanho máximo do array ultrapassado)
-\end{lstlisting}
+```
 
 No exemplo anterior, a última declaração está errada porque o índice máximo do \textit{array} foi ultrapassado, ou seja, tentou-se aceder a uma posição inexistente. O \textit{array} tem 10 elementos, 10 posições. O primeiro é no índice 0 e o último no índice 9.
 
