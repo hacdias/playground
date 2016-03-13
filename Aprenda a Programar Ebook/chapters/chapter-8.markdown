@@ -25,37 +25,37 @@ Uma forma de declarar *strings* em C, é criar um *array* do tipo `char` com um 
 char nome[8] = "Pplware";
 ```
 
-No exemplo anterior, é declarada a *string* \texttt{nome} que pode armazenar uma frase com 7 caracteres. Porquê 7 se foram declaradas 8 posições no \textit{array}? Isto acontece porque o último carácter, o oitavo carácter, é o delimitador do final da frase \texttt{\textbackslash 0}.
+No exemplo anterior, é declarada a *string* `nome` que pode armazenar uma frase com 7 caracteres. Porquê 7 se foram declaradas 8 posições no *array*? Isto acontece porque o último carácter, o oitavo carácter, é o delimitador do final da frase `\0`.
 
-Existem, no total, três formas de declarar \textit{strings} em C: 
+Existem, no total, três formas de declarar *strings* em C: 
 
-+ A primeira consiste na criação de um \textit{array} com o tamanho pré-determinado;
-+ A segunda consiste na criação de um \textit{array} sem especificar o seu comprimento, tendo que ser inicializada no momento da declaração de forma a que o espaço na memória seja alocado dependendo do tamanho da \textit{string} colocada;
++ A primeira consiste na criação de um *array* com o tamanho pré-determinado;
++ A segunda consiste na criação de um *array* sem especificar o seu comprimento, tendo que ser inicializada no momento da declaração de forma a que o espaço na memória seja alocado dependendo do tamanho da *string* colocada;
 + Ou através de um apontador.
 
-\begin{lstlisting}
+```c
 char nome[8] = "Pplware";
 char nome[] = "Pplware"; // recomenda-se devido à legibilidade
 char* nome = "Pplware"; 
-\end{lstlisting}
+```
 
-Se reparar, este \quotes{tipo} de dados sempre foi utilizado. Na função \textit{printf}, por exemplo, o primeiro argumento foi sempre uma \textit{string}, pois é uma sequência de caracteres delimitada por aspas.
+Se reparar, este "tipo" de dados sempre foi utilizado. Na função *printf*, por exemplo, o primeiro argumento foi sempre uma *string*, pois é uma sequência de caracteres delimitada por aspas.
 
-\section{Como imprimir \textit{strings}}
+## Como imprimir *strings*
 
-As \textit{strings} podem ser imprimidas recorrendo a diversas funções. Aqui são abordadas duas formas: recorrendo à função \texttt{printf} e recorrendo à função \texttt{puts}.
+As *strings* podem ser imprimidas recorrendo a diversas funções. Aqui são abordadas duas formas: recorrendo à função `printf` e recorrendo à função `puts`.
 
-\subsection{Com a função \texttt{printf}}
+### Com a função `printf`
 
-Para imprimir uma \textit{string} utilizando a função \texttt{printf}, basta utilizar o especificador \texttt{\%s}. Por exemplo:
+Para imprimir uma *string* utilizando a função `printf`, basta utilizar o especificador `\%s`. Por exemplo:
 
-\begin{lstlisting}
+```c
 printf("Esta é uma string: \%s", nomeDaString);
-\end{lstlisting}
+```
 
-A função \texttt{printf} é útil quando é necessário imprimir uma \textit{string} que pode variar.
+A função `printf` é útil quando é necessário imprimir uma *string* que pode variar.
 
-\subsection{Com a função \texttt{puts}}
+### Com a função `puts`
 
 Temos também a função \texttt{puts}, já abordada no capítulo 5, cujo nome quer dizer \textit{put string}, ou seja, colocar \textit{string}. Esta função é excelente para imprimir uma \textit{string} que não esteja intercalada noutra \textit{string}. Ora veja o seguinte exemplo:
 
@@ -128,7 +128,7 @@ Onde \texttt{nomeDaVariavel} corresponde ao apontador que aponta para o local on
 
 Imaginando agora que precisa criar um boletim de informação com diversos dados sobre o utilizador. Poderia fazer da seguinte forma:
 
-\begin{lstlisting}
+```c
 #include <stdio.h>
 #include <stdlib.h>
  
@@ -157,7 +157,7 @@ int main() {
     printf("Código Postal: %s\n", codigoPostal);
     return 0;
 }
-\end{lstlisting}
+```
 
 Analisando o código é possível verificar que com esta função não é preciso limpar o \textit{buffer} de forma a não obter caracteres indevidos. Isto acontece porque a função \texttt{gets} os ignora.
 
