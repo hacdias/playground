@@ -118,13 +118,13 @@ Relembro que a utilização de comandos para limpar o *buffer* não é recomend�
 
 ### Com a função `gets`
 
-Podem-se imprimir *strings* com a função `gets`, cujo nome quer dizer *get string*, ou seja, obter *string*. A utilização desta função é simples. Ora veja como se utiliza esta função:
+Podem-se ler *strings* com a função `gets`, cujo nome quer dizer *get string*, ou seja, obter *string*. A utilização desta função é simples. Ora veja como se utiliza esta função:
 
 ```c
 gets(nomeDaVariavel);
 ```
 
-Onde \texttt{nomeDaVariavel} corresponde ao apontador que aponta para o local onde a \textit{string} vai ser armazenada. Recordo que, no caso se ser utilizado um apontador ou um \textit{array}, não é necessário utilizar um \quotes{e} comercial no início.
+Onde `nomeDaVariavel` corresponde ao apontador que aponta para o local onde a *string* vai ser armazenada. Recordo que, no caso se ser utilizado um apontador ou um *array*, não é necessário utilizar um "e" comercial no início.
 
 Imaginando agora que precisa criar um boletim de informação com diversos dados sobre o utilizador. Poderia fazer da seguinte forma:
 
@@ -173,13 +173,13 @@ fgets(char *str, int n, FILE *stream);
 
 Onde:
 
-+ `str` corresponde ao apontador para um \textit{array} de caracteres onde os dados obtidos serão armazenados;
-+ `n` é o número máximo de caracteres a serem lidos (incluindo o delimitador final). Geralmente é igual ao tamanho do \textit{arrar};
++ `str` corresponde ao apontador para um *array* de caracteres onde os dados obtidos serão armazenados;
++ `n` é o número máximo de caracteres a serem lidos (incluindo o delimitador final). Geralmente é igual ao tamanho do *array*;
 + `stream` corresponde ao apontador para o ficheiro ou objeto donde serão lidos os dados.
 
-Imaginando agora que é necessário converter o programa da criação do boletim de informação do utilizador para utilizar a função \texttt{fgets}. Ficaria da seguinte forma:
+Imaginando agora que é necessário converter o programa da criação do boletim de informação do utilizador para utilizar a função `fgets`. Ficaria da seguinte forma:
 
-\begin{lstlisting}
+```c
 #include <stdio.h>
 #include <stdlib.h>
  
@@ -208,11 +208,11 @@ int main() {
     printf("Código Postal: %s\n", codigoPostal);
     return 0;
 }
-\end{lstlisting}
+```
 
 Se compilar e correr o código acima, irá receber algo semelhante ao seguinte:
 
-\begin{lstlisting}[language=bash,numbers=none]
+```
 O seu Cartão de Identificação:
 Nome: Apelido
 , Nome
@@ -220,26 +220,24 @@ Nome: Apelido
 Morada: Morada
 
 Código Postal: CP
-\end{lstlisting}
+```
 
-Estas mudanças de linha acontecem porque as \textit{strings} obtidas através da função \texttt{fgets} ficaram com o carácter \texttt{\textbackslash n} no final. Para remover este carácter pode-se recorrer à função \texttt{strtok}. Esta função utiliza-se da seguinte forma:
+Estas mudanças de linha acontecem porque as *strings* obtidas através da função `fgets` ficaram com o carácter `\n` no final. Para remover este carácter pode-se recorrer à função `strtok`. Esta função utiliza-se da seguinte forma:
 
-\begin{lstlisting}
+```c
 strtok(char *str, const char *delim);
-\end{lstlisting}
+```
 
 Onde:
 
-\begin{itemize}
-\item \texttt{str} é o apontador para um \textit{array} de caracteres onde a \textit{string} está armazenada;
-\item \texttt{delim} corresponde ao delimitador a remover.
-\end{itemize}
++ `str` é o apontador para um *array* de caracteres onde a *string* está armazenada;
++ `delim` corresponde ao delimitador a remover.
 
-Assim, para que o carácter \texttt{\textbackslash n} seja removido de todas as \textit{strings} utilizadas no programa anterior, bastaria adicionar as seguintes linhas:
+Assim, para que o carácter `\n` seja removido de todas as *strings* utilizadas no programa anterior, bastaria adicionar as seguintes linhas:
 
-\begin{lstlisting}
+```c
 strtok(nome, "\n");
 strtok(apelido, "\n");
 strtok(morada, "\n");
 strtok(codigoPostal, "\n");
-\end{lstlisting}
+```
