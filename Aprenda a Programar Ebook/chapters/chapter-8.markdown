@@ -116,13 +116,13 @@ int main() {
 
 Relembro que a utilização de comandos para limpar o *buffer* não é recomendável e que devem ser utilizadas outras funções que não a `scanf` de forma a obter dados do utilizador sem "lixo".
 
-\subsection{Com a função \texttt{gets}}
+### Com a função `gets`
 
-Podem-se imprimir \textit{strings} com a função \texttt{gets}, cujo nome quer dizer \textit{get string}, ou seja, obter \textit{string}. A utilização desta função é simples. Ora veja como se utiliza esta função:
+Podem-se imprimir *strings* com a função `gets`, cujo nome quer dizer *get string*, ou seja, obter *string*. A utilização desta função é simples. Ora veja como se utiliza esta função:
 
-\begin{lstlisting}
+```c
 gets(nomeDaVariavel);
-\end{lstlisting}
+```
 
 Onde \texttt{nomeDaVariavel} corresponde ao apontador que aponta para o local onde a \textit{string} vai ser armazenada. Recordo que, no caso se ser utilizado um apontador ou um \textit{array}, não é necessário utilizar um \quotes{e} comercial no início.
 
