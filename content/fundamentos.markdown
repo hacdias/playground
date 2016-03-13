@@ -1,4 +1,5 @@
 ---
+weight: 2
 title: Fundamentos
 type: page
 ---
@@ -393,11 +394,11 @@ xcode-select --install
 
 Pode verificar a versão instalada do GCC nos dois últimos sistemas operativos recorrendo ao comando anteriormente mencionado.
 
-\begin{mdframed}[backgroundcolor=cinzaclaro, linewidth=0pt]
+{{% moreabout title="" %}}
 Um **IDE} é um Ambiente de Desenvolvimento Integrado, do inglês *Integrated
 Development Environment}. É um programa de computador que reúne diversas ferramentas
 para apoiar no desenvolvimento de software.
-\end{mdframed}
+{{% /moreabout %}}
 
 #### Editor de texto}
 
@@ -449,11 +450,11 @@ Deverá receber uma mensagem na Linha de Comandos a dizer "Hello World}.
 
 A primeira linha do trecho acima **não} é C mas sim uma indicação para o **compilador}.
 
-\begin{mdframed}[backgroundcolor=cinzaclaro, linewidth=0pt]
+{{% moreabout title="" %}}
 C é uma linguagem utilizada em locais que necessitam de alta velocidade, como o *kernel} - núcleo - do Linux, pois esta tem essa capacidade.
 
 Devido à alta velocidade que pode ser proporcionada por esta linguagem, C não está preparado, por omissão, para todos os tipos de tarefas. Assim, precisamos de incluí-las para ter disponíveis mais funções.
-\end{mdframed}
+{{% /moreabout %}}
 
 A linguagem C não vem "empacotada} de funções por padrão e é necessário incluí-las. Para as incluir, utilizamos a diretiva `\#include} que diz ao compilador que precisa de incluir ficheiros ponto H (.h) que são ficheiros do tipo *header}.
 Nesta caso adicionámos o ficheiro `stdio.h} que quer dizer *standard input/output}, ou seja, sistema padrão de entrada e saída.

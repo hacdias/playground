@@ -1,8 +1,14 @@
+---
+weight: 4
+title: Operadores
+type: page
+---
+
 Neste capítulo são abordados os operadores, que são deveras importantes na modificação dos valores de variáveis.
 
-\begin{defi}
+{{% concept %}}
 \textbf{Operadores} são símbolos para efetuar determinadas ações sobre variáveis. Na programação existem diversos tipos de operadores como, por exemplo, para efetuar operações aritméticas.
-\end{defi}
+{{% /concept %}}
 
 Alguns dos operadores também existem em outras áreas do conhecimento como matemática, por exemplo.
 
@@ -43,9 +49,9 @@ Resto inteiro e atribuição	&	\texttt{\%= (var = var \% n}	& var \%= 5 		& 2   
 
 \section{Operadores relacionais}
 
-\begin{mdframed}[backgroundcolor=cinzaclaro, linewidth=0pt]
+{{% moreabout title="" %}}
 Pode avançar esta e as secções mais à frente por agora. Mais tarde ser-lhe-á indicado para aqui voltar. Consultar capítulo 4.
-\end{mdframed}
+{{% /moreabout %}}
 
 Estes operadores (relacionais) permitem-nos estabelecer relações de comparação entre diversas variáveis.
 
@@ -67,35 +73,30 @@ Menor ou Igual & \texttt{\textless=}       & x \textless= y                     
 
 Os operadores lógicos são normalmente utilizados em testes lógicos quando é necessário incluir mais do que uma condição para que algo aconteça. Existem três operadores lógicos que aqui são abordados: \texttt{\&\&}, \texttt{\(||\)} e \texttt{!}. Estes operadores também são \textit{syntactic sugar}.
 
-\begin{table}[h]
-\center\begin{tabular}{|l|l|}
-\hline
-\textbf{Nome} & \multicolumn{1}{c|}{\textbf{Operador}} \\ \hline
-Operador \quotes{e}  & \&\&                                    \\ \hline
-Operador \quotes{ou} & ||                                     \\ \hline
-Negação       & !                                      \\ \hline
-\end{tabular}
-\caption{Operadores lógicos}
-\end{table}
+| Nome          | Operador |
+|---------------|:--------:|
+| Operador "e"  | `&&`     |
+| Operador "ou" | `||`     |
+| Negação       | `!`      |
 
 \subsection{Operador \texttt{\&\&}}
 
 Na programação, o operador \texttt{\&\&} tem como função a conjugação de condições, ou seja, funciona da mesma forma que um \quotes{e} na Língua Portuguesa. Com este elemento, para que algo seja considerado verdadeiro, todos os elementos têm que o ser. Veja alguns exemplos em que este operador é utilizado para agregar condições:
 
-\begin{lstlisting}
+```
 #include <stdio.h>
 
 int main() {     
     int a;  
     a = 4;  
-   
+
     if (a > 0 && a <= 10) {  
         printf("O número %d está entre 1 e 10.", num1);  
     }  
-	   
+
 	return 0;
 }
-\end{lstlisting}
+```
 
 A condição acima pode ser transcrita para uma linguagem lógica da seguinte forma: \quotes{\textbf{Se} \texttt{a} for maior que 0 \textbf{e} menor ou igual a 10, então o código é executado}.
 
@@ -107,20 +108,20 @@ Este operador pode ser utilizado mais do que uma vez no interior de um teste con
 
 Com este operador, podemos executar um trecho de código que \textbf{satisfaz} uma das \textbf{várias condições} existentes. Por exemplo:
 
-\begin{lstlisting}
+```
 #include <stdio.h>  
-   
+
 int main() {     
     int a;  
     a = 3;  
-   
+
     if (a == 3 || a == 5) {  
         printf("O número é 3 ou 5.\n");  
     }  
-	   
+
     return 0;  
 }  
-\end{lstlisting}
+```
 
 Numa linguagem puramente lógica, podemos converter a condição anterior para o seguinte: \quotes{Se \texttt{a} for 3 \textbf{ou} 5, então a linha 8 é executada}.
 
@@ -128,20 +129,20 @@ Numa linguagem puramente lógica, podemos converter a condição anterior para o
 
 O operador \texttt{!} é utilizado para indicar a negação, ou numa linguagem corrente, \quotes{o contrário de}. Quando é utilizado juntamente com uma condição, quer dizer que o código que está condicionado depende se a negação da condição é satisfeita, tal como o antónimo de uma palavra. Ora veja o seguinte exemplo:
 
-\begin{lstlisting}
+```
 #include <stdio.h>  
-   
+
 int main() {     
     int a;  
     a = 0;  
-   
+
     if (!a) {  
         printf("A variável é 0.\n");  
     }  
-   
+
     return 0;  
 }  
-\end{lstlisting}
+```
 
 Relembrando que o número 0 é considerado o binário para falso e que, qualquer número diferente de 0 é, na linguagem C, considerado como verdadeiro, a condição acima pode ser traduzida para: \quotes{Se \texttt{a} \textbf{não} for diferente de 0, então executa o código}.
 
@@ -149,100 +150,100 @@ Relembrando que o número 0 é considerado o binário para falso e que, qualquer
 
 Os operadores de incremento e decremento são dois operadores essenciais na vida de qualquer programador. Imagine que necessita de contar um número cujo qual nem o programador sabe o fim. Vai adicionar/subtrair valor a valor? Não, não é necessário.
 
-\begin{lstlisting}
+```
 #include <stdio.h>  
-   
+
 int main() {     
     int num;  
-  
+
     num = 1;  
     printf("O número é %d\n", num);  
-  
+
     num = num + 1;  
     printf("O número é %d\n", num);  
-   
+
     num += 1;  
     printf("O número é %d\n", num);  
-   
+
     return 0;  
 }   
-\end{lstlisting}
+```
 
 O código acima imprime a frase \quotes{O número é x}, onde \textit{x} corresponde ao valor da variável \texttt{num} nesse momento. Este algoritmo faz com que a variável inicialmente tenha um valor de 1, passando por 2, chegando finalmente a 3. As linhas \texttt{num = num + 1} e \texttt{num += 1} são equivalentes.
 
 Existe outra forma mais simples para adicionar/subtrair um valor a uma variável: através dos operadores \texttt{++} e \texttt{--}. Veja como ficaria o código anterior com estes operadores:
 
-\begin{lstlisting}
+```
 #include <stdio.h>  
-   
+
 int main() {     
     int num;  
-   
+
     num = 1;  
     printf("O número é %d\n", num);  
-   
+
     num++;  
     printf("O número é %d\n", num);  
-   
+
     num++;  
     printf("O número é %d\n", num);  
-	   
+
     return 0;  
 }  
-\end{lstlisting}
+```
 
 Este último trecho de código irá imprimir o mesmo que o código anterior. Agora, a diferença aparenta não ser imensa, porém estes operadores serão extremamente úteis em testes lógicos/de repetição.
 
 Para remover uma unidade bastaria colocar \texttt{--} ao invés de \texttt{++}. Então podemos concluir que este operador torna o incremento/decremento mais rápido, mas só funciona quando o assunto é uma unidade. Veja o seguinte exemplo:
 
-\begin{lstlisting}
+```
 #include <stdio.h>  
-   
+
 int main() {     
     int num;  
-   
+
     num = 1;  
     printf("O número é %d\n", num);  
-  
+
     num--;  
     printf("O número é %d\n", num);  
-   
+
     return 0;  
 }  
-\end{lstlisting}
+```
 
-\begin{mdframed}[backgroundcolor=cinzaclaro, linewidth=0pt]
+{{% moreabout title="" %}}
 \subsubsection{Posição do operador}
 
 Estes operadores podem ocupar duas posições: antes ou depois do nome da variável, ou seja, posso colocar tanto \texttt{num++} como \texttt{++num}. Quando são utilizados isoladamente, não existe nenhuma diferença. Porém, quando estamos a efetuar uma atribuição, existem diferenças. Analise o seguinte exemplo:
 
-\begin{lstlisting}
+```
 #include <stdio.h>  
-   
+
 int main() {     
     int a, b, c;  
-   
+
     a = 0;  
     b = a++;  
     c = ++a;  
-	   
+
     printf("A: %d, B: %d, C: %d", a, b, c);  
-   
+
     return 0;  
 }  
-\end{lstlisting}
+```
 
 Em primeiro lugar, são declaradas três variáveis: \texttt{a}, \texttt{b} e \texttt{c}. Seguidamente, é atribuído o valor 0 à primeira variável. Quando o valor \texttt{a++} é atribuído à variável \texttt{b}, esta fica com valor 0 ou 1? E o que acontece com a variável \texttt{a}? A variável \texttt{b} irá assumir o valor 0, e um valor é incrementado a \texttt{a} ficando esta com o valor 1, ou seja, \texttt{b = a++} é um atalho para o seguinte:
 
-\begin{lstlisting}
+```
 b = a;  
 a++;  
-\end{lstlisting}
+```
 
 Depois desta atribuição, é atribuída à variável \texttt{c}, o valor \texttt{++a}, ou seja, primeiro é incrementado o valor da variável \texttt{a} e só depois é que o valor de esta é atribuído à variável \texttt{c}. Então, isto é um atalho para o seguinte:
 
-\begin{lstlisting}
+```
 ++a;  
 c = a;
-\end{lstlisting}
-\end{mdframed}
+```
+{{% /moreabout %}}

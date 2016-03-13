@@ -1,3 +1,9 @@
+---
+type: page
+weight: 9
+title: Strings
+---
+
 Na programação, os tipos de dados não se limitam aos já abordados no capítulo 2: `char`, `int`, `float`, `double`, etc. O tipo `char` permite armazenar um carácter. Mas, não é um carácter muito pouco? E se for necessário armazenar uma frase? Aí entram as *strings*.
 
 {{% concept %}}
@@ -27,7 +33,7 @@ char nome[8] = "Pplware";
 
 No exemplo anterior, é declarada a *string* `nome` que pode armazenar uma frase com 7 caracteres. Porquê 7 se foram declaradas 8 posições no *array*? Isto acontece porque o último carácter, o oitavo carácter, é o delimitador do final da frase `\0`.
 
-Existem, no total, três formas de declarar *strings* em C: 
+Existem, no total, três formas de declarar *strings* em C:
 
 + A primeira consiste na criação de um *array* com o tamanho pré-determinado;
 + A segunda consiste na criação de um *array* sem especificar o seu comprimento, tendo que ser inicializada no momento da declaração de forma a que o espaço na memória seja alocado dependendo do tamanho da *string* colocada;
@@ -36,7 +42,7 @@ Existem, no total, três formas de declarar *strings* em C:
 ```c
 char nome[8] = "Pplware";
 char nome[] = "Pplware"; // recomenda-se devido à legibilidade
-char* nome = "Pplware"; 
+char* nome = "Pplware";
 ```
 
 Se reparar, este "tipo" de dados sempre foi utilizado. Na função *printf*, por exemplo, o primeiro argumento foi sempre uma *string*, pois é uma sequência de caracteres delimitada por aspas.
@@ -83,29 +89,29 @@ Imagine agora que precisa do nome, apelido, morada e código postal de um utiliz
 ```c
 #include <stdio.h>
 #include <stdlib.h>
- 
+
 int main() {
     char nome[21],
         apelido[21],
         morada[51],
         codigoPostal[11];
- 
+
     printf("Por favor insira os seus dados conforme pedido:\n\n");
     printf("Primeiro nome: ");
     scanf("%s", nome);
- 
+
     printf("Último nome: ");
     scanf("%s", apelido);
- 
+
     printf("Morada: ");
     scanf("%s", morada);
- 
+
     // limpeza do buffer no Windows; usar "_fpurge(stdin)" em sistemas Unix
     fflush(stdin);
- 
+
     printf("Código Postal: ");
     scanf("%s", codigoPostal);
- 
+
     printf("\nO seu Cartão de Identificação:\n");
     printf("Nome: %s, %s\n", apelido, nome);
     printf("Morada: %s\n", morada);
@@ -131,26 +137,26 @@ Imaginando agora que precisa criar um boletim de informação com diversos dados
 ```c
 #include <stdio.h>
 #include <stdlib.h>
- 
+
 int main() {
     char nome[21],
         apelido[21],
         morada[51],
         codigoPostal[11];
- 
+
     printf("Por favor insira os seus dados conforme pedido:\n\n");
     printf("Primeiro nome: ");
     gets(nome);
- 
+
     printf("Último nome: ");
     gets(apelido);
- 
+
     printf("Morada: ");
     gets(morada);
- 
+
     printf("Código Postal: ");
     gets(codigoPostal);
- 
+
     printf("\nO seu Cartão de Identificação:\n");
     printf("Nome: %s, %s\n", apelido, nome);
     printf("Morada: %s\n", morada);
@@ -182,26 +188,26 @@ Imaginando agora que é necessário converter o programa da criação do boletim
 ```c
 #include <stdio.h>
 #include <stdlib.h>
- 
+
 int main() {
     char nome[21],
         apelido[21],
         morada[51],
         codigoPostal[11];
- 
+
     printf("Por favor insira os seus dados conforme pedido:\n\n");
     printf("Primeiro nome: ");
     fgets(nome, 21, stdin);
- 
+
     printf("Último nome: ");
     fgets(apelido, 21, stdin);
- 
+
     printf("Morada: ");
     fgets(morada, 51, stdin);
- 
+
     printf("Código Postal: ");
     fgets(codigoPostal, 11, stdin);
- 
+
     printf("\nO seu Cartão de Identificação:\n");
     printf("Nome: %s, %s\n", apelido, nome);
     printf("Morada: %s\n", morada);
@@ -216,7 +222,7 @@ Se compilar e correr o código acima, irá receber algo semelhante ao seguinte:
 O seu Cartão de Identificação:
 Nome: Apelido
 , Nome
- 
+
 Morada: Morada
 
 Código Postal: CP

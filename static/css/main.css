@@ -180,19 +180,39 @@ tr td:hover {
 }
 
 /* ARTICLE BLOCKS */
-article pre {
-  display: block;
-  overflow-x: auto;
-  padding: 1em 0;
-  color: #333;
-  background: #F1F1F1;
+article pre,
+article code {
+  background-color: transparent;
+  max-width: 600px;
+  width: 90%;
+  padding: 0.5em;
+  border: 1px solid rgba(0,0,0,0.1);
+  background-color: rgba(0,0,0,0.05);
+  border-radius: .2em;
 }
 
-article pre > .hljs {
-  background-color: transparent;
-  margin: 0 auto;
-  max-width: 800px;
-  width: 90%;
+article pre {
+  margin: 1em auto;
+}
+
+article p code,
+article ul code,
+article li code,
+article h2 code,
+article h3 code,
+article h4 code {
+  margin: 0;
+  max-width: none;
+  width: auto;
+  padding: .02em;
+}
+
+article pre code {
+  background-color: transparent !important;
+  width: 100% !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
 }
 
 article .block {
@@ -214,6 +234,9 @@ article .block:last-child {
 
 .concept {
   background-color: #8BC34A;
-  color: #fff;
-  padding: 1em;
+}
+
+.alert {
+  background-color: #FDD835;
+  color: #212121 !important;
 }
