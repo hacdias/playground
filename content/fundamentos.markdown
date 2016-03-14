@@ -412,15 +412,15 @@ Existem vários editores de texto que pode utilizar. Aqui deixamos algumas recom
 \item **OS X} \(\rightarrow\) TextWrangler, Sublime Text, Atom.
 \end{itemize}
 
-### "Hello World!}}
+### "Hello World!"
 
-Como seria o mundo da programação sem o famoso "Hello World}? É uma tradição o primeiro programa criado por alguém imprimir a mensagem "Hello World} no ecrã.
+Como seria o mundo da programação sem o famoso "Hello World"? É uma tradição o primeiro programa criado por alguém imprimir a mensagem "Hello World" no ecrã.
 
 Crie um ficheiro, onde queira, com o nome HelloWorld.c. Tenha em atenção à extensão do ficheiro que tem que ser .c, ou seja, da linguagem C.
 
 Abra esse mesmo ficheiro com um editor de texto, copie e cole o seguinte texto e então guarde as alterações.
 
-```
+```c
 #include <stdio.h>      
 #include <stdlib.h>
 
@@ -430,25 +430,25 @@ int main() {
 }
 ```
 
-Este trecho de código irá imprimir no ecrã a mensagem "Hello World!}. Para executarmos este comando, deverá abrir a Linha de Comandos/Terminal e navegar até ao local onde guardou o ficheiro. Depois, execute o seguinte comando:
+Este trecho de código irá imprimir no ecrã a mensagem "Hello World!". Para executarmos este comando, deverá abrir a Linha de Comandos/Terminal e navegar até ao local onde guardou o ficheiro. Depois, execute o seguinte comando:
 
-```[language=bash,numbers=none]
-> gcc HelloWorld.c -o HelloWorld
+```bash
+gcc HelloWorld.c -o HelloWorld
 ```
 
 Onde HelloWorld.c é o ficheiro de entrada e HelloWorld o ficheiro de saída. A extensão do ficheiro produzido deverá ser diferente consoante o sistema operativo.
 
-No meu caso, como estou a utilizar o Windows, foi criado um ficheiro **.exe}. Agora, para executar o seu ficheiro, basta o executar através da linha de comandos:
+No meu caso, como estou a utilizar o Windows, foi criado um ficheiro **.exe**. Agora, para executar o seu ficheiro, basta o executar através da linha de comandos:
 
-```[language=bash,numbers=none]
-> HelloWorld
+```bash
+HelloWorld
 ```
 
-Deverá receber uma mensagem na Linha de Comandos a dizer "Hello World}.
+Deverá receber uma mensagem na Linha de Comandos a dizer "Hello World".
 
-### `\#include}}
+### `#include`
 
-A primeira linha do trecho acima **não} é C mas sim uma indicação para o **compilador}.
+A primeira linha do trecho acima **não** é C mas sim uma indicação para o **compilador**.
 
 {{% moreabout title="" %}}
 C é uma linguagem utilizada em locais que necessitam de alta velocidade, como o *kernel} - núcleo - do Linux, pois esta tem essa capacidade.
@@ -456,7 +456,7 @@ C é uma linguagem utilizada em locais que necessitam de alta velocidade, como o
 Devido à alta velocidade que pode ser proporcionada por esta linguagem, C não está preparado, por omissão, para todos os tipos de tarefas. Assim, precisamos de incluí-las para ter disponíveis mais funções.
 {{% /moreabout %}}
 
-A linguagem C não vem "empacotada} de funções por padrão e é necessário incluí-las. Para as incluir, utilizamos a diretiva `\#include} que diz ao compilador que precisa de incluir ficheiros ponto H (.h) que são ficheiros do tipo *header}.
+A linguagem C não vem "empacotada" de funções por padrão e é necessário incluí-las. Para as incluir, utilizamos a diretiva `\#include} que diz ao compilador que precisa de incluir ficheiros ponto H (.h) que são ficheiros do tipo *header}.
 Nesta caso adicionámos o ficheiro `stdio.h} que quer dizer *standard input/output}, ou seja, sistema padrão de entrada e saída.
 
 ### Função `main}}
