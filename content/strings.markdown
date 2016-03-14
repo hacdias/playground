@@ -2,6 +2,7 @@
 type: page
 weight: 9
 title: Strings
+description: "No sétimo capítulo serão abordadas as strings, ou seja, sequências de caracteres. São muito importantes, principalmente quando precisa de armazenar texto."
 ---
 
 Na programação, os tipos de dados não se limitam aos já abordados no capítulo 2: `char`, `int`, `float`, `double`, etc. O tipo `char` permite armazenar um carácter. Mas, não é um carácter muito pouco? E se for necessário armazenar uma frase? Aí entram as *strings*.

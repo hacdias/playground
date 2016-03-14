@@ -2,6 +2,7 @@
 weight: 5
 type: page
 title: Controlo de Fluxo
+description: "A ordem lógica das ações a tomar pode ser diferente em diversas situações. Neste capítulo aprenderá a alterar e a modificar a ordem das ações com base em condições."
 ---
 
 Este quarto capítulo tem como objetivo mostrar-lhe as formas de controlar o fluxo de uma aplicação, de um algoritmo, de um programa.

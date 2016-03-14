@@ -1,4 +1,4 @@
-<header>
+{{ if not .IsHome }}<header>
   <div>
     {{ if not .IsNode}}{{ if .Prev }}
     <a href="{{ .Prev.Permalink  }}" class="prev">
@@ -7,7 +7,7 @@
     {{ end }}{{ end }}
   </div>
   <div>
-    <a href="/aprenda-a-programar/"><span>Aprenda a Programar</span></a>
+    <a href="/aprenda-a-programar/"><span>{{ .Title }}</span></a>
   </div>
   <div>
     {{ if not .IsNode}}{{ if .Next }}
@@ -16,4 +16,4 @@
     </a>
     {{ end }}{{ end }}
   </div>
-</header>
+</header>{{ end }}

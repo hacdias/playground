@@ -2,6 +2,7 @@
 weight: 4
 title: Operadores
 type: page
+description: "No mundo da programação os dados devem ser modelados, moldados, alterados. É com os operadores abordados neste capítulo que tudo isso pode ser feito. Os operadores abordados existem na maioria das linguagens de programação."
 ---
 
 Neste capítulo são abordados os operadores, que são deveras importantes na modificação dos valores de variáveis.

@@ -2,6 +2,7 @@
 weight: 7
 title: Arrays
 type: page
+description: "Neste capítulo é abordada uma estrutura de dados extremamente importante, os arrays, que estão presentes em quase todas as linguagens de programação."
 ---
 
 Até este ponto do livro, apenas têm sido abordadas variáveis que contêm um e apenas um valor. Chegou a altura de falar de uma estrutura de dados muito importante no mundo da programação, os *arrays*.

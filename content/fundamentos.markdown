@@ -2,6 +2,7 @@
 weight: 2
 title: Fundamentos
 type: page
+description: "No primeiro capítulo serão abordados fundamentos essenciais sobre o mundo da programação: o que é uma linguagem de programação, para que serve, como está estruturada, o que precisará utilizar, etc."
 ---
 
 O objetivo deste primeiro capítulo é mostrar-lhe os fundamentos essenciais sobre o mundo da programação. Começaremos por utilizar pseudocódigo (conceito explicado à frente), avançando gradualmente até chegar à linguagem pretendida: a Linguagem C.
@@ -10,7 +11,10 @@ O objetivo deste primeiro capítulo é mostrar-lhe os fundamentos essenciais sob
 
 À semelhança de uma linguagem humana, uma linguagem de programação permite-nos comunicar, não com Humanos, mas com computadores ou qualquer outro sistema computorizado. Linguagens de programação são constituídas por uma "gramática" que contém todas as regras sintáticas utilizadas. Através da utilização dessas regras, podemos comunicar instruções a um computador, ou seja, instruir-lhe a fazer algo. É assim que os programas são criados.
 
-> **Regras sintáticas** consistem num conjunto de normas a seguir que indicam como se deve estruturar o código, ou seja, como se deve construir o código.
+{{% concept %}}
+
+**Regras sintáticas** consistem num conjunto de normas a seguir que indicam como se deve estruturar o código, ou seja, como se deve construir o código.
+{{% /concept %}}
 
 Existem inúmeras linguagens de programação: algumas de propósito geral, ou seja, sem ter uma finalidade específica. Por outro lado, existem outras criadas para um domínio específico. A linguagem de programação C é um exemplo de uma linguagem de programação de propósito geral. Por outro lado a [*Wolfram Language*](http://www.wolfram.com/language/), é uma linguagem de domínio específico, multi-paradigma (abordado mais à frente) e dedicada à Matemática.
 
@@ -18,7 +22,8 @@ Existem inúmeras linguagens de programação: algumas de propósito geral, ou s
 
 É importante compreender alguns conceitos básicos que serão fundamentais na sua jornada no mundo da programação. Assim, vai começar por entender o que são **algoritmos** visto que vai estar sempre em contacto com eles.
 
-> **Algoritmos** são quaisquer sequências de instruções finitas e bem definidas que podem ser executadas por computadores, autómatos ou até mesmo humanos.
+{{% concept %}}
+**Algoritmos** são quaisquer sequências de instruções finitas e bem definidas que podem ser executadas por computadores, autómatos ou até mesmo humanos.{{% /concept %}}
 
 Abaixo pode visualizar todo o processo da confeção de um bolo onde o algoritmo é a receita – uma sequência de instruções bem definida e finita – que é executada pelo(a) "cozinheiro(a)".
 
@@ -32,7 +37,8 @@ Nem sempre são precisos os dois tipos de representação de algoritmos. Por vez
 
 Vejamos então a primeira forma de representar algoritmos, os fluxogramas.
 
-> Um **fluxograma** é uma representação gráfica de um algoritmo que utiliza símbolos de forma a demonstrar os processos neste realizado.
+{{% concept %}}
+Um **fluxograma** é uma representação gráfica de um algoritmo que utiliza símbolos de forma a demonstrar os processos neste realizado.{{% /concept %}}
 
 Existem várias vantagens na criação de fluxogramas como, por exemplo, a sua facilidade de criar, a facilidade na partilha e ajuda a criar modelos mentais.
 
@@ -46,7 +52,8 @@ Na figura mais à frente pode visualizar um fluxograma, baseado no processo de c
 
 Uma forma mais aproximada do código final é a utilização de pseudocódigo. Sendo assim, sucede a criação dos fluxogramas.
 
-> **Pseudocódigo** é uma forma de representação de algoritmos que se assemelha a linguagens de programação mas que utiliza a língua nativa do utilizador de forma a ser facilmente entendida por quem não tem quaisquer conhecimentos da sintaxe de uma linguagem de programação.
+{{% concept %}}
+**Pseudocódigo** é uma forma de representação de algoritmos que se assemelha a linguagens de programação mas que utiliza a língua nativa do utilizador de forma a ser facilmente entendida por quem não tem quaisquer conhecimentos da sintaxe de uma linguagem de programação.{{% /concept %}}
 
 Os programadores cuja língua nativa é português, costumam referir-se ao pseudocódigo como *Portugol*, também conhecido por "Português Estruturado". O seguinte trecho de Portugol representa o algoritmo anteriormente representado com um fluxograma, a confeção de uma receita:
 
@@ -65,7 +72,8 @@ fim
 
 Como pode verificar, o algoritmo acima, em Portugol, é extremamente simples de compreender. De momento, peço-lhe que entenda as expressões que terminam com `()` como se fossem comandos.
 
-> Um **comando** é uma ordem ou instrução dada a um computador ou qualquer outra máquina automatizada.
+{{% concept %}}
+Um **comando** é uma ordem ou instrução dada a um computador ou qualquer outra máquina automatizada.{{% /concept %}}
 
 {{< figure src="/aprenda-a-programar/images/confecao_bolo_al.png" title="Fluxograma \"Confeção de um bolo\"" alt="Fluxograma \"Confeção de um bolo\"" >}}
 
@@ -79,7 +87,8 @@ variavel caracter receita <- "A minha receita"
 
 Esse trecho de código declara uma variável do tipo **caracter**, que se chama `receita`, com o valor "A minha receita".
 
-> A **declaração de variáveis**, ou constantes, consiste no processo em que o compilador é "avisado" da sua existência para que, de cada vez se menciona o nome da variável/constante, esta seja utilizada.
+{{% concept %}}
+A **declaração de variáveis**, ou constantes, consiste no processo em que o compilador é "avisado" da sua existência para que, de cada vez se menciona o nome da variável/constante, esta seja utilizada.{{% /concept %}}
 
 Por exemplo, quando declaramos a variável `receita`, estamos a reservar um endereço da memória RAM para alocar um valor. Neste caso, o valor foi atribuído no momento da sua declaração utilizando o operador `<-`.
 
@@ -89,7 +98,8 @@ A partir do momento declaramos uma variável ou constante, o endereço da memór
 
 Comecemos por abordar as constantes.
 
-> **Constantes** permitem armazenar valores imutáveis, ou seja, que não podem ser alterados ao longo da execução de um programa.
+{{% concept %}}
+**Constantes** permitem armazenar valores imutáveis, ou seja, que não podem ser alterados ao longo da execução de um programa.{{% /concept %}}
 
 Ora veja o seguinte exemplo:
 
@@ -108,7 +118,8 @@ Convencionalmente, o nome das constantes é escrito com letras maiúsculas para 
 
 Por outro lado, existem as variáveis.
 
-> **Variáveis**, ao contrário das constantes, permitem o armazenamento de valores que podem ser alterados durante a execução de um programa. Geralmente são utilizadas para manter estados de algo e são fundamentais na programação.
+{{% concept %}}
+**Variáveis**, ao contrário das constantes, permitem o armazenamento de valores que podem ser alterados durante a execução de um programa. Geralmente são utilizadas para manter estados de algo e são fundamentais na programação.{{% /concept %}}
 
 Abaixo encontra um exemplo:
 
@@ -130,7 +141,8 @@ O nome das variáveis e constantes:
 + Não pode conter espaços (ex.: `a minha var` não é permitido, porém `aMinhaVar` é válido);
 + Não pode conter caracteres especiais (existem exceções em diversas linguagens).
 
-> **Palavras reservadas** são aquelas que constam na gramática da linguagem de programação. Tendo em conta que a palavra "se" é um comando do Portugol, não podemos declarar nenhuma variável ou constante com esse nome. Se isso for feito, será gerado um erro.
+{{% concept %}}
+**Palavras reservadas** são aquelas que constam na gramática da linguagem de programação. Tendo em conta que a palavra "se" é um comando do Portugol, não podemos declarar nenhuma variável ou constante com esse nome. Se isso for feito, será gerado um erro.{{% /concept %}}
 
 As variáveis e constantes podem ser de diversos tipos. Os tipos de dados existentes variam de linguagem para linguagem. Mais à frente irão ser abordados os tipos de dados na linguagem C.
 
@@ -142,7 +154,8 @@ As variáveis, ao contrário das constantes, não são totalmente escritas em le
 
 Todas as linguagens de programação têm características que as distinguem de outras. O(s) paradigma(s) de programação que ela segue são fundamentais.
 
-> **Paradigmas de programação** são modelos ou padrões da forma de estruturar o nosso código. Existem muitos.
+{{% concept %}}
+**Paradigmas de programação** são modelos ou padrões da forma de estruturar o nosso código. Existem muitos.{{% /concept %}}
 
 Nesta secção apenas são abordados 6 paradigmas de programação, os mais conhecidos e utilizados. As que adotam mais do que um paradigma chamam-se **multi-paradigma**.
 
@@ -345,7 +358,8 @@ C é uma linguagem de programação, em relação aos paradigmas, **estruturada*
 
 Linguagens de Programação Compiladas são aquelas que passam pelo processo de compilação, ou seja, onde o seu código fonte é diretamente transformado na linguagem da máquina por via de um compilador.
 
-{{% concept %}}**Código fonte** é um conjunto de instruções lógicas, escritas de acordo com uma linguagem de programação existente.{{% /concept %}}
+{{% concept %}}
+**Código fonte** é um conjunto de instruções lógicas, escritas de acordo com uma linguagem de programação existente.{{% /concept %}}
 
 Aprendendo a linguagem C, fica preparado para se iniciar com muitas outras linguagens de programação pois tem uma sintaxe muito utilizada e, além disso, sabe a lógica.
 
@@ -355,7 +369,8 @@ Para começar a desenvolver programas, necessita ter um ambiente de desenvolvime
 
 #### Instalação de um compilador
 
-> Um **compilador** é a ferramenta que transforma o código-fonte na linguagem da máquina através do processo de compilação.
+{{% concept %}}
+Um **compilador** é a ferramenta que transforma o código-fonte na linguagem da máquina através do processo de compilação.{{% /concept %}}
 
 O compilador que iremos utilizar denomina-se GCC (*GNU Compiler Collection*). Este compilador é de fácil instalação e utilização.
 
@@ -395,22 +410,20 @@ xcode-select --install
 Pode verificar a versão instalada do GCC nos dois últimos sistemas operativos recorrendo ao comando anteriormente mencionado.
 
 {{% moreabout title="" %}}
-Um **IDE} é um Ambiente de Desenvolvimento Integrado, do inglês *Integrated
-Development Environment}. É um programa de computador que reúne diversas ferramentas
+Um **IDE** é um Ambiente de Desenvolvimento Integrado, do inglês *Integrated
+Development Environment*. É um programa de computador que reúne diversas ferramentas
 para apoiar no desenvolvimento de software.
 {{% /moreabout %}}
 
-#### Editor de texto}
+#### Editor de texto
 
 Além do compilador, irá também precisar de um editor de texto. Qualquer editor de texto funciona, mas recomendo um que suporte a sintaxe da linguagem C.
 
 Existem vários editores de texto que pode utilizar. Aqui deixamos algumas recomendações:
 
-\begin{itemize}
-\item **Windows} \(\rightarrow\) Notepad++, Atom, Sublime Text;
-\item **Linux} \(\rightarrow\) Gedit, Atom, Sublime Text (algumas distribuições), Vim;
-\item **OS X} \(\rightarrow\) TextWrangler, Sublime Text, Atom.
-\end{itemize}
++ **Windows** → Notepad++, Atom, Sublime Text;
++ **Linux** → Gedit, Atom, Sublime Text (algumas distribuições), Vim;
++ **OS X** → TextWrangler, Sublime Text, Atom.
 
 ### "Hello World!"
 
@@ -421,7 +434,7 @@ Crie um ficheiro, onde queira, com o nome HelloWorld.c. Tenha em atenção à ex
 Abra esse mesmo ficheiro com um editor de texto, copie e cole o seguinte texto e então guarde as alterações.
 
 ```c
-#include <stdio.h>      
+#include <stdio.h>   
 #include <stdlib.h>
 
 int main() {
@@ -451,59 +464,55 @@ Deverá receber uma mensagem na Linha de Comandos a dizer "Hello World".
 A primeira linha do trecho acima **não** é C mas sim uma indicação para o **compilador**.
 
 {{% moreabout title="" %}}
-C é uma linguagem utilizada em locais que necessitam de alta velocidade, como o *kernel} - núcleo - do Linux, pois esta tem essa capacidade.
+C é uma linguagem utilizada em locais que necessitam de alta velocidade, como o *kernel* - núcleo - do Linux, pois esta tem essa capacidade.
 
 Devido à alta velocidade que pode ser proporcionada por esta linguagem, C não está preparado, por omissão, para todos os tipos de tarefas. Assim, precisamos de incluí-las para ter disponíveis mais funções.
 {{% /moreabout %}}
 
-A linguagem C não vem "empacotada" de funções por padrão e é necessário incluí-las. Para as incluir, utilizamos a diretiva `\#include} que diz ao compilador que precisa de incluir ficheiros ponto H (.h) que são ficheiros do tipo *header}.
-Nesta caso adicionámos o ficheiro `stdio.h} que quer dizer *standard input/output}, ou seja, sistema padrão de entrada e saída.
+A linguagem C não vem "empacotada" de funções por padrão e é necessário incluí-las. Para as incluir, utilizamos a diretiva `\#include` que diz ao compilador que precisa de incluir ficheiros ponto H (.h) que são ficheiros do tipo *header*.
+Nesta caso adicionámos o ficheiro `stdio.h` que quer dizer *standard input/output*, ou seja, sistema padrão de entrada e saída.
 
-### Função `main}}
+### Função `main`
 
-Todos os programas C têm que ter, obrigatoriamente, uma função `main} que será automaticamente executada. Esta função é o ponto de partida para criar um programa. É o seu cerne.
+Todos os programas C têm que ter, obrigatoriamente, uma função `main` que será automaticamente executada. Esta função é o ponto de partida para criar um programa. É o seu cerne.
 
 Voltaremos a falar sobre este tema e da sua importância.
 
-### Função `printf}}
+### Função `printf`
 
-Este é um comando/função que está contido no ficheiro stdio.h. Caso não incluamos o ficheiro, será gerado erro. Esta função significa *print formatted}, ou seja, "escrita de dados formatados}.
+Este é um comando/função que está contido no ficheiro stdio.h. Caso não incluamos o ficheiro, será gerado erro. Esta função significa *print formatted*, ou seja, "escrita de dados formatados".
 
 Esta função aceita vários parâmetros; permite-nos enviar várias coisas que irão ser processadas por ela. De momento, apenas iremos falar do primeiro argumento.
 
-O primeiro argumento é uma *string}, ou seja, um conjunto de caracteres. Este conjunto de caracteres deve ser colocado dentro de aspas.
+O primeiro argumento é uma *string*, ou seja, um conjunto de caracteres. Este conjunto de caracteres deve ser colocado dentro de aspas.
 
-Neste caso escrevemos `Hello World!\textbackslash n!} o que quer dizer que será imprimido "Hello World!} na janela. E o que faz `\textbackslash n}? Simples, é um carácter especial que imprime uma nova linha. Chama-se *new line}.
+Neste caso escrevemos `Hello World!\n!` o que quer dizer que será imprimido "Hello World!" na janela. E o que faz `\n` Simples, é um carácter especial que imprime uma nova linha. Chama-se *new line*.
 
-A `\textbackslash} serve para inserir caracteres especiais.
+A `\` serve para inserir caracteres especiais.
 
-\begin{table}[h]
-\center\begin{tabular}{|l|l|}
-\hline
-`\%\%}     & Por cento                                            \\ \hline
-`\textbackslash t}      & Tab                                                  \\ \hline
-`\textbackslash r}      & Carriage Return (coloca o cursor no início da linha) \\ \hline
-`\textbackslash a} e \textbackslash 7 & Alguns sons                                          \\ \hline
-\end{tabular}
-\caption{Alguns caracteres especiais em C}
-\end{table}
+| Símbolo      | Significado                                            |
+|-------------|------------------------------------------------------|
+| `\%\%`      | Por cento                                            |
+| `\t`        | Tab                                                  |
+| `\r`        | Carriage Return (coloca o cursor no início da linha) |
+| `\a` e `\7` | Alguns sons                                          |
 
-### `return}}
+### `return`
 
-Como referi acima, a função `main} irá, neste caso, retornar um número inteiro. É aqui que o comando *return}, que quer dizer retorno, entra. Este retorna o número 0 que é o **binário para falso}.
+Como referi acima, a função `main` irá, neste caso, retornar um número inteiro. É aqui que o comando *return*, que quer dizer retorno, entra. Este retorna o número 0 que é o **binário para falso**.
 
 De momento, ainda não temos muito a acrescentar sobre esta diretiva mas mais à frente iremos falar de novo sobre ele quando abordarmos funções e procedimentos.
 
-### Comentários}
+### Comentários
 
 Os comentários, em programação, são colocados para auxiliar ou dar mais informações sobre alguma parte ou trecho do código. Os comentários são completamente ignorados pelo compilador.
 
-Os comentários que iniciam por "//} começam nesse local e prolongam-se até ao final da linha em questão. Os blocos de comentários maiores começam por "/*} e terminam com "*/} e tudo o que está contido entre eles é um comentário.
+Os comentários que iniciam por `//` começam nesse local e prolongam-se até ao final da linha em questão. Os blocos de comentários maiores começam por `/*` e terminam com `*/` e tudo o que está contido entre eles é um comentário.
 
-Estes não devem ser utilizados para coisas óbvias como, por exemplo, "aqui somam-se as variáveis a e b}. Devem-se utilizar os comentários de dupla barra em variáveis e constantes (ou para comentários curtos). Para comentar algo mais longo como funções ou classes, deverá ser utilizada a estrutura "*/}.
+Estes não devem ser utilizados para coisas óbvias como, por exemplo, "aqui somam-se as variáveis a e b". Devem-se utilizar os comentários de dupla barra em variáveis e constantes (ou para comentários curtos). Para comentar algo mais longo como funções ou classes, deverá ser utilizada a estrutura `*/`.
 
 ```c
-#include <stdio.h>    
+#include <stdio.h>
 
 int main() {        
     int n = 1; //Até ao final da linha é um comentário.    
@@ -514,4 +523,4 @@ int main() {
 }    
 ```
 
-Em C, o tipo de comentários mais utilizado é aquele que começa por "/*}, independentemente do tamanho do comentário.
+Em C, o tipo de comentários mais utilizado é aquele que começa por `/*`, independentemente do tamanho do comentário.

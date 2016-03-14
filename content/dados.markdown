@@ -1,6 +1,7 @@
 ---
 weight: 3
 title: Dados
+description: "Tal como o nome sugere, o tema a abordar são os dados e várias coisas relacionadas com eles. São abordados os vários tipos de dados existentes, tal como a utilização de variáveis e constantes em C."
 type: page
 ---
 

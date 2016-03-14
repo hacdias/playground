@@ -2,6 +2,7 @@
 weight: 6
 title: Funções e Procedimentos
 type: page
+description: "No quinto capítulo serão abordadas duas coisas importantíssimas na programação: as funções e procedimentos. Com elas irá poupar espaço e ainda reutilizar código."
 ---
 
 Neste capítulo é abordada uma parte fundamental da programação funcional, ou seja, as funções e procedimentos.
