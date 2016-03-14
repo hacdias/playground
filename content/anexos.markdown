@@ -4,9 +4,9 @@ type: page
 title: Anexos
 ---
 
-\section{Anexo I - Tabela ASCII}
+## Anexo I - Tabela ASCII
 
-\begin{verbatim}
+```text
 Char  Dec  Oct  Hex | Char  Dec  Oct  Hex | Char  Dec  Oct  Hex |
 -----------------------------------------------------------------
 (nul)   0 0000 0x00 | (sp)   32 0040 0x20 | @      64 0100 0x40 |
@@ -54,22 +54,17 @@ h     104 0150 0x68 | s     115 0163 0x73 | ~     126 0176 0x7e |
 i     105 0151 0x69 | t     116 0164 0x74 | (del) 127 0177 0x7f |
 j     106 0152 0x6a | u     117 0165 0x75 |-------------------- |
 --------------------------------------------------------------- |
-\end{verbatim}
+```
 
-\section{Anexo II - Conversão Hexadecimal-Decimal}
+## Anexo II - Conversão Hexadecimal-Decimal
 
-\begin{table}[h]
-\center\begin{tabular}{|c|c|c|c|}
-\hline
-\textbf{Hexadecimal} & \textbf{Decimal} & \textbf{Hexadecimal} & \textbf{Decimal} \\ \hline
-0                    & 0                & 8                    & 8                \\ \hline
-1                    & 1                & 9                    & 9                \\ \hline
-2                    & 2                & A                    & 10               \\ \hline
-3                    & 3                & B                    & 11               \\ \hline
-4                    & 4                & C                    & 12               \\ \hline
-5                    & 5                & D                    & 13               \\ \hline
-6                    & 6                & E                    & 14               \\ \hline
-7                    & 7                & F                    & 15               \\ \hline
-\end{tabular}
-\caption{Conversão hexadecimal para decimal}
-\end{table}
+| Hexadecimal | Decimal | Hexadecimal | Decimal |
+|:---------------:|:-----------:|:---------------:|:-----------:|
+|        0        |      0      |        8        |      8      |
+|        1        |      1      |        9        |      9      |
+|        2        |      2      |        A        |      10     |
+|        3        |      3      |        B        |      11     |
+|        4        |      4      |        C        |      12     |
+|        5        |      5      |        D        |      13     |
+|        6        |      6      |        E        |      14     |
+|        7        |      7      |        F        |      15     |
