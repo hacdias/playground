@@ -2,6 +2,7 @@
 weight: 10
 type: page
 title: Anexos
+description: Anexos mencionados ao longo dos capítulos.
 ---
 
 ## Anexo I - Tabela ASCII
