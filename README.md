@@ -1,6 +1,6 @@
 # Aprenda a Programar
 
-Versão atualizada do *ebook* anteriormente publicado no Pplware e baseado na saga "Introdução à Programação".
+Versão atualizada do *ebook* anteriormente publicado no Pplware e baseado na saga "Introdução à Programação". Desta vez em formato de website.
 
 ## [Artigo original](pplware.sapo.pt/tutoriais/aprenda-a-programar-o-e-book-gratuito-e-essencial/):
 
