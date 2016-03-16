@@ -264,8 +264,7 @@ article .block pre {
 /* SITE FOOTER */
 
 body > footer {
-  background-color: #2c3e50;
-  color: #ddd;
+  background-color: #F1F1F1;
   text-align: center;
   padding: 1em 0;
 }
@@ -273,10 +272,6 @@ body > footer {
 body > footer p {
   margin: 0 auto;
   font-size: .8em;
-}
-
-body > footer a {
-  color: #ABC8E2 !important;
 }
 
 /* SITE NAV */
