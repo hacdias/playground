@@ -1,5 +1,5 @@
 ---
-weight: 2
+weight: 1
 title: Fundamentos
 type: page
 description: "No primeiro capítulo serão abordados fundamentos essenciais sobre o mundo da programação: o que é uma linguagem de programação, para que serve, como está estruturada, o que precisará utilizar, etc."

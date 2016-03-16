@@ -1,6 +1,6 @@
 ---
 type: page
-weight: 8
+weight: 7
 title: Apontadores
 description: "Apontadores estão omnipresentes, mas são utilizados massivamente em apenas algumas linguagens, como C. Pode ser um capítulo interessante para quem já tem bases nalguma linguagem de programação, mas que gostava de aprender mais sobre apontadores."
 ---

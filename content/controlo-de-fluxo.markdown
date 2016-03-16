@@ -1,5 +1,5 @@
 ---
-weight: 5
+weight: 4
 type: page
 title: Controlo de Fluxo
 description: "A ordem lógica das ações a tomar pode ser diferente em diversas situações. Neste capítulo aprenderá a alterar e a modificar a ordem das ações com base em condições."

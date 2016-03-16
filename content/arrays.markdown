@@ -1,5 +1,5 @@
 ---
-weight: 7
+weight: 6
 title: Arrays
 type: page
 description: "Neste capítulo é abordada uma estrutura de dados extremamente importante, os arrays, que estão presentes em quase todas as linguagens de programação."

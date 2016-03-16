@@ -1,5 +1,5 @@
 ---
-weight: 4
+weight: 3
 title: Operadores
 type: page
 description: "No mundo da programação os dados devem ser modelados, moldados, alterados. É com os operadores abordados neste capítulo que tudo isso pode ser feito. Os operadores abordados existem na maioria das linguagens de programação."
@@ -41,7 +41,7 @@ Os operadores de atribuição servem para atribuir um determinado valor a uma va
 ## Operadores relacionais
 
 {{% alert %}}
-Pode avançar esta e as secções mais à frente por agora. Mais tarde ser-lhe-á indicado para aqui voltar. Consultar capítulo 4.
+Pode avançar esta e as secções mais à frente por agora. Mais tarde ser-lhe-á indicado para aqui voltar. Consultar [capítulo 4](/aprenda-a-programar/controlo-de-fluxo/).
 {{% /alert %}}
 
 Estes operadores (relacionais) permitem-nos estabelecer relações de comparação entre diversas variáveis.
