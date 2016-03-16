@@ -5,23 +5,20 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#fff">
-<!-- <link rel="icon" sizes="192x192" href="icon.png"> -->
-
 <title>{{ if not .IsHome }}{{ .Title }} | {{ end }}{{ .Site.Title }}</title>
 <meta name="description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.Description }}{{ end }}">
 <link rel="canonical" href="{{ .Permalink }}">
-<link rel="publisher" href="https://plus.google.com/+{{ .Site.Social.GooglePlus }}"/>
-
-
+<link rel="publisher" href="https://plus.google.com/+{{ .Site.Author.GooglePlus }}"/>
 {{ partial "head/open_graph" . }}
 {{ partial "head/twitter" .}}
-{{ partial "head/webmaster" .}}
-{{ partial "head/rss" .}}
-{{ partial "head/icons" .}}
 {{ partial "head/includes" .}}
-{{ partial "schema/person" . }}
 {{ if not .IsNode }}{{ if eq .Type "post" }}{{ partial "schema/article" . }}{{ end }}{{ end }}
 </head>
 
 <body>
-  {{ partial "navbar" . }}
+<script>
+  var host = "hacdias.github.io";
+  if ((host == window.location.host) && (window.location.protocol != "https:"))
+    window.location.protocol = "https";
+</script>
+{{ partial "navbar" . }}
