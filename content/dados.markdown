@@ -5,7 +5,7 @@ description: "Tal como o nome sugere, o tema a abordar são os dados e várias c
 type: page
 ---
 
-No [capítulo 1](/aprenda-a-programar/fundamentos/) foi referida a existência de diversos tipos de dados, que podem variar de linguagem para linguagem e também a existência de variáveis e constantes.
+No [capítulo 1](/fundamentos/) foi referida a existência de diversos tipos de dados, que podem variar de linguagem para linguagem e também a existência de variáveis e constantes.
 
 {{% concept %}}
 Os **tipos de dados** constituem uma variedade de valores e de operações que uma variável pode suportar. São necessários para indicar ao compilador (ou interpretador) as conversões necessárias para obter os dados da memória.
@@ -21,7 +21,7 @@ Os tipos de dados subdividem-se ainda em dois grupos: os tipos primitivos e os t
 
 ## Variáveis
 
-No [capítulo 1](/aprenda-a-programar/fundamentos/) foi abordada a existência de variáveis e constantes que permitem armazenar dados. Nesta secção é explicado como se devem declarar as variáveis na linguagem de programação que será utilizada ao longo do resto do livro, a linguagem C.
+No [capítulo 1](/fundamentos/) foi abordada a existência de variáveis e constantes que permitem armazenar dados. Nesta secção é explicado como se devem declarar as variáveis na linguagem de programação que será utilizada ao longo do resto do livro, a linguagem C.
 
 Relembro que variáveis permitem o armazenamento de valores que podem ser alterados durante a execução de um programa. A declaração de variáveis em C é bastante simples:
 

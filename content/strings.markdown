@@ -5,7 +5,7 @@ title: Strings
 description: "No sétimo capítulo serão abordadas as strings, ou seja, sequências de caracteres. São muito importantes, principalmente quando precisa de armazenar texto."
 ---
 
-Na programação, os tipos de dados não se limitam aos já abordados no [capítulo 2](/aprenda-a-programar/dados/): `char`, `int`, `float`, `double`, etc. O tipo `char` permite armazenar um carácter. Mas, não é um carácter muito pouco? E se for necessário armazenar uma frase? Aí entram as *strings*.
+Na programação, os tipos de dados não se limitam aos já abordados no [capítulo 2](/dados/): `char`, `int`, `float`, `double`, etc. O tipo `char` permite armazenar um carácter. Mas, não é um carácter muito pouco? E se for necessário armazenar uma frase? Aí entram as *strings*.
 
 {{% concept %}}
 **Strings** são sequências de caracteres. Qualquer frase é considerada uma *string*, pois é uma sequência de caracteres.
@@ -64,7 +64,7 @@ A função `printf` é útil quando é necessário imprimir uma *string* que pod
 
 ### Com a função `puts`
 
-Temos também a função `puts`, já abordada no [capítulo 5](/aprenda-a-programar/funcoes-procedimentos/), cujo nome quer dizer *put string*, ou seja, colocar *string*. Esta função é excelente para imprimir uma *string* que não esteja intercalada noutra *string*. Ora veja o seguinte exemplo:
+Temos também a função `puts`, já abordada no [capítulo 5](/funcoes-procedimentos/), cujo nome quer dizer *put string*, ou seja, colocar *string*. Esta função é excelente para imprimir uma *string* que não esteja intercalada noutra *string*. Ora veja o seguinte exemplo:
 
 ```c
 char* nome = "José";

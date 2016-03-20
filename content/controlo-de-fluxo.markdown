@@ -16,7 +16,7 @@ Ao controlar o fluxo pode-se direcionar o utilizador para as ações que este es
 Existem diversas estruturas que nos permitem controlar o fluxo de uma aplicação. A maioria das que são aqui abordadas são transversais à maioria das linguagens de programação existentes.
 
 {{% alert %}}
-Antes de continuar aconselhamos a que reveja os **operadores relacionais e lógicos** no [capítulo 3](/aprenda-a-programar/operadores/).
+Antes de continuar aconselhamos a que reveja os **operadores relacionais e lógicos** no [capítulo 3](/operadores/).
 {{% /alert %}}
 
 ## Estrutura `if/else`

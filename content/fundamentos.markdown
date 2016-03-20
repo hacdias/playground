@@ -27,7 +27,7 @@ Existem inúmeras linguagens de programação: algumas de propósito geral, ou s
 
 Abaixo pode visualizar todo o processo da confeção de um bolo onde o algoritmo é a receita – uma sequência de instruções bem definida e finita – que é executada pelo(a) "cozinheiro(a)".
 
-{{< figure src="/aprenda-a-programar/images/confecao_bolo.png" title="Confeção de um bolo" alt="Confeção de um bolo" >}}
+{{< figure src="/images/confecao_bolo.png" title="Confeção de um bolo" alt="Confeção de um bolo" >}}
 
 Os algoritmos podem ser representados de diversas formas. Aqui são abordadas duas delas: os fluxogramas e o pseudocódigo. Estas representações dos algoritmos são essenciais antes destes serem escritos em código; ir-se-à poupar tempo visto que são reduzidos os possíveis erros durante o desenvolvimento.
 
@@ -44,7 +44,7 @@ Existem várias vantagens na criação de fluxogramas como, por exemplo, a sua f
 
 Um fluxograma pode fazer uso de muitos símbolos. No entanto, apenas iremos necessitar dos básicos para ter uma boa compreensão de como funcionam os fluxogramas. Pode visualizar estes símbolos abaixo.
 
-{{< figure src="/aprenda-a-programar/images/simbolos.png" title="Símbolos primários dos fluxogramas" alt="Símbolos primários dos fluxogramas" >}}
+{{< figure src="/images/simbolos.png" title="Símbolos primários dos fluxogramas" alt="Símbolos primários dos fluxogramas" >}}
 
 Na figura mais à frente pode visualizar um fluxograma, baseado no processo de confeção de um bolo.
 
@@ -75,7 +75,7 @@ Como pode verificar, o algoritmo acima, em Portugol, é extremamente simples de 
 {{% concept %}}
 Um **comando** é uma ordem ou instrução dada a um computador ou qualquer outra máquina automatizada.{{% /concept %}}
 
-{{< figure src="/aprenda-a-programar/images/confecao_bolo_al.png" title="Fluxograma \"Confeção de um bolo\"" alt="Fluxograma \"Confeção de um bolo\"" >}}
+{{< figure src="/images/confecao_bolo_al.png" title="Fluxograma \"Confeção de um bolo\"" alt="Fluxograma \"Confeção de um bolo\"" >}}
 
 ## Constantes e variáveis
 
@@ -190,7 +190,7 @@ Ir trabalhar;
 
 Este é um exemplo de uma sequência onde são realizadas as ações normais do dia-a-dia de um indivíduo que está empregado.
 
-{{< figure src="/aprenda-a-programar/images/sequencia.png" title="Fluxograma de uma sequência" alt="Fluxograma de uma sequência" >}}
+{{< figure src="/images/sequencia.png" title="Fluxograma de uma sequência" alt="Fluxograma de uma sequência" >}}
 
 Na maioria das linguagens de programação, os comandos/ações terminam com ponto e vírgula pois estas permitem que os comandos sejam colocados em linha da seguinte forma:
 
@@ -225,7 +225,7 @@ O pseudocódigo acima já não está em português; já não é Portugol. O que 
 
 Retornando novamente ao trecho de código escrito acima, repare que `Trabalhar` só será executado se e apenas se o indivíduo `Acordar`. Caso contrário, o trecho `Não trabalhar` será executado.
 
-{{< figure src="/aprenda-a-programar/images/decisao01.png" title="Exemplo de uma decisão em fluxograma" alt="Exemplo de uma decisão em fluxograma" >}}
+{{< figure src="/images/decisao01.png" title="Exemplo de uma decisão em fluxograma" alt="Exemplo de uma decisão em fluxograma" >}}
 
 Agora veja o seguinte exemplo em que a condição "Dói-me a cabeça. Se doer muito pouco, vou trabalhar. Se doer pouco, tomo um comprimido e vou trabalhar. Se doer muito, vou ao médico e falto ao trabalho" é executada.
 
@@ -242,7 +242,7 @@ case "Dor de cabeca"
 + **when** → quando
 + **else if** → caso contrário se
 
-{{< figure src="/aprenda-a-programar/images/decisao02.png" title="O que farei se me doer a cabeça" alt="O que farei se me doer a cabeça" >}}
+{{< figure src="/images/decisao02.png" title="O que farei se me doer a cabeça" alt="O que farei se me doer a cabeça" >}}
 
 Este é mais um exemplo mas utilizando diferentes comandos. Este trecho poderia ser também escrito através de *primitivas if/else* da seguinte forma (ver Figura 1.6):
 
@@ -338,7 +338,7 @@ Os anos de 1969 a 1973 foram de extremo entusiasmo dentro da AT\&T Bell Labs por
 
 O principal desenvolvedor desta linguagem foi **Dennis Ritchie** que descreveu o ano de 1972 como o mais produtivo e criativo.
 
-{{< figure src="/aprenda-a-programar/images/dennisritchie.jpg" title="Dennis Ritchie" alt="Dennis Ritchie" >}}
+{{< figure src="/images/dennisritchie.jpg" title="Dennis Ritchie" alt="Dennis Ritchie" >}}
 
 A linguagem desenvolvida por Ritchie chama-se **C** porque esta linguagem baseou-se imenso numa outra linguagem de programação chamada **B**, tendo C diversas características em comum com B.
 

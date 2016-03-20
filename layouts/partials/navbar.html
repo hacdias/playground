@@ -5,13 +5,13 @@
       <div>{{ .Prev.Title }}</div>
     </a>
     {{ else }}
-    <a href="/aprenda-a-programar/" class="prev">
+    <a href="/" class="prev">
       <div>Aprenda a Programar</div>
     </a>
     {{ end }}{{ end }}
   </div>
   <div>
-    <a href="/aprenda-a-programar/"><span>{{ .Title }}</span></a>
+    <a href="/"><span>{{ .Title }}</span></a>
   </div>
   <div>
     {{ if not .IsNode}}{{ if .Next }}
@@ -19,7 +19,7 @@
       <div>{{ .Next.Title }}</div>
     </a>
     {{ end }}{{ else }}
-    <a href="/aprenda-a-programar/fundamentos/" class="next">
+    <a href="/fundamentos/" class="next">
       <div>Vamos Começar</div>
     </a>
     {{ end }}

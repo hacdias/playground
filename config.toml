@@ -1,4 +1,4 @@
-baseurl = "https://hacdias.github.io/aprenda-a-programar/"
+baseurl = "https://aprenda-a-programar.github.io/"
 disqusShortname = "aprendaaprogramar"
 languageCode = "pt_PT"
 pluralizelisttitles = false

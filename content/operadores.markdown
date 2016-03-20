@@ -41,7 +41,7 @@ Os operadores de atribuição servem para atribuir um determinado valor a uma va
 ## Operadores relacionais
 
 {{% alert %}}
-Pode avançar esta e as secções mais à frente por agora. Mais tarde ser-lhe-á indicado para aqui voltar. Consultar [capítulo 4](/aprenda-a-programar/controlo-de-fluxo/).
+Pode avançar esta e as secções mais à frente por agora. Mais tarde ser-lhe-á indicado para aqui voltar. Consultar [capítulo 4](/controlo-de-fluxo/).
 {{% /alert %}}
 
 Estes operadores (relacionais) permitem-nos estabelecer relações de comparação entre diversas variáveis.
