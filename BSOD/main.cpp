@@ -8,6 +8,8 @@
 #include <string>
 using namespace std;
 
+#define SCREEN(x) GetSystemMetrics(*x == 'X' ? SM_CXSCREEN : SM_CYSCREEN)
+
 int curX, curY;
 bool crazyMouse;
 void CrazyMouse() {
