@@ -30,38 +30,6 @@ void Beeper() {
 
 const LPCWSTR BSOD_TEXT = L"A fatal exception 0E occured at 0028:C003CC2F in VXD VMM(01) +\n 0000156B. The current application will be terminated.\n\n\t* Press any key to terminate the current application.\n\t* Press CTRL+ALT+DEL again to restart your computer. You will\nlose any unsaved information in all applications.\n";
 
-void PaintBSOD(HDC hdc, HWND hwnd) {
-	SetBkMode(hdc, TRANSPARENT);
-	SetTextColor(hdc, RGB(255, 255, 255));
-
-	RECT rc;
-	
-
-	GetWindowRect(hwnd, &rc);
-
-
-	/* int rectHeight = DrawText(hdc, BSOD_TEXT, wcslen(BSOD_TEXT), &rc, DT_CALCRECT);                    // Get formating rectangle height
-
-	int windowHight = rc.bottom - rc.top;
-	int windowWidth = rc.right - rc.left;
-
-
-	int yTop = rc.top + ((windowHight - rectHeight) / 2);
-	int yBottom = yTop + rectHeight;
-
-	int xLeft = rc.left + 20;
-	int xRight = rc.right - 20;
-
-
-	rc.top = (int)GetSystemMetrics(SM_CYSCREEN)/2-rectHeight/2;
-	rc.bottom = 0;
-	rc.left = 0;
-	rc.right = 0; */
-
-
-	DrawText(hdc, BSOD_TEXT, wcslen(BSOD_TEXT), &rc, NULL);
-}
-
 void MakeBSOD(HWND hwnd) {
 	HDC hdc;
 	PAINTSTRUCT ps;
@@ -72,34 +40,22 @@ void MakeBSOD(HWND hwnd) {
 	title.top = 100;
 	DrawText(hdc, TEXT(" Windows "), strlen(" Windows "), &title, DT_CENTER);
 
-	
 	SetBkMode(hdc, TRANSPARENT);
 	SetTextColor(hdc, RGB(255, 255, 255));
 
-	RECT rc;
-	GetWindowRect(hwnd, &rc);
+	RECT main;
+	GetWindowRect(hwnd, &main);
+	
+	int rectHeight = DrawText(hdc, BSOD_TEXT, wcslen(BSOD_TEXT), &main, DT_CALCRECT);
+	int windowHeight = main.bottom - main.top;
+	int windowWidth = main.right - main.left;
 
+	main.top = ((int)GetSystemMetrics(SM_CYSCREEN)-windowHeight) / 2;
+	main.bottom = main.top + windowHeight;
+	main.left = ((int)GetSystemMetrics(SM_CXSCREEN)-windowWidth) / 2;
+	main.right = main.keft + windowWidth;
 
-	int rectHeight = DrawText(hdc, BSOD_TEXT, wcslen(BSOD_TEXT), &rc, DT_CALCRECT);
-
-	int windowHight = rc.bottom - rc.top;
-	int windowWidth = rc.right - rc.left;
-
-
-	int yTop = rc.top + ((windowHight - rectHeight) / 2);
-	int yBottom = yTop + rectHeight;
-
-	int xLeft = rc.left + 20;
-	int xRight = rc.right - 20;
-
-
-	rc.top = yTop;
-	rc.bottom = yBottom;
-	rc.left = xLeft;
-	rc.right = xRight;
-
-	DrawText(hdc, BSOD_TEXT, wcslen(BSOD_TEXT), &rc, NULL);
-
+	DrawText(hdc, BSOD_TEXT, wcslen(BSOD_TEXT), &main, NULL);
 	EndPaint(hwnd, &ps);
 }
 
