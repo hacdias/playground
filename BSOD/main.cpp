@@ -3,13 +3,13 @@
 #endif
 #pragma comment(lib, "Shlwapi.lib")
 
-#include <Windows.h>
 #include <cmath>
 #include <thread>
-#include <tchar.h>
-#include <string>
+#include <Windows.h>
 #include <Shlwapi.h>
 #include <Shlobj.h>
+#include <tchar.h>
+
 using namespace std;
 
 #define WM_FORCE_EXIT (WM_USER + 0x0001)
