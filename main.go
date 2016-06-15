@@ -16,7 +16,7 @@ const usage = `
  /\__/ / (_) | |_| | |  | | | | (_| | |
  \____/ \___/ \__,_|_|  |_| |_|\__,_|_|
 
-Brought to you by Fábio Ferreira and Henrique Dias`
+Brought to you by Fábio Ferreira and Henrique Dias.`
 
 var (
 	tags  string
@@ -27,7 +27,7 @@ var (
 
 func init() {
 	flag.Usage = func() {
-		fmt.Print(usage)
+		fmt.Println(usage)
 
 		flag.PrintDefaults()
 	}
