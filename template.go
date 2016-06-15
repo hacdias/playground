@@ -106,9 +106,10 @@ const templateString = `<!doctype html>
     </div>
   </nav>
   {{ if eq .Kind "single" }}
+  {{ $item := index .Journal.Entries .Index}}
   <article class="container">
-      <h1>{{ .Date.Format "2006-01-02 15:04" }}</h1>
-      {{ .Text }}
+      <h1>{{ $item.Date.Format "Monday, 02 Jan 2006 15:04" }}</h1>
+      {{ $item.Text }}
   </article>
   {{ else if eq .Kind "new" }}
   <form class="container" action="/new" method="post">
@@ -122,7 +123,7 @@ const templateString = `<!doctype html>
     <h1>Entries</h1>
     <ul>
       {{ range $index, $entry := .Journal.Entries }}
-        <li><a href="{{ $entry.Date.Format "2006/01/02/15/04" }}">{{ $entry.Date.Format "2006-01-02 15:04" }}</a></li>
+        <li><a href="{{ $entry.Date.Format "200601021504" }}">{{ $entry.Date.Format "Monday, 02 Jan 2006 15:04" }}</a></li>
       {{ end }}
     </ul>
   </div>

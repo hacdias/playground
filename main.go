@@ -18,6 +18,7 @@ var (
 	port  int
 	help  bool
 	jrn   *Journal
+	tpl   *template.Template
 )
 
 func init() {
@@ -39,6 +40,8 @@ func init() {
 }
 
 func main() {
+	// Declare error variable and parse flags.
+	var err error
 	flag.Parse()
 
 	// Check if 'serve' is being used with more flags
@@ -48,70 +51,82 @@ func main() {
 		os.Exit(0)
 	}
 
-	// If serving is enabled, start a webserver at the defined
-	// port. By default it's 8080
-	if serve {
-		jrn.Path = "D:\\journal.txt"
-		jrn.Retrieved = time.Time{}
-		err := jrn.Parse()
-
-		if err != nil {
-			panic(err)
-		}
-
-		http.HandleFunc("/", serveHTTP)
-		http.ListenAndServe(":"+strconv.Itoa(port), nil)
-		return
-	}
-
 	// If the flag 'help' is true, show the usage for the user
 	if help {
 		flag.Usage()
 		os.Exit(0)
 	}
 
+	// Starts up the link
 	/* 	user, err := user.Current()
-	   	if err != nil {
-	   		panic(err)
-	   	} */
+	if err != nil {
+		panic(err)
+	} */
 
 	// TODO: check if notebook file already exists
 	// The notebook file link should be at %userprofile%/.journal
 	// if it doesn't, ask the user to create a new file
 	// We'll do the encryption later
+
+	jrn.Path = "D:\\journal.txt"
+	jrn.Retrieved = time.Time{}
+	err = jrn.Parse()
+
+	if err != nil {
+		panic(err)
+	}
+
+	// If serving is enabled, start a webserver at the defined
+	// port. By default it's 8080
+	if serve {
+		// Build the template.
+		tpl, err = template.New("template").Parse(templateString)
+		if err != nil {
+			panic(err)
+		}
+
+		http.HandleFunc("/", ServeHTTP)
+		http.ListenAndServe(":"+strconv.Itoa(port), nil)
+		return
+	}
 }
 
 // Page contains the information to show on the page
 type Page struct {
 	Kind    string
-	Date    time.Time
 	Journal *Journal
-	Content string
+	Index   int
 }
 
-func serveHTTP(w http.ResponseWriter, r *http.Request) {
-	tpl, err := template.New("template").Parse(templateString)
-
-	if err != nil {
-		log.Print(err)
+// ServeHTTP is used to handle the requests.
+func ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	// Check if it's using GET or POST.
+	if r.Method != "GET" && r.Method != "POST" {
+		w.WriteHeader(http.StatusNotImplemented)
 		return
 	}
 
+	var err error
 	data := &Page{Journal: jrn}
 
-	// If it's the new entry page
+	// If it's the new entry page.
 	if strings.HasPrefix(r.URL.Path, "/new") {
+		// If the method is post.
 		if r.Method == "POST" {
+			// Gets the form information.
 			tags := r.FormValue("tags")
 			text := r.FormValue("text")
+			// Adds the new entry.
 			err = jrn.AddEntry(tags, text)
 			if err != nil {
 				log.Println(err)
 			}
+			// Redirects the user to the front-page.
 			http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 			return
 		}
 
+		// If it's another method.
 		data.Kind = "new"
 		tpl.Execute(w, data)
 		return
@@ -121,6 +136,17 @@ func serveHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		data.Kind = "single"
 
+		var date time.Time
+		str := strings.TrimPrefix(r.URL.Path, "/")
+		date, err = time.Parse("200601021504", str)
+
+		if err != nil {
+			data.Kind = "error"
+			tpl.Execute(w, data)
+			return
+		}
+
+		data.Index = jrn.EntryIndex(date)
 		tpl.Execute(w, data)
 		return
 	}

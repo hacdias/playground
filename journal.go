@@ -107,6 +107,7 @@ func (j *Journal) Parse() error {
 			// Parses the tags from the line (the date if firstly removed from the
 			// line using strings.Replace).
 			entry.Tags = j.parseTags(strings.Replace(line, date, "", -1))
+			continue
 		}
 
 		// Adds the current line to the text.
@@ -153,6 +154,10 @@ func (j *Journal) AddEntry(tags, text string) error {
 
 	j.Retrieved = time.Now()
 	return nil
+}
+
+func (j Journal) EntryIndex(date time.Time) int {
+	return 0
 }
 
 func (j Journal) parseTags(tags string) []string {
