@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -16,9 +17,12 @@ var (
 	serve bool
 	port  int
 	help  bool
+	jrn   *Journal
 )
 
 func init() {
+	jrn = new(Journal)
+
 	flag.Usage = func() {
 		// TODO: review this
 		fmt.Println("Journal usage:")
@@ -47,6 +51,14 @@ func main() {
 	// If serving is enabled, start a webserver at the defined
 	// port. By default it's 8080
 	if serve {
+		jrn.Path = "D:\\journal.txt"
+		jrn.Retrieved = time.Time{}
+		err := jrn.Parse()
+
+		if err != nil {
+			panic(err)
+		}
+
 		http.HandleFunc("/", serveHTTP)
 		http.ListenAndServe(":"+strconv.Itoa(port), nil)
 		return
@@ -69,10 +81,11 @@ func main() {
 	// We'll do the encryption later
 }
 
+// Page contains the information to show on the page
 type Page struct {
 	Kind    string
 	Date    time.Time
-	Entries []string
+	Journal *Journal
 	Content string
 }
 
@@ -84,7 +97,41 @@ func serveHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data := &Page{}
+	data := &Page{Journal: jrn}
+
+	// If it's the new entry page
+	if strings.HasPrefix(r.URL.Path, "/new") {
+		if r.Method == "POST" {
+			tags := r.FormValue("tags")
+			text := r.FormValue("text")
+			err = jrn.AddEntry(tags, text)
+			if err != nil {
+				log.Println(err)
+			}
+			http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+			return
+		}
+
+		data.Kind = "new"
+		tpl.Execute(w, data)
+		return
+	}
+
+	// If it's a single page
+	if r.URL.Path != "/" {
+		data.Kind = "single"
+
+		tpl.Execute(w, data)
+		return
+	}
+
+	err = jrn.Parse()
+
+	if err != nil {
+		log.Print(err)
+		return
+	}
+
 	tpl.Execute(w, data)
 	return
 }

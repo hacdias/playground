@@ -5,7 +5,7 @@ const templateString = `<!doctype html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title></title>
+    <title>Journal</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -46,12 +46,20 @@ const templateString = `<!doctype html>
     nav .container> div {
         text-align: right;
     }
+    input,
     textarea {
         width: 100%;
-        min-height: 32em;
         font-size: 1em;
-        resize: vertical;
         border: 1px dashed #212121;
+        padding: .2em;
+    }
+    textarea {
+        min-height: 32em;
+        resize: vertical;
+    }
+    textarea:active {
+        outline: 0;
+        border-color: #000;
     }
     button {
         padding: .2em .5em;
@@ -68,6 +76,10 @@ const templateString = `<!doctype html>
         background-color: #212121;
         border: 1px dashed #fff;
         color: #fff;
+    }
+    textarea, input, button {
+        margin: .2em 0;
+        display: block;
     }
     ul {
         list-style-type: none;
@@ -99,40 +111,19 @@ const templateString = `<!doctype html>
       {{ .Text }}
   </article>
   {{ else if eq .Kind "new" }}
-  <form class="container" action="." method="post">
+  <form class="container" action="/new" method="post">
     <h1>New Entry</h1>
-    <textarea id="msg" name="user_message"></textarea>
+    <input id="tags" name="tags" placeholder="happy, summer, tags..."></input>
+    <textarea id="text" name="text"></textarea>
     <button type="submit">Send your message</button>
   </form>
   {{ else }}
   <div class="container">
     <h1>Entries</h1>
     <ul>
-      <li>2016-08-08</li>
-      <li>2016-08-24</li>
-      <li>2016-08-30</li>
-      <li>2016-09-06</li>
-      <li>2016-09-12</li>
-      <li>2016-09-22</li>
-      <li>2016-10-05</li>
-      <li>2016-10-12</li>
-      <li>2016-10-13</li>
-      <li>2016-10-14</li>
-      <li>2016-10-24</li>
-      <li>2016-10-26</li>
-      <li>2016-10-28</li>
-      <li>2016-11-01</li>
-      <li>2016-11-03</li>
-      <li>2016-11-07</li>
-      <li>2016-11-08</li>
-      <li>2016-11-11</li>
-      <li>2016-11-28</li>
-      <li>2016-12-02</li>
-      <li>2016-12-06</li>
-      <li>2016-12-07</li>
-      <li>2016-12-08</li>
-      <li>2016-12-12</li>
-      <li>2016-12-16</li>
+      {{ range $index, $entry := .Journal.Entries }}
+        <li><a href="{{ $entry.Date.Format "2006/01/02/15/04" }}">{{ $entry.Date.Format "2006-01-02 15:04" }}</a></li>
+      {{ end }}
     </ul>
   </div>
   {{ end }}
