@@ -8,16 +8,6 @@ import (
 	"strconv"
 )
 
-const usage = `
-    ___                              _
-   |_  |                            | |
-     | | ___  _   _ _ __ _ __   __ _| |
-     | |/ _ \| | | | '__| '_ \ / _' | |
- /\__/ / (_) | |_| | |  | | | | (_| | |
- \____/ \___/ \__,_|_|  |_| |_|\__,_|_|
-
-Brought to you by Fábio Ferreira and Henrique Dias.`
-
 var (
 	tags  string
 	serve bool
@@ -27,9 +17,11 @@ var (
 
 func init() {
 	flag.Usage = func() {
-		fmt.Println(usage)
-
+		fmt.Println("Journal usage:")
+		fmt.Println("")
 		flag.PrintDefaults()
+		fmt.Println("")
+		fmt.Println("Brought to you by Fábio Ferreira and Henrique Dias.")
 	}
 
 	flag.StringVar(&tags, "tags", "", "set the tags for this entry separated by spaces")
