@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
 	"regexp"
@@ -136,8 +135,6 @@ func (j *Journal) AddEntry(tags, text string) error {
 	// Builds the raw text to append to the file
 	raw := entry.Date.Format(dateLayout) + " " + j.tagsToString(entry.Tags)
 	raw += "\n" + entry.Text + "\n\n"
-
-	fmt.Println(raw)
 
 	// Appends the entry to the journal
 	j.Entries = append([]Entry{entry}, j.Entries...)
