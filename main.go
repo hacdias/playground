@@ -8,6 +8,16 @@ import (
 	"strconv"
 )
 
+const usage = `
+    ___                              _
+   |_  |                            | |
+     | | ___  _   _ _ __ _ __   __ _| |
+     | |/ _ \| | | | '__| '_ \ / _' | |
+ /\__/ / (_) | |_| | |  | | | | (_| | |
+ \____/ \___/ \__,_|_|  |_| |_|\__,_|_|
+
+Brought to you by Fábio Ferreira and Henrique Dias`
+
 var (
 	tags  string
 	serve bool
@@ -17,16 +27,7 @@ var (
 
 func init() {
 	flag.Usage = func() {
-		// TODO: costum usage template
-		fmt.Print(`
-      ___                              _
-     |_  |                            | |
-       | | ___  _   _ _ __ _ __   __ _| |
-       | |/ _ \| | | | '__| '_ \ / _' | |
-   /\__/ / (_) | |_| | |  | | | | (_| | |
-   \____/ \___/ \__,_|_|  |_| |_|\__,_|_|
-
-Brought to you by Fábio Ferreira and Henrique Dias`)
+		fmt.Print(usage)
 
 		flag.PrintDefaults()
 	}
