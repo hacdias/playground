@@ -16,6 +16,12 @@ var (
 )
 
 func init() {
+	flag.Usage = func() {
+		// TODO: costum usage template
+		fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
+		flag.PrintDefaults()
+	}
+
 	flag.StringVar(&tags, "tags", "", "set the tags for this entry separated by spaces")
 	flag.BoolVar(&serve, "serve", false, "run the journal as a webserver")
 	flag.BoolVar(&help, "help", false, "get help")
@@ -42,7 +48,6 @@ func main() {
 
 	// If the flag 'help' is true, show the usage for the user
 	if help {
-		// TODO: costum usage template
 		flag.Usage()
 		os.Exit(0)
 	}
