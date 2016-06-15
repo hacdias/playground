@@ -1,12 +1,16 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
 	"html/template"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
+	"os/user"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -58,20 +62,41 @@ func main() {
 	}
 
 	// Starts up the link
-	/* 	user, err := user.Current()
+	user, err := user.Current()
 	if err != nil {
 		panic(err)
-	} */
+	}
 
-	// TODO: check if notebook file already exists
-	// The notebook file link should be at %userprofile%/.journal
-	// if it doesn't, ask the user to create a new file
-	// We'll do the encryption later
+	confPath := filepath.Join(user.HomeDir, ".journal")
+	jrnlPath := filepath.Join(user.HomeDir, "journal.txt")
 
-	jrn.Path = "D:\\journal.txt"
+	// Checks if the file %userprofile%/.journal exists
+	if _, err = os.Stat(confPath); os.IsNotExist(err) {
+		fmt.Print("Journal file (leave blank for " + jrnlPath + "): ")
+
+		var text string
+		reader := bufio.NewReader(os.Stdin)
+		text, err = reader.ReadString('\n')
+		text = strings.TrimSpace(text)
+
+		if err != nil {
+			panic(err)
+		}
+
+		if text == "" {
+			jrn.Path = jrnlPath
+		} else {
+			jrn.Path = text
+		}
+
+		err = ioutil.WriteFile(confPath, []byte(jrnlPath), 0600)
+		if err != nil {
+			panic(err)
+		}
+	}
+
 	jrn.Retrieved = time.Time{}
 	err = jrn.Parse()
-
 	if err != nil {
 		panic(err)
 	}
@@ -89,6 +114,8 @@ func main() {
 		http.ListenAndServe(":"+strconv.Itoa(port), nil)
 		return
 	}
+
+	// TODO ADD COMMAND LINE
 }
 
 // Page contains the information to show on the page

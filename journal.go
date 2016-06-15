@@ -41,7 +41,15 @@ func (j *Journal) ModifiedMeantime() (bool, error) {
 	// Opens the file and checks if there is any error.
 	file, err := os.Open(j.Path)
 	if err != nil {
-		return false, err
+		if os.IsNotExist(err) {
+			file, err = os.Create(j.Path)
+			if err != nil {
+				return false, err
+			}
+		} else {
+			return false, err
+		}
+		// TODO: simplify this ^
 	}
 
 	// Gets the information of the file and checks if there is any error.
