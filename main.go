@@ -18,7 +18,16 @@ var (
 func init() {
 	flag.Usage = func() {
 		// TODO: costum usage template
-		fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
+		fmt.Print(`
+      ___                              _
+     |_  |                            | |
+       | | ___  _   _ _ __ _ __   __ _| |
+       | |/ _ \| | | | '__| '_ \ / _' | |
+   /\__/ / (_) | |_| | |  | | | | (_| | |
+   \____/ \___/ \__,_|_|  |_| |_|\__,_|_|
+
+Brought to you by Fábio Ferreira and Henrique Dias`)
+
 		flag.PrintDefaults()
 	}
 
