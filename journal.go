@@ -92,7 +92,7 @@ func (j *Journal) Parse() error {
 			// entry to the journal entries array, and starts a new blank entry.
 			if index != 0 {
 				entry.Text = strings.TrimSpace(entry.Text)
-				j.Entries = append(j.Entries, entry)
+				j.Entries = append([]Entry{entry}, j.Entries...)
 				entry = Entry{}
 			}
 
@@ -116,8 +116,9 @@ func (j *Journal) Parse() error {
 
 	// Adds the latest entry to the slice only if there any lines.
 	if len(lines) > 1 {
-		j.Entries = append(j.Entries, entry)
+		j.Entries = append([]Entry{entry}, j.Entries...)
 	}
+
 	// Updates the time when the entries were retrieved.
 	j.Retrieved = time.Now()
 	return nil
@@ -139,7 +140,7 @@ func (j *Journal) AddEntry(tags, text string) error {
 	fmt.Println(raw)
 
 	// Appends the entry to the journal
-	j.Entries = append(j.Entries, entry)
+	j.Entries = append([]Entry{entry}, j.Entries...)
 
 	// Writes the file to append the new Entry
 	file, err := os.OpenFile(j.Path, os.O_APPEND|os.O_WRONLY, 0600)
@@ -156,8 +157,25 @@ func (j *Journal) AddEntry(tags, text string) error {
 	return nil
 }
 
+// EntryIndex retrieves the index of an entry
 func (j Journal) EntryIndex(date time.Time) int {
-	return 0
+	fi := 0
+	la := len(j.Entries)
+	mid := 0
+
+	for !date.Equal(j.Entries[mid].Date) {
+		mid = (fi + la) / 2
+
+		if date.After(j.Entries[mid].Date) {
+			la = mid
+			continue
+		}
+
+		fi = mid
+		continue
+	}
+
+	return mid
 }
 
 func (j Journal) parseTags(tags string) []string {

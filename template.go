@@ -17,6 +17,10 @@ const templateString = `<!doctype html>
     * {
         box-sizing: border-box;
     }
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
     body {
         font-family: 'Roboto Mono', monospace;
         padding: 0;
