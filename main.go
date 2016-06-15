@@ -3,10 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
+	"html/template"
+	"log"
 	"net/http"
 	"os"
-	"os/user"
 	"strconv"
+	"time"
 )
 
 var (
@@ -56,10 +58,10 @@ func main() {
 		os.Exit(0)
 	}
 
-	user, err := user.Current()
-	if err != nil {
-		panic(err)
-	}
+	/* 	user, err := user.Current()
+	   	if err != nil {
+	   		panic(err)
+	   	} */
 
 	// TODO: check if notebook file already exists
 	// The notebook file link should be at %userprofile%/.journal
@@ -67,6 +69,22 @@ func main() {
 	// We'll do the encryption later
 }
 
+type Page struct {
+	Kind    string
+	Date    time.Time
+	Entries []string
+	Content string
+}
+
 func serveHTTP(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Hey"))
+	tpl, err := template.New("template").Parse(templateString)
+
+	if err != nil {
+		log.Print(err)
+		return
+	}
+
+	data := &Page{}
+	tpl.Execute(w, data)
+	return
 }
