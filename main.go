@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"os/user"
 	"strconv"
 )
 
@@ -53,6 +54,11 @@ func main() {
 	if help {
 		flag.Usage()
 		os.Exit(0)
+	}
+
+	user, err := user.Current()
+	if err != nil {
+		panic(err)
 	}
 
 	// TODO: check if notebook file already exists
