@@ -17,6 +17,7 @@ var (
 
 func init() {
 	flag.Usage = func() {
+		// TODO: review this
 		fmt.Println("Journal usage:")
 		fmt.Println("")
 		flag.PrintDefaults()
