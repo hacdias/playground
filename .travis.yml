@@ -10,4 +10,5 @@ before_install:
   - go get github.com/mattn/goveralls
 script:
   - gox -output "dist/{{.OS}}_{{.Arch}}_{{.Dir}}"
-  - ghr -u hacdias -t $GITHUB_TOKEN --replace --prerelease pre-release dist/
+after_success:
+  - ghr --username hacdias --token $GITHUB_TOKEN --replace --prerelease --debug pre-release dist/
