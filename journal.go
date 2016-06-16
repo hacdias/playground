@@ -106,7 +106,7 @@ func (j *Journal) Parse() error {
 
 			// Parses the tags from the line (the date if firstly removed from the
 			// line using strings.Replace).
-			entry.Tags = j.parseTags(strings.Replace(line, date, "", -1))
+			entry.ParseTags(strings.Replace(line, date, "", -1))
 			continue
 		}
 
@@ -129,12 +129,13 @@ func (j *Journal) AddEntry(tags, text string) error {
 	// Creates a new entry with the form information
 	entry := Entry{
 		Date: time.Now(),
-		Tags: j.parseTags(tags),
 		Text: strings.TrimSpace(text),
 	}
 
+	entry.ParseTags(tags)
+
 	// Builds the raw text to append to the file
-	raw := entry.Date.Format(dateLayout) + " " + j.tagsToString(entry.Tags)
+	raw := entry.Date.Format(dateLayout) + " " + entry.TagsToString()
 	raw += "\n" + entry.Text + "\n\n"
 
 	// Appends the entry to the journal
@@ -157,22 +158,6 @@ func (j *Journal) AddEntry(tags, text string) error {
 
 // EntryIndex retrieves the index of an entry
 func (j Journal) EntryIndex(date time.Time) int {
-	/* fi := 0
-	la := len(j.Entries)
-	mid := 0
-
-	for !date.Equal(j.Entries[mid].Date) {
-		mid = (fi + la) / 2
-
-		if date.After(j.Entries[mid].Date) {
-			la = mid
-			continue
-		}
-
-		fi = mid
-		continue
-	} */
-
 	for index, entry := range j.Entries {
 		if date.Equal(entry.Date) {
 			return index
@@ -182,7 +167,8 @@ func (j Journal) EntryIndex(date time.Time) int {
 	return 0
 }
 
-func (j Journal) parseTags(tags string) []string {
+// ParseTags is used to convert a tags string in a slice
+func (e Entry) ParseTags(tags string) {
 	tags = strings.TrimSpace(tags)
 	parsed := strings.Split(tags, ",")
 
@@ -192,13 +178,14 @@ func (j Journal) parseTags(tags string) []string {
 		parsed[i] = "#" + v
 	}
 
-	return parsed
+	e.Tags = parsed
 }
 
-func (j Journal) tagsToString(tags []string) string {
+// TagsToString converts the tags of an entry to a string
+func (e Entry) TagsToString() string {
 	final := ""
 
-	for _, v := range tags {
+	for _, v := range e.Tags {
 		final += v + " "
 	}
 
