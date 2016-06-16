@@ -1,6 +1,7 @@
 package main
 
 import (
+	"html/template"
 	"io/ioutil"
 	"os"
 	"regexp"
@@ -190,4 +191,12 @@ func (e Entry) TagsToString() string {
 	}
 
 	return strings.TrimSuffix(final, " ")
+}
+
+// HTML converts the entry plain text to HTML
+func (e Entry) HTML() template.HTML {
+	html := e.Text
+	html = "<p>" + html + "</p>"
+	html = strings.Replace(html, "\n", "</p><p>", -1)
+	return template.HTML(html)
 }

@@ -113,7 +113,7 @@ const templateString = `<!doctype html>
   {{ $item := index .Journal.Entries .Index}}
   <article class="container">
       <h1>{{ $item.Date.Format "Monday, 02 Jan 2006 15:04" }}</h1>
-      {{ $item.Text }}
+      {{ $item.HTML }}
   </article>
   {{ else if eq .Kind "new" }}
   <form class="container" action="/new" method="post">
