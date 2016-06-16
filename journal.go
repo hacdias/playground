@@ -112,7 +112,7 @@ func (j *Journal) Parse() error {
 		}
 
 		// Adds the current line to the text.
-		entry.Text += line
+		entry.Text += line + "\n"
 	}
 
 	// Adds the latest entry to the slice only if there any lines.
