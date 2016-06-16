@@ -6,9 +6,12 @@ A simple command line application to keep your journal updated (it has a really 
 
 Firstly, you need to download it from the releases page. Then, put the binary somewhere inside your PATH environment variable. You have two choices now: run it with a web UI or only use the command line tool.
 
-**Run web server:**
+**Run web interface:**
 
 To run the web interface, you should execute ```journal --server``` on your console. By default it will be available at ```localhost:8080``` but you can change the port using the flag ```--port```.
+
+![New entry interface](https://cloud.githubusercontent.com/assets/5447088/16109858/eb5af042-33a2-11e6-9c38-47d8e940900a.png)
+
 
 **Use the CLI tool:**
 
