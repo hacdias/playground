@@ -40,16 +40,9 @@ func (j *Journal) Read() error {
 func (j *Journal) ModifiedMeantime() (bool, error) {
 	// Opens the file and checks if there is any error.
 	file, err := os.Open(j.Path)
+
 	if err != nil {
-		if os.IsNotExist(err) {
-			file, err = os.Create(j.Path)
-			if err != nil {
-				return false, err
-			}
-		} else {
-			return false, err
-		}
-		// TODO: simplify this ^
+		return false, err
 	}
 
 	// Gets the information of the file and checks if there is any error.
@@ -164,7 +157,7 @@ func (j *Journal) AddEntry(tags, text string) error {
 
 // EntryIndex retrieves the index of an entry
 func (j Journal) EntryIndex(date time.Time) int {
-	fi := 0
+	/* fi := 0
 	la := len(j.Entries)
 	mid := 0
 
@@ -178,9 +171,15 @@ func (j Journal) EntryIndex(date time.Time) int {
 
 		fi = mid
 		continue
+	} */
+
+	for index, entry := range j.Entries {
+		if date.Equal(entry.Date) {
+			return index
+		}
 	}
 
-	return mid
+	return 0
 }
 
 func (j Journal) parseTags(tags string) []string {

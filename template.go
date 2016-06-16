@@ -122,14 +122,22 @@ const templateString = `<!doctype html>
     <textarea id="text" name="text"></textarea>
     <button type="submit">Send your message</button>
   </form>
-  {{ else }}
+  {{ else if eq .Kind "listing" }}
   <div class="container">
     <h1>Entries</h1>
+    {{ if eq .Length 0 }}
+    <p>You haven't write anything yet :(</p>
+    {{ else }}
     <ul>
       {{ range $index, $entry := .Journal.Entries }}
         <li><a href="{{ $entry.Date.Format "200601021504" }}">{{ $entry.Date.Format "Monday, 02 Jan 2006 15:04" }}</a></li>
       {{ end }}
     </ul>
+    {{ end }}
+  </div>
+  {{ else }}
+  <div class="container">
+    <h1 style="text-align:left">Something wrong happened :(</h1>
   </div>
   {{ end }}
 </body>
