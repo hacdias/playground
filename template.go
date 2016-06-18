@@ -56,6 +56,7 @@ const templateString = `<!doctype html>
         font-size: 1em;
         border: 1px dashed #212121;
         padding: .2em;
+        border-bottom: 0;
     }
     textarea {
         min-height: 32em;
@@ -82,7 +83,7 @@ const templateString = `<!doctype html>
         color: #fff;
     }
     textarea, input, button {
-        margin: .2em 0;
+        margin: 0;
         display: block;
     }
     ul {
@@ -120,13 +121,13 @@ const templateString = `<!doctype html>
     <h1>New Entry</h1>
     <input id="tags" name="tags" placeholder="happy, summer, tags..."></input>
     <textarea id="text" name="text"></textarea>
-    <button type="submit">Send your message</button>
+    <button type="submit">Dry the ink</button>
   </form>
   {{ else if eq .Kind "listing" }}
   <div class="container">
     <h1>Entries</h1>
     {{ if eq .Length 0 }}
-    <p>You haven't write anything yet :(</p>
+    <p>You haven't wrote anything yet :(</p>
     {{ else }}
     <ul>
       {{ range $index, $entry := .Journal.Entries }}
