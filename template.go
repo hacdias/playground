@@ -98,6 +98,10 @@ const templateString = `<!doctype html>
         border-bottom: 1px dashed #212121;
         padding: .5em 0;
     }
+    .tags {
+        text-align: right;
+        font-size: .9em;
+    }
     </style>
 </head>
 <body>
@@ -115,6 +119,7 @@ const templateString = `<!doctype html>
   <article class="container">
       <h1>{{ $item.Date.Format "Monday, 02 Jan 2006 15:04" }}</h1>
       {{ $item.HTML }}
+      <p class="tags">{{ $item.TagsToString }}</p>
   </article>
   {{ else if eq .Kind "new" }}
   <form class="container" action="/new" method="post">
