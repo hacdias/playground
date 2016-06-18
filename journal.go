@@ -169,7 +169,7 @@ func (j Journal) EntryIndex(date time.Time) int {
 }
 
 // ParseTags is used to convert a tags string in a slice
-func (e Entry) ParseTags(tags string) {
+func (e *Entry) ParseTags(tags string) {
 	tags = strings.TrimSpace(tags)
 	parsed := strings.Split(tags, ",")
 
