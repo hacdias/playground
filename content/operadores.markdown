@@ -77,7 +77,7 @@ int main() {
     a = 4;  
 
     if (a > 0 && a <= 10) {  
-        printf("O número %d está entre 1 e 10.", num1);  
+        printf("O número %d está entre 1 e 10.", a);  
     }  
 
 	return 0;
