@@ -1,4 +1,4 @@
-var url = 'localhost';
+var url = '335cb4f6.ngrok.io';
 
 if (window.location.host != url) {
   window.location.replace('http://' + url + window.location.pathname);
