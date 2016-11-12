@@ -1,9 +1,5 @@
 Require all granted
 
-<IfModule mod_rewrite.c>
-
-    RewriteEngine on
-    RewriteRule    ^$    public_html/    [L]
-    RewriteRule    (.*) public_html/$1    [L]
-
-</IfModule>
+RewriteEngine on
+RewriteRule    ^$    public_html/    [L]
+RewriteRule    (.*) public_html/$1    [L]

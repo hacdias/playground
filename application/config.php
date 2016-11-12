@@ -31,7 +31,7 @@ date_default_timezone_set('Europe/London');
  * @cons boolean JSON_IGNORE_ROUTES Ignore routes file if the URL is related with the api.
  */
 define('ROOT', dirname(__FILE__) . '/');
-define('URL', 'http://securenotes.dev/');
+define('URL', 'http://74d81983.ngrok.io');
 define('SITE_TITLE', 'Secure Notes');
 
 define('MODE', 'DEVELOPMENT');

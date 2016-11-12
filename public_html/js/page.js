@@ -2,7 +2,7 @@ $(document).ready(function () {
     setTimeout(changeBackground, 500);
 });
 
-var url = "http://securenotes.dev/";
+var url = "http://74d81983.ngrok.io/";
 
 var changeBackgroundNum = 0;
 var changeBackground = function () {
@@ -76,7 +76,7 @@ var createNote = function () {
 
         }).fail(function (xhr, desc, err) {
 
-            alertBox.html('Something wents wrong!').addClass('red-box').fadeIn();
+            alertBox.html('Something went wrong!').addClass('red-box').fadeIn();
 
         });
     }
@@ -125,7 +125,7 @@ var submitViewPassword = function () {
 
         }).fail(function (xhr, desc, err) {
 
-            displayMessage('Something wents wrong.', 'red');
+            displayMessage('Something went wrong.', 'red');
 
         });
     }
