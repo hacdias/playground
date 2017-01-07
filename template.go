@@ -115,7 +115,7 @@ const templateString = `<!doctype html>
     </div>
   </nav>
   {{ if eq .Kind "single" }}
-  {{ $item := index .Journal.Entries .Index}}
+  {{ $item := index .Entries 0}}
   <article class="container">
       <h1>{{ $item.Date.Format "Monday, 02 Jan 2006 15:04" }}</h1>
       {{ $item.HTML }}
@@ -135,7 +135,7 @@ const templateString = `<!doctype html>
     <p>You haven't wrote anything yet :(</p>
     {{ else }}
     <ul>
-      {{ range $index, $entry := .Journal.Entries }}
+      {{ range $index, $entry := .Entries }}
         <li><a href="{{ $entry.Date.Format "200601021504" }}">{{ $entry.Date.Format "Monday, 02 Jan 2006 15:04" }}</a></li>
       {{ end }}
     </ul>

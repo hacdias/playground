@@ -13,7 +13,8 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
-	"time"
+
+	"github.com/boltdb/bolt"
 )
 
 var (
@@ -21,12 +22,16 @@ var (
 	serve bool
 	port  int
 	help  bool
-	jrn   *Journal
-	tpl   *template.Template
+	//	jrn   *Journal
+	tpl *template.Template
+
+	path string
+
+	db *bolt.DB
 )
 
 func init() {
-	jrn = new(Journal)
+	//jrn = new(Journal)
 
 	flag.Usage = func() {
 		fmt.Println("Journal usage:")
@@ -70,8 +75,8 @@ func main() {
 
 	// Checks if the file %userprofile%/.journal exists
 	if _, err = os.Stat(confPath); os.IsNotExist(err) {
-		jrnlPath := filepath.Join(user.HomeDir, "journal.txt")
-		fmt.Print("Journal file (leave blank for " + jrnlPath + "): ")
+		path = filepath.Join(user.HomeDir, "journal.db")
+		fmt.Print("Journal file (leave blank for " + path + "): ")
 
 		var text string
 		reader := bufio.NewReader(os.Stdin)
@@ -79,23 +84,16 @@ func main() {
 		text = strings.TrimSpace(text)
 
 		if err != nil {
-			panic(err)
+			log.Fatal(err)
 		}
 
-		if text == "" {
-			jrn.Path = jrnlPath
-		} else {
-			jrn.Path = text
+		if text != "" {
+			path = text
 		}
 
-		_, err = os.Create(jrn.Path)
+		err = ioutil.WriteFile(confPath, []byte(path), 0600)
 		if err != nil {
-			log.Panic(err)
-		}
-
-		err = ioutil.WriteFile(confPath, []byte(jrn.Path), 0600)
-		if err != nil {
-			panic(err)
+			log.Fatal(err)
 		}
 	} else {
 		var raw []byte
@@ -105,19 +103,24 @@ func main() {
 			panic(err)
 		}
 
-		jrn.Path = strings.TrimSpace(string(raw))
+		path = strings.TrimSpace(string(raw))
 	}
 
-	jrn.Retrieved = time.Time{}
+	db, err = bolt.Open(path, 0600, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer db.Close()
+
+	err = db.Update(func(tx *bolt.Tx) error {
+		_, err = tx.CreateBucketIfNotExists([]byte("entries"))
+		return err
+	})
 
 	// If serving is enabled, start a webserver at the defined
 	// port. By default it's 8080
 	if serve {
-		err = jrn.Parse()
-		if err != nil {
-			panic(err)
-		}
-
 		// Build the template.
 		tpl, err = template.New("template").Parse(templateString)
 		if err != nil {
@@ -134,7 +137,6 @@ func main() {
 	var text string
 
 	for _, val := range flag.Args() {
-		fmt.Println("Hey")
 		text += val
 	}
 
@@ -153,98 +155,10 @@ func main() {
 		}
 	}
 
-	err = jrn.AddEntry(tags, text)
-
+	err = addEntry(text, strings.Split(tags, " "))
 	if err != nil {
 		panic(err)
 	}
 
 	fmt.Println("Entry added!")
-}
-
-// Page contains the information to show on the page
-type Page struct {
-	Kind    string
-	Journal *Journal
-	Index   int
-	Err     error
-	Length  int
-}
-
-// ServeHTTP is used to handle the requests.
-func ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	// Check if it's using GET or POST.
-	if r.Method != "GET" && r.Method != "POST" {
-		w.WriteHeader(http.StatusNotImplemented)
-		return
-	}
-
-	var err error
-	data := &Page{Journal: jrn}
-
-	// If it's the new entry page.
-	if strings.HasPrefix(r.URL.Path, "/new") {
-		// If the method is post.
-		if r.Method == "POST" {
-			// Gets the form information.
-			tags := r.FormValue("tags")
-			text := r.FormValue("text")
-			// Adds the new entry.
-			err = jrn.AddEntry(tags, text)
-			if err != nil {
-				log.Println(err)
-			}
-			// Redirects the user to the front-page.
-			http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
-			return
-		}
-
-		// If it's another method.
-		data.Kind = "new"
-		tpl.Execute(w, data)
-		return
-	}
-
-	// If it's a single page
-	if r.URL.Path != "/" {
-		data.Kind = "single"
-
-		// Parses the date
-		var date time.Time
-		str := strings.TrimPrefix(r.URL.Path, "/")
-		date, err = time.Parse("200601021504", str)
-
-		// If it can't parse the date, it's because the user
-		// is in an invalid URL
-		if err != nil {
-			data.Kind = "error"
-			data.Err = err
-
-			// Writes the header and executes the template
-			w.WriteHeader(http.StatusNotFound)
-			tpl.Execute(w, data)
-			return
-		}
-
-		// Gets the index of the current entry and executes the template
-		data.Index = jrn.EntryIndex(date)
-		tpl.Execute(w, data)
-		return
-	}
-
-	// If it's not one of the options above, we are on the
-	// main page to show a listing!
-	err = jrn.Parse()
-
-	data.Kind = "listing"
-	data.Length = len(data.Journal.Entries)
-
-	if err != nil {
-		data.Kind = "error"
-		data.Err = err
-		w.WriteHeader(http.StatusInternalServerError)
-	}
-
-	tpl.Execute(w, data)
-	return
 }
