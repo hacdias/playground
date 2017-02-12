@@ -1,0 +1,4 @@
+rita 120
+manuel 80
+joao 70
+ana 10

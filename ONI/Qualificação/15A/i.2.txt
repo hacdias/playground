@@ -1,0 +1,6 @@
+5 2
+pedro 10 20
+joao 20 10
+miguel 0 30
+joana 100 100
+cristina 5 5
