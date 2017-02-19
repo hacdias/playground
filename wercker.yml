@@ -2,12 +2,14 @@ box: debian
 build:
   steps:
     - arjen/hugo-build:
-        version: "0.15"
+        version: "0.17"
 deploy:
   steps:
     - install-packages:
         packages: git ssh-client
-    - leipert/git-push@0.7.6:
+    - leipert/git-push:
          gh_oauth: $GIT_TOKEN
+         gh_pages_domain: henriquedias.com
          basedir: public
          branch: master
+         basedir: aprenda-a-programar.github.io
