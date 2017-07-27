@@ -68,6 +68,9 @@ func CopyDir(source string, dest string) error {
 
 	dir, _ := os.Open(source)
 	obs, err := dir.Readdir(-1)
+	if err != nil {
+		return err
+	}
 
 	var errs []error
 
