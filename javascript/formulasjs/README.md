@@ -1,4 +1,4 @@
-#formulas.js#
+# formulas.js#
 
 Formulas.js is just more one file in .js family that groups various math formulas related to algebra and geometry.
 
