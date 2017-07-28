@@ -31,7 +31,7 @@ func (d Dir) Mkdir(name string, perm os.FileMode) error {
 	if name = d.resolve(name); name == "" {
 		return os.ErrNotExist
 	}
-	return os.Mkdir(name, perm)
+	return os.MkdirAll(name, perm)
 }
 
 // OpenFile implements os.OpenFile in this directory context.
