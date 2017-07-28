@@ -37,7 +37,7 @@ func TestDir(t *testing.T) {
 		t.Error(err)
 	}
 
-	err = testdata.Mkdir("/test/qwe/rty/uio/pas/dfg/gh", 0666)
+	err = testdata.Mkdir("/test/qwe/rty/uio/pas/dfg/gh", 0700)
 	if err != nil {
 		t.Error(err)
 	}
