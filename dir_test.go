@@ -1,11 +1,28 @@
 package fileutils
 
-import "testing"
+import (
+	"io/ioutil"
+	"os"
+	"path/filepath"
+	"testing"
+)
 
 func TestDir(t *testing.T) {
-	testdata := Dir("./testdata")
+	tempdir, err := ioutil.TempDir("", "")
+	if err != nil {
+		t.Error(err)
+	}
+	defer os.RemoveAll(tempdir)
 
-	err := testdata.Copy("/mountain", "/test")
+	folder := filepath.Join(tempdir, "folder")
+	err = CopyDir("./testdata", folder)
+	if err != nil {
+		t.Error(err)
+	}
+
+	testdata := Dir(folder)
+
+	err = testdata.Copy("/mountain", "/test")
 	if err != nil {
 		t.Error(err)
 	}
