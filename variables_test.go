@@ -21,6 +21,7 @@ var testFieldInStructCases = []testFieldInStruct{
 	{testFieldInStructData{}, "f3", true},
 	{testFieldInStructData{}, "f4", true},
 	{testFieldInStructData{}, "f5", false},
+	{testFieldInStructData{}, "f6", false},
 	{[]string{}, "", false},
 	{map[string]int{"oi": 4}, "", false},
 	{"asa", "", false},
