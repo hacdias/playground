@@ -26,6 +26,10 @@ func (d Dir) resolve(name string) string {
 	return filepath.Join(dir, filepath.FromSlash(SlashClean(name)))
 }
 
+func (d Dir) String() string {
+	return string(d)
+}
+
 // Mkdir implements os.Mkdir in this directory context.
 func (d Dir) Mkdir(name string, perm os.FileMode) error {
 	if name = d.resolve(name); name == "" {
