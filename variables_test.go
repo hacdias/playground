@@ -1,6 +1,57 @@
 package varutils
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
+
+var testDictCases = []struct {
+	argument []interface{}
+	result   map[string]interface{}
+	err      error
+}{
+	{
+		[]interface{}{"k1", "v1", "k2", "v2", "k3", "v3"},
+		map[string]interface{}{
+			"k1": "v1",
+			"k2": "v2",
+			"k3": "v3",
+		},
+		nil,
+	},
+	{
+		[]interface{}{"k1", "v1", "k2", "v2", "k3"},
+		nil,
+		errInvalidDictCall,
+	},
+	{
+		[]interface{}{2, "v1", "k2", "v2", "k3", "v3"},
+		nil,
+		errInvalidDictKey,
+	},
+}
+
+func TestDict(t *testing.T) {
+	for _, test := range testDictCases {
+		res, err := Dict(test.argument...)
+
+		if !reflect.DeepEqual(res, test.result) {
+			t.Error(
+				"For", test.argument,
+				"expected", test.result,
+				"got", res,
+			)
+		}
+
+		if err != test.err {
+			t.Error(
+				"For", test.argument,
+				"expected", test.err,
+				"got", err,
+			)
+		}
+	}
+}
 
 type testFieldInStructData struct {
 	f1 string
