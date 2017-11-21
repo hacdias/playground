@@ -1,6 +1,7 @@
 package fileutils
 
 import (
+	"errors"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -21,6 +22,10 @@ func TestDir(t *testing.T) {
 	}
 
 	testdata := Dir(folder)
+
+	if testdata.String() != folder {
+		t.Error(errors.New("wrong path"))
+	}
 
 	err = testdata.Copy("/mountain", "/test")
 	if err != nil {
