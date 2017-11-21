@@ -43,5 +43,5 @@ func StringInSlice(a string, list []string) (bool, int) {
 			return true, i
 		}
 	}
-	return false, 0
+	return false, -1
 }

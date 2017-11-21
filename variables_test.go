@@ -40,3 +40,28 @@ func TestFieldInStruct(t *testing.T) {
 		}
 	}
 }
+
+var testStringInSliceCases = []struct {
+	Slice  []string
+	Search string
+	Index  int
+	Result bool
+}{
+	{[]string{"f1", "f2", "f3"}, "f1", 0, true},
+	{[]string{"f1", "f2", "f3"}, "f2", 1, true},
+	{[]string{"f1", "f2", "f3"}, "f3", 2, true},
+	{[]string{"f1", "f2", "f3"}, "f4", -1, false},
+}
+
+func TestStringInSlice(t *testing.T) {
+	for _, c := range testStringInSliceCases {
+		res, i := StringInSlice(c.Search, c.Slice)
+		if res != c.Result || i != c.Index {
+			t.Error(
+				"For", c.Slice, c.Search,
+				"expected", c.Result, c.Index,
+				"got", res, i,
+			)
+		}
+	}
+}
