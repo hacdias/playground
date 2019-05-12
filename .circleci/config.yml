@@ -5,7 +5,7 @@ jobs:
       - image: golangci/golangci-lint:v1.16
     steps:
       - checkout
-      - run: golangci-lint run -v
+      - run: golangci-lint run -v --tests false
       - run: go test -race -coverprofile=coverage.txt -covermode=atomic
       - run: bash <(curl -s https://codecov.io/bash)
 workflows:
