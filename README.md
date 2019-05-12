@@ -1,6 +1,6 @@
-# varutils 
+# varutils
 
-[![Build](https://img.shields.io/travis/hacdias/varutils.svg?style=flat-square)](https://travis-ci.org/hacdias/varutils)
+[![Build](https://img.shields.io/circleci/project/github/hacdias/varutils/master.svg?style=flat-square)](https://circleci.com/gh/hacdias/varutils)
 [![Coverage](https://img.shields.io/codecov/c/github/hacdias/varutils.svg?style=flat-square)](https://codecov.io/gh/hacdias/varutils/)
 [![Go Report Card](https://goreportcard.com/badge/github.com/hacdias/varutils?style=flat-square)](https://goreportcard.com/report/hacdias/varutils)
 [![Documentation](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square)](http://godoc.org/github.com/hacdias/varutils)
