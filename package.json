@@ -1,0 +1,28 @@
+{
+  "name": "trakt-collectort",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "standard **/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hacdias/trakt-collector.git"
+  },
+  "author": "Henrique Dias <hacdias@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hacdias/trakt-collector/issues"
+  },
+  "homepage": "https://github.com/hacdias/trakt-collector#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "opn": "^6.0.0",
+    "simple-oauth2": "^3.3.0",
+    "got": "^10.5.7"
+  },
+  "devDependencies": {
+    "standard": "^14.3.1"
+  }
+}
