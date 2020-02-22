@@ -13,6 +13,8 @@ const monthNames = [
   'July', 'August', 'September', 'October', 'November', 'December'
 ]
 
+// svgo *.svg --multipass --disable=removeViewBox --enable=removeDimensions
+
 ;(async () => {
   const rawDir = join(process.env.DATA_DIR, 'raw')
   const outputDir = join(process.env.DATA_DIR, 'output')
