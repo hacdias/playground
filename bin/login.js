@@ -1,6 +1,7 @@
+#!/usr/bin/env node
+
 require('dotenv').config()
 
-const opn = require('opn')
 const express = require('express')
 
 const CREDENTIALS = {
@@ -22,7 +23,8 @@ const CALLBACK = `http://localhost:${process.env.PORT}/callback`
   const oauth2 = require('simple-oauth2').create(CREDENTIALS)
   const authorizationUri = oauth2.authorizationCode.authorizeURL({ redirect_uri: CALLBACK })
 
-  opn(authorizationUri)
+  console.log('Open the URL bellow:')
+  console.log(authorizationUri)
 
   const app = express()
 
@@ -38,14 +40,14 @@ const CALLBACK = `http://localhost:${process.env.PORT}/callback`
       const result = await oauth2.authorizationCode.getToken(tokenConfig)
       const accessToken = oauth2.accessToken.create(result)
 
-      console.log(`ACCESS_TOKEN=${accessToken.token.access_token}`)
+      console.log(`\nACCESS_TOKEN=${accessToken.token.access_token}`)
     } catch (error) {
       code = 1
-      console.log('Could not get access token:', error.message)
+      console.log('\nCould not get access token:', error.message)
     }
 
     res.set('Content-Type', 'text/html')
-    res.send(Buffer.from('<script>window.close();</script>'))
+    res.send(Buffer.from('<!DOCTYPE html><html><head></head><body><h1>Please close this page and go back to the CLI.</h1><script>window.close();</script></body></html>'))
     server.close()
     process.exit(code)
   })
