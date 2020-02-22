@@ -7,7 +7,7 @@ const fs = require('fs-extra')
 const path = require('path')
 
 async function get (page) {
-  const { headers, body } = await got(`https://api.trakt.tv/sync/history?page=${page}&limit=500`, {
+  const { headers, body } = await got(`https://api.trakt.tv/sync/history?page=${page}&limit=500&extended=full`, {
     headers: {
       'Content-Type': 'application/json',
       'trakt-api-key': process.env.TRAKT_ID,
