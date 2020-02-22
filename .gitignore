@@ -1,4 +1,2 @@
-*.db
 .env
 node_modules
-history.*

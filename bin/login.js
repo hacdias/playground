@@ -3,28 +3,9 @@
 require('dotenv').config()
 
 const express = require('express')
-const got = require('got')
-const fs = require('fs')
-const path = require('path')
-
-const args = process.argv.slice(2)
-const command = args[0]
+const simpleOAuth = require('simple-oauth2')
 
 ;(async () => {
-  switch (command) {
-    case 'login':
-      await login()
-      break
-    case 'sync':
-      await sync()
-      break
-    default:
-      console.log('Invalid command: ' + command)
-      process.exit(1)
-  }
-})()
-
-async function login () {
   const credentials = {
     client: {
       id: process.env.TRAKT_ID,
@@ -36,7 +17,7 @@ async function login () {
   }
 
   const callback = `http://localhost:${process.env.PORT}/callback`
-  const oauth2 = require('simple-oauth2').create(credentials)
+  const oauth2 = simpleOAuth.create(credentials)
   const authorizationUri = oauth2.authorizationCode.authorizeURL({ redirect_uri: callback })
 
   console.log('Open the URL bellow:')
@@ -68,29 +49,4 @@ async function login () {
   })
 
   const server = app.listen(process.env.PORT)
-}
-
-async function get (page) {
-  const { headers, body } = await got(`https://api.trakt.tv/sync/history?page=${page}&limit=500`, {
-    headers: {
-      'Content-Type': 'application/json',
-      'trakt-api-key': process.env.TRAKT_ID,
-      'trakt-api-version': '2',
-      Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
-    },
-    responseType: 'json'
-  })
-
-  const totalPages = parseInt(headers['x-pagination-page-count'])
-  return { body, totalPages }
-}
-
-async function sync () {
-  const items = []
-
-  for (let page = 1, res; (res = await get(page)) && res.totalPages >= page; page++) {
-    items.push(...res.body)
-  }
-
-  fs.writeFileSync(path.join(process.env.OUTPUT_DIRECTORY, 'history.json'), JSON.stringify(items, null, 2))
-}
+})()
