@@ -9,7 +9,7 @@
     "type": "git",
     "url": "git+https://github.com/hacdias/trakt-collector.git"
   },
-  "author": "Henrique Dias <hacdias@gmail.com>",
+  "author": "Henrique Dias <mail@hacdias.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/hacdias/trakt-collector/issues"
