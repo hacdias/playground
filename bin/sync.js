@@ -23,8 +23,6 @@ async function get (page) {
 
 ;(async () => {
   const items = []
-  const dataDir = path.join(process.env.DATA_DIR, 'raw')
-  await fs.ensureDir(dataDir)
 
   for (let page = 1, res; (res = await get(page)) && res.totalPages >= page; page++) {
     console.log(`Page ${page} downloaded with ${res.body.length} items.`)
@@ -32,5 +30,5 @@ async function get (page) {
   }
 
   console.log(`${items.length} items downloaded.`)
-  fs.writeFileSync(path.join(dataDir, 'history.json'), JSON.stringify(items, null, 2))
+  fs.writeFileSync(path.join(process.env.DATA_DIR, 'history.json'), JSON.stringify(items, null, 2))
 })()
