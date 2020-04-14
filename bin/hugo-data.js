@@ -9,7 +9,7 @@ const { join } = require('path')
   const rawDir = join(process.env.DATA_DIR, 'raw')
   const historyFile = join(rawDir, 'history.json')
   const history = await fs.readJSON(historyFile)
-
+  const outFile = join(process.env.DATA_DIR, 'out', 'hugo.json')
   const data = {}
 
   data.movies = Object.values(history.filter(({ type }) => type === 'movie')
@@ -50,9 +50,5 @@ const { join } = require('path')
     }, {}))
     .sort((a, b) => b.watched - a.watched)
 
-  if (process.argv.length > 2) {
-    await fs.outputJSON(process.argv[2], data, { spaces: 2 })
-  } else {
-    console.log(JSON.stringify(data, null, 2))
-  }
+  await fs.outputJSON(outFile, data, { spaces: 2 })
 })()
