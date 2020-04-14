@@ -51,4 +51,5 @@ const { join } = require('path')
     .sort((a, b) => b.watched - a.watched)
 
   await fs.outputJSON(outFile, data, { spaces: 2 })
+  console.log('Converted to simpler format; stored at', outFile)
 })()
