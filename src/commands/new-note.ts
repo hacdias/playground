@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import slugify from 'slugify';
-import { Type, Zettel, Talk } from '../types/note-types';
+import { Type, Zettel, Talk, Raw } from '../types/note-types';
 
 function getWorkSpaceUri () {
   let workspaceUri = '';
@@ -14,6 +14,7 @@ function getWorkSpaceUri () {
 
 const types: Type[] = [
   new Zettel(),
+  new Raw(),
   new Talk()
 ];
 

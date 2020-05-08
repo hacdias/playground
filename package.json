@@ -26,6 +26,15 @@
 				"title": "Insert Current Date"
 			}
 		],
+		"keybindings": [
+			{
+				"mac": "cmd+n",
+				"win": "ctrl+n",
+				"linux": "ctrl+n",
+				"key": "ctrl+n",
+				"command": "notes.newNote"
+			}
+		],
 		"views": {
       "explorer": [
         {
