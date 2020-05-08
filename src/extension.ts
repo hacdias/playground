@@ -4,7 +4,7 @@ import insertDate from './commands/insert-date';
 import { BackLinksCollector } from './types/backlinks-collector';
 import { BackLinksProvider } from './types/backlinks-provider';
 
-// import onWillSave from './events/on-will-save';
+import onWillSave from './events/on-will-save';
 
 export function activate(context: vscode.ExtensionContext) {
 	const commands = [
@@ -20,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(...commands);
 
-	// vscode.workspace.onWillSaveTextDocument(onWillSave);
+	vscode.workspace.onWillSaveTextDocument(onWillSave);
 
 	const collector = new BackLinksCollector(context);
 	const provider = new BackLinksProvider(collector);
