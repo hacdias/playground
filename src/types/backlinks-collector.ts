@@ -25,10 +25,16 @@ export class BackLinksCollector {
 	}
 
 	get (): BackLink[] {
-		const filename = cleanPath(vscode.window.activeTextEditor?.document.fileName);
-		return (this.cache[filename] || []).map(relativePath => {
-			const uri = vscode.Uri.file(path.join(vscode.workspace?.rootPath || '', relativePath));
-			return new BackLink(relativePath, uri);
+		const editor = vscode.window.activeTextEditor;
+		if (!editor) {
+			return [];
+		}
+
+		const filename = editor.document.uri.path;
+		return (this.cache[filename] || []).map(path => {
+			const relative = vscode.workspace.asRelativePath(path);
+			const uri = vscode.Uri.file(path);
+			return new BackLink(relative, uri);
 		});
 	}
 
@@ -44,19 +50,28 @@ export class BackLinksCollector {
 		this.generate();
 
 		vscode.workspace.onDidSaveTextDocument((e: vscode.TextDocument) => {
+			console.debug('Detected save.');
 			const file = e.uri;
 			const content = e.getText();
 			this.update(file, content);
 			this.generate();
 		});
+
+		// TODO: add watcher for delete and rename things
+		// vscode.workspace.createFileSystemWatcher()
 	}
 
 	private update (file: vscode.Uri, content: string) {
 		const links = matchAll(content, /\[(.*?)\]\((.*?)\)/g)
-			.map(arr => cleanPath(arr[2]));
-
-		const from = cleanPath(file.path);
-		this.links[from] = links;
+			.map(arr => arr[2])
+			.filter((uri: string) => !uri.startsWith('http:') && !uri.startsWith('https:'))
+			.map((uri: string) => path.resolve(path.dirname(file.path), uri));
+			
+		if (links.length) {
+			this.links[file.path] = links;
+		} else {
+			delete this.links[file.path];
+		}
 	}
 
 	private generate () {
@@ -69,7 +84,6 @@ export class BackLinksCollector {
 			}
 		}
 
-		
 		this.cache = cache;
 		this.onUpdate();
 	}
