@@ -2,42 +2,40 @@ import * as vscode from 'vscode';
 
 export interface Type {
   name: string;
-  directory: string;
   make: (name: string) => string;
   range: vscode.Range;
 };
 
-export class Zettel implements Type {
-  name: string = 'Zettel';
-  directory: string = 'zettels';
+export class Default implements Type {
+  name: string = 'Default';
   make: (name: string) => string = (name: string) => `---
 date: ${new Date().toISOString()}
 title: ${name}
-tags: []
 ---\n\n`;
-  range: vscode.Range = new vscode.Range(6, 0, 6, 0);
+  range: vscode.Range = new vscode.Range(5, 0, 5, 0);
 };
 
 export class Talk implements Type {
   name: string = 'Talk';
   directory: string = 'talks';
-  make: (name: string) => string = (name: string) => `---
-date: ${new Date().toISOString()}
-title: ${name}
-speaker: 
-talk: 
-tags: []
----\n\n`;
-  range: vscode.Range = new vscode.Range(3, 9, 3, 9);
-};
+  make: (name: string) => string = (name: string) => {
+    let talk = name
+    let speaker = ''
 
-export class Raw implements Type {
-  name: string = 'Raw';
-  directory: string = '';
-  make: (name: string) => string = (name: string) => `---
+    if (name.includes('-')) {
+      const parts = name.split(/-(.+)/);
+      talk = parts[0].trim();
+      speaker = parts[1].trim();
+    }
+
+    return `---
 date: ${new Date().toISOString()}
 title: ${name}
-tags: []
----\n\n`;
-  range: vscode.Range = new vscode.Range(6, 0, 6, 0);
+---
+
+- **talk**: ${talk}
+- **speaker**: ${speaker}
+- **tags**:\n\n`
+  };
+  range: vscode.Range = new vscode.Range(9, 0, 9, 0);
 };

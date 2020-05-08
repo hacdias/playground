@@ -2,9 +2,9 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import slugify from 'slugify';
-import { Type, Zettel, Talk, Raw } from '../types/note-types';
+import { Type, Talk, Default } from '../types/note-types';
 
-function getWorkSpaceUri () {
+function getWorkSpaceUri() {
   let workspaceUri = '';
   if (vscode.workspace.workspaceFolders) {
     workspaceUri = vscode.workspace.workspaceFolders[0].uri.path.toString();
@@ -13,8 +13,7 @@ function getWorkSpaceUri () {
 }
 
 const types: Type[] = [
-  new Zettel(),
-  new Raw(),
+  new Default(),
   new Talk()
 ];
 
@@ -25,7 +24,7 @@ const typesByNames: { [name: string]: Type } = types.reduce((acc: { [name: strin
   return acc;
 }, {});
 
-export default async function newNote () {
+export default async function newNote() {
   try {
     const title = (await vscode.window.showInputBox({
       prompt: 'Enter your new note title.',
@@ -36,7 +35,7 @@ export default async function newNote () {
       console.debug('Note title was empty.');
       return false;
     }
-    
+
     const slug = makeSlug(title);
     const typeName = (await vscode.window.showQuickPick(typesNames));
 
@@ -46,7 +45,7 @@ export default async function newNote () {
     }
 
     const type = typesByNames[typeName];
-    const filename = path.join(getWorkSpaceUri(), type.directory, `${slug}.md`);
+    const filename = path.join(getWorkSpaceUri(), `${slug}.md`);
     const exists = await fs.pathExists(filename);
 
     if (!exists) {
@@ -67,7 +66,7 @@ export default async function newNote () {
   }
 }
 
-function makeSlug (text: string) {
+function makeSlug(text: string) {
   return slugify(text, {
     strict: true,
     lower: true
