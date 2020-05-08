@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
-import { BackLinksCollector } from '../types/backlinks-collector';
+import { Indexer } from '../types/indexer';
 
-export default function openMindMap (collector: BackLinksCollector) {
-  const links = collector.getLinks();
+export default function openMindMap (collector: Indexer) {
+  const links = collector.getIndex();
 
   const panel = vscode.window.createWebviewPanel(
     'mindMap',
@@ -18,7 +18,7 @@ export default function openMindMap (collector: BackLinksCollector) {
 
   for (const from in links) {
     nodes.push({ id: from, label: vscode.workspace.asRelativePath(from) });
-    edges.push(...links[from].map(to => ({ from, to })));
+    edges.push(...links[from].links.map(to => ({ from, to })));
   }
 
   // TODO: update on data change
