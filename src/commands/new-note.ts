@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import slugify from 'slugify';
+import { Type, Zettel, Talk } from '../types/note-types';
 
 function getWorkSpaceUri () {
   let workspaceUri = '';
@@ -11,30 +12,44 @@ function getWorkSpaceUri () {
   return workspaceUri;
 }
 
+const types: Type[] = [
+  new Zettel(),
+  new Talk()
+];
+
+const typesNames: string[] = types.map(type => type.name);
+
+const typesByNames: { [name: string]: Type } = types.reduce((acc: { [name: string]: Type }, type: Type) => {
+  acc[type.name] = type;
+  return acc;
+}, {});
+
 export default async function newNote() {
   try {
-    const name = (await vscode.window.showInputBox({
-      prompt: 'Enter your new note name.',
+    const title = (await vscode.window.showInputBox({
+      prompt: 'Enter your new note title.',
       value: ''
     }))?.trim();
 
-    if (!name) {
-      console.debug('Note name was empty.');
+    if (!title) {
+      console.debug('Note title was empty.');
       return false;
     }
     
-    const slug = slugify(name, {
-      strict: true,
-      lower: true
-    });
+    const slug = makeSlug(title);
+    const typeName = (await vscode.window.showQuickPick(typesNames));
 
+    if (!typeName) {
+      console.debug('Type was empty.');
+      return false;
+    }
 
-    const filename = path.join(getWorkSpaceUri(), `${slug}.md`);
+    const type = typesByNames[typeName];
+    const filename = path.join(getWorkSpaceUri(), type.directory, `${slug}.md`);
+    const exists = await fs.pathExists(filename);
 
-    if (!await fs.pathExists(filename)) {
-      // TODO: add templates
-      const contents = `# ${name}\n\n`;
-      await fs.outputFile(filename, contents);
+    if (!exists) {
+      await fs.outputFile(filename, type.make(title));
     }
 
     await vscode.window.showTextDocument(vscode.Uri.file(filename), {
@@ -42,19 +57,18 @@ export default async function newNote() {
       preview: false
     });
 
-    // TODO: if created go to last line
-
-    /* if (!fileAlreadyExists) {
-      let editor = vscode.window.activeTextEditor;
-      if (editor) {
-        const lineNumber = 3;
-        let range = editor.document.lineAt(lineNumber - 1).range;
-        editor.selection = new vscode.Selection(range.start, range.end);
-        editor.revealRange(range);
-      }
+    if (!exists && vscode.window.activeTextEditor) {
+      vscode.window.activeTextEditor.revealRange(type.range);
+      vscode.window.activeTextEditor.selection = new vscode.Selection(type.range.start, type.range.end);
     }
-  }); */
   } catch (err) {
     vscode.window.showErrorMessage('Error creating new note.');
   }
+}
+
+function makeSlug (text: string) {
+  return slugify(text, {
+    strict: true,
+    lower: true
+  });
 }
