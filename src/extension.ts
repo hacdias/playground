@@ -1,6 +1,8 @@
 import * as vscode from 'vscode';
 import newNote from './commands/new-note';
-import insertDate from './commands/insert-date';
+import insertNow from './commands/insert-now';
+import insertToday from './commands/insert-today';
+import insertLink from './commands/insert-link';
 import updateDate from './commands/update-date';
 import openMindMap from './commands/open-mind-map';
 import { BackLinksProvider } from './types/backlinks-provider';
@@ -25,10 +27,11 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const commands = [
 		vscode.commands.registerCommand('notes.newNote', newNote),
-		vscode.commands.registerCommand('notes.insertDate', insertDate),
+		vscode.commands.registerCommand('notes.insertToday', insertToday),
+		vscode.commands.registerCommand('notes.insertNow', insertNow),
+		vscode.commands.registerCommand('notes.insertLink', () => insertLink(indexer)),
 		vscode.commands.registerCommand('notes.updateDate', updateDate),
 		vscode.commands.registerCommand('notes.openMindMap', () => openMindMap(indexer)),
-		// TODO: add new entry to journal
 		vscode.commands.registerCommand('notes.openFile', (path: string) => {
 			vscode.window.showTextDocument(vscode.Uri.file(path), {
 				preserveFocus: false,
@@ -40,7 +43,6 @@ export function activate(context: vscode.ExtensionContext) {
 		})
 	];
 
-	// TODO: command quick link
 	context.subscriptions.push(...commands);
 }
 

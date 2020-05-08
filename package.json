@@ -20,7 +20,9 @@
 		"onLanguage:markdown",
 		"onCommand:notes.newNote",
 		"onCommand:notes.resetBackLinks",
-		"onCommand:notes.insertDate",
+		"onCommand:notes.insertNow",
+		"onCommand:notes.insertToday",
+		"onCommand:notes.insertLink",
 		"onCommand:notes.updateDate",
 		"onCommand:notes.openMindMap"
 	],
@@ -32,8 +34,16 @@
 				"title": "New Note"
 			},
 			{
-				"command": "notes.insertDate",
-				"title": "Insert Current Date"
+				"command": "notes.insertNow",
+				"title": "Insert Now Timestamp"
+			},
+			{
+				"command": "notes.insertToday",
+				"title": "Insert Today Timestamp"
+			},
+			{
+				"command": "notes.insertLink",
+				"title": "Insert Link to Note"
 			},
 			{
 				"command": "notes.resetBackLinks",
