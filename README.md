@@ -4,6 +4,8 @@ This is a notes extension for VSCode that adds some sweet features. I'm mainly u
 
 ## Install
 
+## Features
+
 TODO
 
 ## Usage

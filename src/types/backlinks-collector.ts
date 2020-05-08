@@ -68,6 +68,10 @@ export class BackLinksCollector {
 		});
 	}
 
+	getLinks () {
+		return this.links;
+	}
+
 	reset () {
 		this.fromScratch();
 	}

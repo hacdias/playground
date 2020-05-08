@@ -21,7 +21,8 @@
 		"onCommand:notes.newNote",
 		"onCommand:notes.resetBackLinks",
 		"onCommand:notes.insertDate",
-		"onCommand:notes.updateDate"
+		"onCommand:notes.updateDate",
+		"onCommand:notes.openMindMap"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -41,6 +42,10 @@
 			{
 				"command": "notes.updateDate",
 				"title": "Update (or Add) Date to Front Matter"
+			},
+			{
+				"command": "notes.openMindMap",
+				"title": "Open Mind Map"
 			}
 		],
 		"keybindings": [
