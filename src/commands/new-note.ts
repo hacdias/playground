@@ -25,7 +25,7 @@ const typesByNames: { [name: string]: Type } = types.reduce((acc: { [name: strin
   return acc;
 }, {});
 
-export default async function newNote() {
+export default async function newNote () {
   try {
     const title = (await vscode.window.showInputBox({
       prompt: 'Enter your new note title.',

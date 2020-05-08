@@ -20,7 +20,8 @@
 		"onLanguage:markdown",
 		"onCommand:notes.newNote",
 		"onCommand:notes.resetBackLinks",
-		"onCommand:notes.insertDate"
+		"onCommand:notes.insertDate",
+		"onCommand:notes.updateDate"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -36,6 +37,10 @@
 			{
 				"command": "notes.resetBackLinks",
 				"title": "Reset Back Links Cache"
+			},
+			{
+				"command": "notes.updateDate",
+				"title": "Update (or Add) Date to Front Matter"
 			}
 		],
 		"keybindings": [
@@ -60,7 +65,17 @@
 				"view": "backlinks",
 				"contents": "No backlinks for this note were found."
 			}
-		]
+		],
+		"configuration": {
+			"title": "Notes",
+			"properties": {
+				"notes.updateDateOnSave": {
+					"type": "boolean",
+					"default": true,
+					"description": "Update (or add) date to YAML frontmatter when saving markdown files."
+				}
+			}
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
