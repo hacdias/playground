@@ -12,6 +12,8 @@
 		"vscode": "^1.44.0"
 	},
 	"categories": [
+		"Snippets",
+		"Keymaps",
 		"Other"
 	],
 	"activationEvents": [
