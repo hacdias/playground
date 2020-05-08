@@ -38,8 +38,9 @@ export class Indexer extends EventEmitter {
       this.buildBackLinksCache();
     };
 
-    const onChange = (uri: vscode.Uri) => {
-      this.parseFile(uri);
+    const onChange = async (uri: vscode.Uri) => {
+      const entry = await this.parseFile(uri);
+      this.index[entry.path] = entry;
       this.buildBackLinksCache();
     };
 
@@ -76,7 +77,7 @@ export class Indexer extends EventEmitter {
     return this.index;
   }
 
-  getIndexByTitle () {
+  getIndexByTitle() {
     return this.indexByTitle;
   }
 
