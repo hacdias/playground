@@ -24,6 +24,10 @@
 			{
 				"command": "notes.insertDate",
 				"title": "Insert Current Date"
+			},
+			{
+				"command": "notes.resetBackLinks",
+				"title": "Reset Back Links Cache"
 			}
 		],
 		"keybindings": [

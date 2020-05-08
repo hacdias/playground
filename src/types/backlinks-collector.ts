@@ -21,32 +21,7 @@ export class BackLinksCollector {
 
 	constructor(context: vscode.ExtensionContext) {
 		this.context = context;
-		this.start();
-	}
-
-	get (): BackLink[] {
-		const editor = vscode.window.activeTextEditor;
-		if (!editor) {
-			return [];
-		}
-
-		const filename = editor.document.uri.path;
-		return (this.cache[filename] || []).map(path => {
-			const relative = vscode.workspace.asRelativePath(path);
-			const uri = vscode.Uri.file(path);
-			return new BackLink(relative, uri);
-		});
-	}
-
-	async start () {
-		const files = await vscode.workspace.findFiles('**/*');
-		const mdFiles = files.filter(isMarkdown);
-
-		for (const file of mdFiles) {
-			this.onFileChange(file);
-		}
-
-		this.generate();
+		this.fromScratch();
 
 		const onDelete = (uri: vscode.Uri) => {
 			this.onFileDelete(uri);
@@ -67,6 +42,37 @@ export class BackLinksCollector {
 		markdownWatch.onDidChange(onChange);
 		markdownWatch.onDidCreate(onChange);
 		markdownWatch.onDidDelete(onDelete);
+	}
+
+	get (): BackLink[] {
+		const editor = vscode.window.activeTextEditor;
+		if (!editor) {
+			return [];
+		}
+
+		const filename = editor.document.uri.path;
+		return (this.cache[filename] || []).map(path => {
+			const relative = vscode.workspace.asRelativePath(path);
+			const uri = vscode.Uri.file(path);
+			return new BackLink(relative, uri);
+		});
+	}
+
+	reset () {
+		this.fromScratch();
+	}
+
+	private async fromScratch () {
+		this.links = {};
+		this.cache = {};
+		const files = await vscode.workspace.findFiles('**/*');
+		const mdFiles = files.filter(isMarkdown);
+
+		for (const file of mdFiles) {
+			this.onFileChange(file);
+		}
+
+		this.generate();  
 	}
 
 	private onFileChange (uri: vscode.Uri) {
