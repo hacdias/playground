@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 
-export default function updateDate (doc: vscode.TextDocument): vscode.TextEdit | undefined {
+export default function updateDate(doc: vscode.TextDocument): vscode.TextEdit | undefined {
   const firstLine = doc.lineAt(0);
 
   if (firstLine.text.trim() !== '---') {

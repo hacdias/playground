@@ -21,7 +21,9 @@ export default function openMindMap (collector: Indexer) {
     edges.push(...links[from].links.map(to => ({ from, to })));
   }
 
+  // TODO: deduplicate connections
   // TODO: update on data change
+  // TODO: bundle vis.js
   const data: any = { nodes, edges };
   panel.webview.html = getWebviewContent(data);
 }

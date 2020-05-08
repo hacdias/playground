@@ -17,6 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
 	refreshProvider();
 
 	indexer.on('backLinksUpdated', () => {
+		console.debug('Refreshing provider');
 		refreshProvider();
 	});
 
@@ -27,6 +28,7 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.commands.registerCommand('notes.insertDate', insertDate),
 		vscode.commands.registerCommand('notes.updateDate', updateDate),
 		vscode.commands.registerCommand('notes.openMindMap', () => openMindMap(indexer)),
+		// TODO: add new entry to journal
 		vscode.commands.registerCommand('notes.openFile', (path: string) => {
 			vscode.window.showTextDocument(vscode.Uri.file(path), {
 				preserveFocus: false,
@@ -38,7 +40,8 @@ export function activate(context: vscode.ExtensionContext) {
 		})
 	];
 
+	// TODO: command quick link
 	context.subscriptions.push(...commands);
 }
 
-export function deactivate() {}
+export function deactivate() { }

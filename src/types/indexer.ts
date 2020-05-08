@@ -2,6 +2,8 @@ import * as vscode from 'vscode';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import { EventEmitter } from 'events';
+import isMarkdown from '../helpers/is-markdown';
+import matchAll from '../helpers/match-all';
 
 export interface IndexEntry {
   path: string;
@@ -14,70 +16,79 @@ const STATE_KEY = 'notes-index';
 export class Indexer extends EventEmitter {
   index: { [path: string]: IndexEntry; } = {};
   backLinkCache: { [path: string]: IndexEntry[]; } = {};
-	context: vscode.ExtensionContext;
+  indexByTitle: { [title: string]: IndexEntry; } = {};
+  context: vscode.ExtensionContext;
 
-	constructor(context: vscode.ExtensionContext) {
+  constructor(context: vscode.ExtensionContext) {
     super();
     this.context = context;
 
     const cachedIndex = context.workspaceState.get(STATE_KEY);
 
-		if (cachedIndex) {
-			console.debug('Index was cached');
-			this.index = <{ [path: string]: IndexEntry; }>cachedIndex;
-			this.buildBackLinksCache();
-		} else {
-			this.buildIndexFromScratch();
-		}
+    if (cachedIndex) {
+      console.debug('Index was cached');
+      this.index = <{ [path: string]: IndexEntry; }>cachedIndex;
+      this.buildBackLinksCache();
+    } else {
+      this.buildIndexFromScratch();
+    }
 
-		const onDelete = (uri: vscode.Uri) => {
-			this.deleteFile(uri);
-			this.buildBackLinksCache();
-		};
+    const onDelete = (uri: vscode.Uri) => {
+      this.deleteFile(uri);
+      this.buildBackLinksCache();
+    };
 
-		const onChange = (uri: vscode.Uri) => {
-			this.parseFile(uri);
-			this.buildBackLinksCache();
-		};
+    const onChange = (uri: vscode.Uri) => {
+      this.parseFile(uri);
+      this.buildBackLinksCache();
+    };
 
-		const mdWatch = vscode.workspace.createFileSystemWatcher('**/*.md');
-		mdWatch.onDidChange(onChange);
-		mdWatch.onDidCreate(onChange);
-		mdWatch.onDidDelete(onDelete);
+    const mdWatch = vscode.workspace.createFileSystemWatcher('**/*.md');
+    mdWatch.onDidChange(onChange);
+    mdWatch.onDidCreate(onChange);
+    mdWatch.onDidDelete(onDelete);
 
-		const markdownWatch = vscode.workspace.createFileSystemWatcher('**/*.markdown');
-		markdownWatch.onDidChange(onChange);
-		markdownWatch.onDidCreate(onChange);
-		markdownWatch.onDidDelete(onDelete);
+    const markdownWatch = vscode.workspace.createFileSystemWatcher('**/*.markdown');
+    markdownWatch.onDidChange(onChange);
+    markdownWatch.onDidCreate(onChange);
+    markdownWatch.onDidDelete(onDelete);
   }
-  
-  getCurrentBackLinks (): IndexEntry[] {
+
+  getCurrentBackLinks(): IndexEntry[] {
     const editor = vscode.window.activeTextEditor;
-		if (!editor) {
-			return [];
-		}
+    if (!editor) {
+      return [];
+    }
 
-		const filename = editor.document.uri.path;
-		return this.backLinkCache[filename] || [];
+    const filename = editor.document.uri.path;
+    return this.backLinkCache[filename] || [];
   }
 
-  reset () {
-		this.buildIndexFromScratch();
+  getAllTitles(): string[] {
+    return Object.values(this.index).map(e => e.title);
   }
-  
-  getIndex () {
+
+  reset() {
+    this.buildIndexFromScratch();
+  }
+
+  getIndex() {
     return this.index;
   }
 
-	private async buildIndexFromScratch () {
+  getIndexByTitle () {
+    return this.indexByTitle;
+  }
+
+  private async buildIndexFromScratch() {
     console.debug('Building index from scratch');
     const files = await vscode.workspace.findFiles('**/*');
     const mdFiles = files.filter(isMarkdown);
     const entries = await Promise.all(mdFiles.map(this.parseFile));
     this.buildIndexFromEntries(entries);
   }
-  
-  private async parseFile (uri: vscode.Uri): Promise<IndexEntry> {
+
+  private async parseFile(uri: vscode.Uri): Promise<IndexEntry> {
     console.debug('Checking file', uri.path);
     const content = (await fs.readFile(uri.path)).toString();
     const links = matchAll(content, /\[(.*?)\]\((.*?)\)/g)
@@ -97,12 +108,12 @@ export class Indexer extends EventEmitter {
     };
   }
 
-  private deleteFile (uri: vscode.Uri) {
-		console.log('Deleting file', uri.path);
+  private deleteFile(uri: vscode.Uri) {
+    console.log('Deleting file', uri.path);
     delete this.index[uri.path];
-	}
+  }
 
-  private buildIndexFromEntries (entries: IndexEntry[]) {
+  private buildIndexFromEntries(entries: IndexEntry[]) {
     console.debug('Building index from entries');
     const index: { [path: string]: IndexEntry; } = {};
 
@@ -114,39 +125,26 @@ export class Indexer extends EventEmitter {
     this.buildBackLinksCache();
   }
 
-  private buildBackLinksCache () {
+  private buildBackLinksCache() {
     console.debug('Storing on workspace state');
-		this.context.workspaceState.update(STATE_KEY, this.index);
+    this.context.workspaceState.update(STATE_KEY, this.index);
 
-		console.debug('Regenerating cache');
-		const cache: { [path: string]: IndexEntry[]; } = {};
+    console.debug('Regenerating cache');
+    const backLinkCache: { [path: string]: IndexEntry[]; } = {};
+    const indexByTitle: { [title: string]: IndexEntry; } = {};
 
-		for (const from in this.index) {
-			for (const to of this.index[from].links) {
-				cache[to] = cache[to] || [];
-				cache[to].push(this.index[from]);
-			}
-		}
+    for (const from in this.index) {
+      indexByTitle[this.index[from].title] = this.index[from];
 
-    this.backLinkCache = cache;
+      for (const to of this.index[from].links) {
+        backLinkCache[to] = backLinkCache[to] || [];
+        backLinkCache[to].push(this.index[from]);
+      }
+    }
 
-    console.debug(cache);
-    this.emit('backLinksUpdated', cache);
+    this.backLinkCache = backLinkCache;
+    this.indexByTitle = indexByTitle;
+    // console.debug(cache);
+    this.emit('backLinksUpdated', backLinkCache);
   }
-}
-
-function isMarkdown (uri: vscode.Uri): boolean {
-	return uri.scheme === 'file' && (uri.path.endsWith('.md') || uri.path.endsWith('.markdown'));
-}
-
-function matchAll (text: string, pattern: RegExp) {
-	const matches = [];
-	let match;
-	do {
-			match = pattern.exec(text);
-			if (match) {
-				matches.push(match);
-			}
-	} while (match);
-	return matches;
 }
