@@ -137,7 +137,11 @@ export class Indexer extends EventEmitter {
     for (const from in this.index) {
       indexByTitle[this.index[from].title] = this.index[from];
 
-      for (const to of this.index[from].links) {
+      for (let to of this.index[from].links) {
+        const hash = to.lastIndexOf('#');
+        if (hash !== -1) {
+          to = to.substring(0, hash);
+        }
         backLinkCache[to] = backLinkCache[to] || [];
         backLinkCache[to].push(this.index[from]);
       }
