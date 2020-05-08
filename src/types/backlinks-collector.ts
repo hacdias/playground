@@ -12,7 +12,8 @@ export class BackLink {
 	}
 }
 
-// TODO: implement cache.
+const STATE_KEY = 'notes-links';
+
 export class BackLinksCollector {
 	links: { [from: string] : string[]; } = {};
 	cache: { [to: string]: string[]; } = {};
@@ -21,7 +22,16 @@ export class BackLinksCollector {
 
 	constructor(context: vscode.ExtensionContext) {
 		this.context = context;
-		this.fromScratch();
+
+		const cachedLinks = context.workspaceState.get(STATE_KEY);
+
+		if (cachedLinks) {
+			console.debug('Links were cached');
+			this.links = <{ [from: string] : string[]; }>cachedLinks;
+			this.generate();
+		} else {
+			this.fromScratch();
+		}
 
 		const onDelete = (uri: vscode.Uri) => {
 			this.onFileDelete(uri);
@@ -72,7 +82,7 @@ export class BackLinksCollector {
 			this.onFileChange(file);
 		}
 
-		this.generate();  
+		this.generate();
 	}
 
 	private onFileChange (uri: vscode.Uri) {
@@ -82,7 +92,7 @@ export class BackLinksCollector {
 			.map(arr => arr[2])
 			.filter((link: string) => !link.startsWith('http:') && !link.startsWith('https:'))
 			.map((link: string) => path.resolve(path.dirname(uri.path), link));
-			
+
 		if (links.length) {
 			this.links[uri.path] = links;
 		} else {
@@ -96,6 +106,9 @@ export class BackLinksCollector {
 	}
 
 	private generate () {
+		console.debug('Storing on workspace state');
+		this.context.workspaceState.update(STATE_KEY, this.links);
+
 		console.debug('Regenerating cache');
 		const cache: { [to: string]: string[]; } = {};
 
