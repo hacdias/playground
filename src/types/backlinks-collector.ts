@@ -43,38 +43,54 @@ export class BackLinksCollector {
 		const mdFiles = files.filter(isMarkdown);
 
 		for (const file of mdFiles) {
-			const content = fs.readFileSync(file.path).toString();
-			this.update(file, content);
+			this.onFileChange(file);
 		}
 
 		this.generate();
 
-		vscode.workspace.onDidSaveTextDocument((e: vscode.TextDocument) => {
-			console.debug('Detected save.');
-			const file = e.uri;
-			const content = e.getText();
-			this.update(file, content);
+		const onDelete = (uri: vscode.Uri) => {
+			this.onFileDelete(uri);
 			this.generate();
-		});
+		};
 
-		// TODO: add watcher for delete and rename things
-		// vscode.workspace.createFileSystemWatcher()
+		const onChange = (uri: vscode.Uri) => {
+			this.onFileChange(uri);
+			this.generate();
+		};
+
+		const mdWatch = vscode.workspace.createFileSystemWatcher('**/*.md');
+		mdWatch.onDidChange(onChange);
+		mdWatch.onDidCreate(onChange);
+		mdWatch.onDidDelete(onDelete);
+
+		const markdownWatch = vscode.workspace.createFileSystemWatcher('**/*.markdown');
+		markdownWatch.onDidChange(onChange);
+		markdownWatch.onDidCreate(onChange);
+		markdownWatch.onDidDelete(onDelete);
 	}
 
-	private update (file: vscode.Uri, content: string) {
+	private onFileChange (uri: vscode.Uri) {
+		console.debug('Checking file', uri.path);
+		const content = fs.readFileSync(uri.path).toString();
 		const links = matchAll(content, /\[(.*?)\]\((.*?)\)/g)
 			.map(arr => arr[2])
-			.filter((uri: string) => !uri.startsWith('http:') && !uri.startsWith('https:'))
-			.map((uri: string) => path.resolve(path.dirname(file.path), uri));
+			.filter((link: string) => !link.startsWith('http:') && !link.startsWith('https:'))
+			.map((link: string) => path.resolve(path.dirname(uri.path), link));
 			
 		if (links.length) {
-			this.links[file.path] = links;
+			this.links[uri.path] = links;
 		} else {
-			delete this.links[file.path];
+			delete this.links[uri.path];
 		}
 	}
 
+	private onFileDelete (uri: vscode.Uri) {
+		console.log('Deleting file', uri.path);
+		delete this.links[uri.path];
+	}
+
 	private generate () {
+		console.debug('Regenerating cache');
 		const cache: { [to: string]: string[]; } = {};
 
 		for (const from in this.links) {
@@ -103,24 +119,4 @@ function matchAll (text: string, pattern: RegExp) {
 			}
 	} while (match);
 	return matches;
-}
-
-function cleanPath (path?: string): string {
-	if (!path) {
-		return '';
-	}
-
-	const root = vscode.workspace.rootPath || '';
-	path = vscode.workspace.asRelativePath(path);
-	path = path.replace(root, '');
-
-	if (path.startsWith('./')) {
-		path = path.substr(2);
-	}
-
-	if (path.startsWith('/')) {
-		path = path.substr(1);
-	}
-
-	return path;
 }
