@@ -15,9 +15,10 @@
 		"Other"
 	],
 	"activationEvents": [
+		"onLanguage:markdown",
 		"onCommand:notes.newNote",
-		"onCommand:notes.insertDate",
-		"onView:backlinks"
+		"onCommand:notes.resetBackLinks",
+		"onCommand:notes.insertDate"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -57,9 +58,6 @@
 				"view": "backlinks",
 				"contents": "No backlinks for this note were found."
 			}
-		],
-		"configuration": [
-			
 		]
 	},
 	"scripts": {
