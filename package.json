@@ -1,7 +1,12 @@
 {
 	"name": "notes",
 	"displayName": "notes",
+	"publisher": "hacdias",
 	"description": "",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/hacdias/vscode-notes"
+	},
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.44.0"
@@ -52,6 +57,9 @@
 				"view": "backlinks",
 				"contents": "No backlinks for this note were found."
 			}
+		],
+		"configuration": [
+			
 		]
 	},
 	"scripts": {
