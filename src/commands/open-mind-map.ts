@@ -1,9 +1,30 @@
 import * as vscode from 'vscode';
 import { Indexer } from '../types/indexer';
 
-export default function openMindMap (collector: Indexer) {
+function getData(collector: Indexer) {
   const links = collector.getIndex();
 
+  const nodes: any[] = [];
+  const edgesHelper: any = {};
+  const edges: any[] = [];
+
+  for (const from in links) {
+    nodes.push({ id: from, label: links[from].title });
+
+    for (const to of links[from].links) {
+      edgesHelper[from] = edgesHelper[from] || [];
+      edgesHelper[to] = edgesHelper[to] || [];
+      if (!edgesHelper[from].includes(to) && !edgesHelper[to].includes(from)) {
+        edgesHelper[from].push(to);
+        edges.push({ from, to });
+      }
+    }
+  }
+
+  return { nodes, edges };
+}
+
+export default function openMindMap(collector: Indexer) {
   const panel = vscode.window.createWebviewPanel(
     'mindMap',
     'Mind Map',
@@ -13,19 +34,17 @@ export default function openMindMap (collector: Indexer) {
     }
   );
 
-  const nodes: any[] = [];
-  const edges: any[] = [];
+  const updater = () => {
+    panel.webview.postMessage(getData(collector));
+  };
 
-  for (const from in links) {
-    nodes.push({ id: from, label: links[from].title });
-    edges.push(...links[from].links.map(to => ({ from, to })));
-  }
-
-  // TODO: deduplicate connections
-  // TODO: update on data change
   // TODO: bundle vis.js
-  const data: any = { nodes, edges };
-  panel.webview.html = getWebviewContent(data);
+  panel.webview.html = getWebviewContent(getData(collector));
+
+  collector.on('backLinksUpdated', updater);
+  panel.onDidDispose(() => {
+    collector.removeListener('backLinksUpdated', updater);
+  });
 }
 
 function getWebviewContent(data: any) {
@@ -50,7 +69,8 @@ function getWebviewContent(data: any) {
   <div id="network"></div>
   <script type="text/javascript">
     var container = document.getElementById('network');
-    var options = {};
+    var options = {
+    };
     var initialData = JSON.parse('${JSON.stringify(data)}');
     var network = new vis.Network(container, initialData, options);
 
