@@ -17,7 +17,7 @@ export default function openMindMap (collector: Indexer) {
   const edges: any[] = [];
 
   for (const from in links) {
-    nodes.push({ id: from, label: vscode.workspace.asRelativePath(from) });
+    nodes.push({ id: from, label: links[from].title });
     edges.push(...links[from].links.map(to => ({ from, to })));
   }
 
