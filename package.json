@@ -33,7 +33,13 @@
           "name": "Backlinks"
         }
       ]
-    }
+		},
+		"viewsWelcome": [
+			{
+				"view": "backlinks",
+				"contents": "No backlinks for this note were found."
+			}
+		]
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
