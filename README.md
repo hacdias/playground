@@ -18,4 +18,4 @@ PRs accepted.
 
 ## License
 
-MIT © Richard McRichface
+MIT © Henrique Dias
