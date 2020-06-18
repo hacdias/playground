@@ -1,0 +1,26 @@
+{
+  "name": "goodreads-collector",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "standard **/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hacdias/goodreads-collector.git"
+  },
+  "author": "Henrique Dias <mail@hacdias.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hacdias/goodreads-collector/issues"
+  },
+  "homepage": "https://github.com/hacdias/goodreads-collector#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "got": "^11.3.0",
+    "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "standard": "^14.3.4"
+  }
+}
