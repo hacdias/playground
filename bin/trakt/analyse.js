@@ -16,8 +16,8 @@ const monthNames = [
 // svgo *.svg --multipass --disable=removeViewBox --enable=removeDimensions
 
 ;(async () => {
-  const rawDir = join(process.env.DATA_DIR, 'raw')
-  const outputDir = join(process.env.DATA_DIR, 'output')
+  const rawDir = join(process.env.TRAKT_DATA_DIR, 'raw')
+  const outputDir = join(process.env.TRAKT_DATA_DIR, 'output')
   const historyFile = join(rawDir, 'history.json')
 
   const history = (await fs.readJSON(historyFile))

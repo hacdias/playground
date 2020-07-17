@@ -30,5 +30,5 @@ async function get (page) {
   }
 
   console.log(`${items.length} items downloaded.`)
-  fs.writeFileSync(path.join(process.env.DATA_DIR, 'history.json'), JSON.stringify(items, null, 2))
+  fs.writeFileSync(path.join(process.env.TRAKT_DATA_DIR, 'history.json'), JSON.stringify(items, null, 2))
 })()

@@ -22,8 +22,8 @@ async function getMovie (path, output) {
 }
 
 ;(async () => {
-  const postersDir = join(process.env.DATA_DIR, 'posters')
-  const rawDir = join(process.env.DATA_DIR, 'raw')
+  const postersDir = join(process.env.TRAKT_DATA_DIR, 'posters')
+  const rawDir = join(process.env.TRAKT_DATA_DIR, 'raw')
   const historyFile = join(rawDir, 'history.json')
   const history = await fs.readJSON(historyFile)
 

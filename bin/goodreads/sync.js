@@ -4,6 +4,7 @@ require('dotenv').config()
 
 const got = require('got')
 const xml2js = require('xml2js')
+const updateGithub = require('../../src/update-github')
 
 async function fetch () {
   const items = []
@@ -49,36 +50,16 @@ async function parse (data) {
   return books
 }
 
-const github = got.extend({
-  prefixUrl: 'https://api.github.com',
-  username: process.env.GITHUB_USERNAME,
-  password: process.env.GITHUB_TOKEN,
-  responseType: 'json'
-})
-
 ;(async () => {
   console.log('📚 Fetching from GoodReads...')
   const raw = await fetch()
   const data = await parse(raw)
   const json = JSON.stringify(data, null, 2)
-  const encoded = Buffer.from(json).toString('base64')
 
-  console.log('🖥  Fetching from GitHub...')
-  const get = await github(`repos/${process.env.GITHUB_REPO}/contents/${process.env.GITHUB_PATH}`)
-  const oldData = get.body.content.split('\n').join('').trim()
-
-  if (oldData === encoded) {
-    console.log('✅ Already up to date!')
-    return
-  }
-
-  await github.put(`repos/${process.env.GITHUB_REPO}/contents/${process.env.GITHUB_PATH}`, {
-    json: {
-      message: `${new Date().toUTCString()} update reads`,
-      content: encoded,
-      sha: get.body.sha
-    }
+  await updateGithub({
+    data: json,
+    repo: process.env.GOODREADS_GITHUB_REPO,
+    path: process.env.GOODREADS_GITHUB_PATH,
+    message: `${new Date().toUTCString()} update reads`
   })
-
-  console.log('✅ Commit created!')
 })()

@@ -40,7 +40,7 @@ const CALLBACK = `http://localhost:${process.env.PORT}/callback`
       const result = await oauth2.authorizationCode.getToken(tokenConfig)
       const accessToken = oauth2.accessToken.create(result)
 
-      console.log(`\nACCESS_TOKEN=${accessToken.token.access_token}`)
+      console.log(`\nFOURSQUARE_ACCESS_TOKEN=${accessToken.token.access_token}`)
     } catch (error) {
       code = 1
       console.log('\nCould not get access token:', error.message)

@@ -4,7 +4,7 @@ require('dotenv').config()
 
 const fs = require('fs-extra')
 const path = require('path')
-const dataDir = process.env.DATA_DIR
+const dataDir = process.env.FOURSQUARE_DATA_DIR
 
 ;(async () => {
   const data = await fs.readJSON(path.join(dataDir, 'raw/history.json'))

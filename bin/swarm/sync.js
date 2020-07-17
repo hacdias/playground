@@ -7,7 +7,7 @@ const path = require('path')
 const fs = require('fs-extra')
 
 const get = async (page) => {
-  const url = `https://api.foursquare.com/v2/users/self/checkins?offset=${250 * page}&limit=250&oauth_token=${process.env.ACCESS_TOKEN}&v=20200222`
+  const url = `https://api.foursquare.com/v2/users/self/checkins?offset=${250 * page}&limit=250&oauth_token=${process.env.FOURSQUARE_ACCESS_TOKEN}&v=20200222`
   const { body } = await got(url, {
     headers: {
       'Content-Type': 'application/json'
@@ -19,7 +19,7 @@ const get = async (page) => {
 }
 
 const getID = async (id) => {
-  const url = `https://api.foursquare.com/v2/checkins/${id}?oauth_token=${process.env.ACCESS_TOKEN}&v=20200222`
+  const url = `https://api.foursquare.com/v2/checkins/${id}?oauth_token=${process.env.FOURSQUARE_ACCESS_TOKEN}&v=20200222`
   const { body } = await got(url, {
     headers: {
       'Content-Type': 'application/json'
@@ -31,7 +31,7 @@ const getID = async (id) => {
 }
 
 ;(async () => {
-  const dataDir = process.env.DATA_DIR
+  const dataDir = process.env.FOURSQUARE_DATA_DIR
   const singleDir = path.join(dataDir, 'single')
   const historyFile = path.join(dataDir, 'history.json')
 
