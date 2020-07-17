@@ -38,7 +38,7 @@ const getID = async (id) => {
   const items = []
 
   for (let page = 0, res; (res = await get(page)) && res.response.checkins.items.length > 0; page++) {
-    console.log(`Downloaded page ${page + 1} with ${res.response.checkins.items.length} items.`)
+    console.log(`⬇️  Downloaded page ${page + 1} with ${res.response.checkins.items.length} items.`)
     items.push(...res.response.checkins.items)
   }
 
@@ -53,9 +53,11 @@ const getID = async (id) => {
     }
 
     const data = await getID(item.id)
-    console.log(`Got full data for ${item.id}.`)
+    console.log(`📌 Got full data for ${item.id}.`)
     await fs.outputJSON(filePath, data, {
       spaces: 2
     })
   }
+
+  console.log(`✅ ${items.length} items downloaded.`)
 })()

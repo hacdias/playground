@@ -12,7 +12,7 @@ async function get (page) {
       'Content-Type': 'application/json',
       'trakt-api-key': process.env.TRAKT_ID,
       'trakt-api-version': '2',
-      Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
+      Authorization: `Bearer ${process.env.TRAKT_ACCESS_TOKEN}`
     },
     responseType: 'json'
   })
@@ -25,10 +25,10 @@ async function get (page) {
   const items = []
 
   for (let page = 1, res; (res = await get(page)) && res.totalPages >= page; page++) {
-    console.log(`Page ${page} downloaded with ${res.body.length} items.`)
+    console.log(`⬇️  Page ${page} downloaded with ${res.body.length} items.`)
     items.push(...res.body)
   }
 
-  console.log(`${items.length} items downloaded.`)
+  console.log(`✅ ${items.length} items downloaded.`)
   fs.writeFileSync(path.join(process.env.TRAKT_DATA_DIR, 'history.json'), JSON.stringify(items, null, 2))
 })()
