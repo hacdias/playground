@@ -1,38 +1,33 @@
-# GoodReads Collector
+# Silos Collectors
 
-These are just some scripts to collect your [GoodReads](https://goodreads.com) history.
+This is a compilation of some silos data collectors I use for my strictly personal use. Feel free to reuse code and use it for your own purposes.
 
-## To collect your history
+## GoodReads
 
-1. Copy `.env.example` to `.env`
-2. Create an application on https://goodreads.com/api
-3. Fill the variables
-4. Run `node sync.js` and your GitHub will be updated.
+> Collects [GoodReads](https://goodreads.com) history.
 
-# Swarm Collector
+1. Create an application on https://goodreads.com/api
+2. Fill the variables
+3. Run `node bin/goodreads/sync.js` and your GitHub will be updated.
 
-These are just some scripts to collect your [Swarm](https://www.swarmapp.com/) history. I'm using this for personal uses.
+## Swarm
 
-## To collect your history
+> Collects [Swarm](https://www.swarmapp.com/) history.
 
-1. Copy `.env.example` to `.env` and fill the blanks.
-2. Create an application on https://foursquare.com/developers/apps/.
+1. Create an application on https://foursquare.com/developers/apps/.
     - The callback should be `http://localhost:PORT/callback` where `PORT` is defined on `.env`.
-3. Run `node bin/login` and append the result to `.env`.
-4. Run `node bin/sync and then a file called `history.json` will be generated.
+2. Run `node bin/swarm/login` and append the result to `.env`.
+3. Run `node bin/swarm` sync and then a file called `history.json` will be generated.
 
-# Trakt Collector
+## Trakt
 
-These are just some scripts to collect your [Trakt](https://trakt.tv) history.
+> Collects [Trakt](https://trakt.tv) history.
 
-## To collect your history
-
-1. Copy `.env.example` to `.env`
-2. Create an application on https://trakt.tv/oauth/applications/new.
+1. Create an application on https://trakt.tv/oauth/applications/new.
     - The callback should be `http://localhost:PORT/callback` where `PORT` is defined on `.env`.
-3. Fill the `OUTPUT_DIRECTORY` where the history will be dumped. The directory **must** exist.
-4. Run `node bin/login` and append the result to `.env`.
-5. Run `node bin/sync` and then a file called `history.json` will be generated.
+2. Fill the `TRAKT_DATA_DIR` where the history will be dumped. The directory **must** exist.
+3. Run `node bin/trakt/login` and append the result to `.env`.
+4. Run `node bin/trakt/sync` and then a file called `history.json` will be generated.
 
 ## Known Issues
 
