@@ -31,7 +31,7 @@ const getID = async (id) => {
 }
 
 ;(async () => {
-  const dataDir = path.join(process.env.DATA_DIR, 'raw')
+  const dataDir = process.env.DATA_DIR
   const singleDir = path.join(dataDir, 'single')
   const historyFile = path.join(dataDir, 'history.json')
 
