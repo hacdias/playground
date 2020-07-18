@@ -1,5 +1,7 @@
 const got = require('got')
 const xml2js = require('xml2js')
+const path = require('path')
+const fs = require('fs-extra')
 const updateGitHub = require('../update-github')
 
 const user = process.env.GOODREADS_USER
@@ -53,7 +55,11 @@ async function parse (data) {
 
 module.exports = async function () {
   console.log('📚 Fetching from GoodReads...')
+  const dataFile = path.join(process.env.DATA_DIR, 'goodreads', 'history.json')
   const raw = await fetch()
+  await fs.outputJSON(dataFile, raw, {
+    spaces: 2
+  })
   const data = await parse(raw)
   const json = JSON.stringify(data, null, 2)
 
