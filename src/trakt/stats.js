@@ -1,7 +1,3 @@
-#!/usr/bin/env node
-
-require('dotenv').config()
-
 const vega = require('vega')
 const vegaLite = require('vega-lite')
 
@@ -15,9 +11,10 @@ const monthNames = [
 
 // svgo *.svg --multipass --disable=removeViewBox --enable=removeDimensions
 
-;(async () => {
-  const rawDir = join(process.env.TRAKT_DATA_DIR, 'raw')
-  const outputDir = join(process.env.TRAKT_DATA_DIR, 'output')
+module.exports = async () => {
+  const dataDir = join(process.env.DATA_DIR)
+  const rawDir = join(dataDir, 'trakt')
+  const outputDir = join(rawDir, 'output')
   const historyFile = join(rawDir, 'history.json')
 
   const history = (await fs.readJSON(historyFile))
@@ -29,7 +26,7 @@ const monthNames = [
   await output(yearDistribution(history), join(outputDir, 'year-dist.svg'))
   await output(genresAnalyse(history), join(outputDir, 'genres-general.svg'))
   await output(perMonth(history), join(outputDir, 'monthly.svg'))
-})()
+}
 
 function perMonth (history) {
   const data = Object.values(history.reduce((acc, curr) => {

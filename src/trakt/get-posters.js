@@ -1,6 +1,6 @@
-#!/usr/bin/env node
+/*
 
-require('dotenv').config()
+GET POSTERS (?)
 
 const got = require('got')
 const fs = require('fs-extra')
@@ -46,3 +46,5 @@ async function getMovie (path, output) {
 
   // TODO: series
 })()
+
+*/

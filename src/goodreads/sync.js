@@ -1,10 +1,11 @@
-#!/usr/bin/env node
-
-require('dotenv').config()
-
 const got = require('got')
 const xml2js = require('xml2js')
-const updateGithub = require('../../src/update-github')
+const updateGitHub = require('../update-github')
+
+const user = process.env.GOODREADS_USER
+const apiId = process.env.GOODREADS_API_ID
+const githubRepo = process.env.GOODREADS_GITHUB_REPO
+const githubPath = process.env.GOODREADS_GITHUB_PATH
 
 async function fetch () {
   const items = []
@@ -13,7 +14,7 @@ async function fetch () {
   let total
 
   do {
-    const { body } = await got(`https://www.goodreads.com/review/list/${process.env.GOODREADS_USER}.xml?key=${process.env.GOODREADS_API_ID}&v=2&per_page=200&page=${page}`)
+    const { body } = await got(`https://www.goodreads.com/review/list/${user}.xml?key=${apiId}&v=2&per_page=200&page=${page}`)
     const data = await xml2js.parseStringPromise(body)
     end = data.GoodreadsResponse.reviews[0].$.end
     total = data.GoodreadsResponse.reviews[0].$.total
@@ -50,16 +51,16 @@ async function parse (data) {
   return books
 }
 
-;(async () => {
+module.exports = async function () {
   console.log('📚 Fetching from GoodReads...')
   const raw = await fetch()
   const data = await parse(raw)
   const json = JSON.stringify(data, null, 2)
 
-  await updateGithub({
+  await updateGitHub({
     data: json,
-    repo: process.env.GOODREADS_GITHUB_REPO,
-    path: process.env.GOODREADS_GITHUB_PATH,
+    repo: githubRepo,
+    path: githubPath,
     message: `${new Date().toUTCString()} update reads`
   })
-})()
+}

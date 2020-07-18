@@ -1,13 +1,9 @@
-#!/usr/bin/env node
-
-require('dotenv').config()
-
 const fs = require('fs-extra')
 const path = require('path')
-const dataDir = process.env.FOURSQUARE_DATA_DIR
 
-;(async () => {
-  const data = await fs.readJSON(path.join(dataDir, 'raw/history.json'))
+module.exports = async () => {
+  const dataDir = path.join(process.env.DATA_DIR, 'swarm')
+  const data = await fs.readJSON(path.join(dataDir, 'history.json'))
 
   const ids = []
 
@@ -30,5 +26,5 @@ const dataDir = process.env.FOURSQUARE_DATA_DIR
     })
   }
 
-  console.log(JSON.stringify(values))
-})()
+  console.log(JSON.stringify(values, null, 2))
+}
