@@ -1,21 +1,3 @@
-:root {
-  --black: #333;
-  --dark-gray: #333;
-  --gray: #444;
-  --light-gray: #555;
-  --light-white: #ddd;
-  --near-white: #f4f4f4;
-  --white: #ffffff;
-  --accent: #a5d388;
-  --accent-darker: #78b154;
-  --accent-text: white;
-  --fold: 32px;
-  --space: 3rem;
-  --max-width: 46rem;
-  --f6: .875rem;
-  --f7: .75rem;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -44,7 +26,6 @@ body {
   line-height: 1.5;
   color: #333;
   font-size: 1rem;
-
   max-width: 42rem;
   width: 100%;
   padding: 0 2rem;
@@ -97,7 +78,7 @@ a:hover {
 
 hr {
   border: 0;
-  border-top: 1px solid var(--light-white);
+  border-top: 1px solid #fff;
   margin: 1.2em auto;
 }
 
@@ -119,16 +100,16 @@ table th {
 table th,
 table td {
   padding: 6px 13px;
-  border: 1px solid var(--light-white);;
+  border: 1px solid #ddd;
 }
 
 table tr {
-  background-color: var(--white);
-  border-top: 1px solid var(--light-white);;
+  background-color: #ffffff;
+  border-top: 1px solid #ddd;
 }
 
 table tr:nth-child(2n) {
-  background-color: var(--near-white);
+  background-color: #f4f4f4;
 }
 
 table img {
@@ -138,7 +119,7 @@ table img {
 blockquote {
   padding-left: 0.75rem;
   margin: 1em 0 1rem 1rem;
-  border-left: .25rem solid var(--accent);
+  border-left: .25rem solid #3abb9b;
 }
 
 .highlight > pre,
@@ -188,9 +169,7 @@ blockquote {
 }
 
 @media screen and (max-width: 40rem) {
-  :root {
-    --space: 1.5rem;
-  }
+
 }
 
 @media print {
