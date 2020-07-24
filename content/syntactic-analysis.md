@@ -18,4 +18,4 @@ See [YACC](/yacc/)
 
 ## References
 
-- [Introduction to Sytax](https://web.tecnico.ulisboa.pt/~david.matos/w/pt/index.php/Introduction_to_Syntax)
+- [Introduction to Syntax](https://web.tecnico.ulisboa.pt/~david.matos/w/pt/index.php/Introduction_to_Syntax)
