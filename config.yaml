@@ -1,0 +1,49 @@
+baseurl: 'https://notes.hacdias.com/'
+languageCode: en
+paginate: 10
+rssLimit: 20
+pluralizelisttitles: false
+removePathAccents: true
+title: "@hacdias' garden"
+summarylength: 30
+relativeURLs: true
+enableRobotsTXT: true
+summaryLength: 150
+
+#TODO: use flower LEAF as favicon and icon besides title
+# https://mind.miketannenbaum.com/these-notes-are-written-for-myself
+
+social:
+  twitter: hacdias
+
+params:
+  emoji: 🧙‍♂️
+  Description: >-
+    Henrique is finishing his Bachelor's degree in Computer Science and Engineering
+    while working on the most fascinating projects to decentralize the web.
+
+disableKinds:
+  - taxonomy
+  - term
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    style: vs
+
+outputFormats:
+  embed:
+    baseName: embed
+    mediaType: text/html
+    notAlternative: true
+
+outputs:
+  home:
+    - html
+  section:
+    - html
+  page:
+    - html
+    - embed
