@@ -1,6 +1,6 @@
-# [hacdias.com](https://hacdias.com)
+# [notes.hacdias.com](https://notes.hacdias.com)
 
-The source 🧙‍♂️ of my website.
+The source 🧙‍♂️ of my digital garden.
 
 ---
 
