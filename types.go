@@ -1,14 +1,16 @@
 package main
 
-import "regexp"
+import (
+	"regexp"
+)
 
 const (
-	input     = "/Users/henriquedias/Documents/Notes"
-	output    = "/Users/henriquedias/Code/hacdias/notes.hacdias.com/content"
 	formatExt = ".md"
 )
 
 var (
+	input         string
+	output        string
 	latexRegex    = regexp.MustCompile(`(\$\$.*?\$\$|\$.*?\$)`)
 	wikilinkRegex = regexp.MustCompile(`\[\[(.*?)\]\]`)
 	exceptions    = []string{
@@ -24,9 +26,9 @@ type pageMeta struct {
 }
 
 type pageInfo struct {
-	Meta    pageMeta
-	Content []byte
-	Out     string
+	Meta     pageMeta
+	Content  []byte
+	Filename string
 }
 
 type pageCollection = map[string]*pageInfo

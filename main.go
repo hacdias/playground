@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -9,15 +11,36 @@ import (
 	"strings"
 
 	"github.com/gosimple/slug"
+	"github.com/otiai10/copy"
 )
 
+func init() {
+	flag.StringVar(&input, "input", "", "the input directory")
+	flag.StringVar(&output, "output", "", "the output Hugo website root")
+}
+
 func main() {
-	err := emptyDirectory(output, exceptions)
+	flag.Parse()
+
+	if input == "" || output == "" {
+		flag.PrintDefaults()
+		os.Exit(2)
+	}
+
+	contentDir := filepath.Join(output, "content")
+	attachmentsDir := filepath.Join(output, "static", "attachments")
+
+	err := emptyDirectory(contentDir, exceptions)
 	if err != nil {
 		panic(err)
 	}
 
 	files, err := ioutil.ReadDir(input)
+	if err != nil {
+		panic(err)
+	}
+
+	err = copy.Copy(filepath.Join(input, "attachments"), attachmentsDir)
 	if err != nil {
 		panic(err)
 	}
@@ -42,8 +65,9 @@ func main() {
 		}
 
 		page.Content = append([]byte{'\n', '\n'}, page.Content...)
-		ioutil.WriteFile(page.Out, append(meta, page.Content...), 0644)
-		fmt.Printf("created %s\n", page.Out)
+		out := filepath.Join(contentDir, page.Filename)
+		ioutil.WriteFile(out, append(meta, page.Content...), 0644)
+		fmt.Printf("created %s\n", out)
 	}
 }
 
@@ -64,7 +88,7 @@ func parse(col pageCollection, file, filename string) error {
 		return err
 	}
 
-	col[canonical].Out = filepath.Join(output, canonical+formatExt)
+	col[canonical].Filename = canonical + formatExt
 	col[canonical].Meta.Title = title
 	col[canonical].Meta.Mermaid = strings.Contains(string(content), "```mermaid")
 	col[canonical].Meta.Math = latexRegex.Match(content)
@@ -150,6 +174,12 @@ func parse(col pageCollection, file, filename string) error {
 
 		return []byte(finalLink)
 	})
+
+	col[canonical].Content = bytes.ReplaceAll(
+		col[canonical].Content,
+		[]byte("](attachments/"),
+		[]byte("](/attachments/"),
+	)
 
 	return nil
 }
