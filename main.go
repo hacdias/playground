@@ -165,6 +165,14 @@ func parse(col pageCollection, file, filename string) error {
 			}
 		}
 
+		// Do not duplicate references. This should be removed after this package
+		// _somehow_ supports references context (i.e., text before and after).
+		for _, backlink := range col[target].Meta.Backlinks {
+			if backlink.Target == "/"+canonical {
+				return []byte(finalLink)
+			}
+		}
+
 		col[target].Meta.Backlinks = append(col[target].Meta.Backlinks, backlink{
 			Target: "/" + canonical,
 			Before: "Unknown",
