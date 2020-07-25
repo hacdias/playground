@@ -8,6 +8,8 @@
 - **watch**: https://www.youtube.com/watch?v=-1h4RNetLbg
 - **tags**: [Movies](/movies/) [Open Source](/open-source/)
 
+---
+
 - You're never supposed to use an OS. people  use programs
 - An OS just helps creating programs
 - Richard Stallman

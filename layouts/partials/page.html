@@ -1,0 +1,24 @@
+<article class='h-entry'>
+  <header>
+    <h1 class='p-name'>{{- .Title -}}</h1>
+  </header>
+
+  <div>
+    <section class='content e-content'>
+      {{- .Content -}}
+    </section>
+  
+    <section id='backlinks'>
+      <h3>Links to this note</h2>
+      <div>
+        {{ range .Params.backlinks }}
+          {{ $page := $.Site.GetPage .Target }}
+          <a href="{{ $page.RelPermalink }}">
+            <strong>{{ $page.Title }}</strong>
+            <p>{{ trim (substr $page.Plain 0 100) " " }}…</p>
+          </a>
+        {{ end }}
+      </div>
+    </section>
+  </div>
+</article>

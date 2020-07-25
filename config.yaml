@@ -16,8 +16,9 @@ social:
 params:
   emoji: 🧙‍♂️
   Description: >-
-    This is Henrique Dias' digital garden with nodes made by him for him. He likes
-    to share his thoughts and notes with others and this is the way he found to do so.
+    This is my digital garden where I publish my notes. This is an experiment and you
+    should note that this notes are made by me for me. However, it's always good to share
+    knowledge.
 
 disableKinds:
   - taxonomy
