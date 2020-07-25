@@ -14,7 +14,7 @@
 
 An **action potential** happens when the membrane potential of a specific neuron rapidly rises and falls.
 
-![Action Potential](attachments/action-potential.svg)
+![Action Potential](/attachments/action-potential.svg)
 
 There are two **refractory periods**:
 

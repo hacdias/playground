@@ -8,18 +8,6 @@
 			"Before": "Unknown",
 			"Actual": "URL",
 			"After": "Unknown"
-		},
-		{
-			"Target": "/naming-system",
-			"Before": "Unknown",
-			"Actual": "URLs",
-			"After": "Unknown"
-		},
-		{
-			"Target": "/naming-system",
-			"Before": "Unknown",
-			"Actual": "URNs",
-			"After": "Unknown"
 		}
 	]
 }

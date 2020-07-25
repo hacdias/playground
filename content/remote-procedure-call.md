@@ -22,12 +22,6 @@
 			"After": "Unknown"
 		},
 		{
-			"Target": "/remote-method-invocation-rmi",
-			"Before": "Unknown",
-			"Actual": "failure semantics",
-			"After": "Unknown"
-		},
-		{
 			"Target": "/grpc",
 			"Before": "Unknown",
 			"Actual": "Remote Procedure Call",

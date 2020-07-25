@@ -14,7 +14,7 @@
 
 **Neurons** are the individual cellular unit in the nervous systems.
 
-![Neuron](attachments/neuron.png)
+![Neuron](/attachments/neuron.png)
 
 - **Axon terminals** connect to dendrites.
 - **Dendrites** receive **input** signals.

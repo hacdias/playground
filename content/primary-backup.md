@@ -21,7 +21,7 @@ Some **assumptions**:
 - Static amount of replicas and known beforehand.
 - $f+1$ replicas tolerate $f$ faults
 
-![Passive Replication](attachments/passive-replication.png)
+![Passive Replication](/attachments/passive-replication.png)
 
 1. Client sends request to the primary server using the [*at most once*](/remote-procedure-call/#server-failure) semantics.
 2. Primary server handles all request by causal order.

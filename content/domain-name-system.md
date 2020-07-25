@@ -10,12 +10,6 @@
 			"After": "Unknown"
 		},
 		{
-			"Target": "/naming-system",
-			"Before": "Unknown",
-			"Actual": "DNS",
-			"After": "Unknown"
-		},
-		{
 			"Target": "/replication",
 			"Before": "Unknown",
 			"Actual": "Domain Name System",

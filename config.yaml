@@ -10,17 +10,14 @@ relativeURLs: true
 enableRobotsTXT: true
 summaryLength: 150
 
-#TODO: use flower LEAF as favicon and icon besides title
-# https://mind.miketannenbaum.com/these-notes-are-written-for-myself
-
 social:
   twitter: hacdias
 
 params:
   emoji: 🧙‍♂️
   Description: >-
-    Henrique is finishing his Bachelor's degree in Computer Science and Engineering
-    while working on the most fascinating projects to decentralize the web.
+    This is Henrique Dias' digital garden with nodes made by him for him. He likes
+    to share his thoughts and notes with others and this is the way he found to do so.
 
 disableKinds:
   - taxonomy
@@ -32,13 +29,7 @@ markup:
       unsafe: true
   highlight:
     style: vs
-
-outputFormats:
-  embed:
-    baseName: embed
-    mediaType: text/html
-    notAlternative: true
-
+    
 outputs:
   home:
     - html
@@ -46,4 +37,3 @@ outputs:
     - html
   page:
     - html
-    - embed

@@ -10,7 +10,7 @@
 - Uses [XML](/xml/)
 - Can be used with any transport [Protocol](/protocol/)
 
-![SOAP](attachments/soap.svg)
+![SOAP](/attachments/soap.svg)
 
 **Disadvantages**
 

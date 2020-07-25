@@ -8,12 +8,6 @@
 			"Before": "Unknown",
 			"Actual": "**Syntax errors**",
 			"After": "Unknown"
-		},
-		{
-			"Target": "/programming-fundamentals",
-			"Before": "Unknown",
-			"Actual": "**Semantic errors**",
-			"After": "Unknown"
 		}
 	]
 }

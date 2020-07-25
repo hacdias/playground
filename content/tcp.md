@@ -10,12 +10,6 @@
 			"After": "Unknown"
 		},
 		{
-			"Target": "/http",
-			"Before": "Unknown",
-			"Actual": "TCP",
-			"After": "Unknown"
-		},
-		{
 			"Target": "/grpc",
 			"Before": "Unknown",
 			"Actual": "TCP",
