@@ -41,5 +41,65 @@ https://en.wikipedia.org/wiki/%27t_kofschip
 | You (plural)   | Jullie    |
 | They           | Zij (Ze*) |
 
+## Verbs
+- Usually end in **-en** (e.g., *eten*, *drinken*).
+- Basic rule: stem + right ending.
+- Like in Portuguese, there's tons of exceptions.
+
+### Regular Verbs 
+- English present continuous and present simple boil down to just present in Dutch.
+
+#### Present
+
+|Pronoun|Conjugation|Example|
+|----|----|---|
+|Ik|stem|Ik drink|
+|Jij|stem+t|Jij drinkt|
+|Hij/Zij/Het|stem+t|Hij drinkt|
+|U|stem+t|U drinkt|
+|Wij|Infinitive|Wij drinken|
+|Jullie|Infinitive|Jullie drinken|
+|Zij|Infinitive|Zij drinken|
+
+### Irregular Verbs
+- Only 6 verbs are completely irregular
+	- Hebben (to have)
+	- Kunnen (can)
+	- Mogen (may)
+	- Willen (to want)
+	- Zijn (to be)
+	- Zullen (shall)
+
+| Pronoun     | Hebben     | Zijn |
+|-------------|------------|------|
+| Ik          | heb        | ben  |
+| Jij         | hebt       | bent |
+| Hij/Zij/Het | heeft      | is   |
+| U           | hebt/heeft | bent |
+| Wij         | hebben     | zijn |
+| Jullie      | hebben     | zijn |
+| Zij         | hebben     | zijn |
+
+## Negation
+- Use *niet* and *geen* t"o negate (not interchangeable).
+- *Geen* negates nouns, just like "not a". Also used for some nouns not preceded by articles, like plural and uncountable nouns.
+	- Dat is geen man (that's not a man)
+	- Zij hebben geen boeken (they don't have books)
+- *Niet* negates everything else: verbs, adjectives, etc. Comes **after** the subject.
+	- Ik ren niet (I do not run)
+	- Hij is niet zo oud (He is not that old)
+
+## Pronunciation
+
+Check:
+- https://www.duolingo.com/skill/dn/Basics-2/tips-and-notes
+- https://www.duolingo.com/skill/dn/Common-Phrases-1/tips-and-notes
+
 ## Words
-- **Welkom**: welcome
+- Welkom: welcome
+- Morgen: morning
+- Middag: midday
+- Avond: evening
+- Nacht: night
+- Dag: day
+- Goedemorgen: good morning (same for other times of the day)
