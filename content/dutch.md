@@ -29,17 +29,17 @@ https://en.wikipedia.org/wiki/%27t_kofschip
 
 ## Pronouns
 
-| English        | Dutch     |
-|----------------|-----------|
-| I              | Ik        |
-| You (singular) | Jij (Je*) |
-| He             | Hij       |
-| She            | Zij (Ze*) |
-| It             | Het       |
-| You(formal)    | U         |
-| We             | Wij (We*) |
-| You (plural)   | Jullie    |
-| They           | Zij (Ze*) |
+| English        | Unstressed     |Streessed|
+|----------------|-----------|-----|
+| I              | Ik        |-|
+| You (singular) | Je|Jij|
+| He             | Hij       |-|
+| She            | Ze |Zij|
+| It             | Het       |-|
+| You(formal)    | U         |-|
+| We             | We |Wij|
+| You (plural)   | Jullie    |-|
+| They           | Ze |Zij|
 
 ## Verbs
 - Usually end in **-en** (e.g., *eten*, *drinken*).
@@ -88,6 +88,23 @@ https://en.wikipedia.org/wiki/%27t_kofschip
 - *Niet* negates everything else: verbs, adjectives, etc. Comes **after** the subject.
 	- Ik ren niet (I do not run)
 	- Hij is niet zo oud (He is not that old)
+
+## Questions
+- Switch the verb with the subject (inversion).
+	- Hij spreekt Nederlands.
+	- Spreekt hij Nederlands?
+- When we invert the sentence for "je", we drop the **-t**.
+	- Je spreekt Nederlands
+	- Spreek je Nederlands?
+
+## Plurals
+- 1st most common is adding **-en**
+	- If it ends with 's' or 'f',it's replaced by 'z' or 'v', respectively (muis --> muizen).
+- 2nd most common is adding **-s**
+	- If it ends with a single vowel, an apostrophe is needed (menu --> menu's), except when ending with **-e**.
+- Rarest forms:
+	- Add **-eren**
+	- Add **-a**: words that come from latin, can also be used with **-s**.
 
 ## Pronunciation
 
