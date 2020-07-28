@@ -115,13 +115,28 @@ Check:
 ## Adjectives
 - If an adjective comes before a noun with a definite article, it usually ends with an **-e**.
 - When there is a possessive pronoun we also add **-e**.
+- If the indefinity article "een" comes before a het-word in the singular, it doesn't get an -e.
+	- een or; geen/elk/genoeg/ieder/veel/wat/weinig/welk/zo'n/zulk
+- If it comes before a de-word, it gets an -e.
+	- **een** oud**e** hond (**de** hond)
+	- **een** oud huis (**het** huis)
+	- oud**e** honden
+	- oud**e** huizen
 
-## Words
-- Welkom: welcome
-- Morgen: morning
-- Middag: midday
-- Avond: evening
-- Nacht: night
-- Dag: day
-- Goedemorgen: good morning (same for other times of the day)
-- Avondete: dinner
+### No article
+- Het-word -> No ending
+	- Het water -> koud water
+- De-word -> Ending
+	- De koffie -> Lekkere koffie
+
+### Predicate adjectives
+- Predicate adjectives follow a linking verb.
+- Do not get any special ending.
+	- Het huis is groot.
+	- De honden zijn duur.
+
+## Unchanging adjectives
+- Adjectives ending in **-en**.
+- Some others.
+
+## [Words](/dutch-words/)
