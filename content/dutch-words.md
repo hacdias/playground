@@ -37,18 +37,23 @@
 - als: as / if
 - ben: am
 - was: was
-- mijn: my
-- Elk:
-- Genoeg
+- dit: this
+- aan: on
+- om: to / for / at
+- hier: here
+- naar: to
+- dan: then
+- weet: know
+- wil: want
+- moet: must
+- elk:
+- genoeg
 - Ieder:
-- Veel:
-- Wat:
-- Weinig
-- Welk
-- Zo'n
-- Zulk
-- Snel: fast
-- Kort: short
-- Goed: good
-- Maaltijd: meal
-- Langzaam: slow
+- veel:
+- weinig:
+- welk:
+- snel: fast
+- kort: short
+- goed: good
+- maaltijd: meal
+- langzaam: slow
