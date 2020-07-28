@@ -57,3 +57,4 @@
 - goed: good
 - maaltijd: meal
 - langzaam: slow
+- gemakkelijk: easy
