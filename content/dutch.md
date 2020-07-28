@@ -112,6 +112,10 @@ Check:
 - https://www.duolingo.com/skill/dn/Basics-2/tips-and-notes
 - https://www.duolingo.com/skill/dn/Common-Phrases-1/tips-and-notes
 
+## Adjectives
+- If an adjective comes before a noun with a definite article, it usually ends with an **-e**.
+- When there is a possessive pronoun we also add **-e**.
+
 ## Words
 - Welkom: welcome
 - Morgen: morning
@@ -120,3 +124,4 @@ Check:
 - Nacht: night
 - Dag: day
 - Goedemorgen: good morning (same for other times of the day)
+- Avondete: dinner
