@@ -58,3 +58,5 @@
 - maaltijd: meal
 - langzaam: slow
 - gemakkelijk: easy
+- liefje: honey (like people, not the bee thingy)
+- schatje: babe
