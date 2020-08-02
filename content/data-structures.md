@@ -78,3 +78,6 @@ tarjan_visit(u):
   1. Run DFS to get end times (f)
   2. When a vertex is closed, add to the beginning of a list.
   3. Return the list.
+![attachments/asa.notes.i.pdf](/attachments-asa-notes-i-pdf/)
+![attachments/asa.notes.ii.pdf](/attachments-asa-notes-ii-pdf/)
+![attachments/asa.notes.iii.pdf](/attachments-asa-notes-iii-pdf/)
