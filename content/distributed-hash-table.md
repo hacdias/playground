@@ -52,7 +52,9 @@ DHTs are Distributed Hash Tables which are P2P algorithms.
 	- **Direct storage**: data is copied upon insertion to the responsible node.
 		- Good because the data is directly on the peer.
 		- Bad for bandwidth and resources.
-	- **Referenced storage**: references to the 
+	- **Referenced storage**: references pointers to the actual location of the data.
+		- Good because there's less load on the DHT.
+		- Bad becauser data is only available while the node is available.
 
 ## Algorithms
 
