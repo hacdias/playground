@@ -49,8 +49,10 @@ DHTs are Distributed Hash Tables which are P2P algorithms.
 - By distributing identifiers of nodes and data equally thorough the system, the load shoud be balanced across all peers
 	- PROBLEM: obviously there are some resources that are always more accessed than others, creating possibily huge differences.
 - Data storage:
-	- **Direct storage**: store the data directly on the DHT. Bad for performance and bandwidth.
-	- **Referenced storage**:
+	- **Direct storage**: data is copied upon insertion to the responsible node.
+		- Good because the data is directly on the peer.
+		- Bad for bandwidth and resources.
+	- **Referenced storage**: references to the 
 
 ## Algorithms
 
