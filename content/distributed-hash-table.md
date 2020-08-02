@@ -55,6 +55,13 @@ DHTs are Distributed Hash Tables which are P2P algorithms.
 	- **Referenced storage**: references pointers to the actual location of the data.
 		- Good because there's less load on the DHT.
 		- Bad becauser data is only available while the node is available.
+- Can be interpreted as:
+	- Routing systems
+	- Storage systems
+- Challenges:
+	- Routing efficiency
+	- Management overhead
+	- Dynamics
 
 ## Algorithms
 
@@ -63,3 +70,14 @@ DHTs are Distributed Hash Tables which are P2P algorithms.
 - [Tapestry (DHT)](/tapestry-dht/)
 - [Pastry (DHT)](/pastry-dht/)
 - [Kademlia (DHT)](/kademlia-dht/)
+
+### Comparison
+
+|System|Routing Hops|Node State|Arrival|Departure|
+|---|---|---|---|---|
+|[Chord (DHT)](/chord-dht/)|$O(\frac{1}{2}\log_2(N))$|$O(2\log_2(N))$|$$|$$|
+|[Pastry (DHT)](/pastry-dht/)|$O(\frac{1}{2}\log_2(N))$|$$|$$|$$|
+|[Content Addressable Network (DHT)](/content-addressable-network-dht/)|$O(\frac{D}{2}N^{1/D})$|$$|$$|$$|
+|Symphony|$O(\frac{c}{k}\log_2(N))$|$O(2k+2)$|$$|$$|
+|Viceroy|$O(\frac{c}{k}\log_2(N))$|$O(2k+2)$|$$|$$|
+|[Kademlia (DHT)](/kademlia-dht/)|$O(\log_b(N))$|$O(b\log_b(N))$|$$|$$|
