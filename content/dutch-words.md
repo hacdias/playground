@@ -60,3 +60,4 @@
 - gemakkelijk: easy
 - liefje: honey (like people, not the bee thingy)
 - schatje: babe
+- geniet: enjoy (*geniet van je eten*)
