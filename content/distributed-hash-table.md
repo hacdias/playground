@@ -75,9 +75,9 @@ DHTs are Distributed Hash Tables which are P2P algorithms.
 
 |System|Routing Hops|Node State|Arrival|Departure|
 |---|---|---|---|---|
-|[Chord (DHT)](/chord-dht/)|$O(\frac{1}{2}\log_2(N))$|$O(2\log_2(N))$|$$|$$|
-|[Pastry (DHT)](/pastry-dht/)|$O(\frac{1}{2}\log_2(N))$|$$|$$|$$|
-|[Content Addressable Network (DHT)](/content-addressable-network-dht/)|$O(\frac{D}{2}N^{1/D})$|$$|$$|$$|
-|Symphony|$O(\frac{c}{k}\log_2(N))$|$O(2k+2)$|$$|$$|
-|Viceroy|$O(\frac{c}{k}\log_2(N))$|$O(2k+2)$|$$|$$|
-|[Kademlia (DHT)](/kademlia-dht/)|$O(\log_b(N))$|$O(b\log_b(N))$|$$|$$|
+|[Chord (DHT)](/chord-dht/)|$O(\frac{1}{2}\log_2(N))$|$O(2\log_2(N))$|$O(log_2^2(N))$|$O(\log_2^2(N))$|
+|[Pastry (DHT)](/pastry-dht/)|$O(\frac{1}{2}\log_2(N))$|$O(\frac{1}{b}(2^b-1)\log_2(N))$|$O(log_{2^b}(N))$|$O(\log_b(N))$|
+|[Content Addressable Network (DHT)](/content-addressable-network-dht/)|$O(\frac{D}{2}N^{1/D})$|$O(2D)$|$O(\frac{D}{2}N^{1/D})$|$O(2D)$|
+|Symphony|$O(\frac{c}{k}\log_2(N))$|$O(2k+2)$|$O(\log^2(N))$|$O(\log^2(N))$|
+|Viceroy|$O(\frac{c}{k}\log_2(N))$|$O(2k+2)$|$O(\log_2(N))$|$O(\log_2(N))$|
+|[Kademlia (DHT)](/kademlia-dht/)|$O(\log_b(N))$|$O(b\log_b(N))$|$O(\log_b(N))$|$O(\log_b(N))$|
