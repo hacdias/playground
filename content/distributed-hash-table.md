@@ -1,7 +1,7 @@
 {
 	"title": "Distributed Hash Table",
 	"mermaid": false,
-	"math": false,
+	"math": true,
 	"backlinks": [
 		{
 			"Target": "/bittorrent",
@@ -26,6 +26,12 @@
 			"Before": "Unknown",
 			"Actual": "Distributed Hash Table",
 			"After": "Unknown"
+		},
+		{
+			"Target": "/peer-to-peer-systems-and-applications",
+			"Before": "Unknown",
+			"Actual": "Distributed Hash Table",
+			"After": "Unknown"
 		}
 	]
 }
@@ -34,9 +40,17 @@
 
 DHTs are Distributed Hash Tables which are P2P algorithms.
 
+>  "A system where the nodes organize themselves in a structured overlay and establish a small amount of routing information for quick and efficient routing to other overlay nodes." - [Peer-to-Peer Systems and Applications](/peer-to-peer-systems-and-applications/)
+
 - P2P Algorithms: different implementations
 - Nodes store index info about other resources
 - Flat architecture: no special nodes
+- Usually can find resources on $O(\log N)$
+- By distributing identifiers of nodes and data equally thorough the system, the load shoud be balanced across all peers
+	- PROBLEM: obviously there are some resources that are always more accessed than others, creating possibily huge differences.
+- Data storage:
+	- **Direct storage**: store the data directly on the DHT. Bad for performance and bandwidth.
+	- **Referenced storage**:
 
 ## Algorithms
 
