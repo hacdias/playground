@@ -4,6 +4,12 @@
 	"math": true,
 	"backlinks": [
 		{
+			"Target": "/peer-to-peer-systems-and-applications",
+			"Before": "Unknown",
+			"Actual": "Fault Tolerance",
+			"After": "Unknown"
+		},
+		{
 			"Target": "/primary-backup",
 			"Before": "Unknown",
 			"Actual": "Fail-silent faults",
