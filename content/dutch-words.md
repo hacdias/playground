@@ -49,7 +49,6 @@
 - elk:
 - genoeg
 - Ieder:
-- veel:
 - weinig:
 - welk:
 - snel: fast
@@ -61,3 +60,15 @@
 - liefje: honey (like people, not the bee thingy)
 - schatje: babe
 - geniet: enjoy (*geniet van je eten*)
+- koop: buy
+- voor: for
+- oud: old
+- word: become
+- iedereen: everybody
+- alles: everything
+- weet: know
+- veel: a lot
+- blijf: stay
+- rustig: calm
+- bril: glasses
+- zoek: is looking for
