@@ -47,7 +47,7 @@ module.exports = async () => {
   const items = []
 
   for (let page = 1, res; (res = await get(page)) && res.totalPages >= page; page++) {
-    const its = res.body.filter(item => !item['@attr'] || item['@attr']['nowplaying'] !== 'true')
+    const its = res.body.filter(item => !item['@attr'] || item['@attr'].nowplaying !== 'true')
     console.log(`⬇️  Page ${page} downloaded with ${its.length} items.`)
     items.push(...its)
   }
@@ -65,10 +65,9 @@ module.exports = async () => {
   await fs.outputJSON(path.join(dataDir, 'week.json'), lastWeek, { spaces: 2 })
 
   await updateGitHub({
-    data:  JSON.stringify(lastWeek, null, 2),
+    data: JSON.stringify(lastWeek, null, 2),
     repo: githubRepo,
     path: githubPath,
     message: `${new Date().toUTCString()} update music`
   })
-
 }
