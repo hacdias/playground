@@ -2,8 +2,8 @@
 
 require('dotenv').config()
 
-const feedbin = require('../src/feedbin')
-const availableCommands = Object.keys(feedbin)
+const miniflux = require('../src/miniflux')
+const availableCommands = Object.keys(miniflux)
 
 ;(async () => {
   if (process.argv.length !== 3 || !availableCommands.includes(process.argv[2])) {
@@ -11,5 +11,5 @@ const availableCommands = Object.keys(feedbin)
     process.exit(1)
   }
 
-  await feedbin[process.argv[2]]()
+  await miniflux[process.argv[2]]()
 })()
