@@ -45,6 +45,6 @@ module.exports = async function () {
     data: JSON.stringify(history, null, 2),
     repo: githubRepo,
     path: githubPath,
-    message: `${new Date().toUTCString()} update watches`,
+    message: `${new Date().toUTCString()} update watches`
   })
 }

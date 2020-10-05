@@ -5,6 +5,10 @@
   "scripts": {
     "lint": "standard **/*.js"
   },
+  "main": "index.js",
+  "bin": {
+    "silos-collector": "bin.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hacdias/silos-collector.git"
@@ -25,8 +29,6 @@
     "got": "^11.5.1",
     "open": "^7.0.4",
     "simple-oauth2": "^4.1.0",
-    "vega": "^5.13.0",
-    "vega-lite": "^4.13.1",
     "xml2js": "^0.4.23"
   }
 }
