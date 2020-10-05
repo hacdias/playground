@@ -14,23 +14,9 @@ const get = async (page, accessToken) => {
   return body
 }
 
-const getID = async (id, accessToken) => {
-  const url = `https://api.foursquare.com/v2/checkins/${id}?oauth_token=${accessToken}&v=20200222`
-  const { body } = await got(url, {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    responseType: 'json'
-  })
-
-  return body.response.checkin
-}
-
 module.exports = async function () {
   const dataDir = path.join(process.env.DATA_DIR, 'swarm')
   const accessToken = path.join(process.env.FOURSQUARE_ACCESS_TOKEN)
-
-  const singleDir = path.join(dataDir, 'single')
   const historyFile = path.join(dataDir, 'history.json')
 
   const items = []
@@ -43,19 +29,6 @@ module.exports = async function () {
   await fs.outputJSON(historyFile, items, {
     spaces: 2
   })
-
-  for (const item of items) {
-    const filePath = path.join(singleDir, `${item.id}.json`)
-    if (await fs.existsSync(filePath)) {
-      continue
-    }
-
-    const data = await getID(item.id, accessToken)
-    console.log(`📌 Got full data for ${item.id}.`)
-    await fs.outputJSON(filePath, data, {
-      spaces: 2
-    })
-  }
 
   console.log(`✅ ${items.length} items downloaded.`)
 }
