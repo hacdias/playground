@@ -1,7 +1,6 @@
 {
-  "name": "silos-collector",
+  "name": "@hacdias/silos-collector",
   "version": "1.0.0",
-  "private": true,
   "scripts": {
     "lint": "standard **/*.js"
   },
