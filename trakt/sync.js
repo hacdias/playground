@@ -11,7 +11,7 @@ const githubPath = process.env.TRAKT_GITHUB_PATH
 const dataDir = path.join(process.env.DATA_DIR, 'trakt')
 
 async function get (page) {
-  const { headers, body } = await got(`https://api.trakt.tv/sync/history?page=${page}&limit=500&extended=full`, {
+  const { headers, body } = await got(`https://api.trakt.tv/sync/history?page=${page}&limit=500&extended=metadata`, {
     headers: {
       'Content-Type': 'application/json',
       'trakt-api-key': traktId,
@@ -38,8 +38,7 @@ module.exports = async function () {
   fs.writeFileSync(historyPath, JSON.stringify(items, null, 2))
 
   // GitHub updater...
-  const rawHistory = fs.readJSONSync(historyPath)
-  const history = convert(rawHistory)
+  const history = convert(items)
 
   await updateGitHub({
     data: JSON.stringify(history, null, 2),
