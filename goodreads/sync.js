@@ -57,14 +57,15 @@ module.exports = async function () {
   console.log('📚 Fetching from GoodReads...')
   const dataFile = path.join(process.env.DATA_DIR, 'goodreads', 'history.json')
   const raw = await fetch()
-  await fs.outputJSON(dataFile, raw, {
+  const data = await parse(raw)
+
+  console.log('📄 Saving GoodReads history...')
+  await fs.outputJSON(dataFile, data, {
     spaces: 2
   })
-  const data = await parse(raw)
-  const json = JSON.stringify(data, null, 2)
 
   await updateGitHub({
-    data: json,
+    data: JSON.stringify(data, null, 2),
     repo: githubRepo,
     path: githubPath,
     message: `${new Date().toUTCString()} update reads`
