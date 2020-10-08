@@ -28,7 +28,11 @@ async function fetch () {
 }
 
 async function parse (data) {
-  const books = {}
+  const books = {
+    'to-read': [],
+    read: [],
+    'currently-reading': []
+  }
 
   for (const item of data) {
     const shelf = item.shelves[0].shelf[0].$.name
