@@ -26,7 +26,6 @@ module.exports = async () => {
       return acc
     }
 
-    acc[category] = acc[category] || []
     acc[category].push({
       feed: curr.feed_url,
       site: curr.site_url,
@@ -34,7 +33,10 @@ module.exports = async () => {
     })
 
     return acc
-  }, {})
+  }, {
+    following: [],
+    comics: []
+  })
 
   for (const key in blogroll) {
     blogroll[key].sort((a, b) => {
