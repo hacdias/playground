@@ -41,7 +41,9 @@ async function parse (data) {
       date: item.read_at[0] || item.started_at[0] || null,
       author: item.book[0].authors[0].author[0].name[0],
       name: item.book[0].title[0],
-      isbn: item.book[0].isbn13[0],
+      isbn: typeof item.book[0].isbn13[0] === 'string'
+        ? item.book[0].isbn13[0]
+        : '',
       rating: Number(item.rating[0]) || 'N/A'
     }
 
