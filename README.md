@@ -1,15 +1,6 @@
 # Silos Collectors
 
 This is a compilation of some silos data collectors I use for my strictly personal use. Feel free to reuse code and use it for your own purposes.
-
-## GoodReads
-
-> Collects [GoodReads](https://goodreads.com) history.
-
-1. Create an application on https://goodreads.com/api
-2. Fill the variables
-3. Run `./bin.js goodreads sync` and your GitHub will be updated.
-
 ## Swarm
 
 > Collects [Swarm](https://www.swarmapp.com/) history.
