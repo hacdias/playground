@@ -20,15 +20,15 @@
   },
   "homepage": "https://github.com/hacdias/silos-collector#readme",
   "devDependencies": {
-    "standard": "^14.3.4"
+    "standard": "^16.0.4"
   },
   "dependencies": {
-    "dotenv": "^8.2.0",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "fs-extra": "^9.0.1",
-    "got": "^11.5.1",
-    "open": "^7.0.4",
-    "simple-oauth2": "^4.1.0",
+    "fs-extra": "^10.0.0",
+    "got": "^11.8.2",
+    "open": "^8.4.0",
+    "simple-oauth2": "^4.2.0",
     "xml2js": "^0.4.23"
   }
 }

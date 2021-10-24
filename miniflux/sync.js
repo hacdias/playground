@@ -40,14 +40,10 @@ module.exports = async () => {
 
   for (const key in blogroll) {
     blogroll[key].sort((a, b) => {
-      var tA = a.title.toUpperCase()
-      var tB = b.title.toUpperCase()
-      if (tA < tB) {
-        return -1
-      }
-      if (tA > tB) {
-        return 1
-      }
+      const tA = a.title.toUpperCase()
+      const tB = b.title.toUpperCase()
+      if (tA < tB) return -1
+      if (tA > tB) return 1
       return 0
     })
   }

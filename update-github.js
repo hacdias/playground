@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 const got = require('got')
 
 const github = got.extend({
