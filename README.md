@@ -20,10 +20,6 @@ This is a compilation of some silos data collectors I use for my strictly person
 3. Run `./bin.js trakt login` and append the result to `.env`.
 4. Run `./bin.js trakt sync` and then a file called `history.json` will be generated.
 
-## Miniflux
-
-To write...
-
 ## LastFM
 
 To write...
