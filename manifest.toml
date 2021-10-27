@@ -11,5 +11,5 @@ enabled = true
 enabled = true
 
 [[testcases]]
-name = "connect"
+name = "peer-routing"
 instances = { min = 6, max = 100, default = 12 }
