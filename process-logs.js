@@ -23,5 +23,6 @@ for (const test of fs.readdirSync(dir)) {
     .map(d => d.message_event.message)
     .filter(d => typeof d === 'object')
 
+  // Do whatever we need with the processed data.
   console.log(data)
 }

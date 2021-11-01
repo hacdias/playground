@@ -18,6 +18,8 @@ testground run s -r local:docker -b docker:node -p dht-testground -t peer-routin
 
 ## Content Routing Example
 
+First, import the plan as mentioned above. Then, you can run it:
+
 ```
 testground run s \
   -r local:docker \
@@ -27,9 +29,13 @@ testground run s \
   --wait --collect
 ```
 
+You may replace 6 but any number of instances you want. In the end, you should have the output with the run ID. A file `[run-id].tgz` will be generated with the logs. Extract it:
+
 ```
 tar -xvf [run-id].tgz
 ```
+
+Then process it:
 
 ```
 node process-logs.js [run-id]
