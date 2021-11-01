@@ -14,3 +14,23 @@ Then run it:
 ```
 testground run s -r local:docker -b docker:node -p dht-testground -t peer-routing -i 12 --wait
 ```
+
+
+## Content Routing Example
+
+```
+testground run s \
+  -r local:docker \
+  -b docker:node \
+  -p dht-testground \
+  -t content-routing -i 6 \
+  --wait --collect
+```
+
+```
+tar -xvf [run-id].tgz
+```
+
+```
+node process-logs.js [run-id]
+```

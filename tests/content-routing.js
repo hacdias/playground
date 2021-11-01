@@ -1,3 +1,4 @@
+const { performance } = require('perf_hooks')
 const delay = require('delay')
 const PeerId = require('peer-id')
 const { Multiaddr } = require('multiaddr')
@@ -20,10 +21,13 @@ module.exports = bureaucracy(async (runenv, client, netclient) => {
     // Signal entry to the enrolled state, and obtain a sequence number.
     // We will use this number to know where in the "circle" we are.
     const seq = await client.signalEntry(states.enrolled)
-    runenv.recordMessage(`sequence id: ${seq}`)
-
     node = await createNode()
-    runenv.recordMessage(`peer id: ${node.peerId.toString()}`)
+
+    runenv.recordMessage({
+      event: 'node-created',
+      ts: performance.now(),
+      peerId: node.peerId.toString()
+    })
 
     // Wait for all the nodes to be created.
     await client.signalAndWait(states.nodeCreated, runenv.testInstanceCount)
@@ -46,13 +50,23 @@ module.exports = bureaucracy(async (runenv, client, netclient) => {
       let { peerId, multiaddrs } = bootstrapNode.value
       peerId = PeerId.parse(peerId)
       multiaddrs = multiaddrs.map(ma => new Multiaddr(ma))
-      runenv.recordMessage(`got bootstrap node: ${JSON.stringify(bootstrapNode)}`)
+
+      runenv.recordMessage({
+        event: 'received-bootstrap',
+        ts: performance.now(),
+        peerId: peerId.toString()
+      })
 
       if (seq !== 2) {
         // Connect to the bootstrap node.
         node.peerStore.addressBook.set(peerId, multiaddrs)
         await node.dial(peerId)
-        runenv.recordMessage('dialed bootstrap node')
+
+        runenv.recordMessage({
+          event: 'dialed-bootstrap',
+          ts: performance.now(),
+          peerId: peerId.toString()
+        })
 
         // The DHT routing tables need a moment to populate
         await delay(100)
@@ -68,31 +82,47 @@ module.exports = bureaucracy(async (runenv, client, netclient) => {
         const b = await client.barrier(states.published, 1)
         await b.wait
 
-        runenv.recordMessage('will join now')
-
         // Connect to the bootstrap node.
         node.peerStore.addressBook.set(peerId, multiaddrs)
         await node.dial(peerId)
-        runenv.recordMessage('dialed bootstrap node')
+
+        runenv.recordMessage({
+          event: 'dialed-bootstrap',
+          ts: performance.now(),
+          peerId: peerId.toString()
+        })
 
         // The DHT routing tables need a moment to populate
         await delay(100)
 
-        runenv.recordMessage('will try findind content')
+        runenv.recordMessage({
+          event: 'find-content',
+          ts: performance.now(),
+          cid: cid.toString()
+        })
 
+        const start = performance.now()
         for await (const provider of node.contentRouting.findProviders(cid, { timeout: 3000 })) {
           runenv.recordMessage(`found provider: ${provider.id.toString()}`)
         }
+        const end = performance.now()
+
+        runenv.recordMessage({
+          event: 'found-content',
+          ts: performance.now(),
+          cid: cid.toString(),
+          took: end - start
+        })
       } else if (seq === 3) {
         // Provide the content.
-
         await node.contentRouting.provide(cid)
-
-        runenv.recordMessage('providind content')
-
+        runenv.recordMessage({
+          event: 'providing-content',
+          ts: performance.now(),
+          cid: cid.toString()
+        })
         // Wait for propagation.
         await delay(5000)
-
         await client.signalEntry(states.published)
       }
     }
@@ -102,7 +132,8 @@ module.exports = bureaucracy(async (runenv, client, netclient) => {
   } finally {
     // TODO: node hangs while stopping. Adding a delay reduces the likeliness.
     await delay(1000)
-    runenv.recordMessage('stopping node')
+    runenv.recordMessage({ event: 'node-stopping', ts: performance.now() })
     if (node) await node.stop()
+    runenv.recordMessage({ event: 'node-stopped', ts: performance.now() })
   }
 })
