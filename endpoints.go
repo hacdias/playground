@@ -1,0 +1,153 @@
+package main
+
+import (
+	"fmt"
+	"sort"
+
+	cmds "github.com/ipfs/go-ipfs-cmds"
+	corecmds "github.com/ipfs/kubo/core/commands"
+	"github.com/samber/lo"
+)
+
+var ignoreEndpoints = []string{}
+
+var ignoreOptionsPerEndpoint = map[string]map[string]struct{}{
+	"/api/v0/add": {
+		cmds.RecLong:     struct{}{},
+		cmds.DerefLong:   struct{}{},
+		cmds.StdinName:   struct{}{},
+		cmds.Hidden:      struct{}{},
+		cmds.Ignore:      struct{}{},
+		cmds.IgnoreRules: struct{}{},
+	},
+}
+
+func GetRPC() *RPC {
+	return &RPC{
+		Endpoints: getEndpoints("", corecmds.Root),
+	}
+}
+
+func parseArgument(arg cmds.Argument) *Argument {
+	// TODO: here we need some annotations to know what the string actually is.
+	// Is it a CID? Is it a multiaddress? Is it just a string?
+	argType := "string"
+	if arg.Type == cmds.ArgFile {
+		argType = "file"
+	}
+
+	return &Argument{
+		Name:        arg.Name,
+		Type:        argType,
+		Required:    arg.Required,
+		Description: arg.Description,
+	}
+}
+
+func parseOption(opt cmds.Option) *Argument {
+	def := fmt.Sprint(opt.Default())
+	if def == "<nil>" {
+		def = ""
+	}
+
+	return &Argument{
+		Name:        opt.Names()[0], // TODO: opt.Name()?
+		Type:        opt.Type().String(),
+		Description: opt.Description(),
+		Default:     def,
+	}
+}
+
+func getEndpoints(prefix string, cmd *cmds.Command) (endpoints []*Endpoint) {
+	// Only get commands that are active. Deprecated, experimental and removed
+	// commands are not exported.
+	if cmd.Status != cmds.Active {
+		return nil
+	}
+
+	var (
+		arguments []*Argument
+		options   []*Argument
+		response  []*Argument
+	)
+
+	ignore := cmd.Run == nil || lo.Contains(ignoreEndpoints, prefix)
+	if !ignore {
+		// Parse arguments.
+		for _, arg := range cmd.Arguments {
+			arguments = append(arguments, parseArgument(arg))
+		}
+
+		// Parse options.
+		for _, opt := range cmd.Options {
+			// Check if option is ignored for this endpoint.
+			if ignoreOpts, ok := ignoreOptionsPerEndpoint[prefix]; ok {
+				if _, ok := ignoreOpts[opt.Names()[0]]; ok {
+					continue
+				}
+			}
+
+			options = append(options, parseOption(opt))
+		}
+
+		endpoints = []*Endpoint{
+			{
+				Name:        prefix,
+				Description: cmd.Helptext.Tagline,
+				Arguments:   arguments,
+				Options:     options,
+				Response:    response,
+			},
+		}
+
+		// if endpoint.Response != nil {
+		// 	e := reflect.ValueOf(endpoint.Response)
+
+		// 	// Defer pointers.
+		// 	if e.Type().Kind() == reflect.Pointer || e.Type().Kind() == reflect.Interface {
+		// 		e = e.Elem()
+		// 	}
+
+		// 	// switch e.Type().Kind() {
+
+		// 	// case reflect.Array, reflect.Slice:
+		// 	// 	isArray = true
+		// 	// 	fmt.Println("skip array")
+
+		// 	// // case reflect.Pointer, reflect.Interface:
+		// 	// // 	e = e.Elem()
+		// 	// // 	fallthrough
+		// 	// case reflect.Struct:
+		// 	// 	for i := 0; i < e.NumField(); i++ {
+		// 	// 		if e.Type().Field(i).IsExported() {
+		// 	// 			varName := e.Type().Field(i).Name
+		// 	// 			varType := e.Type().Field(i).Type
+		// 	// 			// varValue := e.Field(i).Interface()
+		// 	// 			fmt.Printf("%v %v\n", varName, varType)
+		// 	// 		}
+		// 	// 	}
+		// 	// }
+
+		// 	switch e.Type().Kind() {
+		// 	case reflect.Array, reflect.Slice:
+		// 		fmt.Println("TODO: array")
+		// 	case reflect.Struct:
+		// 		fmt.Println("TODO: struct")
+		// 	default:
+		// 		fmt.Printf("TODO: %s\n", e.Type().String())
+		// 	}
+
+		// }
+	}
+
+	for n, cmd := range cmd.Subcommands {
+		endpoints = append(endpoints,
+			getEndpoints(fmt.Sprintf("%s/%s", prefix, n), cmd)...)
+	}
+
+	sort.SliceStable(endpoints, func(i, j int) bool {
+		return endpoints[i].Name < endpoints[j].Name
+	})
+
+	return endpoints
+}
