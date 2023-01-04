@@ -147,9 +147,12 @@ func generateGoClient(rpc *RPC, outputDirectory string) error {
 }
 
 func main() {
-	rpc := GetRPC()
+	rpc, err := GetRPC()
+	if err != nil {
+		panic(err)
+	}
 
-	err := os.MkdirAll("gen/", 0766)
+	err = os.MkdirAll("gen/", 0766)
 	if err != nil {
 		panic(err)
 	}

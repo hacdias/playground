@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"reflect"
 	"sort"
 
 	cmds "github.com/ipfs/go-ipfs-cmds"
@@ -22,10 +23,14 @@ var ignoreOptionsPerEndpoint = map[string]map[string]struct{}{
 	},
 }
 
-func GetRPC() *RPC {
-	return &RPC{
-		Endpoints: getEndpoints("", corecmds.Root),
+func GetRPC() (*RPC, error) {
+	endpoints, err := getEndpoints("", corecmds.Root)
+	if err != nil {
+		return nil, err
 	}
+	return &RPC{
+		Endpoints: endpoints,
+	}, nil
 }
 
 func parseArgument(arg cmds.Argument) *Argument {
@@ -58,14 +63,15 @@ func parseOption(opt cmds.Option) *Argument {
 	}
 }
 
-func getEndpoints(prefix string, cmd *cmds.Command) (endpoints []*Endpoint) {
+func getEndpoints(prefix string, cmd *cmds.Command) ([]*Endpoint, error) {
 	// Only get commands that are active. Deprecated, experimental and removed
 	// commands are not exported.
 	if cmd.Status != cmds.Active {
-		return nil
+		return nil, nil
 	}
 
 	var (
+		endpoints []*Endpoint
 		arguments []*Argument
 		options   []*Argument
 		response  []*Argument
@@ -90,6 +96,48 @@ func getEndpoints(prefix string, cmd *cmds.Command) (endpoints []*Endpoint) {
 			options = append(options, parseOption(opt))
 		}
 
+		if cmd.Type != nil {
+			e := reflect.ValueOf(cmd.Type)
+
+			// Defer pointers.
+			if e.Type().Kind() == reflect.Pointer || e.Type().Kind() == reflect.Interface {
+				e = e.Elem()
+			}
+
+			// 	// switch e.Type().Kind() {
+
+			// 	// case reflect.Array, reflect.Slice:
+			// 	// 	isArray = true
+			// 	// 	fmt.Println("skip array")
+
+			// 	// // case reflect.Pointer, reflect.Interface:
+			// 	// // 	e = e.Elem()
+			// 	// // 	fallthrough
+			// 	// case reflect.Struct:
+			// 	// 	for i := 0; i < e.NumField(); i++ {
+			// 	// 		if e.Type().Field(i).IsExported() {
+			// 	// 			varName := e.Type().Field(i).Name
+			// 	// 			varType := e.Type().Field(i).Type
+			// 	// 			// varValue := e.Field(i).Interface()
+			// 	// 			fmt.Printf("%v %v\n", varName, varType)
+			// 	// 		}
+			// 	// 	}
+			// 	// }
+
+			fmt.Println(e.Type().Kind())
+
+			switch e.Type().Kind() {
+			case reflect.Slice:
+				// TODO: handle
+			case reflect.Map:
+				// TODO: handle
+			case reflect.Struct:
+				// TODO: handle
+			default:
+				return nil, fmt.Errorf("return type unknown: %v of %s", e.Type().Kind(), e.Type().Name())
+			}
+		}
+
 		endpoints = []*Endpoint{
 			{
 				Name:        prefix,
@@ -99,55 +147,19 @@ func getEndpoints(prefix string, cmd *cmds.Command) (endpoints []*Endpoint) {
 				Response:    response,
 			},
 		}
-
-		// if endpoint.Response != nil {
-		// 	e := reflect.ValueOf(endpoint.Response)
-
-		// 	// Defer pointers.
-		// 	if e.Type().Kind() == reflect.Pointer || e.Type().Kind() == reflect.Interface {
-		// 		e = e.Elem()
-		// 	}
-
-		// 	// switch e.Type().Kind() {
-
-		// 	// case reflect.Array, reflect.Slice:
-		// 	// 	isArray = true
-		// 	// 	fmt.Println("skip array")
-
-		// 	// // case reflect.Pointer, reflect.Interface:
-		// 	// // 	e = e.Elem()
-		// 	// // 	fallthrough
-		// 	// case reflect.Struct:
-		// 	// 	for i := 0; i < e.NumField(); i++ {
-		// 	// 		if e.Type().Field(i).IsExported() {
-		// 	// 			varName := e.Type().Field(i).Name
-		// 	// 			varType := e.Type().Field(i).Type
-		// 	// 			// varValue := e.Field(i).Interface()
-		// 	// 			fmt.Printf("%v %v\n", varName, varType)
-		// 	// 		}
-		// 	// 	}
-		// 	// }
-
-		// 	switch e.Type().Kind() {
-		// 	case reflect.Array, reflect.Slice:
-		// 		fmt.Println("TODO: array")
-		// 	case reflect.Struct:
-		// 		fmt.Println("TODO: struct")
-		// 	default:
-		// 		fmt.Printf("TODO: %s\n", e.Type().String())
-		// 	}
-
-		// }
 	}
 
 	for n, cmd := range cmd.Subcommands {
-		endpoints = append(endpoints,
-			getEndpoints(fmt.Sprintf("%s/%s", prefix, n), cmd)...)
+		child, err := getEndpoints(fmt.Sprintf("%s/%s", prefix, n), cmd)
+		if err != nil {
+			return nil, err
+		}
+		endpoints = append(endpoints, child...)
 	}
 
 	sort.SliceStable(endpoints, func(i, j int) bool {
 		return endpoints[i].Name < endpoints[j].Name
 	})
 
-	return endpoints
+	return endpoints, nil
 }
