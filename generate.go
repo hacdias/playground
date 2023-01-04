@@ -3,7 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
+	"path/filepath"
 	"strings"
 	"text/tabwriter"
 
@@ -48,6 +50,102 @@ func formatArgument(arg *Argument, exported bool) (string, string) {
 	return strings.Join(parts, ""), arg.Type
 }
 
+func writeOptionsStruct(w io.Writer, name string, options []*Argument) {
+	if len(options) == 0 {
+		return
+	}
+
+	fmt.Fprintf(w, "type %s struct {\n", name)
+	tw := tabwriter.NewWriter(w, 4, 4, 2, ' ', tabwriter.TabIndent)
+
+	for _, option := range options {
+		if option.Description != "" {
+			lines := strings.Split(option.Description, "\n")
+
+			for _, line := range lines {
+				line = strings.TrimSpace(line)
+				fmt.Fprintf(tw, "\t// %s\n", line)
+			}
+		}
+
+		n, t := formatArgument(option, true)
+		fmt.Fprintf(tw, "\t%s\t%s", n, t)
+		fmt.Fprintf(tw, "\n")
+	}
+
+	tw.Flush()
+	fmt.Fprintf(w, "}\n\n")
+}
+
+func writeFunction(w io.Writer, endpoint *Endpoint) {
+	functionName := endpointNameToFunctionName(endpoint.Name)
+	optionsName := functionName + "Options"
+	args := []string{"ctx context.Context"}
+
+	writeOptionsStruct(w, optionsName, endpoint.Options)
+
+	fmt.Fprintf(w, "func (c *Client) %s(", functionName)
+
+	for _, argument := range endpoint.Arguments {
+		n, t := formatArgument(argument, false)
+		args = append(args, fmt.Sprintf("%s %s", n, t))
+	}
+
+	if len(endpoint.Options) > 0 {
+		args = append(args, fmt.Sprintf("options *%s", functionName+"Options"))
+	}
+
+	fmt.Fprint(w, strings.Join(args, ", "))
+	fmt.Fprintf(w, ") ")
+
+	if len(endpoint.Response) > 1 {
+		fmt.Fprintf(w, "(")
+	}
+
+	types := lo.Reduce(endpoint.Response, func(agg []string, a *Argument, _ int) []string {
+		agg = append(agg, a.Type)
+		return agg
+	}, []string{})
+
+	fmt.Fprintf(w, "%s", strings.Join(types, ", "))
+
+	if len(endpoint.Response) > 1 {
+		fmt.Fprintf(w, ")")
+	}
+
+	fmt.Fprintf(w, " {\n")
+	fmt.Fprintf(w, "\t// TODO: body, return\n\treturn nil\n")
+	fmt.Fprintf(w, "}\n\n")
+}
+
+func generateGoClient(rpc *RPC, outputDirectory string) error {
+	err := os.MkdirAll(outputDirectory, 0766)
+	if err != nil {
+		return err
+	}
+
+	// TODO: copy default code.
+
+	w, err := os.Create(filepath.Join(outputDirectory, "generated.go"))
+	if err != nil {
+		return err
+	}
+	defer w.Close()
+
+	fmt.Fprintf(w, "package main\n\n")
+	fmt.Fprintln(w, "import (")
+	fmt.Fprintln(w, "\t\"context\"")
+	fmt.Fprintln(w, "\t\"io\"")
+	fmt.Fprintf(w, ")\n\n")
+	fmt.Fprintf(w, "type Client struct {\n}\n\n")
+
+	for _, endpoint := range rpc.Endpoints {
+		writeFunction(w, endpoint)
+	}
+
+	return nil
+}
+
 func main() {
 	rpc := GetRPC()
 
@@ -66,73 +164,5 @@ func main() {
 		panic(err)
 	}
 
-	w, err := os.Create("gen/api.go")
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Fprintf(w, "package main\n\n")
-	fmt.Fprintln(w, "import (")
-	fmt.Fprintln(w, "\t\"context\"")
-	fmt.Fprintln(w, "\t\"io\"")
-	fmt.Fprintf(w, ")\n\n")
-	fmt.Fprintf(w, "type Client struct {\n}\n\n")
-
-	for _, endpoint := range rpc.Endpoints {
-		functionName := endpointNameToFunctionName(endpoint.Name)
-		optionsName := functionName + "Options"
-		args := []string{"ctx context.Context"}
-
-		if len(endpoint.Options) > 0 {
-			tw := tabwriter.NewWriter(w, 4, 4, 2, ' ', tabwriter.TabIndent)
-
-			fmt.Fprintf(w, "type %s struct {\n", optionsName)
-			for _, option := range endpoint.Options {
-				n, t := formatArgument(option, true)
-				fmt.Fprintf(tw, "\t%s\t%s", n, t)
-				if option.Description != "" {
-					fmt.Fprintf(tw, "\t// %s", strings.ReplaceAll(option.Description, "\n", " "))
-				}
-				fmt.Fprintf(tw, "\n")
-			}
-
-			tw.Flush()
-
-			fmt.Fprintf(w, "}\n\n")
-		}
-
-		fmt.Fprintf(w, "func (c *Client) %s(", functionName)
-
-		for _, argument := range endpoint.Arguments {
-			n, t := formatArgument(argument, false)
-			args = append(args, fmt.Sprintf("%s %s", n, t))
-		}
-
-		if len(endpoint.Options) > 0 {
-			args = append(args, fmt.Sprintf("options *%s", functionName+"Options"))
-		}
-
-		fmt.Fprint(w, strings.Join(args, ", "))
-		fmt.Fprintf(w, ") ")
-
-		if len(endpoint.Response) > 1 {
-			fmt.Fprintf(w, "(")
-		}
-
-		types := lo.Reduce(endpoint.Response, func(agg []string, a *Argument, _ int) []string {
-			agg = append(agg, a.Type)
-			return agg
-		}, []string{})
-
-		fmt.Fprintf(w, "%s", strings.Join(types, ", "))
-
-		if len(endpoint.Response) > 1 {
-			fmt.Fprintf(w, ")")
-		}
-
-		fmt.Fprintf(w, " {\n")
-		fmt.Fprintf(w, "\t// TODO: body, return\n\treturn nil\n")
-		fmt.Fprintf(w, "}\n\n")
-	}
-
+	generateGoClient(rpc, "gen/go")
 }
