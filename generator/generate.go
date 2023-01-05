@@ -169,7 +169,7 @@ func generateGoClient(rpc *RPC, outputDirectory string) error {
 	}
 	defer w.Close()
 
-	fmt.Fprintf(w, "package client\n\n")
+	fmt.Fprintf(w, "package kubo\n\n")
 	fmt.Fprintln(w, "import (")
 	fmt.Fprintln(w, "\t\"context\"")
 	fmt.Fprintln(w, "\t\"io\"")
