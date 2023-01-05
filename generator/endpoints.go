@@ -51,13 +51,13 @@ func parseArgument(arg cmds.Argument) *Argument {
 	}
 }
 
-func parseOption(opt cmds.Option) *Argument {
+func parseOption(opt cmds.Option) *Option {
 	def := fmt.Sprint(opt.Default())
 	if def == "<nil>" {
 		def = ""
 	}
 
-	return &Argument{
+	return &Option{
 		Name:        opt.Names()[0], // TODO: opt.Name()?
 		Type:        opt.Type().String(),
 		Description: opt.Description(),
@@ -75,7 +75,7 @@ func getEndpoints(prefix string, cmd *cmds.Command) ([]*Endpoint, error) {
 	var (
 		endpoints []*Endpoint
 		arguments []*Argument
-		options   []*Argument
+		options   []*Option
 		response  []*Argument
 	)
 

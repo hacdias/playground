@@ -14,7 +14,7 @@ import (
 	"golang.org/x/text/language"
 )
 
-func endpointNameToFunctionName(name string) string {
+func formatFunctionName(name string) string {
 	name = strings.TrimPrefix(name, "/")
 	name = strings.ReplaceAll(name, "-", "/")
 	parts := strings.Split(name, "/")
@@ -26,18 +26,15 @@ func endpointNameToFunctionName(name string) string {
 	return strings.Join(parts, "")
 }
 
-func formatArgument(arg *Argument, exported bool) (string, string) {
-	if arg.Type == "file" {
-		return "r", "io.Reader"
+func formatVariableName(name, typ string, exported bool) string {
+	if typ == "file" {
+		return "f"
 	}
 
-	if arg.Type == "array" {
-		arg.Type = "[]string"
-	}
-
-	name := strings.ReplaceAll(arg.Name, "_", " ")
+	name = strings.ReplaceAll(name, "_", " ")
 	name = strings.ReplaceAll(name, "-", " ")
 	name = strings.ReplaceAll(name, ".", " ")
+
 	parts := strings.Split(name, " ")
 	parts = lo.Map(parts, func(s string, i int) string {
 		s = strings.ToLower(s)
@@ -47,10 +44,22 @@ func formatArgument(arg *Argument, exported bool) (string, string) {
 		return cases.Title(language.English).String(s)
 	})
 
-	return strings.Join(parts, ""), arg.Type
+	return strings.Join(parts, "")
 }
 
-func writeOptionsStruct(w io.Writer, name string, options []*Argument) {
+func formatVariableType(typ string) string {
+	if typ == "file" {
+		return "io.Reader"
+	}
+
+	if typ == "array" {
+		return "[]string"
+	}
+
+	return typ
+}
+
+func writeOptionsStruct(w io.Writer, name string, options []*Option) {
 	if len(options) == 0 {
 		return
 	}
@@ -68,8 +77,9 @@ func writeOptionsStruct(w io.Writer, name string, options []*Argument) {
 			}
 		}
 
-		n, t := formatArgument(option, true)
-		fmt.Fprintf(tw, "\t%s\t%s", n, t)
+		name := formatVariableName(option.Name, option.Type, true)
+		typ := formatVariableType(option.Type)
+		fmt.Fprintf(tw, "\t%s %s", name, typ)
 		fmt.Fprintf(tw, "\n")
 	}
 
@@ -78,7 +88,7 @@ func writeOptionsStruct(w io.Writer, name string, options []*Argument) {
 }
 
 func writeFunction(w io.Writer, endpoint *Endpoint) {
-	functionName := endpointNameToFunctionName(endpoint.Name)
+	functionName := formatFunctionName(endpoint.Name)
 	optionsName := functionName + "Options"
 	args := []string{"ctx context.Context"}
 
@@ -87,8 +97,9 @@ func writeFunction(w io.Writer, endpoint *Endpoint) {
 	fmt.Fprintf(w, "func (c *Client) %s(", functionName)
 
 	for _, argument := range endpoint.Arguments {
-		n, t := formatArgument(argument, false)
-		args = append(args, fmt.Sprintf("%s %s", n, t))
+		name := formatVariableName(argument.Name, argument.Type, false)
+		typ := formatVariableType(argument.Type)
+		args = append(args, fmt.Sprintf("%s %s", name, typ))
 	}
 
 	if len(endpoint.Options) > 0 {
@@ -98,61 +109,61 @@ func writeFunction(w io.Writer, endpoint *Endpoint) {
 	fmt.Fprint(w, strings.Join(args, ", "))
 	fmt.Fprintf(w, ") ")
 
-	if len(endpoint.Response) > 1 {
-		fmt.Fprintf(w, "(")
-	}
+	// TODO: use correct endpoint.Response type.
+	// if len(endpoint.Response) > 1 {
+	// 	fmt.Fprintf(w, "(")
+	// }
 
-	types := lo.Reduce(endpoint.Response, func(agg []string, a *Argument, _ int) []string {
-		agg = append(agg, a.Type)
-		return agg
-	}, []string{})
+	// types := lo.Reduce(endpoint.Response, func(agg []string, a *Argument, _ int) []string {
+	// 	agg = append(agg, a.Type)
+	// 	return agg
+	// }, []string{})
 
-	fmt.Fprintf(w, "%s", strings.Join(types, ", "))
+	// fmt.Fprintf(w, "%s", strings.Join(types, ", "))
 
-	if len(endpoint.Response) > 1 {
-		fmt.Fprintf(w, ")")
-	}
-
-	fmt.Fprintf(w, " ([]byte, error) {\n")
+	// if len(endpoint.Response) > 1 {
+	// 	fmt.Fprintf(w, ")")
+	// }
+	fmt.Fprintf(w, "([]byte, error) {\n")
 
 	fmt.Fprintf(w, "\treq := c.Request(\"%s\")\n", endpoint.Name)
 
 	for _, argument := range endpoint.Arguments {
 		if argument.Type == "file" {
-			fmt.Fprintf(w, "\treq.FileBody(r)\n")
+			fmt.Fprintf(w, "\treq.FileBody(f)\n")
 		} else {
-			n, _ := formatArgument(argument, false)
-			fmt.Fprintf(w, "\treq.Arguments(%s)\n", n)
+			name := formatVariableName(argument.Name, argument.Type, false)
+			fmt.Fprintf(w, "\treq.Arguments(%s)\n", name)
 		}
 	}
 
 	if len(endpoint.Options) > 0 {
-		fmt.Fprintf(w, " \tif options != nil {\n")
+		fmt.Fprintf(w, "\tif options != nil {\n")
 
 		for _, option := range endpoint.Options {
-			n, _ := formatArgument(option, true)
-			fmt.Fprintf(w, " \t\treq.Option(\"%s\", options.%s)\n", option.Name, n)
+			name := formatVariableName(option.Name, option.Type, true)
+			fmt.Fprintf(w, "\t\treq.Option(\"%s\", options.%s)\n", option.Name, name)
 		}
 
 		fmt.Fprintf(w, "\t}\n")
 	}
 
-	// TODO: work with defaults!
+	// TODO: options defaults.
+	// TODO: variadics.
+	// TODO: streaming APIs?
 
 	fmt.Fprintf(w, "\tres, err := req.Send(ctx)\n")
-	fmt.Fprintf(w, "\tif err != nil{\n")
+	fmt.Fprintf(w, "\tif err != nil {\n")
 	fmt.Fprintf(w, "\t\treturn nil, err\n")
 	fmt.Fprintf(w, "\t}\n")
-	fmt.Fprintf(w, "\tif res.Error != nil{\n")
+	fmt.Fprintf(w, "\tif res.Error != nil {\n")
 	fmt.Fprintf(w, "\t\treturn nil, res.Error\n")
 	fmt.Fprintf(w, "\t}\n")
 
 	fmt.Fprintf(w, "\tdefer res.Close()\n")
-	fmt.Fprintf(w, "\treturn io.ReadAll(res.Output)\t")
+	fmt.Fprintf(w, "\treturn io.ReadAll(res.Output)\n")
 
-	fmt.Fprintf(w, "\t// TODO: body, return\n")
 	fmt.Fprintf(w, "}\n\n")
-
 }
 
 func generateGoClient(rpc *RPC, outputDirectory string) error {
@@ -188,20 +199,15 @@ func main() {
 		panic(err)
 	}
 
-	err = os.MkdirAll("gen/", 0766)
-	if err != nil {
-		panic(err)
-	}
-
 	js, err := json.MarshalIndent(rpc, "", "  ")
 	if err != nil {
 		panic(err)
 	}
 
-	err = os.WriteFile("gen/api.json", js, 0644)
+	err = os.WriteFile("../go-client-usage/api.json", js, 0644)
 	if err != nil {
 		panic(err)
 	}
 
-	generateGoClient(rpc, "../kubo-rpc-generated")
+	generateGoClient(rpc, "../go-client/")
 }

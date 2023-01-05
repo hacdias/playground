@@ -54,9 +54,9 @@ type AddOptions struct {
 	ToFiles string
 }
 
-func (c *Client) Add(ctx context.Context, r io.Reader, options *AddOptions) ([]byte, error) {
+func (c *Client) Add(ctx context.Context, f io.Reader, options *AddOptions) ([]byte, error) {
 	req := c.Request("add")
-	req.FileBody(r)
+	req.FileBody(f)
 	if options != nil {
 		req.Option("recursive", options.Recursive)
 		req.Option("dereference-args", options.DereferenceArgs)
@@ -90,7 +90,7 @@ func (c *Client) Add(ctx context.Context, r io.Reader, options *AddOptions) ([]b
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) BitswapLedger(ctx context.Context, peer string) ([]byte, error) {
@@ -104,7 +104,7 @@ func (c *Client) BitswapLedger(ctx context.Context, peer string) ([]byte, error)
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) BitswapReprovide(ctx context.Context) ([]byte, error) {
@@ -117,7 +117,7 @@ func (c *Client) BitswapReprovide(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type BitswapStatOptions struct {
@@ -141,7 +141,7 @@ func (c *Client) BitswapStat(ctx context.Context, options *BitswapStatOptions) (
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type BitswapWantlistOptions struct {
@@ -162,7 +162,7 @@ func (c *Client) BitswapWantlist(ctx context.Context, options *BitswapWantlistOp
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) BlockGet(ctx context.Context, cid string) ([]byte, error) {
@@ -176,7 +176,7 @@ func (c *Client) BlockGet(ctx context.Context, cid string) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type BlockPutOptions struct {
@@ -194,9 +194,9 @@ type BlockPutOptions struct {
 	Format string
 }
 
-func (c *Client) BlockPut(ctx context.Context, r io.Reader, options *BlockPutOptions) ([]byte, error) {
+func (c *Client) BlockPut(ctx context.Context, f io.Reader, options *BlockPutOptions) ([]byte, error) {
 	req := c.Request("block/put")
-	req.FileBody(r)
+	req.FileBody(f)
 	if options != nil {
 		req.Option("cid-codec", options.CidCodec)
 		req.Option("mhtype", options.Mhtype)
@@ -213,7 +213,7 @@ func (c *Client) BlockPut(ctx context.Context, r io.Reader, options *BlockPutOpt
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type BlockRmOptions struct {
@@ -238,7 +238,7 @@ func (c *Client) BlockRm(ctx context.Context, cid string, options *BlockRmOption
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) BlockStat(ctx context.Context, cid string) ([]byte, error) {
@@ -252,7 +252,7 @@ func (c *Client) BlockStat(ctx context.Context, cid string) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) Bootstrap(ctx context.Context) ([]byte, error) {
@@ -265,7 +265,7 @@ func (c *Client) Bootstrap(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type BootstrapAddOptions struct {
@@ -287,7 +287,7 @@ func (c *Client) BootstrapAdd(ctx context.Context, peer string, options *Bootstr
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) BootstrapAddDefault(ctx context.Context) ([]byte, error) {
@@ -300,7 +300,7 @@ func (c *Client) BootstrapAddDefault(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) BootstrapList(ctx context.Context) ([]byte, error) {
@@ -313,7 +313,7 @@ func (c *Client) BootstrapList(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type BootstrapRmOptions struct {
@@ -335,7 +335,7 @@ func (c *Client) BootstrapRm(ctx context.Context, peer string, options *Bootstra
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) BootstrapRmAll(ctx context.Context) ([]byte, error) {
@@ -348,7 +348,7 @@ func (c *Client) BootstrapRmAll(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type CatOptions struct {
@@ -376,7 +376,7 @@ func (c *Client) Cat(ctx context.Context, ipfsPath string, options *CatOptions) 
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) CidBase32(ctx context.Context, cid string) ([]byte, error) {
@@ -390,7 +390,7 @@ func (c *Client) CidBase32(ctx context.Context, cid string) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type CidBasesOptions struct {
@@ -414,7 +414,7 @@ func (c *Client) CidBases(ctx context.Context, options *CidBasesOptions) ([]byte
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type CidCodecsOptions struct {
@@ -438,7 +438,7 @@ func (c *Client) CidCodecs(ctx context.Context, options *CidCodecsOptions) ([]by
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type CidFormatOptions struct {
@@ -469,7 +469,7 @@ func (c *Client) CidFormat(ctx context.Context, cid string, options *CidFormatOp
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type CidHashesOptions struct {
@@ -493,7 +493,7 @@ func (c *Client) CidHashes(ctx context.Context, options *CidHashesOptions) ([]by
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type CommandsOptions struct {
@@ -514,7 +514,7 @@ func (c *Client) Commands(ctx context.Context, options *CommandsOptions) ([]byte
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) CommandsCompletionBash(ctx context.Context) ([]byte, error) {
@@ -527,7 +527,7 @@ func (c *Client) CommandsCompletionBash(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) CommandsCompletionFish(ctx context.Context) ([]byte, error) {
@@ -540,7 +540,7 @@ func (c *Client) CommandsCompletionFish(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type ConfigOptions struct {
@@ -566,7 +566,7 @@ func (c *Client) Config(ctx context.Context, key string, value string, options *
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) ConfigEdit(ctx context.Context) ([]byte, error) {
@@ -579,7 +579,7 @@ func (c *Client) ConfigEdit(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type ConfigProfileApplyOptions struct {
@@ -601,12 +601,12 @@ func (c *Client) ConfigProfileApply(ctx context.Context, profile string, options
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
-func (c *Client) ConfigReplace(ctx context.Context, r io.Reader) ([]byte, error) {
+func (c *Client) ConfigReplace(ctx context.Context, f io.Reader) ([]byte, error) {
 	req := c.Request("config/replace")
-	req.FileBody(r)
+	req.FileBody(f)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -615,7 +615,7 @@ func (c *Client) ConfigReplace(ctx context.Context, r io.Reader) ([]byte, error)
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) ConfigShow(ctx context.Context) ([]byte, error) {
@@ -628,7 +628,7 @@ func (c *Client) ConfigShow(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type DagExportOptions struct {
@@ -650,7 +650,7 @@ func (c *Client) DagExport(ctx context.Context, root string, options *DagExportO
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type DagGetOptions struct {
@@ -672,7 +672,7 @@ func (c *Client) DagGet(ctx context.Context, ref string, options *DagGetOptions)
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type DagImportOptions struct {
@@ -686,9 +686,9 @@ type DagImportOptions struct {
 	AllowBigBlock bool
 }
 
-func (c *Client) DagImport(ctx context.Context, r io.Reader, options *DagImportOptions) ([]byte, error) {
+func (c *Client) DagImport(ctx context.Context, f io.Reader, options *DagImportOptions) ([]byte, error) {
 	req := c.Request("dag/import")
-	req.FileBody(r)
+	req.FileBody(f)
 	if options != nil {
 		req.Option("pin-roots", options.PinRoots)
 		req.Option("silent", options.Silent)
@@ -703,7 +703,7 @@ func (c *Client) DagImport(ctx context.Context, r io.Reader, options *DagImportO
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type DagPutOptions struct {
@@ -719,9 +719,9 @@ type DagPutOptions struct {
 	AllowBigBlock bool
 }
 
-func (c *Client) DagPut(ctx context.Context, r io.Reader, options *DagPutOptions) ([]byte, error) {
+func (c *Client) DagPut(ctx context.Context, f io.Reader, options *DagPutOptions) ([]byte, error) {
 	req := c.Request("dag/put")
-	req.FileBody(r)
+	req.FileBody(f)
 	if options != nil {
 		req.Option("store-codec", options.StoreCodec)
 		req.Option("input-codec", options.InputCodec)
@@ -737,7 +737,7 @@ func (c *Client) DagPut(ctx context.Context, r io.Reader, options *DagPutOptions
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) DagResolve(ctx context.Context, ref string) ([]byte, error) {
@@ -751,7 +751,7 @@ func (c *Client) DagResolve(ctx context.Context, ref string) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type DagStatOptions struct {
@@ -773,7 +773,7 @@ func (c *Client) DagStat(ctx context.Context, root string, options *DagStatOptio
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type DhtQueryOptions struct {
@@ -795,7 +795,7 @@ func (c *Client) DhtQuery(ctx context.Context, peerid string, options *DhtQueryO
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type DiagCmdsOptions struct {
@@ -816,7 +816,7 @@ func (c *Client) DiagCmds(ctx context.Context, options *DiagCmdsOptions) ([]byte
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) DiagCmdsClear(ctx context.Context) ([]byte, error) {
@@ -829,7 +829,7 @@ func (c *Client) DiagCmdsClear(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) DiagCmdsSetTime(ctx context.Context, time string) ([]byte, error) {
@@ -843,7 +843,7 @@ func (c *Client) DiagCmdsSetTime(ctx context.Context, time string) ([]byte, erro
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type DiagProfileOptions struct {
@@ -876,7 +876,7 @@ func (c *Client) DiagProfile(ctx context.Context, options *DiagProfileOptions) (
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) DiagSys(ctx context.Context) ([]byte, error) {
@@ -889,7 +889,7 @@ func (c *Client) DiagSys(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type FilesChcidOptions struct {
@@ -914,7 +914,7 @@ func (c *Client) FilesChcid(ctx context.Context, path string, options *FilesChci
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type FilesCpOptions struct {
@@ -937,7 +937,7 @@ func (c *Client) FilesCp(ctx context.Context, source string, dest string, option
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) FilesFlush(ctx context.Context, path string) ([]byte, error) {
@@ -951,7 +951,7 @@ func (c *Client) FilesFlush(ctx context.Context, path string) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type FilesLsOptions struct {
@@ -976,7 +976,7 @@ func (c *Client) FilesLs(ctx context.Context, path string, options *FilesLsOptio
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type FilesMkdirOptions struct {
@@ -1004,7 +1004,7 @@ func (c *Client) FilesMkdir(ctx context.Context, path string, options *FilesMkdi
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) FilesMv(ctx context.Context, source string, dest string) ([]byte, error) {
@@ -1019,7 +1019,7 @@ func (c *Client) FilesMv(ctx context.Context, source string, dest string) ([]byt
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type FilesReadOptions struct {
@@ -1044,7 +1044,7 @@ func (c *Client) FilesRead(ctx context.Context, path string, options *FilesReadO
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type FilesRmOptions struct {
@@ -1069,7 +1069,7 @@ func (c *Client) FilesRm(ctx context.Context, path string, options *FilesRmOptio
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type FilesStatOptions struct {
@@ -1104,7 +1104,7 @@ func (c *Client) FilesStat(ctx context.Context, path string, options *FilesStatO
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type FilesWriteOptions struct {
@@ -1126,10 +1126,10 @@ type FilesWriteOptions struct {
 	Hash string
 }
 
-func (c *Client) FilesWrite(ctx context.Context, path string, r io.Reader, options *FilesWriteOptions) ([]byte, error) {
+func (c *Client) FilesWrite(ctx context.Context, path string, f io.Reader, options *FilesWriteOptions) ([]byte, error) {
 	req := c.Request("files/write")
 	req.Arguments(path)
-	req.FileBody(r)
+	req.FileBody(f)
 	if options != nil {
 		req.Option("offset", options.Offset)
 		req.Option("create", options.Create)
@@ -1148,7 +1148,7 @@ func (c *Client) FilesWrite(ctx context.Context, path string, r io.Reader, optio
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) FilestoreDups(ctx context.Context) ([]byte, error) {
@@ -1161,7 +1161,7 @@ func (c *Client) FilestoreDups(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type FilestoreLsOptions struct {
@@ -1183,7 +1183,7 @@ func (c *Client) FilestoreLs(ctx context.Context, obj string, options *Filestore
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type FilestoreVerifyOptions struct {
@@ -1205,7 +1205,7 @@ func (c *Client) FilestoreVerify(ctx context.Context, obj string, options *Files
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type GetOptions struct {
@@ -1239,7 +1239,7 @@ func (c *Client) Get(ctx context.Context, ipfsPath string, options *GetOptions) 
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type IdOptions struct {
@@ -1264,7 +1264,7 @@ func (c *Client) Id(ctx context.Context, peerid string, options *IdOptions) ([]b
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type KeyExportOptions struct {
@@ -1289,7 +1289,7 @@ func (c *Client) KeyExport(ctx context.Context, name string, options *KeyExportO
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type KeyGenOptions struct {
@@ -1317,7 +1317,7 @@ func (c *Client) KeyGen(ctx context.Context, name string, options *KeyGenOptions
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type KeyImportOptions struct {
@@ -1329,10 +1329,10 @@ type KeyImportOptions struct {
 	AllowAnyKeyType bool
 }
 
-func (c *Client) KeyImport(ctx context.Context, name string, r io.Reader, options *KeyImportOptions) ([]byte, error) {
+func (c *Client) KeyImport(ctx context.Context, name string, f io.Reader, options *KeyImportOptions) ([]byte, error) {
 	req := c.Request("key/import")
 	req.Arguments(name)
-	req.FileBody(r)
+	req.FileBody(f)
 	if options != nil {
 		req.Option("ipns-base", options.IpnsBase)
 		req.Option("format", options.Format)
@@ -1346,7 +1346,7 @@ func (c *Client) KeyImport(ctx context.Context, name string, r io.Reader, option
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type KeyListOptions struct {
@@ -1370,7 +1370,7 @@ func (c *Client) KeyList(ctx context.Context, options *KeyListOptions) ([]byte, 
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type KeyRenameOptions struct {
@@ -1396,7 +1396,7 @@ func (c *Client) KeyRename(ctx context.Context, name string, newname string, opt
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type KeyRmOptions struct {
@@ -1421,7 +1421,7 @@ func (c *Client) KeyRm(ctx context.Context, name string, options *KeyRmOptions) 
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type KeyRotateOptions struct {
@@ -1448,7 +1448,7 @@ func (c *Client) KeyRotate(ctx context.Context, options *KeyRotateOptions) ([]by
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) LogLevel(ctx context.Context, subsystem string, level string) ([]byte, error) {
@@ -1463,7 +1463,7 @@ func (c *Client) LogLevel(ctx context.Context, subsystem string, level string) (
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) LogLs(ctx context.Context) ([]byte, error) {
@@ -1476,7 +1476,7 @@ func (c *Client) LogLs(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type LsOptions struct {
@@ -1507,12 +1507,12 @@ func (c *Client) Ls(ctx context.Context, ipfsPath string, options *LsOptions) ([
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
-func (c *Client) MultibaseDecode(ctx context.Context, r io.Reader) ([]byte, error) {
+func (c *Client) MultibaseDecode(ctx context.Context, f io.Reader) ([]byte, error) {
 	req := c.Request("multibase/decode")
-	req.FileBody(r)
+	req.FileBody(f)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1521,7 +1521,7 @@ func (c *Client) MultibaseDecode(ctx context.Context, r io.Reader) ([]byte, erro
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type MultibaseEncodeOptions struct {
@@ -1529,9 +1529,9 @@ type MultibaseEncodeOptions struct {
 	B string
 }
 
-func (c *Client) MultibaseEncode(ctx context.Context, r io.Reader, options *MultibaseEncodeOptions) ([]byte, error) {
+func (c *Client) MultibaseEncode(ctx context.Context, f io.Reader, options *MultibaseEncodeOptions) ([]byte, error) {
 	req := c.Request("multibase/encode")
-	req.FileBody(r)
+	req.FileBody(f)
 	if options != nil {
 		req.Option("b", options.B)
 	}
@@ -1543,7 +1543,7 @@ func (c *Client) MultibaseEncode(ctx context.Context, r io.Reader, options *Mult
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type MultibaseListOptions struct {
@@ -1567,7 +1567,7 @@ func (c *Client) MultibaseList(ctx context.Context, options *MultibaseListOption
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type MultibaseTranscodeOptions struct {
@@ -1575,9 +1575,9 @@ type MultibaseTranscodeOptions struct {
 	B string
 }
 
-func (c *Client) MultibaseTranscode(ctx context.Context, r io.Reader, options *MultibaseTranscodeOptions) ([]byte, error) {
+func (c *Client) MultibaseTranscode(ctx context.Context, f io.Reader, options *MultibaseTranscodeOptions) ([]byte, error) {
 	req := c.Request("multibase/transcode")
-	req.FileBody(r)
+	req.FileBody(f)
 	if options != nil {
 		req.Option("b", options.B)
 	}
@@ -1589,7 +1589,7 @@ func (c *Client) MultibaseTranscode(ctx context.Context, r io.Reader, options *M
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type NamePublishOptions struct {
@@ -1631,7 +1631,7 @@ func (c *Client) NamePublish(ctx context.Context, ipfsPath string, options *Name
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type NameResolveOptions struct {
@@ -1665,7 +1665,7 @@ func (c *Client) NameResolve(ctx context.Context, name string, options *NameReso
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type PinAddOptions struct {
@@ -1690,7 +1690,7 @@ func (c *Client) PinAdd(ctx context.Context, ipfsPath string, options *PinAddOpt
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type PinLsOptions struct {
@@ -1718,7 +1718,7 @@ func (c *Client) PinLs(ctx context.Context, ipfsPath string, options *PinLsOptio
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type PinRemoteAddOptions struct {
@@ -1746,7 +1746,7 @@ func (c *Client) PinRemoteAdd(ctx context.Context, ipfsPath string, options *Pin
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type PinRemoteLsOptions struct {
@@ -1776,7 +1776,7 @@ func (c *Client) PinRemoteLs(ctx context.Context, options *PinRemoteLsOptions) (
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type PinRemoteRmOptions struct {
@@ -1809,7 +1809,7 @@ func (c *Client) PinRemoteRm(ctx context.Context, options *PinRemoteRmOptions) (
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) PinRemoteServiceAdd(ctx context.Context, service string, endpoint string, key string) ([]byte, error) {
@@ -1825,7 +1825,7 @@ func (c *Client) PinRemoteServiceAdd(ctx context.Context, service string, endpoi
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type PinRemoteServiceLsOptions struct {
@@ -1846,7 +1846,7 @@ func (c *Client) PinRemoteServiceLs(ctx context.Context, options *PinRemoteServi
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) PinRemoteServiceRm(ctx context.Context, service string) ([]byte, error) {
@@ -1860,7 +1860,7 @@ func (c *Client) PinRemoteServiceRm(ctx context.Context, service string) ([]byte
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type PinRmOptions struct {
@@ -1882,7 +1882,7 @@ func (c *Client) PinRm(ctx context.Context, ipfsPath string, options *PinRmOptio
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type PinUpdateOptions struct {
@@ -1905,7 +1905,7 @@ func (c *Client) PinUpdate(ctx context.Context, fromPath string, toPath string, 
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type PinVerifyOptions struct {
@@ -1929,7 +1929,7 @@ func (c *Client) PinVerify(ctx context.Context, options *PinVerifyOptions) ([]by
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type PingOptions struct {
@@ -1951,7 +1951,7 @@ func (c *Client) Ping(ctx context.Context, peerId string, options *PingOptions) 
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type RefsOptions struct {
@@ -1985,7 +1985,7 @@ func (c *Client) Refs(ctx context.Context, ipfsPath string, options *RefsOptions
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) RefsLocal(ctx context.Context) ([]byte, error) {
@@ -1998,7 +1998,7 @@ func (c *Client) RefsLocal(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type RepoGcOptions struct {
@@ -2025,7 +2025,7 @@ func (c *Client) RepoGc(ctx context.Context, options *RepoGcOptions) ([]byte, er
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) RepoLs(ctx context.Context) ([]byte, error) {
@@ -2038,7 +2038,7 @@ func (c *Client) RepoLs(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type RepoMigrateOptions struct {
@@ -2059,7 +2059,7 @@ func (c *Client) RepoMigrate(ctx context.Context, options *RepoMigrateOptions) (
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type RepoStatOptions struct {
@@ -2083,7 +2083,7 @@ func (c *Client) RepoStat(ctx context.Context, options *RepoStatOptions) ([]byte
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) RepoVerify(ctx context.Context) ([]byte, error) {
@@ -2096,7 +2096,7 @@ func (c *Client) RepoVerify(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type RepoVersionOptions struct {
@@ -2117,7 +2117,7 @@ func (c *Client) RepoVersion(ctx context.Context, options *RepoVersionOptions) (
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type ResolveOptions struct {
@@ -2145,7 +2145,7 @@ func (c *Client) Resolve(ctx context.Context, name string, options *ResolveOptio
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type RoutingFindpeerOptions struct {
@@ -2167,7 +2167,7 @@ func (c *Client) RoutingFindpeer(ctx context.Context, peerid string, options *Ro
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type RoutingFindprovsOptions struct {
@@ -2192,7 +2192,7 @@ func (c *Client) RoutingFindprovs(ctx context.Context, key string, options *Rout
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type RoutingGetOptions struct {
@@ -2214,7 +2214,7 @@ func (c *Client) RoutingGet(ctx context.Context, key string, options *RoutingGet
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type RoutingProvideOptions struct {
@@ -2239,7 +2239,7 @@ func (c *Client) RoutingProvide(ctx context.Context, key string, options *Routin
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type RoutingPutOptions struct {
@@ -2247,10 +2247,10 @@ type RoutingPutOptions struct {
 	Verbose bool
 }
 
-func (c *Client) RoutingPut(ctx context.Context, key string, r io.Reader, options *RoutingPutOptions) ([]byte, error) {
+func (c *Client) RoutingPut(ctx context.Context, key string, f io.Reader, options *RoutingPutOptions) ([]byte, error) {
 	req := c.Request("routing/put")
 	req.Arguments(key)
-	req.FileBody(r)
+	req.FileBody(f)
 	if options != nil {
 		req.Option("verbose", options.Verbose)
 	}
@@ -2262,7 +2262,7 @@ func (c *Client) RoutingPut(ctx context.Context, key string, r io.Reader, option
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) Shutdown(ctx context.Context) ([]byte, error) {
@@ -2275,7 +2275,7 @@ func (c *Client) Shutdown(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type StatsBitswapOptions struct {
@@ -2299,7 +2299,7 @@ func (c *Client) StatsBitswap(ctx context.Context, options *StatsBitswapOptions)
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type StatsBwOptions struct {
@@ -2310,7 +2310,7 @@ type StatsBwOptions struct {
 	// Print bandwidth at an interval.
 	Poll bool
 	// Time interval to wait between updating output, if 'poll' is true.
-	//
+	// 
 	// This accepts durations such as "300s", "1.5h" or "2h45m". Valid time units are:
 	// "ns", "us" (or "µs"), "ms", "s", "m", "h". Default: 1s.
 	Interval string
@@ -2332,7 +2332,7 @@ func (c *Client) StatsBw(ctx context.Context, options *StatsBwOptions) ([]byte, 
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) StatsDht(ctx context.Context, dht string) ([]byte, error) {
@@ -2346,7 +2346,7 @@ func (c *Client) StatsDht(ctx context.Context, dht string) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) StatsProvide(ctx context.Context) ([]byte, error) {
@@ -2359,7 +2359,7 @@ func (c *Client) StatsProvide(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type StatsRepoOptions struct {
@@ -2383,7 +2383,7 @@ func (c *Client) StatsRepo(ctx context.Context, options *StatsRepoOptions) ([]by
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) SwarmAddrs(ctx context.Context) ([]byte, error) {
@@ -2396,7 +2396,7 @@ func (c *Client) SwarmAddrs(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) SwarmAddrsListen(ctx context.Context) ([]byte, error) {
@@ -2409,7 +2409,7 @@ func (c *Client) SwarmAddrsListen(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type SwarmAddrsLocalOptions struct {
@@ -2430,7 +2430,7 @@ func (c *Client) SwarmAddrsLocal(ctx context.Context, options *SwarmAddrsLocalOp
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) SwarmConnect(ctx context.Context, address string) ([]byte, error) {
@@ -2444,7 +2444,7 @@ func (c *Client) SwarmConnect(ctx context.Context, address string) ([]byte, erro
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) SwarmDisconnect(ctx context.Context, address string) ([]byte, error) {
@@ -2458,7 +2458,7 @@ func (c *Client) SwarmDisconnect(ctx context.Context, address string) ([]byte, e
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) SwarmFilters(ctx context.Context) ([]byte, error) {
@@ -2471,7 +2471,7 @@ func (c *Client) SwarmFilters(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) SwarmFiltersAdd(ctx context.Context, address string) ([]byte, error) {
@@ -2485,7 +2485,7 @@ func (c *Client) SwarmFiltersAdd(ctx context.Context, address string) ([]byte, e
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) SwarmFiltersRm(ctx context.Context, address string) ([]byte, error) {
@@ -2499,7 +2499,7 @@ func (c *Client) SwarmFiltersRm(ctx context.Context, address string) ([]byte, er
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) SwarmPeeringAdd(ctx context.Context, address string) ([]byte, error) {
@@ -2513,7 +2513,7 @@ func (c *Client) SwarmPeeringAdd(ctx context.Context, address string) ([]byte, e
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) SwarmPeeringLs(ctx context.Context) ([]byte, error) {
@@ -2526,7 +2526,7 @@ func (c *Client) SwarmPeeringLs(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) SwarmPeeringRm(ctx context.Context, id string) ([]byte, error) {
@@ -2540,7 +2540,7 @@ func (c *Client) SwarmPeeringRm(ctx context.Context, id string) ([]byte, error) 
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type SwarmPeersOptions struct {
@@ -2570,7 +2570,7 @@ func (c *Client) SwarmPeers(ctx context.Context, options *SwarmPeersOptions) ([]
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) Update(ctx context.Context, args string) ([]byte, error) {
@@ -2584,7 +2584,7 @@ func (c *Client) Update(ctx context.Context, args string) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 type VersionOptions struct {
@@ -2614,7 +2614,7 @@ func (c *Client) Version(ctx context.Context, options *VersionOptions) ([]byte, 
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
 
 func (c *Client) VersionDeps(ctx context.Context) ([]byte, error) {
@@ -2627,5 +2627,6 @@ func (c *Client) VersionDeps(ctx context.Context) ([]byte, error) {
 		return nil, res.Error
 	}
 	defer res.Close()
-	return io.ReadAll(res.Output) // TODO: body, return
+	return io.ReadAll(res.Output)
 }
+
