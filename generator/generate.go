@@ -64,7 +64,7 @@ func writeOptionsStruct(w io.Writer, name string, options []*Option) {
 		return
 	}
 
-	fmt.Fprintf(w, "type %s struct {\n", name)
+	fmt.Fprintf(w, "type %sSettings struct {\n", name)
 	tw := tabwriter.NewWriter(w, 4, 4, 2, ' ', tabwriter.TabIndent)
 
 	for _, option := range options {
@@ -84,6 +84,38 @@ func writeOptionsStruct(w io.Writer, name string, options []*Option) {
 	}
 
 	tw.Flush()
+	fmt.Fprintf(w, "}\n\n")
+
+	fmt.Fprintf(w, "type %sOption func(*%sSettings) error\n\n", name, name)
+
+	// func UnixfsAddOptions(opts ...UnixfsAddOption) (*UnixfsAddSettings, error) {
+
+	fmt.Fprintf(w, "func %sOptions(options ...%sOption) (*%sSettings, error) {\n", name, name, name)
+	fmt.Fprintf(w, "\tsettings := &%sSettings{\n", name)
+	for _, option := range options {
+		if option.Default != nil {
+			name := formatVariableName(option.Name, option.Type, true)
+
+			switch v := option.Default.(type) {
+			case string:
+				fmt.Fprintf(w, "\t\t%s: `%s`,\n", name, v)
+			case []string:
+				fmt.Fprintf(w, "\t\t%s: []string{%s},\n", name, "\""+strings.Join(v, "\", \"")+"\"")
+			case bool, int, float64:
+				fmt.Fprintf(w, "\t\t%s: %v,\n", name, v)
+			default:
+				fmt.Printf("unrecognized type: %v", option.Default)
+			}
+		}
+	}
+	fmt.Fprintln(w, "\t}")
+	fmt.Fprintln(w, "\tfor _, option := range options {")
+	fmt.Fprintln(w, "\t\terr := option(settings)")
+	fmt.Fprintln(w, "\t\tif err != nil {")
+	fmt.Fprintln(w, "\t\t\treturn nil, err")
+	fmt.Fprintln(w, "\t\t}")
+	fmt.Fprintln(w, "\t}")
+	fmt.Fprintln(w, "\treturn settings, nil")
 	fmt.Fprintf(w, "}\n\n")
 }
 
@@ -117,10 +149,9 @@ func writeOptionsStruct(w io.Writer, name string, options []*Option) {
 
 func writeFunction(w io.Writer, endpoint *Endpoint) {
 	functionName := formatFunctionName(endpoint.Name)
-	optionsName := functionName + "Options"
 	args := []string{"ctx context.Context"}
 
-	writeOptionsStruct(w, optionsName, endpoint.Options)
+	writeOptionsStruct(w, functionName, endpoint.Options)
 	// writeResponseStruct(w, functionName+"Response", endpoint.Response)
 
 	fmt.Fprintf(w, "func (c *Client) %s(", functionName)
@@ -139,7 +170,7 @@ func writeFunction(w io.Writer, endpoint *Endpoint) {
 	}
 
 	if len(endpoint.Options) > 0 {
-		args = append(args, fmt.Sprintf("options *%s", functionName+"Options"))
+		args = append(args, fmt.Sprintf("options ...%s", functionName+"Option"))
 	}
 
 	fmt.Fprint(w, strings.Join(args, ", "))
@@ -169,6 +200,14 @@ func writeFunction(w io.Writer, endpoint *Endpoint) {
 	}
 
 	fmt.Fprintf(w, " {\n")
+
+	if len(endpoint.Options) > 0 {
+		fmt.Fprintf(w, "\tsettings, err := %sOptions(options...)\n", functionName)
+		fmt.Fprintf(w, "\tif err != nil {\n")
+		fmt.Fprintf(w, "\t\treturn nil, err\n")
+		fmt.Fprintf(w, "\t}\n")
+	}
+
 	fmt.Fprintf(w, "\treq := c.Request(\"%s\")\n", endpoint.Name)
 
 	for _, argument := range endpoint.Arguments {
@@ -195,14 +234,10 @@ func writeFunction(w io.Writer, endpoint *Endpoint) {
 	}
 
 	if len(endpoint.Options) > 0 {
-		fmt.Fprintln(w, "\tif options != nil {")
-
 		for _, option := range endpoint.Options {
 			name := formatVariableName(option.Name, option.Type, true)
-			fmt.Fprintf(w, "\t\treq.Option(\"%s\", options.%s)\n", option.Name, name)
+			fmt.Fprintf(w, "\treq.Option(\"%s\", settings.%s)\n", option.Name, name)
 		}
-
-		fmt.Fprintln(w, "\t}")
 	}
 
 	// TODO: options defaults.

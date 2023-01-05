@@ -3,11 +3,11 @@ package kubo
 import (
 	"context"
 	"io"
-
+	
 	files "github.com/ipfs/go-ipfs-files"
 )
 
-type AddOptions struct {
+type AddSettings struct {
 	// Add directory paths recursively.
 	Recursive bool
 	// Symlinks supplied in arguments are dereferenced.
@@ -56,7 +56,29 @@ type AddOptions struct {
 	ToFiles string
 }
 
-func (c *Client) Add(ctx context.Context, f files.Node, options *AddOptions) ([]byte, error) {
+type AddOption func(*AddSettings) error
+
+func AddOptions(options ...AddOption) (*AddSettings, error) {
+	settings := &AddSettings{
+		Chunker: `size-262144`,
+		Hash: `sha2-256`,
+		InlineLimit: 32,
+		Pin: true,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) Add(ctx context.Context, f files.Node, options ...AddOption) ([]byte, error) {
+	settings, err := AddOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("add")
 	if d, ok := f.(files.Directory); ok {
 		req.Body(files.NewMultiFileReader(d, false))
@@ -65,30 +87,29 @@ func (c *Client) Add(ctx context.Context, f files.Node, options *AddOptions) ([]
 		files.NewMultiFileReader(d, false)
 		req.Body(files.NewMultiFileReader(d, false))
 	}
-	if options != nil {
-		req.Option("recursive", options.Recursive)
-		req.Option("dereference-args", options.DereferenceArgs)
-		req.Option("stdin-name", options.StdinName)
-		req.Option("hidden", options.Hidden)
-		req.Option("ignore", options.Ignore)
-		req.Option("ignore-rules-path", options.IgnoreRulesPath)
-		req.Option("quiet", options.Quiet)
-		req.Option("quieter", options.Quieter)
-		req.Option("silent", options.Silent)
-		req.Option("progress", options.Progress)
-		req.Option("trickle", options.Trickle)
-		req.Option("only-hash", options.OnlyHash)
-		req.Option("wrap-with-directory", options.WrapWithDirectory)
-		req.Option("chunker", options.Chunker)
-		req.Option("raw-leaves", options.RawLeaves)
-		req.Option("nocopy", options.Nocopy)
-		req.Option("fscache", options.Fscache)
-		req.Option("cid-version", options.CidVersion)
-		req.Option("hash", options.Hash)
-		req.Option("inline", options.Inline)
-		req.Option("inline-limit", options.InlineLimit)
-		req.Option("pin", options.Pin)
-	}
+	req.Option("recursive", settings.Recursive)
+	req.Option("dereference-args", settings.DereferenceArgs)
+	req.Option("stdin-name", settings.StdinName)
+	req.Option("hidden", settings.Hidden)
+	req.Option("ignore", settings.Ignore)
+	req.Option("ignore-rules-path", settings.IgnoreRulesPath)
+	req.Option("quiet", settings.Quiet)
+	req.Option("quieter", settings.Quieter)
+	req.Option("silent", settings.Silent)
+	req.Option("progress", settings.Progress)
+	req.Option("trickle", settings.Trickle)
+	req.Option("only-hash", settings.OnlyHash)
+	req.Option("wrap-with-directory", settings.WrapWithDirectory)
+	req.Option("chunker", settings.Chunker)
+	req.Option("raw-leaves", settings.RawLeaves)
+	req.Option("nocopy", settings.Nocopy)
+	req.Option("fscache", settings.Fscache)
+	req.Option("cid-version", settings.CidVersion)
+	req.Option("hash", settings.Hash)
+	req.Option("inline", settings.Inline)
+	req.Option("inline-limit", settings.InlineLimit)
+	req.Option("pin", settings.Pin)
+	req.Option("to-files", settings.ToFiles)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -127,19 +148,35 @@ func (c *Client) BitswapReprovide(ctx context.Context) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type BitswapStatOptions struct {
+type BitswapStatSettings struct {
 	// Print extra information.
 	Verbose bool
 	// Print sizes in human readable format (e.g., 1K 234M 2G).
 	Human bool
 }
 
-func (c *Client) BitswapStat(ctx context.Context, options *BitswapStatOptions) ([]byte, error) {
-	req := c.Request("bitswap/stat")
-	if options != nil {
-		req.Option("verbose", options.Verbose)
-		req.Option("human", options.Human)
+type BitswapStatOption func(*BitswapStatSettings) error
+
+func BitswapStatOptions(options ...BitswapStatOption) (*BitswapStatSettings, error) {
+	settings := &BitswapStatSettings{
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) BitswapStat(ctx context.Context, options ...BitswapStatOption) ([]byte, error) {
+	settings, err := BitswapStatOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("bitswap/stat")
+	req.Option("verbose", settings.Verbose)
+	req.Option("human", settings.Human)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -151,16 +188,32 @@ func (c *Client) BitswapStat(ctx context.Context, options *BitswapStatOptions) (
 	return io.ReadAll(res.Output)
 }
 
-type BitswapWantlistOptions struct {
+type BitswapWantlistSettings struct {
 	// Specify which peer to show wantlist for. Default: self.
 	Peer string
 }
 
-func (c *Client) BitswapWantlist(ctx context.Context, options *BitswapWantlistOptions) ([]byte, error) {
-	req := c.Request("bitswap/wantlist")
-	if options != nil {
-		req.Option("peer", options.Peer)
+type BitswapWantlistOption func(*BitswapWantlistSettings) error
+
+func BitswapWantlistOptions(options ...BitswapWantlistOption) (*BitswapWantlistSettings, error) {
+	settings := &BitswapWantlistSettings{
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) BitswapWantlist(ctx context.Context, options ...BitswapWantlistOption) ([]byte, error) {
+	settings, err := BitswapWantlistOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("bitswap/wantlist")
+	req.Option("peer", settings.Peer)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -186,7 +239,7 @@ func (c *Client) BlockGet(ctx context.Context, cid string) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type BlockPutOptions struct {
+type BlockPutSettings struct {
 	// Multicodec to use in returned CID. Default: raw.
 	CidCodec string
 	// Multihash hash function. Default: sha2-256.
@@ -201,7 +254,30 @@ type BlockPutOptions struct {
 	Format string
 }
 
-func (c *Client) BlockPut(ctx context.Context, f files.Node, options *BlockPutOptions) ([]byte, error) {
+type BlockPutOption func(*BlockPutSettings) error
+
+func BlockPutOptions(options ...BlockPutOption) (*BlockPutSettings, error) {
+	settings := &BlockPutSettings{
+		CidCodec: `raw`,
+		Mhtype: `sha2-256`,
+		Mhlen: -1,
+		Pin: false,
+		AllowBigBlock: false,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) BlockPut(ctx context.Context, f files.Node, options ...BlockPutOption) ([]byte, error) {
+	settings, err := BlockPutOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("block/put")
 	if d, ok := f.(files.Directory); ok {
 		req.Body(files.NewMultiFileReader(d, false))
@@ -210,14 +286,12 @@ func (c *Client) BlockPut(ctx context.Context, f files.Node, options *BlockPutOp
 		files.NewMultiFileReader(d, false)
 		req.Body(files.NewMultiFileReader(d, false))
 	}
-	if options != nil {
-		req.Option("cid-codec", options.CidCodec)
-		req.Option("mhtype", options.Mhtype)
-		req.Option("mhlen", options.Mhlen)
-		req.Option("pin", options.Pin)
-		req.Option("allow-big-block", options.AllowBigBlock)
-		req.Option("format", options.Format)
-	}
+	req.Option("cid-codec", settings.CidCodec)
+	req.Option("mhtype", settings.Mhtype)
+	req.Option("mhlen", settings.Mhlen)
+	req.Option("pin", settings.Pin)
+	req.Option("allow-big-block", settings.AllowBigBlock)
+	req.Option("format", settings.Format)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -229,20 +303,36 @@ func (c *Client) BlockPut(ctx context.Context, f files.Node, options *BlockPutOp
 	return io.ReadAll(res.Output)
 }
 
-type BlockRmOptions struct {
+type BlockRmSettings struct {
 	// Ignore nonexistent blocks.
 	Force bool
 	// Write minimal output.
 	Quiet bool
 }
 
-func (c *Client) BlockRm(ctx context.Context, cid []string, options *BlockRmOptions) ([]byte, error) {
+type BlockRmOption func(*BlockRmSettings) error
+
+func BlockRmOptions(options ...BlockRmOption) (*BlockRmSettings, error) {
+	settings := &BlockRmSettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) BlockRm(ctx context.Context, cid []string, options ...BlockRmOption) ([]byte, error) {
+	settings, err := BlockRmOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("block/rm")
 	req.Arguments(cid...)
-	if options != nil {
-		req.Option("force", options.Force)
-		req.Option("quiet", options.Quiet)
-	}
+	req.Option("force", settings.Force)
+	req.Option("quiet", settings.Quiet)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -281,17 +371,33 @@ func (c *Client) Bootstrap(ctx context.Context) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type BootstrapAddOptions struct {
+type BootstrapAddSettings struct {
 	// Add default bootstrap nodes. (Deprecated, use 'default' subcommand instead).
 	Default bool
 }
 
-func (c *Client) BootstrapAdd(ctx context.Context, peer []string, options *BootstrapAddOptions) ([]byte, error) {
+type BootstrapAddOption func(*BootstrapAddSettings) error
+
+func BootstrapAddOptions(options ...BootstrapAddOption) (*BootstrapAddSettings, error) {
+	settings := &BootstrapAddSettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) BootstrapAdd(ctx context.Context, peer []string, options ...BootstrapAddOption) ([]byte, error) {
+	settings, err := BootstrapAddOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("bootstrap/add")
 	req.Arguments(peer...)
-	if options != nil {
-		req.Option("default", options.Default)
-	}
+	req.Option("default", settings.Default)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -329,17 +435,33 @@ func (c *Client) BootstrapList(ctx context.Context) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type BootstrapRmOptions struct {
+type BootstrapRmSettings struct {
 	// Remove all bootstrap peers. (Deprecated, use 'all' subcommand).
 	All bool
 }
 
-func (c *Client) BootstrapRm(ctx context.Context, peer []string, options *BootstrapRmOptions) ([]byte, error) {
+type BootstrapRmOption func(*BootstrapRmSettings) error
+
+func BootstrapRmOptions(options ...BootstrapRmOption) (*BootstrapRmSettings, error) {
+	settings := &BootstrapRmSettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) BootstrapRm(ctx context.Context, peer []string, options ...BootstrapRmOption) ([]byte, error) {
+	settings, err := BootstrapRmOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("bootstrap/rm")
 	req.Arguments(peer...)
-	if options != nil {
-		req.Option("all", options.All)
-	}
+	req.Option("all", settings.All)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -364,7 +486,7 @@ func (c *Client) BootstrapRmAll(ctx context.Context) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type CatOptions struct {
+type CatSettings struct {
 	// Byte offset to begin reading from.
 	Offset int64
 	// Maximum number of bytes to read.
@@ -373,14 +495,31 @@ type CatOptions struct {
 	Progress bool
 }
 
-func (c *Client) Cat(ctx context.Context, ipfsPath []string, options *CatOptions) ([]byte, error) {
+type CatOption func(*CatSettings) error
+
+func CatOptions(options ...CatOption) (*CatSettings, error) {
+	settings := &CatSettings{
+		Progress: true,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) Cat(ctx context.Context, ipfsPath []string, options ...CatOption) ([]byte, error) {
+	settings, err := CatOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("cat")
 	req.Arguments(ipfsPath...)
-	if options != nil {
-		req.Option("offset", options.Offset)
-		req.Option("length", options.Length)
-		req.Option("progress", options.Progress)
-	}
+	req.Option("offset", settings.Offset)
+	req.Option("length", settings.Length)
+	req.Option("progress", settings.Progress)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -406,19 +545,35 @@ func (c *Client) CidBase32(ctx context.Context, cid []string) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type CidBasesOptions struct {
+type CidBasesSettings struct {
 	// also include the single letter prefixes in addition to the code.
 	Prefix bool
 	// also include numeric codes.
 	Numeric bool
 }
 
-func (c *Client) CidBases(ctx context.Context, options *CidBasesOptions) ([]byte, error) {
-	req := c.Request("cid/bases")
-	if options != nil {
-		req.Option("prefix", options.Prefix)
-		req.Option("numeric", options.Numeric)
+type CidBasesOption func(*CidBasesSettings) error
+
+func CidBasesOptions(options ...CidBasesOption) (*CidBasesSettings, error) {
+	settings := &CidBasesSettings{
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) CidBases(ctx context.Context, options ...CidBasesOption) ([]byte, error) {
+	settings, err := CidBasesOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("cid/bases")
+	req.Option("prefix", settings.Prefix)
+	req.Option("numeric", settings.Numeric)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -430,19 +585,35 @@ func (c *Client) CidBases(ctx context.Context, options *CidBasesOptions) ([]byte
 	return io.ReadAll(res.Output)
 }
 
-type CidCodecsOptions struct {
+type CidCodecsSettings struct {
 	// also include numeric codes.
 	Numeric bool
 	// list only codecs supported by go-ipfs commands.
 	Supported bool
 }
 
-func (c *Client) CidCodecs(ctx context.Context, options *CidCodecsOptions) ([]byte, error) {
-	req := c.Request("cid/codecs")
-	if options != nil {
-		req.Option("numeric", options.Numeric)
-		req.Option("supported", options.Supported)
+type CidCodecsOption func(*CidCodecsSettings) error
+
+func CidCodecsOptions(options ...CidCodecsOption) (*CidCodecsSettings, error) {
+	settings := &CidCodecsSettings{
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) CidCodecs(ctx context.Context, options ...CidCodecsOption) ([]byte, error) {
+	settings, err := CidCodecsOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("cid/codecs")
+	req.Option("numeric", settings.Numeric)
+	req.Option("supported", settings.Supported)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -454,7 +625,7 @@ func (c *Client) CidCodecs(ctx context.Context, options *CidCodecsOptions) ([]by
 	return io.ReadAll(res.Output)
 }
 
-type CidFormatOptions struct {
+type CidFormatSettings struct {
 	// Printf style format string. Default: %s.
 	F string
 	// CID version to convert to.
@@ -465,15 +636,32 @@ type CidFormatOptions struct {
 	B string
 }
 
-func (c *Client) CidFormat(ctx context.Context, cid []string, options *CidFormatOptions) ([]byte, error) {
+type CidFormatOption func(*CidFormatSettings) error
+
+func CidFormatOptions(options ...CidFormatOption) (*CidFormatSettings, error) {
+	settings := &CidFormatSettings{
+		F: `%s`,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) CidFormat(ctx context.Context, cid []string, options ...CidFormatOption) ([]byte, error) {
+	settings, err := CidFormatOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("cid/format")
 	req.Arguments(cid...)
-	if options != nil {
-		req.Option("f", options.F)
-		req.Option("v", options.V)
-		req.Option("mc", options.Mc)
-		req.Option("b", options.B)
-	}
+	req.Option("f", settings.F)
+	req.Option("v", settings.V)
+	req.Option("mc", settings.Mc)
+	req.Option("b", settings.B)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -485,19 +673,35 @@ func (c *Client) CidFormat(ctx context.Context, cid []string, options *CidFormat
 	return io.ReadAll(res.Output)
 }
 
-type CidHashesOptions struct {
+type CidHashesSettings struct {
 	// also include numeric codes.
 	Numeric bool
 	// list only codecs supported by go-ipfs commands.
 	Supported bool
 }
 
-func (c *Client) CidHashes(ctx context.Context, options *CidHashesOptions) ([]byte, error) {
-	req := c.Request("cid/hashes")
-	if options != nil {
-		req.Option("numeric", options.Numeric)
-		req.Option("supported", options.Supported)
+type CidHashesOption func(*CidHashesSettings) error
+
+func CidHashesOptions(options ...CidHashesOption) (*CidHashesSettings, error) {
+	settings := &CidHashesSettings{
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) CidHashes(ctx context.Context, options ...CidHashesOption) ([]byte, error) {
+	settings, err := CidHashesOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("cid/hashes")
+	req.Option("numeric", settings.Numeric)
+	req.Option("supported", settings.Supported)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -509,16 +713,32 @@ func (c *Client) CidHashes(ctx context.Context, options *CidHashesOptions) ([]by
 	return io.ReadAll(res.Output)
 }
 
-type CommandsOptions struct {
+type CommandsSettings struct {
 	// Show command flags.
 	Flags bool
 }
 
-func (c *Client) Commands(ctx context.Context, options *CommandsOptions) ([]byte, error) {
-	req := c.Request("commands")
-	if options != nil {
-		req.Option("flags", options.Flags)
+type CommandsOption func(*CommandsSettings) error
+
+func CommandsOptions(options ...CommandsOption) (*CommandsSettings, error) {
+	settings := &CommandsSettings{
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) Commands(ctx context.Context, options ...CommandsOption) ([]byte, error) {
+	settings, err := CommandsOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("commands")
+	req.Option("flags", settings.Flags)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -556,21 +776,37 @@ func (c *Client) CommandsCompletionFish(ctx context.Context) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type ConfigOptions struct {
+type ConfigSettings struct {
 	// Set a boolean value.
 	Bool bool
 	// Parse stringified JSON.
 	Json bool
 }
 
-func (c *Client) Config(ctx context.Context, key string, value string, options *ConfigOptions) ([]byte, error) {
+type ConfigOption func(*ConfigSettings) error
+
+func ConfigOptions(options ...ConfigOption) (*ConfigSettings, error) {
+	settings := &ConfigSettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) Config(ctx context.Context, key string, value string, options ...ConfigOption) ([]byte, error) {
+	settings, err := ConfigOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("config")
 	req.Arguments(key)
 	req.Arguments(value)
-	if options != nil {
-		req.Option("bool", options.Bool)
-		req.Option("json", options.Json)
-	}
+	req.Option("bool", settings.Bool)
+	req.Option("json", settings.Json)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -595,17 +831,33 @@ func (c *Client) ConfigEdit(ctx context.Context) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type ConfigProfileApplyOptions struct {
+type ConfigProfileApplySettings struct {
 	// print difference between the current config and the config that would be generated.
 	DryRun bool
 }
 
-func (c *Client) ConfigProfileApply(ctx context.Context, profile string, options *ConfigProfileApplyOptions) ([]byte, error) {
+type ConfigProfileApplyOption func(*ConfigProfileApplySettings) error
+
+func ConfigProfileApplyOptions(options ...ConfigProfileApplyOption) (*ConfigProfileApplySettings, error) {
+	settings := &ConfigProfileApplySettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) ConfigProfileApply(ctx context.Context, profile string, options ...ConfigProfileApplyOption) ([]byte, error) {
+	settings, err := ConfigProfileApplyOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("config/profile/apply")
 	req.Arguments(profile)
-	if options != nil {
-		req.Option("dry-run", options.DryRun)
-	}
+	req.Option("dry-run", settings.DryRun)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -644,17 +896,33 @@ func (c *Client) ConfigShow(ctx context.Context) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type DagExportOptions struct {
+type DagExportSettings struct {
 	// Display progress on CLI. Defaults to true when STDERR is a TTY.
 	Progress bool
 }
 
-func (c *Client) DagExport(ctx context.Context, root string, options *DagExportOptions) ([]byte, error) {
+type DagExportOption func(*DagExportSettings) error
+
+func DagExportOptions(options ...DagExportOption) (*DagExportSettings, error) {
+	settings := &DagExportSettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) DagExport(ctx context.Context, root string, options ...DagExportOption) ([]byte, error) {
+	settings, err := DagExportOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("dag/export")
 	req.Arguments(root)
-	if options != nil {
-		req.Option("progress", options.Progress)
-	}
+	req.Option("progress", settings.Progress)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -666,17 +934,34 @@ func (c *Client) DagExport(ctx context.Context, root string, options *DagExportO
 	return io.ReadAll(res.Output)
 }
 
-type DagGetOptions struct {
+type DagGetSettings struct {
 	// Format that the object will be encoded as. Default: dag-json.
 	OutputCodec string
 }
 
-func (c *Client) DagGet(ctx context.Context, ref string, options *DagGetOptions) ([]byte, error) {
+type DagGetOption func(*DagGetSettings) error
+
+func DagGetOptions(options ...DagGetOption) (*DagGetSettings, error) {
+	settings := &DagGetSettings{
+		OutputCodec: `dag-json`,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) DagGet(ctx context.Context, ref string, options ...DagGetOption) ([]byte, error) {
+	settings, err := DagGetOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("dag/get")
 	req.Arguments(ref)
-	if options != nil {
-		req.Option("output-codec", options.OutputCodec)
-	}
+	req.Option("output-codec", settings.OutputCodec)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -688,7 +973,7 @@ func (c *Client) DagGet(ctx context.Context, ref string, options *DagGetOptions)
 	return io.ReadAll(res.Output)
 }
 
-type DagImportOptions struct {
+type DagImportSettings struct {
 	// Pin optional roots listed in the .car headers after importing. Default: true.
 	PinRoots bool
 	// No output.
@@ -699,7 +984,27 @@ type DagImportOptions struct {
 	AllowBigBlock bool
 }
 
-func (c *Client) DagImport(ctx context.Context, f files.Node, options *DagImportOptions) ([]byte, error) {
+type DagImportOption func(*DagImportSettings) error
+
+func DagImportOptions(options ...DagImportOption) (*DagImportSettings, error) {
+	settings := &DagImportSettings{
+		PinRoots: true,
+		AllowBigBlock: false,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) DagImport(ctx context.Context, f files.Node, options ...DagImportOption) ([]byte, error) {
+	settings, err := DagImportOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("dag/import")
 	if d, ok := f.(files.Directory); ok {
 		req.Body(files.NewMultiFileReader(d, false))
@@ -708,12 +1013,10 @@ func (c *Client) DagImport(ctx context.Context, f files.Node, options *DagImport
 		files.NewMultiFileReader(d, false)
 		req.Body(files.NewMultiFileReader(d, false))
 	}
-	if options != nil {
-		req.Option("pin-roots", options.PinRoots)
-		req.Option("silent", options.Silent)
-		req.Option("stats", options.Stats)
-		req.Option("allow-big-block", options.AllowBigBlock)
-	}
+	req.Option("pin-roots", settings.PinRoots)
+	req.Option("silent", settings.Silent)
+	req.Option("stats", settings.Stats)
+	req.Option("allow-big-block", settings.AllowBigBlock)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -725,7 +1028,7 @@ func (c *Client) DagImport(ctx context.Context, f files.Node, options *DagImport
 	return io.ReadAll(res.Output)
 }
 
-type DagPutOptions struct {
+type DagPutSettings struct {
 	// Codec that the stored object will be encoded with. Default: dag-cbor.
 	StoreCodec string
 	// Codec that the input object is encoded in. Default: dag-json.
@@ -738,7 +1041,29 @@ type DagPutOptions struct {
 	AllowBigBlock bool
 }
 
-func (c *Client) DagPut(ctx context.Context, f files.Node, options *DagPutOptions) ([]byte, error) {
+type DagPutOption func(*DagPutSettings) error
+
+func DagPutOptions(options ...DagPutOption) (*DagPutSettings, error) {
+	settings := &DagPutSettings{
+		StoreCodec: `dag-cbor`,
+		InputCodec: `dag-json`,
+		Hash: `sha2-256`,
+		AllowBigBlock: false,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) DagPut(ctx context.Context, f files.Node, options ...DagPutOption) ([]byte, error) {
+	settings, err := DagPutOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("dag/put")
 	if d, ok := f.(files.Directory); ok {
 		req.Body(files.NewMultiFileReader(d, false))
@@ -747,13 +1072,11 @@ func (c *Client) DagPut(ctx context.Context, f files.Node, options *DagPutOption
 		files.NewMultiFileReader(d, false)
 		req.Body(files.NewMultiFileReader(d, false))
 	}
-	if options != nil {
-		req.Option("store-codec", options.StoreCodec)
-		req.Option("input-codec", options.InputCodec)
-		req.Option("pin", options.Pin)
-		req.Option("hash", options.Hash)
-		req.Option("allow-big-block", options.AllowBigBlock)
-	}
+	req.Option("store-codec", settings.StoreCodec)
+	req.Option("input-codec", settings.InputCodec)
+	req.Option("pin", settings.Pin)
+	req.Option("hash", settings.Hash)
+	req.Option("allow-big-block", settings.AllowBigBlock)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -779,17 +1102,34 @@ func (c *Client) DagResolve(ctx context.Context, ref string) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type DagStatOptions struct {
+type DagStatSettings struct {
 	// Return progressive data while reading through the DAG. Default: true.
 	Progress bool
 }
 
-func (c *Client) DagStat(ctx context.Context, root string, options *DagStatOptions) ([]byte, error) {
+type DagStatOption func(*DagStatSettings) error
+
+func DagStatOptions(options ...DagStatOption) (*DagStatSettings, error) {
+	settings := &DagStatSettings{
+		Progress: true,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) DagStat(ctx context.Context, root string, options ...DagStatOption) ([]byte, error) {
+	settings, err := DagStatOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("dag/stat")
 	req.Arguments(root)
-	if options != nil {
-		req.Option("progress", options.Progress)
-	}
+	req.Option("progress", settings.Progress)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -801,17 +1141,33 @@ func (c *Client) DagStat(ctx context.Context, root string, options *DagStatOptio
 	return io.ReadAll(res.Output)
 }
 
-type DhtQueryOptions struct {
+type DhtQuerySettings struct {
 	// Print extra information.
 	Verbose bool
 }
 
-func (c *Client) DhtQuery(ctx context.Context, peerid []string, options *DhtQueryOptions) ([]byte, error) {
+type DhtQueryOption func(*DhtQuerySettings) error
+
+func DhtQueryOptions(options ...DhtQueryOption) (*DhtQuerySettings, error) {
+	settings := &DhtQuerySettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) DhtQuery(ctx context.Context, peerid []string, options ...DhtQueryOption) ([]byte, error) {
+	settings, err := DhtQueryOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("dht/query")
 	req.Arguments(peerid...)
-	if options != nil {
-		req.Option("verbose", options.Verbose)
-	}
+	req.Option("verbose", settings.Verbose)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -823,16 +1179,32 @@ func (c *Client) DhtQuery(ctx context.Context, peerid []string, options *DhtQuer
 	return io.ReadAll(res.Output)
 }
 
-type DiagCmdsOptions struct {
+type DiagCmdsSettings struct {
 	// Print extra information.
 	Verbose bool
 }
 
-func (c *Client) DiagCmds(ctx context.Context, options *DiagCmdsOptions) ([]byte, error) {
-	req := c.Request("diag/cmds")
-	if options != nil {
-		req.Option("verbose", options.Verbose)
+type DiagCmdsOption func(*DiagCmdsSettings) error
+
+func DiagCmdsOptions(options ...DiagCmdsOption) (*DiagCmdsSettings, error) {
+	settings := &DiagCmdsSettings{
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) DiagCmds(ctx context.Context, options ...DiagCmdsOption) ([]byte, error) {
+	settings, err := DiagCmdsOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("diag/cmds")
+	req.Option("verbose", settings.Verbose)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -871,7 +1243,7 @@ func (c *Client) DiagCmdsSetTime(ctx context.Context, time string) ([]byte, erro
 	return io.ReadAll(res.Output)
 }
 
-type DiagProfileOptions struct {
+type DiagProfileSettings struct {
 	// The path where the output .zip should be stored. Default: ./ipfs-profile-[timestamp].zip.
 	Output string
 	// The list of collectors to use for collecting diagnostic data. Default: [goroutines-stack goroutines-pprof version heap bin cpu mutex block].
@@ -884,15 +1256,35 @@ type DiagProfileOptions struct {
 	BlockProfileRate string
 }
 
-func (c *Client) DiagProfile(ctx context.Context, options *DiagProfileOptions) ([]byte, error) {
-	req := c.Request("diag/profile")
-	if options != nil {
-		req.Option("output", options.Output)
-		req.Option("collectors", options.Collectors)
-		req.Option("profile-time", options.ProfileTime)
-		req.Option("mutex-profile-fraction", options.MutexProfileFraction)
-		req.Option("block-profile-rate", options.BlockProfileRate)
+type DiagProfileOption func(*DiagProfileSettings) error
+
+func DiagProfileOptions(options ...DiagProfileOption) (*DiagProfileSettings, error) {
+	settings := &DiagProfileSettings{
+		Collectors: []string{"goroutines-stack", "goroutines-pprof", "version", "heap", "bin", "cpu", "mutex", "block"},
+		ProfileTime: `30s`,
+		MutexProfileFraction: 4,
+		BlockProfileRate: `1ms`,
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) DiagProfile(ctx context.Context, options ...DiagProfileOption) ([]byte, error) {
+	settings, err := DiagProfileOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("diag/profile")
+	req.Option("output", settings.Output)
+	req.Option("collectors", settings.Collectors)
+	req.Option("profile-time", settings.ProfileTime)
+	req.Option("mutex-profile-fraction", settings.MutexProfileFraction)
+	req.Option("block-profile-rate", settings.BlockProfileRate)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -917,20 +1309,36 @@ func (c *Client) DiagSys(ctx context.Context) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type FilesChcidOptions struct {
+type FilesChcidSettings struct {
 	// Cid version to use. (experimental).
 	CidVersion int
 	// Hash function to use. Will set Cid version to 1 if used. (experimental).
 	Hash string
 }
 
-func (c *Client) FilesChcid(ctx context.Context, path string, options *FilesChcidOptions) ([]byte, error) {
+type FilesChcidOption func(*FilesChcidSettings) error
+
+func FilesChcidOptions(options ...FilesChcidOption) (*FilesChcidSettings, error) {
+	settings := &FilesChcidSettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) FilesChcid(ctx context.Context, path string, options ...FilesChcidOption) ([]byte, error) {
+	settings, err := FilesChcidOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("files/chcid")
 	req.Arguments(path)
-	if options != nil {
-		req.Option("cid-version", options.CidVersion)
-		req.Option("hash", options.Hash)
-	}
+	req.Option("cid-version", settings.CidVersion)
+	req.Option("hash", settings.Hash)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -942,18 +1350,34 @@ func (c *Client) FilesChcid(ctx context.Context, path string, options *FilesChci
 	return io.ReadAll(res.Output)
 }
 
-type FilesCpOptions struct {
+type FilesCpSettings struct {
 	// Make parent directories as needed.
 	Parents bool
 }
 
-func (c *Client) FilesCp(ctx context.Context, source string, dest string, options *FilesCpOptions) ([]byte, error) {
+type FilesCpOption func(*FilesCpSettings) error
+
+func FilesCpOptions(options ...FilesCpOption) (*FilesCpSettings, error) {
+	settings := &FilesCpSettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) FilesCp(ctx context.Context, source string, dest string, options ...FilesCpOption) ([]byte, error) {
+	settings, err := FilesCpOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("files/cp")
 	req.Arguments(source)
 	req.Arguments(dest)
-	if options != nil {
-		req.Option("parents", options.Parents)
-	}
+	req.Option("parents", settings.Parents)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -979,20 +1403,36 @@ func (c *Client) FilesFlush(ctx context.Context, path string) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type FilesLsOptions struct {
+type FilesLsSettings struct {
 	// Use long listing format.
 	Long bool
 	// Do not sort; list entries in directory order.
 	U bool
 }
 
-func (c *Client) FilesLs(ctx context.Context, path string, options *FilesLsOptions) ([]byte, error) {
+type FilesLsOption func(*FilesLsSettings) error
+
+func FilesLsOptions(options ...FilesLsOption) (*FilesLsSettings, error) {
+	settings := &FilesLsSettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) FilesLs(ctx context.Context, path string, options ...FilesLsOption) ([]byte, error) {
+	settings, err := FilesLsOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("files/ls")
 	req.Arguments(path)
-	if options != nil {
-		req.Option("long", options.Long)
-		req.Option("U", options.U)
-	}
+	req.Option("long", settings.Long)
+	req.Option("U", settings.U)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1004,7 +1444,7 @@ func (c *Client) FilesLs(ctx context.Context, path string, options *FilesLsOptio
 	return io.ReadAll(res.Output)
 }
 
-type FilesMkdirOptions struct {
+type FilesMkdirSettings struct {
 	// No error if existing, make parent directories as needed.
 	Parents bool
 	// Cid version to use. (experimental).
@@ -1013,14 +1453,30 @@ type FilesMkdirOptions struct {
 	Hash string
 }
 
-func (c *Client) FilesMkdir(ctx context.Context, path string, options *FilesMkdirOptions) ([]byte, error) {
+type FilesMkdirOption func(*FilesMkdirSettings) error
+
+func FilesMkdirOptions(options ...FilesMkdirOption) (*FilesMkdirSettings, error) {
+	settings := &FilesMkdirSettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) FilesMkdir(ctx context.Context, path string, options ...FilesMkdirOption) ([]byte, error) {
+	settings, err := FilesMkdirOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("files/mkdir")
 	req.Arguments(path)
-	if options != nil {
-		req.Option("parents", options.Parents)
-		req.Option("cid-version", options.CidVersion)
-		req.Option("hash", options.Hash)
-	}
+	req.Option("parents", settings.Parents)
+	req.Option("cid-version", settings.CidVersion)
+	req.Option("hash", settings.Hash)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1047,20 +1503,36 @@ func (c *Client) FilesMv(ctx context.Context, source string, dest string) ([]byt
 	return io.ReadAll(res.Output)
 }
 
-type FilesReadOptions struct {
+type FilesReadSettings struct {
 	// Byte offset to begin reading from.
 	Offset int64
 	// Maximum number of bytes to read.
 	Count int64
 }
 
-func (c *Client) FilesRead(ctx context.Context, path string, options *FilesReadOptions) ([]byte, error) {
+type FilesReadOption func(*FilesReadSettings) error
+
+func FilesReadOptions(options ...FilesReadOption) (*FilesReadSettings, error) {
+	settings := &FilesReadSettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) FilesRead(ctx context.Context, path string, options ...FilesReadOption) ([]byte, error) {
+	settings, err := FilesReadOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("files/read")
 	req.Arguments(path)
-	if options != nil {
-		req.Option("offset", options.Offset)
-		req.Option("count", options.Count)
-	}
+	req.Option("offset", settings.Offset)
+	req.Option("count", settings.Count)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1072,20 +1544,36 @@ func (c *Client) FilesRead(ctx context.Context, path string, options *FilesReadO
 	return io.ReadAll(res.Output)
 }
 
-type FilesRmOptions struct {
+type FilesRmSettings struct {
 	// Recursively remove directories.
 	Recursive bool
 	// Forcibly remove target at path; implies -r for directories.
 	Force bool
 }
 
-func (c *Client) FilesRm(ctx context.Context, path []string, options *FilesRmOptions) ([]byte, error) {
+type FilesRmOption func(*FilesRmSettings) error
+
+func FilesRmOptions(options ...FilesRmOption) (*FilesRmSettings, error) {
+	settings := &FilesRmSettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) FilesRm(ctx context.Context, path []string, options ...FilesRmOption) ([]byte, error) {
+	settings, err := FilesRmOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("files/rm")
 	req.Arguments(path...)
-	if options != nil {
-		req.Option("recursive", options.Recursive)
-		req.Option("force", options.Force)
-	}
+	req.Option("recursive", settings.Recursive)
+	req.Option("force", settings.Force)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1097,7 +1585,7 @@ func (c *Client) FilesRm(ctx context.Context, path []string, options *FilesRmOpt
 	return io.ReadAll(res.Output)
 }
 
-type FilesStatOptions struct {
+type FilesStatSettings struct {
 	// Print statistics in given format. Allowed tokens: <hash> <size> <cumulsize> <type> <childs>. Conflicts with other format options. Default: <hash>
 	// Size: <size>
 	// CumulativeSize: <cumulsize>
@@ -1112,15 +1600,36 @@ type FilesStatOptions struct {
 	WithLocal bool
 }
 
-func (c *Client) FilesStat(ctx context.Context, path string, options *FilesStatOptions) ([]byte, error) {
+type FilesStatOption func(*FilesStatSettings) error
+
+func FilesStatOptions(options ...FilesStatOption) (*FilesStatSettings, error) {
+	settings := &FilesStatSettings{
+		Format: `<hash>
+Size: <size>
+CumulativeSize: <cumulsize>
+ChildBlocks: <childs>
+Type: <type>`,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) FilesStat(ctx context.Context, path string, options ...FilesStatOption) ([]byte, error) {
+	settings, err := FilesStatOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("files/stat")
 	req.Arguments(path)
-	if options != nil {
-		req.Option("format", options.Format)
-		req.Option("hash", options.Hash)
-		req.Option("size", options.Size)
-		req.Option("with-local", options.WithLocal)
-	}
+	req.Option("format", settings.Format)
+	req.Option("hash", settings.Hash)
+	req.Option("size", settings.Size)
+	req.Option("with-local", settings.WithLocal)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1132,7 +1641,7 @@ func (c *Client) FilesStat(ctx context.Context, path string, options *FilesStatO
 	return io.ReadAll(res.Output)
 }
 
-type FilesWriteOptions struct {
+type FilesWriteSettings struct {
 	// Byte offset to begin writing at.
 	Offset int64
 	// Create the file if it does not exist.
@@ -1151,20 +1660,36 @@ type FilesWriteOptions struct {
 	Hash string
 }
 
-func (c *Client) FilesWrite(ctx context.Context, path string, f io.Reader, options *FilesWriteOptions) ([]byte, error) {
+type FilesWriteOption func(*FilesWriteSettings) error
+
+func FilesWriteOptions(options ...FilesWriteOption) (*FilesWriteSettings, error) {
+	settings := &FilesWriteSettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) FilesWrite(ctx context.Context, path string, f io.Reader, options ...FilesWriteOption) ([]byte, error) {
+	settings, err := FilesWriteOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("files/write")
 	req.Arguments(path)
 	req.FileBody(f)
-	if options != nil {
-		req.Option("offset", options.Offset)
-		req.Option("create", options.Create)
-		req.Option("parents", options.Parents)
-		req.Option("truncate", options.Truncate)
-		req.Option("count", options.Count)
-		req.Option("raw-leaves", options.RawLeaves)
-		req.Option("cid-version", options.CidVersion)
-		req.Option("hash", options.Hash)
-	}
+	req.Option("offset", settings.Offset)
+	req.Option("create", settings.Create)
+	req.Option("parents", settings.Parents)
+	req.Option("truncate", settings.Truncate)
+	req.Option("count", settings.Count)
+	req.Option("raw-leaves", settings.RawLeaves)
+	req.Option("cid-version", settings.CidVersion)
+	req.Option("hash", settings.Hash)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1189,17 +1714,33 @@ func (c *Client) FilestoreDups(ctx context.Context) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type FilestoreLsOptions struct {
+type FilestoreLsSettings struct {
 	// sort the results based on the path of the backing file.
 	FileOrder bool
 }
 
-func (c *Client) FilestoreLs(ctx context.Context, obj []string, options *FilestoreLsOptions) ([]byte, error) {
+type FilestoreLsOption func(*FilestoreLsSettings) error
+
+func FilestoreLsOptions(options ...FilestoreLsOption) (*FilestoreLsSettings, error) {
+	settings := &FilestoreLsSettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) FilestoreLs(ctx context.Context, obj []string, options ...FilestoreLsOption) ([]byte, error) {
+	settings, err := FilestoreLsOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("filestore/ls")
 	req.Arguments(obj...)
-	if options != nil {
-		req.Option("file-order", options.FileOrder)
-	}
+	req.Option("file-order", settings.FileOrder)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1211,17 +1752,33 @@ func (c *Client) FilestoreLs(ctx context.Context, obj []string, options *Filesto
 	return io.ReadAll(res.Output)
 }
 
-type FilestoreVerifyOptions struct {
+type FilestoreVerifySettings struct {
 	// verify the objects based on the order of the backing file.
 	FileOrder bool
 }
 
-func (c *Client) FilestoreVerify(ctx context.Context, obj []string, options *FilestoreVerifyOptions) ([]byte, error) {
+type FilestoreVerifyOption func(*FilestoreVerifySettings) error
+
+func FilestoreVerifyOptions(options ...FilestoreVerifyOption) (*FilestoreVerifySettings, error) {
+	settings := &FilestoreVerifySettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) FilestoreVerify(ctx context.Context, obj []string, options ...FilestoreVerifyOption) ([]byte, error) {
+	settings, err := FilestoreVerifyOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("filestore/verify")
 	req.Arguments(obj...)
-	if options != nil {
-		req.Option("file-order", options.FileOrder)
-	}
+	req.Option("file-order", settings.FileOrder)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1233,7 +1790,7 @@ func (c *Client) FilestoreVerify(ctx context.Context, obj []string, options *Fil
 	return io.ReadAll(res.Output)
 }
 
-type GetOptions struct {
+type GetSettings struct {
 	// The path where the output should be stored.
 	Output string
 	// Output a TAR archive.
@@ -1246,16 +1803,33 @@ type GetOptions struct {
 	Progress bool
 }
 
-func (c *Client) Get(ctx context.Context, ipfsPath string, options *GetOptions) ([]byte, error) {
+type GetOption func(*GetSettings) error
+
+func GetOptions(options ...GetOption) (*GetSettings, error) {
+	settings := &GetSettings{
+		Progress: true,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) Get(ctx context.Context, ipfsPath string, options ...GetOption) ([]byte, error) {
+	settings, err := GetOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("get")
 	req.Arguments(ipfsPath)
-	if options != nil {
-		req.Option("output", options.Output)
-		req.Option("archive", options.Archive)
-		req.Option("compress", options.Compress)
-		req.Option("compression-level", options.CompressionLevel)
-		req.Option("progress", options.Progress)
-	}
+	req.Option("output", settings.Output)
+	req.Option("archive", settings.Archive)
+	req.Option("compress", settings.Compress)
+	req.Option("compression-level", settings.CompressionLevel)
+	req.Option("progress", settings.Progress)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1267,20 +1841,37 @@ func (c *Client) Get(ctx context.Context, ipfsPath string, options *GetOptions) 
 	return io.ReadAll(res.Output)
 }
 
-type IdOptions struct {
+type IdSettings struct {
 	// Optional output format.
 	Format string
 	// Encoding used for peer IDs: Can either be a multibase encoded CID or a base58btc encoded multihash. Takes {b58mh|base36|k|base32|b...}. Default: b58mh.
 	PeeridBase string
 }
 
-func (c *Client) Id(ctx context.Context, peerid string, options *IdOptions) ([]byte, error) {
+type IdOption func(*IdSettings) error
+
+func IdOptions(options ...IdOption) (*IdSettings, error) {
+	settings := &IdSettings{
+		PeeridBase: `b58mh`,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) Id(ctx context.Context, peerid string, options ...IdOption) ([]byte, error) {
+	settings, err := IdOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("id")
 	req.Arguments(peerid)
-	if options != nil {
-		req.Option("format", options.Format)
-		req.Option("peerid-base", options.PeeridBase)
-	}
+	req.Option("format", settings.Format)
+	req.Option("peerid-base", settings.PeeridBase)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1292,20 +1883,37 @@ func (c *Client) Id(ctx context.Context, peerid string, options *IdOptions) ([]b
 	return io.ReadAll(res.Output)
 }
 
-type KeyExportOptions struct {
+type KeyExportSettings struct {
 	// The path where the output should be stored.
 	Output string
 	// The format of the exported private key, libp2p-protobuf-cleartext or pem-pkcs8-cleartext. Default: libp2p-protobuf-cleartext.
 	Format string
 }
 
-func (c *Client) KeyExport(ctx context.Context, name string, options *KeyExportOptions) ([]byte, error) {
+type KeyExportOption func(*KeyExportSettings) error
+
+func KeyExportOptions(options ...KeyExportOption) (*KeyExportSettings, error) {
+	settings := &KeyExportSettings{
+		Format: `libp2p-protobuf-cleartext`,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) KeyExport(ctx context.Context, name string, options ...KeyExportOption) ([]byte, error) {
+	settings, err := KeyExportOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("key/export")
 	req.Arguments(name)
-	if options != nil {
-		req.Option("output", options.Output)
-		req.Option("format", options.Format)
-	}
+	req.Option("output", settings.Output)
+	req.Option("format", settings.Format)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1317,7 +1925,7 @@ func (c *Client) KeyExport(ctx context.Context, name string, options *KeyExportO
 	return io.ReadAll(res.Output)
 }
 
-type KeyGenOptions struct {
+type KeyGenSettings struct {
 	// type of the key to create: rsa, ed25519. Default: ed25519.
 	Type string
 	// size of the key to generate.
@@ -1326,14 +1934,32 @@ type KeyGenOptions struct {
 	IpnsBase string
 }
 
-func (c *Client) KeyGen(ctx context.Context, name string, options *KeyGenOptions) ([]byte, error) {
+type KeyGenOption func(*KeyGenSettings) error
+
+func KeyGenOptions(options ...KeyGenOption) (*KeyGenSettings, error) {
+	settings := &KeyGenSettings{
+		Type: `ed25519`,
+		IpnsBase: `base36`,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) KeyGen(ctx context.Context, name string, options ...KeyGenOption) ([]byte, error) {
+	settings, err := KeyGenOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("key/gen")
 	req.Arguments(name)
-	if options != nil {
-		req.Option("type", options.Type)
-		req.Option("size", options.Size)
-		req.Option("ipns-base", options.IpnsBase)
-	}
+	req.Option("type", settings.Type)
+	req.Option("size", settings.Size)
+	req.Option("ipns-base", settings.IpnsBase)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1345,7 +1971,7 @@ func (c *Client) KeyGen(ctx context.Context, name string, options *KeyGenOptions
 	return io.ReadAll(res.Output)
 }
 
-type KeyImportOptions struct {
+type KeyImportSettings struct {
 	// Encoding used for keys: Can either be a multibase encoded CID or a base58btc encoded multihash. Takes {b58mh|base36|k|base32|b...}. Default: base36.
 	IpnsBase string
 	// The format of the private key to import, libp2p-protobuf-cleartext or pem-pkcs8-cleartext. Default: libp2p-protobuf-cleartext.
@@ -1354,15 +1980,34 @@ type KeyImportOptions struct {
 	AllowAnyKeyType bool
 }
 
-func (c *Client) KeyImport(ctx context.Context, name string, f io.Reader, options *KeyImportOptions) ([]byte, error) {
+type KeyImportOption func(*KeyImportSettings) error
+
+func KeyImportOptions(options ...KeyImportOption) (*KeyImportSettings, error) {
+	settings := &KeyImportSettings{
+		IpnsBase: `base36`,
+		Format: `libp2p-protobuf-cleartext`,
+		AllowAnyKeyType: false,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) KeyImport(ctx context.Context, name string, f io.Reader, options ...KeyImportOption) ([]byte, error) {
+	settings, err := KeyImportOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("key/import")
 	req.Arguments(name)
 	req.FileBody(f)
-	if options != nil {
-		req.Option("ipns-base", options.IpnsBase)
-		req.Option("format", options.Format)
-		req.Option("allow-any-key-type", options.AllowAnyKeyType)
-	}
+	req.Option("ipns-base", settings.IpnsBase)
+	req.Option("format", settings.Format)
+	req.Option("allow-any-key-type", settings.AllowAnyKeyType)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1374,19 +2019,36 @@ func (c *Client) KeyImport(ctx context.Context, name string, f io.Reader, option
 	return io.ReadAll(res.Output)
 }
 
-type KeyListOptions struct {
+type KeyListSettings struct {
 	// Show extra information about keys.
 	L bool
 	// Encoding used for keys: Can either be a multibase encoded CID or a base58btc encoded multihash. Takes {b58mh|base36|k|base32|b...}. Default: base36.
 	IpnsBase string
 }
 
-func (c *Client) KeyList(ctx context.Context, options *KeyListOptions) ([]byte, error) {
-	req := c.Request("key/list")
-	if options != nil {
-		req.Option("l", options.L)
-		req.Option("ipns-base", options.IpnsBase)
+type KeyListOption func(*KeyListSettings) error
+
+func KeyListOptions(options ...KeyListOption) (*KeyListSettings, error) {
+	settings := &KeyListSettings{
+		IpnsBase: `base36`,
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) KeyList(ctx context.Context, options ...KeyListOption) ([]byte, error) {
+	settings, err := KeyListOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("key/list")
+	req.Option("l", settings.L)
+	req.Option("ipns-base", settings.IpnsBase)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1398,21 +2060,38 @@ func (c *Client) KeyList(ctx context.Context, options *KeyListOptions) ([]byte, 
 	return io.ReadAll(res.Output)
 }
 
-type KeyRenameOptions struct {
+type KeyRenameSettings struct {
 	// Allow to overwrite an existing key.
 	Force bool
 	// Encoding used for keys: Can either be a multibase encoded CID or a base58btc encoded multihash. Takes {b58mh|base36|k|base32|b...}. Default: base36.
 	IpnsBase string
 }
 
-func (c *Client) KeyRename(ctx context.Context, name string, newname string, options *KeyRenameOptions) ([]byte, error) {
+type KeyRenameOption func(*KeyRenameSettings) error
+
+func KeyRenameOptions(options ...KeyRenameOption) (*KeyRenameSettings, error) {
+	settings := &KeyRenameSettings{
+		IpnsBase: `base36`,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) KeyRename(ctx context.Context, name string, newname string, options ...KeyRenameOption) ([]byte, error) {
+	settings, err := KeyRenameOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("key/rename")
 	req.Arguments(name)
 	req.Arguments(newname)
-	if options != nil {
-		req.Option("force", options.Force)
-		req.Option("ipns-base", options.IpnsBase)
-	}
+	req.Option("force", settings.Force)
+	req.Option("ipns-base", settings.IpnsBase)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1424,20 +2103,37 @@ func (c *Client) KeyRename(ctx context.Context, name string, newname string, opt
 	return io.ReadAll(res.Output)
 }
 
-type KeyRmOptions struct {
+type KeyRmSettings struct {
 	// Show extra information about keys.
 	L bool
 	// Encoding used for keys: Can either be a multibase encoded CID or a base58btc encoded multihash. Takes {b58mh|base36|k|base32|b...}. Default: base36.
 	IpnsBase string
 }
 
-func (c *Client) KeyRm(ctx context.Context, name []string, options *KeyRmOptions) ([]byte, error) {
+type KeyRmOption func(*KeyRmSettings) error
+
+func KeyRmOptions(options ...KeyRmOption) (*KeyRmSettings, error) {
+	settings := &KeyRmSettings{
+		IpnsBase: `base36`,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) KeyRm(ctx context.Context, name []string, options ...KeyRmOption) ([]byte, error) {
+	settings, err := KeyRmOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("key/rm")
 	req.Arguments(name...)
-	if options != nil {
-		req.Option("l", options.L)
-		req.Option("ipns-base", options.IpnsBase)
-	}
+	req.Option("l", settings.L)
+	req.Option("ipns-base", settings.IpnsBase)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1449,7 +2145,7 @@ func (c *Client) KeyRm(ctx context.Context, name []string, options *KeyRmOptions
 	return io.ReadAll(res.Output)
 }
 
-type KeyRotateOptions struct {
+type KeyRotateSettings struct {
 	// Keystore name to use for backing up your existing identity.
 	Oldkey string
 	// type of the key to create: rsa, ed25519. Default: ed25519.
@@ -1458,13 +2154,30 @@ type KeyRotateOptions struct {
 	Size int
 }
 
-func (c *Client) KeyRotate(ctx context.Context, options *KeyRotateOptions) ([]byte, error) {
-	req := c.Request("key/rotate")
-	if options != nil {
-		req.Option("oldkey", options.Oldkey)
-		req.Option("type", options.Type)
-		req.Option("size", options.Size)
+type KeyRotateOption func(*KeyRotateSettings) error
+
+func KeyRotateOptions(options ...KeyRotateOption) (*KeyRotateSettings, error) {
+	settings := &KeyRotateSettings{
+		Type: `ed25519`,
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) KeyRotate(ctx context.Context, options ...KeyRotateOption) ([]byte, error) {
+	settings, err := KeyRotateOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("key/rotate")
+	req.Option("oldkey", settings.Oldkey)
+	req.Option("type", settings.Type)
+	req.Option("size", settings.Size)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1504,7 +2217,7 @@ func (c *Client) LogLs(ctx context.Context) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type LsOptions struct {
+type LsSettings struct {
 	// Print table headers (Hash, Size, Name).
 	Headers bool
 	// Resolve linked objects to find out their types. Default: true.
@@ -1515,15 +2228,33 @@ type LsOptions struct {
 	Stream bool
 }
 
-func (c *Client) Ls(ctx context.Context, ipfsPath []string, options *LsOptions) ([]byte, error) {
+type LsOption func(*LsSettings) error
+
+func LsOptions(options ...LsOption) (*LsSettings, error) {
+	settings := &LsSettings{
+		ResolveType: true,
+		Size: true,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) Ls(ctx context.Context, ipfsPath []string, options ...LsOption) ([]byte, error) {
+	settings, err := LsOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("ls")
 	req.Arguments(ipfsPath...)
-	if options != nil {
-		req.Option("headers", options.Headers)
-		req.Option("resolve-type", options.ResolveType)
-		req.Option("size", options.Size)
-		req.Option("stream", options.Stream)
-	}
+	req.Option("headers", settings.Headers)
+	req.Option("resolve-type", settings.ResolveType)
+	req.Option("size", settings.Size)
+	req.Option("stream", settings.Stream)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1549,17 +2280,34 @@ func (c *Client) MultibaseDecode(ctx context.Context, f io.Reader) ([]byte, erro
 	return io.ReadAll(res.Output)
 }
 
-type MultibaseEncodeOptions struct {
+type MultibaseEncodeSettings struct {
 	// multibase encoding. Default: base64url.
 	B string
 }
 
-func (c *Client) MultibaseEncode(ctx context.Context, f io.Reader, options *MultibaseEncodeOptions) ([]byte, error) {
+type MultibaseEncodeOption func(*MultibaseEncodeSettings) error
+
+func MultibaseEncodeOptions(options ...MultibaseEncodeOption) (*MultibaseEncodeSettings, error) {
+	settings := &MultibaseEncodeSettings{
+		B: `base64url`,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) MultibaseEncode(ctx context.Context, f io.Reader, options ...MultibaseEncodeOption) ([]byte, error) {
+	settings, err := MultibaseEncodeOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("multibase/encode")
 	req.FileBody(f)
-	if options != nil {
-		req.Option("b", options.B)
-	}
+	req.Option("b", settings.B)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1571,19 +2319,35 @@ func (c *Client) MultibaseEncode(ctx context.Context, f io.Reader, options *Mult
 	return io.ReadAll(res.Output)
 }
 
-type MultibaseListOptions struct {
+type MultibaseListSettings struct {
 	// also include the single letter prefixes in addition to the code.
 	Prefix bool
 	// also include numeric codes.
 	Numeric bool
 }
 
-func (c *Client) MultibaseList(ctx context.Context, options *MultibaseListOptions) ([]byte, error) {
-	req := c.Request("multibase/list")
-	if options != nil {
-		req.Option("prefix", options.Prefix)
-		req.Option("numeric", options.Numeric)
+type MultibaseListOption func(*MultibaseListSettings) error
+
+func MultibaseListOptions(options ...MultibaseListOption) (*MultibaseListSettings, error) {
+	settings := &MultibaseListSettings{
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) MultibaseList(ctx context.Context, options ...MultibaseListOption) ([]byte, error) {
+	settings, err := MultibaseListOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("multibase/list")
+	req.Option("prefix", settings.Prefix)
+	req.Option("numeric", settings.Numeric)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1595,17 +2359,34 @@ func (c *Client) MultibaseList(ctx context.Context, options *MultibaseListOption
 	return io.ReadAll(res.Output)
 }
 
-type MultibaseTranscodeOptions struct {
+type MultibaseTranscodeSettings struct {
 	// multibase encoding. Default: base64url.
 	B string
 }
 
-func (c *Client) MultibaseTranscode(ctx context.Context, f io.Reader, options *MultibaseTranscodeOptions) ([]byte, error) {
+type MultibaseTranscodeOption func(*MultibaseTranscodeSettings) error
+
+func MultibaseTranscodeOptions(options ...MultibaseTranscodeOption) (*MultibaseTranscodeSettings, error) {
+	settings := &MultibaseTranscodeSettings{
+		B: `base64url`,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) MultibaseTranscode(ctx context.Context, f io.Reader, options ...MultibaseTranscodeOption) ([]byte, error) {
+	settings, err := MultibaseTranscodeOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("multibase/transcode")
 	req.FileBody(f)
-	if options != nil {
-		req.Option("b", options.B)
-	}
+	req.Option("b", settings.B)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1617,7 +2398,7 @@ func (c *Client) MultibaseTranscode(ctx context.Context, f io.Reader, options *M
 	return io.ReadAll(res.Output)
 }
 
-type NamePublishOptions struct {
+type NamePublishSettings struct {
 	// Check if the given path can be resolved before publishing. Default: true.
 	Resolve bool
 	// Time duration that the record will be valid for. Default: 24h.
@@ -1636,18 +2417,38 @@ type NamePublishOptions struct {
 	IpnsBase string
 }
 
-func (c *Client) NamePublish(ctx context.Context, ipfsPath string, options *NamePublishOptions) ([]byte, error) {
+type NamePublishOption func(*NamePublishSettings) error
+
+func NamePublishOptions(options ...NamePublishOption) (*NamePublishSettings, error) {
+	settings := &NamePublishSettings{
+		Resolve: true,
+		Lifetime: `24h`,
+		Key: `self`,
+		IpnsBase: `base36`,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) NamePublish(ctx context.Context, ipfsPath string, options ...NamePublishOption) ([]byte, error) {
+	settings, err := NamePublishOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("name/publish")
 	req.Arguments(ipfsPath)
-	if options != nil {
-		req.Option("resolve", options.Resolve)
-		req.Option("lifetime", options.Lifetime)
-		req.Option("allow-offline", options.AllowOffline)
-		req.Option("ttl", options.Ttl)
-		req.Option("key", options.Key)
-		req.Option("quieter", options.Quieter)
-		req.Option("ipns-base", options.IpnsBase)
-	}
+	req.Option("resolve", settings.Resolve)
+	req.Option("lifetime", settings.Lifetime)
+	req.Option("allow-offline", settings.AllowOffline)
+	req.Option("ttl", settings.Ttl)
+	req.Option("key", settings.Key)
+	req.Option("quieter", settings.Quieter)
+	req.Option("ipns-base", settings.IpnsBase)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1659,7 +2460,7 @@ func (c *Client) NamePublish(ctx context.Context, ipfsPath string, options *Name
 	return io.ReadAll(res.Output)
 }
 
-type NameResolveOptions struct {
+type NameResolveSettings struct {
 	// Resolve until the result is not an IPNS name. Default: true.
 	Recursive bool
 	// Do not use cached entries.
@@ -1672,16 +2473,33 @@ type NameResolveOptions struct {
 	Stream bool
 }
 
-func (c *Client) NameResolve(ctx context.Context, name string, options *NameResolveOptions) ([]byte, error) {
+type NameResolveOption func(*NameResolveSettings) error
+
+func NameResolveOptions(options ...NameResolveOption) (*NameResolveSettings, error) {
+	settings := &NameResolveSettings{
+		Recursive: true,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) NameResolve(ctx context.Context, name string, options ...NameResolveOption) ([]byte, error) {
+	settings, err := NameResolveOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("name/resolve")
 	req.Arguments(name)
-	if options != nil {
-		req.Option("recursive", options.Recursive)
-		req.Option("nocache", options.Nocache)
-		req.Option("dht-record-count", options.DhtRecordCount)
-		req.Option("dht-timeout", options.DhtTimeout)
-		req.Option("stream", options.Stream)
-	}
+	req.Option("recursive", settings.Recursive)
+	req.Option("nocache", settings.Nocache)
+	req.Option("dht-record-count", settings.DhtRecordCount)
+	req.Option("dht-timeout", settings.DhtTimeout)
+	req.Option("stream", settings.Stream)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1693,20 +2511,37 @@ func (c *Client) NameResolve(ctx context.Context, name string, options *NameReso
 	return io.ReadAll(res.Output)
 }
 
-type PinAddOptions struct {
+type PinAddSettings struct {
 	// Recursively pin the object linked to by the specified object(s). Default: true.
 	Recursive bool
 	// Show progress.
 	Progress bool
 }
 
-func (c *Client) PinAdd(ctx context.Context, ipfsPath []string, options *PinAddOptions) ([]byte, error) {
+type PinAddOption func(*PinAddSettings) error
+
+func PinAddOptions(options ...PinAddOption) (*PinAddSettings, error) {
+	settings := &PinAddSettings{
+		Recursive: true,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) PinAdd(ctx context.Context, ipfsPath []string, options ...PinAddOption) ([]byte, error) {
+	settings, err := PinAddOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("pin/add")
 	req.Arguments(ipfsPath...)
-	if options != nil {
-		req.Option("recursive", options.Recursive)
-		req.Option("progress", options.Progress)
-	}
+	req.Option("recursive", settings.Recursive)
+	req.Option("progress", settings.Progress)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1718,7 +2553,7 @@ func (c *Client) PinAdd(ctx context.Context, ipfsPath []string, options *PinAddO
 	return io.ReadAll(res.Output)
 }
 
-type PinLsOptions struct {
+type PinLsSettings struct {
 	// The type of pinned keys to list. Can be "direct", "indirect", "recursive", or "all". Default: all.
 	Type string
 	// Write just hashes of objects.
@@ -1727,14 +2562,31 @@ type PinLsOptions struct {
 	Stream bool
 }
 
-func (c *Client) PinLs(ctx context.Context, ipfsPath []string, options *PinLsOptions) ([]byte, error) {
+type PinLsOption func(*PinLsSettings) error
+
+func PinLsOptions(options ...PinLsOption) (*PinLsSettings, error) {
+	settings := &PinLsSettings{
+		Type: `all`,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) PinLs(ctx context.Context, ipfsPath []string, options ...PinLsOption) ([]byte, error) {
+	settings, err := PinLsOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("pin/ls")
 	req.Arguments(ipfsPath...)
-	if options != nil {
-		req.Option("type", options.Type)
-		req.Option("quiet", options.Quiet)
-		req.Option("stream", options.Stream)
-	}
+	req.Option("type", settings.Type)
+	req.Option("quiet", settings.Quiet)
+	req.Option("stream", settings.Stream)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1746,7 +2598,7 @@ func (c *Client) PinLs(ctx context.Context, ipfsPath []string, options *PinLsOpt
 	return io.ReadAll(res.Output)
 }
 
-type PinRemoteAddOptions struct {
+type PinRemoteAddSettings struct {
 	// Name of the remote pinning service to use (mandatory).
 	Service string
 	// An optional name for the pin.
@@ -1755,14 +2607,31 @@ type PinRemoteAddOptions struct {
 	Background bool
 }
 
-func (c *Client) PinRemoteAdd(ctx context.Context, ipfsPath string, options *PinRemoteAddOptions) ([]byte, error) {
+type PinRemoteAddOption func(*PinRemoteAddSettings) error
+
+func PinRemoteAddOptions(options ...PinRemoteAddOption) (*PinRemoteAddSettings, error) {
+	settings := &PinRemoteAddSettings{
+		Background: false,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) PinRemoteAdd(ctx context.Context, ipfsPath string, options ...PinRemoteAddOption) ([]byte, error) {
+	settings, err := PinRemoteAddOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("pin/remote/add")
 	req.Arguments(ipfsPath)
-	if options != nil {
-		req.Option("service", options.Service)
-		req.Option("name", options.Name)
-		req.Option("background", options.Background)
-	}
+	req.Option("service", settings.Service)
+	req.Option("name", settings.Name)
+	req.Option("background", settings.Background)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1774,7 +2643,7 @@ func (c *Client) PinRemoteAdd(ctx context.Context, ipfsPath string, options *Pin
 	return io.ReadAll(res.Output)
 }
 
-type PinRemoteLsOptions struct {
+type PinRemoteLsSettings struct {
 	// Name of the remote pinning service to use (mandatory).
 	Service string
 	// Return pins with names that contain the value provided (case-sensitive, exact match).
@@ -1785,14 +2654,31 @@ type PinRemoteLsOptions struct {
 	Status []string
 }
 
-func (c *Client) PinRemoteLs(ctx context.Context, options *PinRemoteLsOptions) ([]byte, error) {
-	req := c.Request("pin/remote/ls")
-	if options != nil {
-		req.Option("service", options.Service)
-		req.Option("name", options.Name)
-		req.Option("cid", options.Cid)
-		req.Option("status", options.Status)
+type PinRemoteLsOption func(*PinRemoteLsSettings) error
+
+func PinRemoteLsOptions(options ...PinRemoteLsOption) (*PinRemoteLsSettings, error) {
+	settings := &PinRemoteLsSettings{
+		Status: []string{"pinned"},
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) PinRemoteLs(ctx context.Context, options ...PinRemoteLsOption) ([]byte, error) {
+	settings, err := PinRemoteLsOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("pin/remote/ls")
+	req.Option("service", settings.Service)
+	req.Option("name", settings.Name)
+	req.Option("cid", settings.Cid)
+	req.Option("status", settings.Status)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1804,7 +2690,7 @@ func (c *Client) PinRemoteLs(ctx context.Context, options *PinRemoteLsOptions) (
 	return io.ReadAll(res.Output)
 }
 
-type PinRemoteRmOptions struct {
+type PinRemoteRmSettings struct {
 	// Name of the remote pinning service to use (mandatory).
 	Service string
 	// Remove pins with names that contain provided value (case-sensitive, exact match).
@@ -1817,15 +2703,33 @@ type PinRemoteRmOptions struct {
 	Force bool
 }
 
-func (c *Client) PinRemoteRm(ctx context.Context, options *PinRemoteRmOptions) ([]byte, error) {
-	req := c.Request("pin/remote/rm")
-	if options != nil {
-		req.Option("service", options.Service)
-		req.Option("name", options.Name)
-		req.Option("cid", options.Cid)
-		req.Option("status", options.Status)
-		req.Option("force", options.Force)
+type PinRemoteRmOption func(*PinRemoteRmSettings) error
+
+func PinRemoteRmOptions(options ...PinRemoteRmOption) (*PinRemoteRmSettings, error) {
+	settings := &PinRemoteRmSettings{
+		Status: []string{"pinned"},
+		Force: false,
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) PinRemoteRm(ctx context.Context, options ...PinRemoteRmOption) ([]byte, error) {
+	settings, err := PinRemoteRmOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("pin/remote/rm")
+	req.Option("service", settings.Service)
+	req.Option("name", settings.Name)
+	req.Option("cid", settings.Cid)
+	req.Option("status", settings.Status)
+	req.Option("force", settings.Force)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1853,16 +2757,33 @@ func (c *Client) PinRemoteServiceAdd(ctx context.Context, service string, endpoi
 	return io.ReadAll(res.Output)
 }
 
-type PinRemoteServiceLsOptions struct {
+type PinRemoteServiceLsSettings struct {
 	// Try to fetch and display current pin count on remote service (queued/pinning/pinned/failed). Default: false.
 	Stat bool
 }
 
-func (c *Client) PinRemoteServiceLs(ctx context.Context, options *PinRemoteServiceLsOptions) ([]byte, error) {
-	req := c.Request("pin/remote/service/ls")
-	if options != nil {
-		req.Option("stat", options.Stat)
+type PinRemoteServiceLsOption func(*PinRemoteServiceLsSettings) error
+
+func PinRemoteServiceLsOptions(options ...PinRemoteServiceLsOption) (*PinRemoteServiceLsSettings, error) {
+	settings := &PinRemoteServiceLsSettings{
+		Stat: false,
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) PinRemoteServiceLs(ctx context.Context, options ...PinRemoteServiceLsOption) ([]byte, error) {
+	settings, err := PinRemoteServiceLsOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("pin/remote/service/ls")
+	req.Option("stat", settings.Stat)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1888,17 +2809,34 @@ func (c *Client) PinRemoteServiceRm(ctx context.Context, service string) ([]byte
 	return io.ReadAll(res.Output)
 }
 
-type PinRmOptions struct {
+type PinRmSettings struct {
 	// Recursively unpin the object linked to by the specified object(s). Default: true.
 	Recursive bool
 }
 
-func (c *Client) PinRm(ctx context.Context, ipfsPath []string, options *PinRmOptions) ([]byte, error) {
+type PinRmOption func(*PinRmSettings) error
+
+func PinRmOptions(options ...PinRmOption) (*PinRmSettings, error) {
+	settings := &PinRmSettings{
+		Recursive: true,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) PinRm(ctx context.Context, ipfsPath []string, options ...PinRmOption) ([]byte, error) {
+	settings, err := PinRmOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("pin/rm")
 	req.Arguments(ipfsPath...)
-	if options != nil {
-		req.Option("recursive", options.Recursive)
-	}
+	req.Option("recursive", settings.Recursive)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1910,18 +2848,35 @@ func (c *Client) PinRm(ctx context.Context, ipfsPath []string, options *PinRmOpt
 	return io.ReadAll(res.Output)
 }
 
-type PinUpdateOptions struct {
+type PinUpdateSettings struct {
 	// Remove the old pin. Default: true.
 	Unpin bool
 }
 
-func (c *Client) PinUpdate(ctx context.Context, fromPath string, toPath string, options *PinUpdateOptions) ([]byte, error) {
+type PinUpdateOption func(*PinUpdateSettings) error
+
+func PinUpdateOptions(options ...PinUpdateOption) (*PinUpdateSettings, error) {
+	settings := &PinUpdateSettings{
+		Unpin: true,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) PinUpdate(ctx context.Context, fromPath string, toPath string, options ...PinUpdateOption) ([]byte, error) {
+	settings, err := PinUpdateOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("pin/update")
 	req.Arguments(fromPath)
 	req.Arguments(toPath)
-	if options != nil {
-		req.Option("unpin", options.Unpin)
-	}
+	req.Option("unpin", settings.Unpin)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1933,19 +2888,35 @@ func (c *Client) PinUpdate(ctx context.Context, fromPath string, toPath string, 
 	return io.ReadAll(res.Output)
 }
 
-type PinVerifyOptions struct {
+type PinVerifySettings struct {
 	// Also write the hashes of non-broken pins.
 	Verbose bool
 	// Write just hashes of broken pins.
 	Quiet bool
 }
 
-func (c *Client) PinVerify(ctx context.Context, options *PinVerifyOptions) ([]byte, error) {
-	req := c.Request("pin/verify")
-	if options != nil {
-		req.Option("verbose", options.Verbose)
-		req.Option("quiet", options.Quiet)
+type PinVerifyOption func(*PinVerifySettings) error
+
+func PinVerifyOptions(options ...PinVerifyOption) (*PinVerifySettings, error) {
+	settings := &PinVerifySettings{
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) PinVerify(ctx context.Context, options ...PinVerifyOption) ([]byte, error) {
+	settings, err := PinVerifyOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("pin/verify")
+	req.Option("verbose", settings.Verbose)
+	req.Option("quiet", settings.Quiet)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1957,17 +2928,34 @@ func (c *Client) PinVerify(ctx context.Context, options *PinVerifyOptions) ([]by
 	return io.ReadAll(res.Output)
 }
 
-type PingOptions struct {
+type PingSettings struct {
 	// Number of ping messages to send. Default: 10.
 	Count int
 }
 
-func (c *Client) Ping(ctx context.Context, peerId []string, options *PingOptions) ([]byte, error) {
+type PingOption func(*PingSettings) error
+
+func PingOptions(options ...PingOption) (*PingSettings, error) {
+	settings := &PingSettings{
+		Count: 10,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) Ping(ctx context.Context, peerId []string, options ...PingOption) ([]byte, error) {
+	settings, err := PingOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("ping")
 	req.Arguments(peerId...)
-	if options != nil {
-		req.Option("count", options.Count)
-	}
+	req.Option("count", settings.Count)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -1979,7 +2967,7 @@ func (c *Client) Ping(ctx context.Context, peerId []string, options *PingOptions
 	return io.ReadAll(res.Output)
 }
 
-type RefsOptions struct {
+type RefsSettings struct {
 	// Emit edges with given format. Available tokens: <src> <dst> <linkname>. Default: <dst>.
 	Format string
 	// Emit edge format: `<from> -> <to>`.
@@ -1992,16 +2980,34 @@ type RefsOptions struct {
 	MaxDepth int
 }
 
-func (c *Client) Refs(ctx context.Context, ipfsPath []string, options *RefsOptions) ([]byte, error) {
+type RefsOption func(*RefsSettings) error
+
+func RefsOptions(options ...RefsOption) (*RefsSettings, error) {
+	settings := &RefsSettings{
+		Format: `<dst>`,
+		MaxDepth: -1,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) Refs(ctx context.Context, ipfsPath []string, options ...RefsOption) ([]byte, error) {
+	settings, err := RefsOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("refs")
 	req.Arguments(ipfsPath...)
-	if options != nil {
-		req.Option("format", options.Format)
-		req.Option("edges", options.Edges)
-		req.Option("unique", options.Unique)
-		req.Option("recursive", options.Recursive)
-		req.Option("max-depth", options.MaxDepth)
-	}
+	req.Option("format", settings.Format)
+	req.Option("edges", settings.Edges)
+	req.Option("unique", settings.Unique)
+	req.Option("recursive", settings.Recursive)
+	req.Option("max-depth", settings.MaxDepth)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2026,7 +3032,7 @@ func (c *Client) RefsLocal(ctx context.Context) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type RepoGcOptions struct {
+type RepoGcSettings struct {
 	// Stream errors.
 	StreamErrors bool
 	// Write minimal output.
@@ -2035,13 +3041,29 @@ type RepoGcOptions struct {
 	Silent bool
 }
 
-func (c *Client) RepoGc(ctx context.Context, options *RepoGcOptions) ([]byte, error) {
-	req := c.Request("repo/gc")
-	if options != nil {
-		req.Option("stream-errors", options.StreamErrors)
-		req.Option("quiet", options.Quiet)
-		req.Option("silent", options.Silent)
+type RepoGcOption func(*RepoGcSettings) error
+
+func RepoGcOptions(options ...RepoGcOption) (*RepoGcSettings, error) {
+	settings := &RepoGcSettings{
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) RepoGc(ctx context.Context, options ...RepoGcOption) ([]byte, error) {
+	settings, err := RepoGcOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("repo/gc")
+	req.Option("stream-errors", settings.StreamErrors)
+	req.Option("quiet", settings.Quiet)
+	req.Option("silent", settings.Silent)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2066,16 +3088,32 @@ func (c *Client) RepoLs(ctx context.Context) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type RepoMigrateOptions struct {
+type RepoMigrateSettings struct {
 	// Allow downgrading to a lower repo version.
 	AllowDowngrade bool
 }
 
-func (c *Client) RepoMigrate(ctx context.Context, options *RepoMigrateOptions) ([]byte, error) {
-	req := c.Request("repo/migrate")
-	if options != nil {
-		req.Option("allow-downgrade", options.AllowDowngrade)
+type RepoMigrateOption func(*RepoMigrateSettings) error
+
+func RepoMigrateOptions(options ...RepoMigrateOption) (*RepoMigrateSettings, error) {
+	settings := &RepoMigrateSettings{
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) RepoMigrate(ctx context.Context, options ...RepoMigrateOption) ([]byte, error) {
+	settings, err := RepoMigrateOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("repo/migrate")
+	req.Option("allow-downgrade", settings.AllowDowngrade)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2087,19 +3125,35 @@ func (c *Client) RepoMigrate(ctx context.Context, options *RepoMigrateOptions) (
 	return io.ReadAll(res.Output)
 }
 
-type RepoStatOptions struct {
+type RepoStatSettings struct {
 	// Only report RepoSize and StorageMax.
 	SizeOnly bool
 	// Print sizes in human readable format (e.g., 1K 234M 2G).
 	Human bool
 }
 
-func (c *Client) RepoStat(ctx context.Context, options *RepoStatOptions) ([]byte, error) {
-	req := c.Request("repo/stat")
-	if options != nil {
-		req.Option("size-only", options.SizeOnly)
-		req.Option("human", options.Human)
+type RepoStatOption func(*RepoStatSettings) error
+
+func RepoStatOptions(options ...RepoStatOption) (*RepoStatSettings, error) {
+	settings := &RepoStatSettings{
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) RepoStat(ctx context.Context, options ...RepoStatOption) ([]byte, error) {
+	settings, err := RepoStatOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("repo/stat")
+	req.Option("size-only", settings.SizeOnly)
+	req.Option("human", settings.Human)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2124,16 +3178,32 @@ func (c *Client) RepoVerify(ctx context.Context) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type RepoVersionOptions struct {
+type RepoVersionSettings struct {
 	// Write minimal output.
 	Quiet bool
 }
 
-func (c *Client) RepoVersion(ctx context.Context, options *RepoVersionOptions) ([]byte, error) {
-	req := c.Request("repo/version")
-	if options != nil {
-		req.Option("quiet", options.Quiet)
+type RepoVersionOption func(*RepoVersionSettings) error
+
+func RepoVersionOptions(options ...RepoVersionOption) (*RepoVersionSettings, error) {
+	settings := &RepoVersionSettings{
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) RepoVersion(ctx context.Context, options ...RepoVersionOption) ([]byte, error) {
+	settings, err := RepoVersionOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("repo/version")
+	req.Option("quiet", settings.Quiet)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2145,7 +3215,7 @@ func (c *Client) RepoVersion(ctx context.Context, options *RepoVersionOptions) (
 	return io.ReadAll(res.Output)
 }
 
-type ResolveOptions struct {
+type ResolveSettings struct {
 	// Resolve until the result is an IPFS name. Default: true.
 	Recursive bool
 	// Number of records to request for DHT resolution.
@@ -2154,14 +3224,31 @@ type ResolveOptions struct {
 	DhtTimeout string
 }
 
-func (c *Client) Resolve(ctx context.Context, name string, options *ResolveOptions) ([]byte, error) {
+type ResolveOption func(*ResolveSettings) error
+
+func ResolveOptions(options ...ResolveOption) (*ResolveSettings, error) {
+	settings := &ResolveSettings{
+		Recursive: true,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) Resolve(ctx context.Context, name string, options ...ResolveOption) ([]byte, error) {
+	settings, err := ResolveOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("resolve")
 	req.Arguments(name)
-	if options != nil {
-		req.Option("recursive", options.Recursive)
-		req.Option("dht-record-count", options.DhtRecordCount)
-		req.Option("dht-timeout", options.DhtTimeout)
-	}
+	req.Option("recursive", settings.Recursive)
+	req.Option("dht-record-count", settings.DhtRecordCount)
+	req.Option("dht-timeout", settings.DhtTimeout)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2173,17 +3260,33 @@ func (c *Client) Resolve(ctx context.Context, name string, options *ResolveOptio
 	return io.ReadAll(res.Output)
 }
 
-type RoutingFindpeerOptions struct {
+type RoutingFindpeerSettings struct {
 	// Print extra information.
 	Verbose bool
 }
 
-func (c *Client) RoutingFindpeer(ctx context.Context, peerid []string, options *RoutingFindpeerOptions) ([]byte, error) {
+type RoutingFindpeerOption func(*RoutingFindpeerSettings) error
+
+func RoutingFindpeerOptions(options ...RoutingFindpeerOption) (*RoutingFindpeerSettings, error) {
+	settings := &RoutingFindpeerSettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) RoutingFindpeer(ctx context.Context, peerid []string, options ...RoutingFindpeerOption) ([]byte, error) {
+	settings, err := RoutingFindpeerOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("routing/findpeer")
 	req.Arguments(peerid...)
-	if options != nil {
-		req.Option("verbose", options.Verbose)
-	}
+	req.Option("verbose", settings.Verbose)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2195,20 +3298,37 @@ func (c *Client) RoutingFindpeer(ctx context.Context, peerid []string, options *
 	return io.ReadAll(res.Output)
 }
 
-type RoutingFindprovsOptions struct {
+type RoutingFindprovsSettings struct {
 	// Print extra information.
 	Verbose bool
 	// The number of providers to find. Default: 20.
 	NumProviders int
 }
 
-func (c *Client) RoutingFindprovs(ctx context.Context, key []string, options *RoutingFindprovsOptions) ([]byte, error) {
+type RoutingFindprovsOption func(*RoutingFindprovsSettings) error
+
+func RoutingFindprovsOptions(options ...RoutingFindprovsOption) (*RoutingFindprovsSettings, error) {
+	settings := &RoutingFindprovsSettings{
+		NumProviders: 20,
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) RoutingFindprovs(ctx context.Context, key []string, options ...RoutingFindprovsOption) ([]byte, error) {
+	settings, err := RoutingFindprovsOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("routing/findprovs")
 	req.Arguments(key...)
-	if options != nil {
-		req.Option("verbose", options.Verbose)
-		req.Option("num-providers", options.NumProviders)
-	}
+	req.Option("verbose", settings.Verbose)
+	req.Option("num-providers", settings.NumProviders)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2220,17 +3340,33 @@ func (c *Client) RoutingFindprovs(ctx context.Context, key []string, options *Ro
 	return io.ReadAll(res.Output)
 }
 
-type RoutingGetOptions struct {
+type RoutingGetSettings struct {
 	// Print extra information.
 	Verbose bool
 }
 
-func (c *Client) RoutingGet(ctx context.Context, key []string, options *RoutingGetOptions) ([]byte, error) {
+type RoutingGetOption func(*RoutingGetSettings) error
+
+func RoutingGetOptions(options ...RoutingGetOption) (*RoutingGetSettings, error) {
+	settings := &RoutingGetSettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) RoutingGet(ctx context.Context, key []string, options ...RoutingGetOption) ([]byte, error) {
+	settings, err := RoutingGetOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("routing/get")
 	req.Arguments(key...)
-	if options != nil {
-		req.Option("verbose", options.Verbose)
-	}
+	req.Option("verbose", settings.Verbose)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2242,20 +3378,36 @@ func (c *Client) RoutingGet(ctx context.Context, key []string, options *RoutingG
 	return io.ReadAll(res.Output)
 }
 
-type RoutingProvideOptions struct {
+type RoutingProvideSettings struct {
 	// Print extra information.
 	Verbose bool
 	// Recursively provide entire graph.
 	Recursive bool
 }
 
-func (c *Client) RoutingProvide(ctx context.Context, key []string, options *RoutingProvideOptions) ([]byte, error) {
+type RoutingProvideOption func(*RoutingProvideSettings) error
+
+func RoutingProvideOptions(options ...RoutingProvideOption) (*RoutingProvideSettings, error) {
+	settings := &RoutingProvideSettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) RoutingProvide(ctx context.Context, key []string, options ...RoutingProvideOption) ([]byte, error) {
+	settings, err := RoutingProvideOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("routing/provide")
 	req.Arguments(key...)
-	if options != nil {
-		req.Option("verbose", options.Verbose)
-		req.Option("recursive", options.Recursive)
-	}
+	req.Option("verbose", settings.Verbose)
+	req.Option("recursive", settings.Recursive)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2267,18 +3419,34 @@ func (c *Client) RoutingProvide(ctx context.Context, key []string, options *Rout
 	return io.ReadAll(res.Output)
 }
 
-type RoutingPutOptions struct {
+type RoutingPutSettings struct {
 	// Print extra information.
 	Verbose bool
 }
 
-func (c *Client) RoutingPut(ctx context.Context, key string, f io.Reader, options *RoutingPutOptions) ([]byte, error) {
+type RoutingPutOption func(*RoutingPutSettings) error
+
+func RoutingPutOptions(options ...RoutingPutOption) (*RoutingPutSettings, error) {
+	settings := &RoutingPutSettings{
+	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) RoutingPut(ctx context.Context, key string, f io.Reader, options ...RoutingPutOption) ([]byte, error) {
+	settings, err := RoutingPutOptions(options...)
+	if err != nil {
+		return nil, err
+	}
 	req := c.Request("routing/put")
 	req.Arguments(key)
 	req.FileBody(f)
-	if options != nil {
-		req.Option("verbose", options.Verbose)
-	}
+	req.Option("verbose", settings.Verbose)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2303,19 +3471,35 @@ func (c *Client) Shutdown(ctx context.Context) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type StatsBitswapOptions struct {
+type StatsBitswapSettings struct {
 	// Print extra information.
 	Verbose bool
 	// Print sizes in human readable format (e.g., 1K 234M 2G).
 	Human bool
 }
 
-func (c *Client) StatsBitswap(ctx context.Context, options *StatsBitswapOptions) ([]byte, error) {
-	req := c.Request("stats/bitswap")
-	if options != nil {
-		req.Option("verbose", options.Verbose)
-		req.Option("human", options.Human)
+type StatsBitswapOption func(*StatsBitswapSettings) error
+
+func StatsBitswapOptions(options ...StatsBitswapOption) (*StatsBitswapSettings, error) {
+	settings := &StatsBitswapSettings{
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) StatsBitswap(ctx context.Context, options ...StatsBitswapOption) ([]byte, error) {
+	settings, err := StatsBitswapOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("stats/bitswap")
+	req.Option("verbose", settings.Verbose)
+	req.Option("human", settings.Human)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2327,7 +3511,7 @@ func (c *Client) StatsBitswap(ctx context.Context, options *StatsBitswapOptions)
 	return io.ReadAll(res.Output)
 }
 
-type StatsBwOptions struct {
+type StatsBwSettings struct {
 	// Specify a peer to print bandwidth for.
 	Peer string
 	// Specify a protocol to print bandwidth for.
@@ -2335,20 +3519,37 @@ type StatsBwOptions struct {
 	// Print bandwidth at an interval.
 	Poll bool
 	// Time interval to wait between updating output, if 'poll' is true.
-	//
+	// 
 	// This accepts durations such as "300s", "1.5h" or "2h45m". Valid time units are:
 	// "ns", "us" (or "µs"), "ms", "s", "m", "h". Default: 1s.
 	Interval string
 }
 
-func (c *Client) StatsBw(ctx context.Context, options *StatsBwOptions) ([]byte, error) {
-	req := c.Request("stats/bw")
-	if options != nil {
-		req.Option("peer", options.Peer)
-		req.Option("proto", options.Proto)
-		req.Option("poll", options.Poll)
-		req.Option("interval", options.Interval)
+type StatsBwOption func(*StatsBwSettings) error
+
+func StatsBwOptions(options ...StatsBwOption) (*StatsBwSettings, error) {
+	settings := &StatsBwSettings{
+		Interval: `1s`,
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) StatsBw(ctx context.Context, options ...StatsBwOption) ([]byte, error) {
+	settings, err := StatsBwOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("stats/bw")
+	req.Option("peer", settings.Peer)
+	req.Option("proto", settings.Proto)
+	req.Option("poll", settings.Poll)
+	req.Option("interval", settings.Interval)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2387,19 +3588,35 @@ func (c *Client) StatsProvide(ctx context.Context) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type StatsRepoOptions struct {
+type StatsRepoSettings struct {
 	// Only report RepoSize and StorageMax.
 	SizeOnly bool
 	// Print sizes in human readable format (e.g., 1K 234M 2G).
 	Human bool
 }
 
-func (c *Client) StatsRepo(ctx context.Context, options *StatsRepoOptions) ([]byte, error) {
-	req := c.Request("stats/repo")
-	if options != nil {
-		req.Option("size-only", options.SizeOnly)
-		req.Option("human", options.Human)
+type StatsRepoOption func(*StatsRepoSettings) error
+
+func StatsRepoOptions(options ...StatsRepoOption) (*StatsRepoSettings, error) {
+	settings := &StatsRepoSettings{
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) StatsRepo(ctx context.Context, options ...StatsRepoOption) ([]byte, error) {
+	settings, err := StatsRepoOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("stats/repo")
+	req.Option("size-only", settings.SizeOnly)
+	req.Option("human", settings.Human)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2437,16 +3654,32 @@ func (c *Client) SwarmAddrsListen(ctx context.Context) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type SwarmAddrsLocalOptions struct {
+type SwarmAddrsLocalSettings struct {
 	// Show peer ID in addresses.
 	Id bool
 }
 
-func (c *Client) SwarmAddrsLocal(ctx context.Context, options *SwarmAddrsLocalOptions) ([]byte, error) {
-	req := c.Request("swarm/addrs/local")
-	if options != nil {
-		req.Option("id", options.Id)
+type SwarmAddrsLocalOption func(*SwarmAddrsLocalSettings) error
+
+func SwarmAddrsLocalOptions(options ...SwarmAddrsLocalOption) (*SwarmAddrsLocalSettings, error) {
+	settings := &SwarmAddrsLocalSettings{
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) SwarmAddrsLocal(ctx context.Context, options ...SwarmAddrsLocalOption) ([]byte, error) {
+	settings, err := SwarmAddrsLocalOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("swarm/addrs/local")
+	req.Option("id", settings.Id)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2568,7 +3801,7 @@ func (c *Client) SwarmPeeringRm(ctx context.Context, id []string) ([]byte, error
 	return io.ReadAll(res.Output)
 }
 
-type SwarmPeersOptions struct {
+type SwarmPeersSettings struct {
 	// display all extra information.
 	Verbose bool
 	// Also list information about open streams for each peer.
@@ -2579,14 +3812,30 @@ type SwarmPeersOptions struct {
 	Direction bool
 }
 
-func (c *Client) SwarmPeers(ctx context.Context, options *SwarmPeersOptions) ([]byte, error) {
-	req := c.Request("swarm/peers")
-	if options != nil {
-		req.Option("verbose", options.Verbose)
-		req.Option("streams", options.Streams)
-		req.Option("latency", options.Latency)
-		req.Option("direction", options.Direction)
+type SwarmPeersOption func(*SwarmPeersSettings) error
+
+func SwarmPeersOptions(options ...SwarmPeersOption) (*SwarmPeersSettings, error) {
+	settings := &SwarmPeersSettings{
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) SwarmPeers(ctx context.Context, options ...SwarmPeersOption) ([]byte, error) {
+	settings, err := SwarmPeersOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("swarm/peers")
+	req.Option("verbose", settings.Verbose)
+	req.Option("streams", settings.Streams)
+	req.Option("latency", settings.Latency)
+	req.Option("direction", settings.Direction)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2612,7 +3861,7 @@ func (c *Client) Update(ctx context.Context, args []string) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-type VersionOptions struct {
+type VersionSettings struct {
 	// Only show the version number.
 	Number bool
 	// Show the commit hash.
@@ -2623,14 +3872,30 @@ type VersionOptions struct {
 	All bool
 }
 
-func (c *Client) Version(ctx context.Context, options *VersionOptions) ([]byte, error) {
-	req := c.Request("version")
-	if options != nil {
-		req.Option("number", options.Number)
-		req.Option("commit", options.Commit)
-		req.Option("repo", options.Repo)
-		req.Option("all", options.All)
+type VersionOption func(*VersionSettings) error
+
+func VersionOptions(options ...VersionOption) (*VersionSettings, error) {
+	settings := &VersionSettings{
 	}
+	for _, option := range options {
+		err := option(settings)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return settings, nil
+}
+
+func (c *Client) Version(ctx context.Context, options ...VersionOption) ([]byte, error) {
+	settings, err := VersionOptions(options...)
+	if err != nil {
+		return nil, err
+	}
+	req := c.Request("version")
+	req.Option("number", settings.Number)
+	req.Option("commit", settings.Commit)
+	req.Option("repo", settings.Repo)
+	req.Option("all", settings.All)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2654,3 +3919,4 @@ func (c *Client) VersionDeps(ctx context.Context) ([]byte, error) {
 	defer res.Close()
 	return io.ReadAll(res.Output)
 }
+

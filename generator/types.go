@@ -15,17 +15,16 @@ type Endpoint struct {
 }
 
 type Option struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Type        string `json:"type"`
-	Default     string `json:"default"`
+	Name        string      `json:"name"`
+	Description string      `json:"description"`
+	Type        string      `json:"type"`
+	Default     interface{} `json:"default"`
 }
 
 type Argument struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Type        string `json:"type"`
-	Default     string `json:"default"`
 	Required    bool   `json:"required"`
 	Variadic    bool   `json:"variadic"`
 }

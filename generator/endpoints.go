@@ -52,16 +52,11 @@ func parseArgument(arg cmds.Argument) *Argument {
 }
 
 func parseOption(opt cmds.Option) *Option {
-	def := fmt.Sprint(opt.Default())
-	if def == "<nil>" {
-		def = ""
-	}
-
 	return &Option{
 		Name:        opt.Names()[0], // TODO: opt.Name()?
 		Type:        opt.Type().String(),
 		Description: opt.Description(),
-		Default:     def,
+		Default:     opt.Default(),
 	}
 }
 
