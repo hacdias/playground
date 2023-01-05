@@ -16,6 +16,7 @@ type Argument struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Type        string `json:"type"`
-	Required    bool   `json:"required"`
 	Default     string `json:"default"`
+	Required    bool   `json:"required"`
+	Variadic    bool   `json:"variadic"`
 }

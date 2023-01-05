@@ -113,9 +113,46 @@ func writeFunction(w io.Writer, endpoint *Endpoint) {
 		fmt.Fprintf(w, ")")
 	}
 
-	fmt.Fprintf(w, " {\n")
-	fmt.Fprintf(w, "\t// TODO: body, return\n\treturn nil\n")
+	fmt.Fprintf(w, " ([]byte, error) {\n")
+
+	fmt.Fprintf(w, "\treq := c.Request(\"%s\")\n", endpoint.Name)
+
+	for _, argument := range endpoint.Arguments {
+		if argument.Type == "file" {
+			fmt.Fprintf(w, "\treq.FileBody(r)\n")
+		} else {
+			n, _ := formatArgument(argument, false)
+			fmt.Fprintf(w, "\treq.Arguments(%s)\n", n)
+		}
+	}
+
+	if len(endpoint.Options) > 0 {
+		fmt.Fprintf(w, " \tif options != nil {\n")
+
+		for _, option := range endpoint.Options {
+			n, _ := formatArgument(option, true)
+			fmt.Fprintf(w, " \t\treq.Option(\"%s\", options.%s)\n", option.Name, n)
+		}
+
+		fmt.Fprintf(w, "\t}\n")
+	}
+
+	// TODO: work with defaults!
+
+	fmt.Fprintf(w, "\tres, err := req.Send(ctx)\n")
+	fmt.Fprintf(w, "\tif err != nil{\n")
+	fmt.Fprintf(w, "\t\treturn nil, err\n")
+	fmt.Fprintf(w, "\t}\n")
+	fmt.Fprintf(w, "\tif res.Error != nil{\n")
+	fmt.Fprintf(w, "\t\treturn nil, res.Error\n")
+	fmt.Fprintf(w, "\t}\n")
+
+	fmt.Fprintf(w, "\tdefer res.Close()\n")
+	fmt.Fprintf(w, "\treturn io.ReadAll(res.Output)\t")
+
+	fmt.Fprintf(w, "\t// TODO: body, return\n")
 	fmt.Fprintf(w, "}\n\n")
+
 }
 
 func generateGoClient(rpc *RPC, outputDirectory string) error {
@@ -132,12 +169,11 @@ func generateGoClient(rpc *RPC, outputDirectory string) error {
 	}
 	defer w.Close()
 
-	fmt.Fprintf(w, "package main\n\n")
+	fmt.Fprintf(w, "package client\n\n")
 	fmt.Fprintln(w, "import (")
 	fmt.Fprintln(w, "\t\"context\"")
 	fmt.Fprintln(w, "\t\"io\"")
 	fmt.Fprintf(w, ")\n\n")
-	fmt.Fprintf(w, "type Client struct {\n}\n\n")
 
 	for _, endpoint := range rpc.Endpoints {
 		writeFunction(w, endpoint)
@@ -167,5 +203,5 @@ func main() {
 		panic(err)
 	}
 
-	generateGoClient(rpc, "gen/go")
+	generateGoClient(rpc, "../kubo-rpc-generated")
 }

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"sort"
+	"strings"
 
 	cmds "github.com/ipfs/go-ipfs-cmds"
 	corecmds "github.com/ipfs/kubo/core/commands"
@@ -45,6 +46,7 @@ func parseArgument(arg cmds.Argument) *Argument {
 		Name:        arg.Name,
 		Type:        argType,
 		Required:    arg.Required,
+		Variadic:    arg.Variadic,
 		Description: arg.Description,
 	}
 }
@@ -140,7 +142,7 @@ func getEndpoints(prefix string, cmd *cmds.Command) ([]*Endpoint, error) {
 
 		endpoints = []*Endpoint{
 			{
-				Name:        prefix,
+				Name:        strings.TrimPrefix(prefix, "/"),
 				Description: cmd.Helptext.Tagline,
 				Arguments:   arguments,
 				Options:     options,
