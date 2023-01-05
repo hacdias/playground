@@ -87,18 +87,54 @@ func writeOptionsStruct(w io.Writer, name string, options []*Option) {
 	fmt.Fprintf(w, "}\n\n")
 }
 
+// func writeResponseStruct(w io.Writer, name string, options []*Argument) {
+// 	if len(options) == 0 {
+// 		return
+// 	}
+
+// 	fmt.Fprintf(w, "type %s struct {\n", name)
+// 	tw := tabwriter.NewWriter(w, 4, 4, 2, ' ', tabwriter.TabIndent)
+
+// 	for _, option := range options {
+// 		if option.Description != "" {
+// 			lines := strings.Split(option.Description, "\n")
+
+// 			for _, line := range lines {
+// 				line = strings.TrimSpace(line)
+// 				fmt.Fprintf(tw, "\t// %s\n", line)
+// 			}
+// 		}
+
+// 		name := formatVariableName(option.Name, option.Type, true)
+// 		typ := formatVariableType(option.Type)
+// 		fmt.Fprintf(tw, "\t%s %s", name, typ)
+// 		fmt.Fprintf(tw, "\n")
+// 	}
+
+// 	tw.Flush()
+// 	fmt.Fprintf(w, "}\n\n")
+// }
+
 func writeFunction(w io.Writer, endpoint *Endpoint) {
 	functionName := formatFunctionName(endpoint.Name)
 	optionsName := functionName + "Options"
 	args := []string{"ctx context.Context"}
 
 	writeOptionsStruct(w, optionsName, endpoint.Options)
+	// writeResponseStruct(w, functionName+"Response", endpoint.Response)
 
 	fmt.Fprintf(w, "func (c *Client) %s(", functionName)
 
 	for _, argument := range endpoint.Arguments {
 		name := formatVariableName(argument.Name, argument.Type, false)
 		typ := formatVariableType(argument.Type)
+
+		if argument.Type == "file" && argument.Variadic {
+			typ = "files.Node"
+		} else if argument.Variadic {
+			typ = "[]" + typ
+		}
+
 		args = append(args, fmt.Sprintf("%s %s", name, typ))
 	}
 
@@ -109,59 +145,85 @@ func writeFunction(w io.Writer, endpoint *Endpoint) {
 	fmt.Fprint(w, strings.Join(args, ", "))
 	fmt.Fprintf(w, ") ")
 
-	// TODO: use correct endpoint.Response type.
-	// if len(endpoint.Response) > 1 {
-	// 	fmt.Fprintf(w, "(")
-	// }
+	if endpoint.Response != nil {
+		fmt.Fprintf(w, "([]byte, error)")
 
-	// types := lo.Reduce(endpoint.Response, func(agg []string, a *Argument, _ int) []string {
-	// 	agg = append(agg, a.Type)
-	// 	return agg
-	// }, []string{})
+		// TODO: use correct endpoint.Response type.
+		// if len(endpoint.Response) > 1 {
+		// 	fmt.Fprintf(w, "(")
+		// }
 
-	// fmt.Fprintf(w, "%s", strings.Join(types, ", "))
+		// types := lo.Reduce(endpoint.Response, func(agg []string, a *Argument, _ int) []string {
+		// 	agg = append(agg, a.Type)
+		// 	return agg
+		// }, []string{})
 
-	// if len(endpoint.Response) > 1 {
-	// 	fmt.Fprintf(w, ")")
-	// }
-	fmt.Fprintf(w, "([]byte, error) {\n")
+		// fmt.Fprintf(w, "%s", strings.Join(types, ", "))
 
+		// if len(endpoint.Response) > 1 {
+		// 	fmt.Fprintf(w, ")")
+		// }
+
+	} else {
+		fmt.Fprintf(w, "([]byte, error)")
+	}
+
+	fmt.Fprintf(w, " {\n")
 	fmt.Fprintf(w, "\treq := c.Request(\"%s\")\n", endpoint.Name)
 
 	for _, argument := range endpoint.Arguments {
 		if argument.Type == "file" {
-			fmt.Fprintf(w, "\treq.FileBody(f)\n")
+			if argument.Variadic {
+				fmt.Fprintln(w, "\tif d, ok := f.(files.Directory); ok {")
+				fmt.Fprintln(w, "\t\treq.Body(files.NewMultiFileReader(d, false))")
+				fmt.Fprintln(w, "\t} else {")
+				fmt.Fprintln(w, "\t\td := files.NewMapDirectory(map[string]files.Node{\"\": f})")
+				fmt.Fprintln(w, "\t\tfiles.NewMultiFileReader(d, false)")
+				fmt.Fprintln(w, "\t\treq.Body(files.NewMultiFileReader(d, false))")
+				fmt.Fprintln(w, "\t}")
+			} else {
+				fmt.Fprintln(w, "\treq.FileBody(f)")
+			}
 		} else {
 			name := formatVariableName(argument.Name, argument.Type, false)
-			fmt.Fprintf(w, "\treq.Arguments(%s)\n", name)
+			if argument.Variadic {
+				fmt.Fprintf(w, "\treq.Arguments(%s...)\n", name)
+			} else {
+				fmt.Fprintf(w, "\treq.Arguments(%s)\n", name)
+			}
 		}
 	}
 
 	if len(endpoint.Options) > 0 {
-		fmt.Fprintf(w, "\tif options != nil {\n")
+		fmt.Fprintln(w, "\tif options != nil {")
 
 		for _, option := range endpoint.Options {
 			name := formatVariableName(option.Name, option.Type, true)
 			fmt.Fprintf(w, "\t\treq.Option(\"%s\", options.%s)\n", option.Name, name)
 		}
 
-		fmt.Fprintf(w, "\t}\n")
+		fmt.Fprintln(w, "\t}")
 	}
 
 	// TODO: options defaults.
 	// TODO: variadics.
 	// TODO: streaming APIs?
 
-	fmt.Fprintf(w, "\tres, err := req.Send(ctx)\n")
-	fmt.Fprintf(w, "\tif err != nil {\n")
-	fmt.Fprintf(w, "\t\treturn nil, err\n")
-	fmt.Fprintf(w, "\t}\n")
-	fmt.Fprintf(w, "\tif res.Error != nil {\n")
-	fmt.Fprintf(w, "\t\treturn nil, res.Error\n")
-	fmt.Fprintf(w, "\t}\n")
+	fmt.Fprintln(w, "\tres, err := req.Send(ctx)")
+	fmt.Fprintln(w, "\tif err != nil {")
+	fmt.Fprintln(w, "\t\treturn nil, err")
+	fmt.Fprintln(w, "\t}")
+	fmt.Fprintln(w, "\tif res.Error != nil {")
+	fmt.Fprintln(w, "\t\treturn nil, res.Error")
+	fmt.Fprintln(w, "\t}")
+	fmt.Fprintln(w, "\tdefer res.Close()")
 
-	fmt.Fprintf(w, "\tdefer res.Close()\n")
-	fmt.Fprintf(w, "\treturn io.ReadAll(res.Output)\n")
+	if endpoint.Response != nil {
+		// TODO: handle actual response type.
+		fmt.Fprintln(w, "\treturn io.ReadAll(res.Output)")
+	} else {
+		fmt.Fprintln(w, "\treturn io.ReadAll(res.Output)")
+	}
 
 	fmt.Fprintf(w, "}\n\n")
 }
@@ -184,6 +246,8 @@ func generateGoClient(rpc *RPC, outputDirectory string) error {
 	fmt.Fprintln(w, "import (")
 	fmt.Fprintln(w, "\t\"context\"")
 	fmt.Fprintln(w, "\t\"io\"")
+	fmt.Fprintln(w, "\t")
+	fmt.Fprintln(w, "\tfiles \"github.com/ipfs/go-ipfs-files\"")
 	fmt.Fprintf(w, ")\n\n")
 
 	for _, endpoint := range rpc.Endpoints {

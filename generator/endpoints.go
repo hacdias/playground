@@ -76,7 +76,7 @@ func getEndpoints(prefix string, cmd *cmds.Command) ([]*Endpoint, error) {
 		endpoints []*Endpoint
 		arguments []*Argument
 		options   []*Option
-		response  []*Argument
+		response  *Response
 	)
 
 	ignore := cmd.Run == nil || lo.Contains(ignoreEndpoints, prefix)
@@ -106,35 +106,34 @@ func getEndpoints(prefix string, cmd *cmds.Command) ([]*Endpoint, error) {
 				e = e.Elem()
 			}
 
-			// 	// switch e.Type().Kind() {
-
-			// 	// case reflect.Array, reflect.Slice:
-			// 	// 	isArray = true
-			// 	// 	fmt.Println("skip array")
-
-			// 	// // case reflect.Pointer, reflect.Interface:
-			// 	// // 	e = e.Elem()
-			// 	// // 	fallthrough
-			// 	// case reflect.Struct:
-			// 	// 	for i := 0; i < e.NumField(); i++ {
-			// 	// 		if e.Type().Field(i).IsExported() {
-			// 	// 			varName := e.Type().Field(i).Name
-			// 	// 			varType := e.Type().Field(i).Type
-			// 	// 			// varValue := e.Field(i).Interface()
-			// 	// 			fmt.Printf("%v %v\n", varName, varType)
-			// 	// 		}
-			// 	// 	}
-			// 	// }
-
-			fmt.Println(e.Type().Kind())
-
 			switch e.Type().Kind() {
 			case reflect.Slice:
+				response = &Response{}
 				// TODO: handle
 			case reflect.Map:
+				response = &Response{}
 				// TODO: handle
 			case reflect.Struct:
+				response = &Response{}
 				// TODO: handle
+
+				// fmt.Println(prefix)
+
+				// for i := 0; i < e.NumField(); i++ {
+				// 	if e.Type().Field(i).IsExported() {
+				// 		varName := e.Type().Field(i).Name
+				// 		varType := e.Type().Field(i).Type
+				// 		// varValue := e.Field(i).Interface()
+				// 		fmt.Printf("%v %v\n", varName, varType)
+
+				// 		response = append(response, &Argument{
+				// 			Name: varName,
+				// 			Type: varType.String(),
+				// 		})
+
+				// 	}
+				// }
+
 			default:
 				return nil, fmt.Errorf("return type unknown: %v of %s", e.Type().Kind(), e.Type().Name())
 			}

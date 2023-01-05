@@ -58,7 +58,7 @@ func (r *requestBuilder) Body(body io.Reader) RequestBuilder {
 
 // FileBody sets the request body to the given reader wrapped into multipartreader.
 func (r *requestBuilder) FileBody(body io.Reader) RequestBuilder {
-	pr, _ := files.NewReaderPathFile("/dev/stdin", io.NopCloser(body), nil)
+	pr := files.NewReaderFile(io.NopCloser(body))
 	d := files.NewMapDirectory(map[string]files.Node{"": pr})
 	r.body = files.NewMultiFileReader(d, false)
 

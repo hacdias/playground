@@ -3,6 +3,8 @@ package kubo
 import (
 	"context"
 	"io"
+
+	files "github.com/ipfs/go-ipfs-files"
 )
 
 type AddOptions struct {
@@ -54,9 +56,15 @@ type AddOptions struct {
 	ToFiles string
 }
 
-func (c *Client) Add(ctx context.Context, f io.Reader, options *AddOptions) ([]byte, error) {
+func (c *Client) Add(ctx context.Context, f files.Node, options *AddOptions) ([]byte, error) {
 	req := c.Request("add")
-	req.FileBody(f)
+	if d, ok := f.(files.Directory); ok {
+		req.Body(files.NewMultiFileReader(d, false))
+	} else {
+		d := files.NewMapDirectory(map[string]files.Node{"": f})
+		files.NewMultiFileReader(d, false)
+		req.Body(files.NewMultiFileReader(d, false))
+	}
 	if options != nil {
 		req.Option("recursive", options.Recursive)
 		req.Option("dereference-args", options.DereferenceArgs)
@@ -80,7 +88,6 @@ func (c *Client) Add(ctx context.Context, f io.Reader, options *AddOptions) ([]b
 		req.Option("inline", options.Inline)
 		req.Option("inline-limit", options.InlineLimit)
 		req.Option("pin", options.Pin)
-		req.Option("to-files", options.ToFiles)
 	}
 	res, err := req.Send(ctx)
 	if err != nil {
@@ -194,9 +201,15 @@ type BlockPutOptions struct {
 	Format string
 }
 
-func (c *Client) BlockPut(ctx context.Context, f io.Reader, options *BlockPutOptions) ([]byte, error) {
+func (c *Client) BlockPut(ctx context.Context, f files.Node, options *BlockPutOptions) ([]byte, error) {
 	req := c.Request("block/put")
-	req.FileBody(f)
+	if d, ok := f.(files.Directory); ok {
+		req.Body(files.NewMultiFileReader(d, false))
+	} else {
+		d := files.NewMapDirectory(map[string]files.Node{"": f})
+		files.NewMultiFileReader(d, false)
+		req.Body(files.NewMultiFileReader(d, false))
+	}
 	if options != nil {
 		req.Option("cid-codec", options.CidCodec)
 		req.Option("mhtype", options.Mhtype)
@@ -223,9 +236,9 @@ type BlockRmOptions struct {
 	Quiet bool
 }
 
-func (c *Client) BlockRm(ctx context.Context, cid string, options *BlockRmOptions) ([]byte, error) {
+func (c *Client) BlockRm(ctx context.Context, cid []string, options *BlockRmOptions) ([]byte, error) {
 	req := c.Request("block/rm")
-	req.Arguments(cid)
+	req.Arguments(cid...)
 	if options != nil {
 		req.Option("force", options.Force)
 		req.Option("quiet", options.Quiet)
@@ -273,9 +286,9 @@ type BootstrapAddOptions struct {
 	Default bool
 }
 
-func (c *Client) BootstrapAdd(ctx context.Context, peer string, options *BootstrapAddOptions) ([]byte, error) {
+func (c *Client) BootstrapAdd(ctx context.Context, peer []string, options *BootstrapAddOptions) ([]byte, error) {
 	req := c.Request("bootstrap/add")
-	req.Arguments(peer)
+	req.Arguments(peer...)
 	if options != nil {
 		req.Option("default", options.Default)
 	}
@@ -321,9 +334,9 @@ type BootstrapRmOptions struct {
 	All bool
 }
 
-func (c *Client) BootstrapRm(ctx context.Context, peer string, options *BootstrapRmOptions) ([]byte, error) {
+func (c *Client) BootstrapRm(ctx context.Context, peer []string, options *BootstrapRmOptions) ([]byte, error) {
 	req := c.Request("bootstrap/rm")
-	req.Arguments(peer)
+	req.Arguments(peer...)
 	if options != nil {
 		req.Option("all", options.All)
 	}
@@ -360,9 +373,9 @@ type CatOptions struct {
 	Progress bool
 }
 
-func (c *Client) Cat(ctx context.Context, ipfsPath string, options *CatOptions) ([]byte, error) {
+func (c *Client) Cat(ctx context.Context, ipfsPath []string, options *CatOptions) ([]byte, error) {
 	req := c.Request("cat")
-	req.Arguments(ipfsPath)
+	req.Arguments(ipfsPath...)
 	if options != nil {
 		req.Option("offset", options.Offset)
 		req.Option("length", options.Length)
@@ -379,9 +392,9 @@ func (c *Client) Cat(ctx context.Context, ipfsPath string, options *CatOptions) 
 	return io.ReadAll(res.Output)
 }
 
-func (c *Client) CidBase32(ctx context.Context, cid string) ([]byte, error) {
+func (c *Client) CidBase32(ctx context.Context, cid []string) ([]byte, error) {
 	req := c.Request("cid/base32")
-	req.Arguments(cid)
+	req.Arguments(cid...)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -452,9 +465,9 @@ type CidFormatOptions struct {
 	B string
 }
 
-func (c *Client) CidFormat(ctx context.Context, cid string, options *CidFormatOptions) ([]byte, error) {
+func (c *Client) CidFormat(ctx context.Context, cid []string, options *CidFormatOptions) ([]byte, error) {
 	req := c.Request("cid/format")
-	req.Arguments(cid)
+	req.Arguments(cid...)
 	if options != nil {
 		req.Option("f", options.F)
 		req.Option("v", options.V)
@@ -686,9 +699,15 @@ type DagImportOptions struct {
 	AllowBigBlock bool
 }
 
-func (c *Client) DagImport(ctx context.Context, f io.Reader, options *DagImportOptions) ([]byte, error) {
+func (c *Client) DagImport(ctx context.Context, f files.Node, options *DagImportOptions) ([]byte, error) {
 	req := c.Request("dag/import")
-	req.FileBody(f)
+	if d, ok := f.(files.Directory); ok {
+		req.Body(files.NewMultiFileReader(d, false))
+	} else {
+		d := files.NewMapDirectory(map[string]files.Node{"": f})
+		files.NewMultiFileReader(d, false)
+		req.Body(files.NewMultiFileReader(d, false))
+	}
 	if options != nil {
 		req.Option("pin-roots", options.PinRoots)
 		req.Option("silent", options.Silent)
@@ -719,9 +738,15 @@ type DagPutOptions struct {
 	AllowBigBlock bool
 }
 
-func (c *Client) DagPut(ctx context.Context, f io.Reader, options *DagPutOptions) ([]byte, error) {
+func (c *Client) DagPut(ctx context.Context, f files.Node, options *DagPutOptions) ([]byte, error) {
 	req := c.Request("dag/put")
-	req.FileBody(f)
+	if d, ok := f.(files.Directory); ok {
+		req.Body(files.NewMultiFileReader(d, false))
+	} else {
+		d := files.NewMapDirectory(map[string]files.Node{"": f})
+		files.NewMultiFileReader(d, false)
+		req.Body(files.NewMultiFileReader(d, false))
+	}
 	if options != nil {
 		req.Option("store-codec", options.StoreCodec)
 		req.Option("input-codec", options.InputCodec)
@@ -781,9 +806,9 @@ type DhtQueryOptions struct {
 	Verbose bool
 }
 
-func (c *Client) DhtQuery(ctx context.Context, peerid string, options *DhtQueryOptions) ([]byte, error) {
+func (c *Client) DhtQuery(ctx context.Context, peerid []string, options *DhtQueryOptions) ([]byte, error) {
 	req := c.Request("dht/query")
-	req.Arguments(peerid)
+	req.Arguments(peerid...)
 	if options != nil {
 		req.Option("verbose", options.Verbose)
 	}
@@ -1054,9 +1079,9 @@ type FilesRmOptions struct {
 	Force bool
 }
 
-func (c *Client) FilesRm(ctx context.Context, path string, options *FilesRmOptions) ([]byte, error) {
+func (c *Client) FilesRm(ctx context.Context, path []string, options *FilesRmOptions) ([]byte, error) {
 	req := c.Request("files/rm")
-	req.Arguments(path)
+	req.Arguments(path...)
 	if options != nil {
 		req.Option("recursive", options.Recursive)
 		req.Option("force", options.Force)
@@ -1169,9 +1194,9 @@ type FilestoreLsOptions struct {
 	FileOrder bool
 }
 
-func (c *Client) FilestoreLs(ctx context.Context, obj string, options *FilestoreLsOptions) ([]byte, error) {
+func (c *Client) FilestoreLs(ctx context.Context, obj []string, options *FilestoreLsOptions) ([]byte, error) {
 	req := c.Request("filestore/ls")
-	req.Arguments(obj)
+	req.Arguments(obj...)
 	if options != nil {
 		req.Option("file-order", options.FileOrder)
 	}
@@ -1191,9 +1216,9 @@ type FilestoreVerifyOptions struct {
 	FileOrder bool
 }
 
-func (c *Client) FilestoreVerify(ctx context.Context, obj string, options *FilestoreVerifyOptions) ([]byte, error) {
+func (c *Client) FilestoreVerify(ctx context.Context, obj []string, options *FilestoreVerifyOptions) ([]byte, error) {
 	req := c.Request("filestore/verify")
-	req.Arguments(obj)
+	req.Arguments(obj...)
 	if options != nil {
 		req.Option("file-order", options.FileOrder)
 	}
@@ -1406,9 +1431,9 @@ type KeyRmOptions struct {
 	IpnsBase string
 }
 
-func (c *Client) KeyRm(ctx context.Context, name string, options *KeyRmOptions) ([]byte, error) {
+func (c *Client) KeyRm(ctx context.Context, name []string, options *KeyRmOptions) ([]byte, error) {
 	req := c.Request("key/rm")
-	req.Arguments(name)
+	req.Arguments(name...)
 	if options != nil {
 		req.Option("l", options.L)
 		req.Option("ipns-base", options.IpnsBase)
@@ -1490,9 +1515,9 @@ type LsOptions struct {
 	Stream bool
 }
 
-func (c *Client) Ls(ctx context.Context, ipfsPath string, options *LsOptions) ([]byte, error) {
+func (c *Client) Ls(ctx context.Context, ipfsPath []string, options *LsOptions) ([]byte, error) {
 	req := c.Request("ls")
-	req.Arguments(ipfsPath)
+	req.Arguments(ipfsPath...)
 	if options != nil {
 		req.Option("headers", options.Headers)
 		req.Option("resolve-type", options.ResolveType)
@@ -1675,9 +1700,9 @@ type PinAddOptions struct {
 	Progress bool
 }
 
-func (c *Client) PinAdd(ctx context.Context, ipfsPath string, options *PinAddOptions) ([]byte, error) {
+func (c *Client) PinAdd(ctx context.Context, ipfsPath []string, options *PinAddOptions) ([]byte, error) {
 	req := c.Request("pin/add")
-	req.Arguments(ipfsPath)
+	req.Arguments(ipfsPath...)
 	if options != nil {
 		req.Option("recursive", options.Recursive)
 		req.Option("progress", options.Progress)
@@ -1702,9 +1727,9 @@ type PinLsOptions struct {
 	Stream bool
 }
 
-func (c *Client) PinLs(ctx context.Context, ipfsPath string, options *PinLsOptions) ([]byte, error) {
+func (c *Client) PinLs(ctx context.Context, ipfsPath []string, options *PinLsOptions) ([]byte, error) {
 	req := c.Request("pin/ls")
-	req.Arguments(ipfsPath)
+	req.Arguments(ipfsPath...)
 	if options != nil {
 		req.Option("type", options.Type)
 		req.Option("quiet", options.Quiet)
@@ -1868,9 +1893,9 @@ type PinRmOptions struct {
 	Recursive bool
 }
 
-func (c *Client) PinRm(ctx context.Context, ipfsPath string, options *PinRmOptions) ([]byte, error) {
+func (c *Client) PinRm(ctx context.Context, ipfsPath []string, options *PinRmOptions) ([]byte, error) {
 	req := c.Request("pin/rm")
-	req.Arguments(ipfsPath)
+	req.Arguments(ipfsPath...)
 	if options != nil {
 		req.Option("recursive", options.Recursive)
 	}
@@ -1937,9 +1962,9 @@ type PingOptions struct {
 	Count int
 }
 
-func (c *Client) Ping(ctx context.Context, peerId string, options *PingOptions) ([]byte, error) {
+func (c *Client) Ping(ctx context.Context, peerId []string, options *PingOptions) ([]byte, error) {
 	req := c.Request("ping")
-	req.Arguments(peerId)
+	req.Arguments(peerId...)
 	if options != nil {
 		req.Option("count", options.Count)
 	}
@@ -1967,9 +1992,9 @@ type RefsOptions struct {
 	MaxDepth int
 }
 
-func (c *Client) Refs(ctx context.Context, ipfsPath string, options *RefsOptions) ([]byte, error) {
+func (c *Client) Refs(ctx context.Context, ipfsPath []string, options *RefsOptions) ([]byte, error) {
 	req := c.Request("refs")
-	req.Arguments(ipfsPath)
+	req.Arguments(ipfsPath...)
 	if options != nil {
 		req.Option("format", options.Format)
 		req.Option("edges", options.Edges)
@@ -2153,9 +2178,9 @@ type RoutingFindpeerOptions struct {
 	Verbose bool
 }
 
-func (c *Client) RoutingFindpeer(ctx context.Context, peerid string, options *RoutingFindpeerOptions) ([]byte, error) {
+func (c *Client) RoutingFindpeer(ctx context.Context, peerid []string, options *RoutingFindpeerOptions) ([]byte, error) {
 	req := c.Request("routing/findpeer")
-	req.Arguments(peerid)
+	req.Arguments(peerid...)
 	if options != nil {
 		req.Option("verbose", options.Verbose)
 	}
@@ -2177,9 +2202,9 @@ type RoutingFindprovsOptions struct {
 	NumProviders int
 }
 
-func (c *Client) RoutingFindprovs(ctx context.Context, key string, options *RoutingFindprovsOptions) ([]byte, error) {
+func (c *Client) RoutingFindprovs(ctx context.Context, key []string, options *RoutingFindprovsOptions) ([]byte, error) {
 	req := c.Request("routing/findprovs")
-	req.Arguments(key)
+	req.Arguments(key...)
 	if options != nil {
 		req.Option("verbose", options.Verbose)
 		req.Option("num-providers", options.NumProviders)
@@ -2200,9 +2225,9 @@ type RoutingGetOptions struct {
 	Verbose bool
 }
 
-func (c *Client) RoutingGet(ctx context.Context, key string, options *RoutingGetOptions) ([]byte, error) {
+func (c *Client) RoutingGet(ctx context.Context, key []string, options *RoutingGetOptions) ([]byte, error) {
 	req := c.Request("routing/get")
-	req.Arguments(key)
+	req.Arguments(key...)
 	if options != nil {
 		req.Option("verbose", options.Verbose)
 	}
@@ -2224,9 +2249,9 @@ type RoutingProvideOptions struct {
 	Recursive bool
 }
 
-func (c *Client) RoutingProvide(ctx context.Context, key string, options *RoutingProvideOptions) ([]byte, error) {
+func (c *Client) RoutingProvide(ctx context.Context, key []string, options *RoutingProvideOptions) ([]byte, error) {
 	req := c.Request("routing/provide")
-	req.Arguments(key)
+	req.Arguments(key...)
 	if options != nil {
 		req.Option("verbose", options.Verbose)
 		req.Option("recursive", options.Recursive)
@@ -2310,7 +2335,7 @@ type StatsBwOptions struct {
 	// Print bandwidth at an interval.
 	Poll bool
 	// Time interval to wait between updating output, if 'poll' is true.
-	// 
+	//
 	// This accepts durations such as "300s", "1.5h" or "2h45m". Valid time units are:
 	// "ns", "us" (or "µs"), "ms", "s", "m", "h". Default: 1s.
 	Interval string
@@ -2335,9 +2360,9 @@ func (c *Client) StatsBw(ctx context.Context, options *StatsBwOptions) ([]byte, 
 	return io.ReadAll(res.Output)
 }
 
-func (c *Client) StatsDht(ctx context.Context, dht string) ([]byte, error) {
+func (c *Client) StatsDht(ctx context.Context, dht []string) ([]byte, error) {
 	req := c.Request("stats/dht")
-	req.Arguments(dht)
+	req.Arguments(dht...)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2433,9 +2458,9 @@ func (c *Client) SwarmAddrsLocal(ctx context.Context, options *SwarmAddrsLocalOp
 	return io.ReadAll(res.Output)
 }
 
-func (c *Client) SwarmConnect(ctx context.Context, address string) ([]byte, error) {
+func (c *Client) SwarmConnect(ctx context.Context, address []string) ([]byte, error) {
 	req := c.Request("swarm/connect")
-	req.Arguments(address)
+	req.Arguments(address...)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2447,9 +2472,9 @@ func (c *Client) SwarmConnect(ctx context.Context, address string) ([]byte, erro
 	return io.ReadAll(res.Output)
 }
 
-func (c *Client) SwarmDisconnect(ctx context.Context, address string) ([]byte, error) {
+func (c *Client) SwarmDisconnect(ctx context.Context, address []string) ([]byte, error) {
 	req := c.Request("swarm/disconnect")
-	req.Arguments(address)
+	req.Arguments(address...)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2474,9 +2499,9 @@ func (c *Client) SwarmFilters(ctx context.Context) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-func (c *Client) SwarmFiltersAdd(ctx context.Context, address string) ([]byte, error) {
+func (c *Client) SwarmFiltersAdd(ctx context.Context, address []string) ([]byte, error) {
 	req := c.Request("swarm/filters/add")
-	req.Arguments(address)
+	req.Arguments(address...)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2488,9 +2513,9 @@ func (c *Client) SwarmFiltersAdd(ctx context.Context, address string) ([]byte, e
 	return io.ReadAll(res.Output)
 }
 
-func (c *Client) SwarmFiltersRm(ctx context.Context, address string) ([]byte, error) {
+func (c *Client) SwarmFiltersRm(ctx context.Context, address []string) ([]byte, error) {
 	req := c.Request("swarm/filters/rm")
-	req.Arguments(address)
+	req.Arguments(address...)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2502,9 +2527,9 @@ func (c *Client) SwarmFiltersRm(ctx context.Context, address string) ([]byte, er
 	return io.ReadAll(res.Output)
 }
 
-func (c *Client) SwarmPeeringAdd(ctx context.Context, address string) ([]byte, error) {
+func (c *Client) SwarmPeeringAdd(ctx context.Context, address []string) ([]byte, error) {
 	req := c.Request("swarm/peering/add")
-	req.Arguments(address)
+	req.Arguments(address...)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2529,9 +2554,9 @@ func (c *Client) SwarmPeeringLs(ctx context.Context) ([]byte, error) {
 	return io.ReadAll(res.Output)
 }
 
-func (c *Client) SwarmPeeringRm(ctx context.Context, id string) ([]byte, error) {
+func (c *Client) SwarmPeeringRm(ctx context.Context, id []string) ([]byte, error) {
 	req := c.Request("swarm/peering/rm")
-	req.Arguments(id)
+	req.Arguments(id...)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2573,9 +2598,9 @@ func (c *Client) SwarmPeers(ctx context.Context, options *SwarmPeersOptions) ([]
 	return io.ReadAll(res.Output)
 }
 
-func (c *Client) Update(ctx context.Context, args string) ([]byte, error) {
+func (c *Client) Update(ctx context.Context, args []string) ([]byte, error) {
 	req := c.Request("update")
-	req.Arguments(args)
+	req.Arguments(args...)
 	res, err := req.Send(ctx)
 	if err != nil {
 		return nil, err
@@ -2629,4 +2654,3 @@ func (c *Client) VersionDeps(ctx context.Context) ([]byte, error) {
 	defer res.Close()
 	return io.ReadAll(res.Output)
 }
-
