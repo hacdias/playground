@@ -1,5 +1,7 @@
 # human-to-milliseconds
 
+> ⚠️ This package has been deprecated. It contains very few lines of code. If you want to use this functionality, just copy it over.
+
 [![npm](https://img.shields.io/npm/v/human-to-milliseconds.svg?style=flat-square)](https://www.npmjs.com/package/human-to-milliseconds)
 [![Travis](https://img.shields.io/travis/hacdias/human-to-milliseconds.svg?style=flat-square)](https://travis-ci.org/hacdias/human-to-milliseconds)
 
