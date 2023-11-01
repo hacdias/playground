@@ -1,0 +1,5 @@
+joana 200
+joao 30
+miguel 30
+pedro 30
+cristina 10
