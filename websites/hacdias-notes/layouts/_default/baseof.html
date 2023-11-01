@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+<head>
+  {{ partial "head" . -}}
+</head>
+<body>
+  <header id="header">
+    <nav>
+      <ul>
+        <li><strong><a href="{{ relURL .Site.BaseURL }}">{{ .Site.Title }}</a></strong></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main role="main">
+    {{ block "main" . -}}{{ end }}
+  </main>
+</body>
+</html>

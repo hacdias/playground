@@ -1,0 +1,90 @@
+{{- $description := or .Description .Site.Params.Description }}
+{{- $img := or (.Page.Resources.GetMatch "*social*") (.Page.Resources.GetMatch "*cover*") (.Page.Resources.GetMatch "*thumb*") }}
+{{- $shortTitle := or .Title .Site.Title -}}
+{{- $longTitle := (printf "%s - %s" $shortTitle .Site.Title) -}}
+{{- if .IsHome -}}{{ $longTitle = .Site.Title }}{{- end -}}
+{{- if not .Title -}}{{ $longTitle = $shortTitle }}{{- end -}}
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ $longTitle }}</title>
+<meta name="description" content="{{ $description }}">
+<link rel="canonical" href="{{ .Permalink }}">
+<!-- <link rel="icon" href="{{ relURL "/favicon.ico" }}" type=image/x-icon> -->
+
+{{ range .AlternativeOutputFormats -}}
+  <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}">
+{{ end -}}
+
+<!-- Social Media -->
+<meta name="twitter:site" content="@{{ .Site.Social.twitter }}"/>
+<meta name="twitter:creator" content="@{{ .Site.Social.twitter }}"/>
+<meta property="og:locale" content="{{ .Site.LanguageCode }}" />
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
+<meta property="og:title" content="{{ $shortTitle }}" />
+<meta property="og:description" content="{{ $description }}" />
+<meta property="og:url" content="{{ .Permalink }}" />
+<meta property="og:site_name" content="{{ .Site.Title }}" />
+{{- with $img }}
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta property="og:image" content="{{ .Permalink }}" />
+{{ else }}
+  {{ if .IsHome -}}
+    <meta name="twitter:card" content="summary"/>
+    <meta property="og:image" content="https://hacdias.com/me-512.jpg" />
+  {{ end }}
+{{ end }}
+
+{{ if and .IsPage (not .Date.IsZero) }}
+  {{ $date := .Date.Format "2006-01-02T15:04:05-07:00" }}
+  <meta property="article:published_time" content="{{ if .PublishDate.IsZero }}{{ $date }}{{ else }}{{ .PublishDate.Format "2006-01-02T15:04:05-07:00" }}{{ end }}" />
+  <meta property="article:modified_time" content="{{ $date }}" />
+  <meta property="og:updated_time" content="{{ $date }}" />
+{{ end }}
+
+<!-- Styles -->
+{{- if not (eq .Type "html") -}}
+  {{- $normalize := resources.Get "css/vendor/normalize.css" }}
+  {{- $styles := resources.Get "css/styles.css" }}
+  {{- $css := slice $normalize $styles | resources.Concat "css/styles.css" | resources.Minify }}
+  <style>{{ $css.Content | safeCSS }}</style>
+{{ end }}
+
+{{ if .Params.mermaid }}
+  {{- $mermaid := resources.Get "js/vendor/mermaid.min.js" }}
+  <script defer src="{{ $mermaid.RelPermalink }}?hash={{ md5 $mermaid.Content }}"></script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () =>{
+    mermaid.init('.language-mermaid')
+  })
+  </script>
+{{ end }}
+
+{{ if .Params.math }}
+  {{- $styles := resources.Get "css/vendor/katex.min.css" }}
+  <link rel="stylesheet" href="{{ $styles.RelPermalink }}?hash={{ md5 $styles.Content }}" />
+
+  {{- $k1 := resources.Get "js/vendor/katex.min.js" }}
+  {{- $k2 := resources.Get "js/vendor/auto-render.min.js" }}
+  {{- $k3 := resources.Get "js/vendor/mhchem.min.js" }}
+  {{- $js := slice $k1 $k2 $k3 | resources.Concat "js/katex.js" | resources.Minify }}
+  <script defer src="{{ $js.RelPermalink }}?hash={{ md5 $js.Content }}"></script>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false}
+      ]
+    });
+  });
+  </script>
+{{ end }}
+
+{{- $twemoji := resources.Get "js/vendor/twemoji.min.js" }}
+{{- $app := resources.Get "js/app.js" }}
+{{- $js := slice $twemoji $app | resources.Concat "js/bundle.js" | resources.Minify }}
+<script defer type="text/javascript" src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>

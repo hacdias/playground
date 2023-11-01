@@ -1,0 +1,40 @@
+baseurl: 'https://notes.hacdias.com/'
+languageCode: en
+paginate: 10
+rssLimit: 20
+pluralizelisttitles: false
+removePathAccents: true
+title: "@hacdias' notes"
+summarylength: 30
+relativeURLs: true
+enableRobotsTXT: true
+summaryLength: 150
+
+social:
+  twitter: hacdias
+
+params:
+  emoji: 🧙‍♂️
+  Description: >-
+    This is my digital garden where I publish my notes. This is an experiment and you
+    should note that this notes are made by me for me. However, it's always good to share
+    knowledge.
+
+disableKinds:
+  - taxonomy
+  - term
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    style: vs
+    
+outputs:
+  home:
+    - html
+  section:
+    - html
+  page:
+    - html
