@@ -1,15 +1,9 @@
-!["My Labs Logo"](lab-logo.png "Labs")
+# playground
 
-# Hello everyone
+> For all the experiments that either do not work, or do not deserve their own repository.
 
-My name is Henrique Dias and I'm an extremely curious about technology. I want to be a programmer and do something useful for the people. [Read more here.](http://henriquedias.com/)
+This is just an experimental repository with different things that I have done over the years, which I believe should not be polluting the rest of the namespace. Some work, some don't. Some are stupid, some aren't. Feel free to take a look.
 
-# What is this?
+## License
 
-This repository contains some experiments that I've made and some code that I use in a couple of blogs I write for. So... be free to see.
-
-Right now I have some experiments about a small number of languages but I think that with the time it will being increased.
-
-# License
-
-MIT License &copy; Henrique Dias
+[MIT License](LICENSE) © [Henrique Dias](https://hacdias.com)
