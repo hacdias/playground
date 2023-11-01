@@ -1,0 +1,18 @@
+# ROUTING CONFIGURATION
+#
+# This is the routing file where you will put your personalized routing. The
+# application normally routes the user to /controller/method/args[/args...].
+# Every single line that begins with "#" is ignored (is a comment).
+#
+# With this file you can set custom routes with the following syntax:
+#   new/path!routes/to/this/path
+#
+# If you want to use regex in your url parameters, you can do it putting the
+# regex code between curly braces ( "{regexCode}" ). Example:
+#   {\d+}!posts/id
+#
+# If JSON API mode is turned on and the url is /api/something this file will
+# be ignored by default. Change it in your config.php file.
+
+new!note/index
+{\d+}!note/view

@@ -1,0 +1,259 @@
+@import url(//fonts.googleapis.com/css?family=Pacifico);
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400italic,400,700);
+
+html, body {
+    font-family: 'Open Sans', sans-serif;
+    color: rgba(0, 0, 0, 0.8);
+    height: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    width: 100%;
+    margin: 0;
+}
+
+.all-page {
+    height: 100% !important;
+    width: 100% !important;
+}
+
+p {
+    margin: 1em 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.autoBackgroud {
+    transition: 5s ease all;
+    background: #CDDC39;
+}
+
+/* SPLASH PAGE */
+
+.splash {
+    background: url(../imgs/background.jpg) center center / cover;
+}
+
+.splash0, .splash1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.splash0 {
+    z-index: 0;
+    opacity: .5;
+}
+
+.splash1 {
+    z-index: 1;
+    text-align: center;
+    color: #fff;
+    opacity: .9;
+}
+
+.splash #header {
+    opacity: .5;
+}
+
+.splash .site-title {
+    padding: 0;
+    font-size: 5em;
+}
+
+.splash .site-subtitle {
+    font-size: 1.5em;
+}
+
+.splash .new-note {
+    background: #fff;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.ghost {
+    height: 100%;
+    vertical-align: middle;
+    display: inline-block;
+    width: 1px;
+    margin-right: -1px;
+}
+
+.align-middle-w-ghost {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+/* HEADER */
+
+/* NAVBAR */
+
+.navbar {
+    width: 100%;
+    height: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    color: #fff;
+}
+
+.navbar .site-title {
+    padding: 0;
+    font-size: 1.25em;
+    line-height: 50px;
+}
+
+.left, .right {
+    vertical-align: middle;
+    width: 50%;
+    display: inline-block;
+}
+
+.navbar .left,
+.navbar .right {
+    height: 50px;
+}
+
+.right {
+    text-align: right;
+}
+
+.navbar .right img {
+    width: 25px;
+    height: 25px;
+    margin: 0;
+    padding: 12.5px;
+}
+
+.navbar .right img:first-child {
+    padding-left: 0 !important;
+}
+
+.navbar .right img:last-child {
+    padding-right: 0 !important;
+}
+
+/* */
+
+#header {
+    width: 100%;
+    text-align: center;
+    background: #F44336;
+    height: 200px;
+    transition: 2s ease all;
+    color: #fff;
+}
+
+.site-title {
+    margin: 0;
+    padding-top: 20px;
+    color: #fff;
+    font-size: 4em;
+}
+
+.site-subtitle {
+    margin: 0;
+    font-weight: normal;
+    font-size: 1.25em;
+}
+
+.title-font {
+    font-family: 'Pacifico', cursive;
+}
+
+.title-font a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.note-form {
+
+}
+
+.note-form input,
+.note-form textarea {
+    width: 100%;
+
+}
+
+.note-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-item {
+    border-radius: 3px;
+    box-sizing: border-box;
+    border: 0;
+    padding: 5px 10px;
+    transition: .5s ease all;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.form-item:focus {
+    outline: 0;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
+}
+
+.buttons {
+    cursor: pointer;
+    color: #fff;
+    margin: 1em 0;
+    background: #2196F3;
+}
+
+.buttons a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#footer {
+    background: rgba(0, 0, 0, 0.87);
+    color: #fff;
+    height: 50px;
+    margin: 0;
+    /* position: fixed; */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+#footer p {
+    line-height: 49px;
+    margin: 0;
+    padding: 0;
+}
+
+#footer a {
+    text-decoration: none;
+    color: inherit
+}
+
+.advice-box {
+    width: 100%;
+    margin: 1em 0 !important;
+    background: rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+    padding: 5px 10px !important;
+    box-sizing: border-box;
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    height: auto !important;
+}
+
+.red-box {
+    background: #F44336;
+}
+
+.orange-box {
+    background: #FF9800;
+}
+
+.green-box {
+    background: #8BC34A;
+}
+
+.hidden {
+    display: none;
+}
