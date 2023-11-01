@@ -1,0 +1,18 @@
+<footer>
+  <div class="buttons container">
+    <a class="twitter social" target="_blank" href="https://twitter.com/share?url={{ .Permalink }}&via={{ .Site.Author.Twitter }}">
+      <div><i class="fa fa-twitter"></i></div>
+    </a>
+    <a class="facebook social" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ .Permalink }}">
+      <div><i class="fa fa-facebook"></i></div>
+    </a>
+    <a class="gplus social" target="_blank" href="https://plus.google.com/share?url={{ .Permalink }}">
+      <div><i class="fa fa-google-plus"></i></div>
+    </a>
+    <a class="linkedin social" target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{ .Permalink }}&title={{ .Title }}&source=Aprenda%a%Programar">
+      <div><i class="fa fa-linkedin"></i></div>
+    </a>
+  </div>
+  <div style="clear:both"></div>
+  {{ partial "disqus" . }}
+</footer>

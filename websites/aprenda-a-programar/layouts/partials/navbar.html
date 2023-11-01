@@ -1,0 +1,27 @@
+<nav>
+  <div>
+    {{ if not .IsNode}}{{ if .Prev }}
+    <a href="{{ .Prev.Permalink  }}" class="prev">
+      <div>{{ .Prev.Title }}</div>
+    </a>
+    {{ else }}
+    <a href="/" class="prev">
+      <div>Aprenda a Programar</div>
+    </a>
+    {{ end }}{{ end }}
+  </div>
+  <div>
+    <a href="/"><span>{{ .Title }}</span></a>
+  </div>
+  <div>
+    {{ if not .IsNode}}{{ if .Next }}
+    <a href="{{ .Next.Permalink  }}" class="next">
+      <div>{{ .Next.Title }}</div>
+    </a>
+    {{ end }}{{ else }}
+    <a href="/fundamentos/" class="next">
+      <div>Vamos Começar</div>
+    </a>
+    {{ end }}
+  </div>
+</nav>

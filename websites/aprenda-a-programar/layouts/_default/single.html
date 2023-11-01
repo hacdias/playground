@@ -1,0 +1,11 @@
+{{ partial "header" . }}
+
+<div class="single">
+  <article>
+  {{ partial "article/header" . }}
+  {{ .Content }}
+  {{ partial "article/footer" . }}
+  </article>
+</div>
+
+{{ partial "footer" . }}

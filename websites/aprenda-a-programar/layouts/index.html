@@ -1,0 +1,62 @@
+{{ partial "header" . }}
+
+<main role="main">
+
+  <header>
+    <h1>Aprenda a Programar</h1>
+    <p>Uma breve introdução ilustrada com a linguagem C.</p>
+  </header>
+
+  <!-- <figure>
+    <img class="medium" src="images/cover.png">
+  </figure> -->
+
+  <p>Este livro pretende dar-lhe a conhecer os fundamentos básicos e essenciais do mundo da programação. Não apenas ensinar-lhe a linguagem de programação
+    <code>x</code>
+    ou
+    <code>y</code>, mas sim ensinar-lhe a
+    <strong>programar</strong>.</p>
+
+  <p>Programar não é conhecer uma linguagem de programação. É conhecer os fundamentos, a lógica, que está na base de todas as linguagens de programação. Com isso, será capaz de utilizar
+    <strong>qualquer</strong>
+    linguagem de programação.</p>
+
+  <h2>Para quem?</h2>
+
+  <p>O público-alvo deste livro prende-se aos que querem iniciar a sua jornada no mundo da programação: independentemente de estarem a estudar ou serem apenas curiosos por esta área. Neste livro é utilizada a linguagem de programação C de forma a
+    mostrar os fundamentos básicos da programação. Fundamentos estes que são omnipresentes em todo o mundo da programação.</p>
+
+  <div class="chapters">
+    {{ $paginator := .Paginate (where .Data.Pages "Type" "page") }}
+    {{ range $paginator.Pages }}
+    <a href="{{ .Permalink }}">
+      <h3>{{ .Title }}</h3>
+      <p>{{ .Description }}</p>
+    </a>
+    {{ end }}
+    {{ partial "pagination" . }}
+  </div>
+
+  <h2>Sobre o Autor</h2>
+
+  <p><a href="http://henriquedias.com">Henrique Dias</a> é um estudante de Ciências e Tecnologias, tem 16 anos, bastante curioso por programação e, também, por música.</p>
+  <h4>Agradecimentos</h4>
+
+  <blockquote>
+    <p>Em primeiro lugar, quero agradecer aos meus pais por estarem sempre presentes e me terem apoiado imenso durante toda a minha vida.</p>
+    <p>Em segundo lugar, quero agradecer a toda a equipa do Pplware, pelo apoio dado. Agradeço também à comunidade do Pplware, que me ajudou, deu dicas, fez correções, sempre construtivamente.</p>
+    <p>Finalmente, mas não menos importante, quero agradecer ao Luís Soares, por se ter oferecido a rever este livro e me dado imensas dicas para o aprimorar.</p>
+  </blockquote>
+
+  <h2>Sobre o Revisor</h2>
+
+  <p>
+    <a href="http://luissoares.com">Luís Soares</a>
+    estudou Licenciatura e Mestrado em Engenharia Informática e de Computadores no Instituto Superior Técnico. Trabalha, há vários anos, no âmbito de aplicações
+    <em>web</em>
+    com as mais diversas tecnologias. Atualmente trabalha na Media Capital numa posição de Desenvolvedor e Arquiteto de
+    <em>Software</em>.</p>
+
+</main>
+
+{{ partial "footer" . }}

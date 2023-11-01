@@ -1,0 +1,13 @@
+<meta property="og:locale" content="{{ .Site.LanguageCode }}" />
+<meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}" />
+<meta property="og:title" content="{{ if not .IsHome }}{{ .Title }} | {{ end }}{{ .Site.Title }}" />
+<meta property="og:description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.Description }}{{ end }}" />
+<meta property="og:url" content="{{ .Permalink }}" />
+<meta property="og:site_name" content="Aprenda a Programar" />
+<meta property="article:author" content="https://www.facebook.com/hacdias" />
+<meta property="article:publisher" content="https://www.facebook.com/hacdias" />
+{{ if .IsPage }}
+{{ if .Params.tags }}<meta property="article:tag" content="{{ delimit .Params.tags ", " }}" />{{ end }}
+{{ if .Params.categories }}<meta property="article:section" content="{{ delimit .Params.categories ", " }}" />{{ end }}
+{{ end }}
+<meta property="og:image" content="{{ .Site.BaseURL }}{{ if .Params.image }}{{ .Params.image }}{{ else }}{{ .Site.Params.Image }}{{ end }}" />
