@@ -1,8 +1,12 @@
-# playground
+# 🛝 playground
 
-> For all the experiments that either do not work, or do not deserve their own repository.
+> For all the experiments that do not deserve their own repository.
 
-This is just an experimental repository with different things that I have done over the years, which I believe should not be polluting the rest of the namespace. Some work, some don't. Some are stupid, some aren't. Feel free to take a look.
+This is an experimental repository that contains things that I have done over the years. Things that may not make sense, or not even work. Feel free to take a look around.
+
+I decided to put them into a single repository, combining the history of many older repositories. The goal is to not pollute my namespace with too many repositories of simple tools and experiments that I created only for myself, but realistically no one else would use them.
+
+If there is anything that you think would be worth moving to its own repository - extremely unlikely -, feel free to reach me out through the repository issues!
 
 ## License
 
