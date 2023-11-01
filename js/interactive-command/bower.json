@@ -1,0 +1,18 @@
+{
+  "name": "interactive-command",
+  "main": "index.js",
+  "version": "0.0.3",
+  "homepage": "https://github.com/hacdias/interactive-command",
+  "authors": [
+    "Henrique Dias <hacdias@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/_bower_components",
+    "test",
+    "tests"
+  ]
+}
