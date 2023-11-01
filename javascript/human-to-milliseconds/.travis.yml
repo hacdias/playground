@@ -1,0 +1,25 @@
+sudo: false
+language: node_js
+
+services:
+  - xvfb
+
+matrix:
+  include:
+  - node_js: 10
+
+script:
+  - npm run lint
+  - npm run test
+  - npm run coverage
+
+after_success:
+  - npm run coverage-publish
+
+addons:
+  firefox: 'latest'
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
