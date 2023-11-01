@@ -1,0 +1,1 @@
+Synchronizes SRT subtitles.

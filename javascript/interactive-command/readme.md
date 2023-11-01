@@ -1,5 +1,7 @@
 # interactive-command
 
+> ⚠️ Deprecated.
+
 [![Latest Version](https://img.shields.io/npm/v/interactive-command.svg?style=flat-square)][1]
 [![Downloads per Month](https://img.shields.io/npm/dm/interactive-command.svg?style=flat-square)][1]
 [![License](https://img.shields.io/npm/l/interactive-command.svg?style=flat-square)](http://opensource.org/licenses/MIT)
