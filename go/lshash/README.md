@@ -7,8 +7,7 @@ List your files and print their MD5, SHA1, SHA256 and/or SHA512 hash in JSON for
 To use this CLI, you need to have [Go 1.1+](https://golang.org/) installed on your computer. Then ,you just have to run the following commands:
 
 ```
-go get github.com/hacdias/lshash
-go install github.com/hacdias/lshash
+go install github.com/hacdias/playground/go/lshash
 ```
 
 **Usage**

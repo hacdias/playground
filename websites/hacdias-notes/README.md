@@ -1,4 +1,4 @@
-# [notes.hacdias.com](https://notes.hacdias.com)
+# notes.hacdias.com
 
 The source 🧙‍♂️ of my digital garden.
 

@@ -1,4 +1,4 @@
-module github.com/hacdias/fingerd
+module github.com/hacdias/playground/go/fingerd
 
 go 1.19
 

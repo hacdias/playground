@@ -1,4 +1,4 @@
-module github.com/hacdias/notes-to-hugo
+module github.com/hacdias/playground/go/notes-to-hugo
 
 go 1.14
 
